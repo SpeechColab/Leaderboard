@@ -12,6 +12,7 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
   - a stable pipeline
   - an objective stand-point
   - open to anyone, to test and compare your models/algorithms with others.
+* performances of top companies' ASR APIs & reproduced paper models are added into leaderboard as "SOTA" references. 
 
 ----------
 ## Test Sets Infomations
@@ -50,12 +51,18 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 
 ----------
 ## How to submit your own benchmarking request?
+To submit your model to leaderboard, you need to prepare 3 things:
+1. a Dockerfile that delivers an implemention of Minimal Benchmarking Interface(MBI)
+2. a model resource directory, containing your models, configs etc.
+3. fill a submission form with your refered ID, title, submission data, model architecture etc.
+
+detailed informations:
 ### Step 1: implement Minimal Benchmarking Interface(MBI) through a Dockerfile.
 ```
-/app/speechio/leaderboard/MBI <input_audio_list> <output_recognition_result> 2> <log>
+/app/speechio/leaderboard/MBI <input_audio_list> <output_recognition_result> 2> <log_file>
 ```
 * we call above command `Minimal Benchmarking Interface(MBI)`, and this is the only concept you need to know to submit your benchmarking request.
-* `/app/speechio/leaderboard/MBI` is a program provided by submitters through a `Dockerfile`. Besides the "MBI" program, Dockerfile should also handle MBI's dependencies(e.g., python? conda? pip requirements? kaldi? pytorch? tensorflow? or a github repo?). SpeechIO will build a Docker image accordingly, and instantiate a container to call above MBI in benchmarking pipeline.
+* `/app/speechio/leaderboard/MBI` is a program provided by submitters through a `Dockerfile`. Besides the "MBI" program, Dockerfile should also handle MBI's dependencies(e.g., python? conda? pip requirements? kaldi? pytorch? tensorflow? espnet? or a github repo?). SpeechIO will build a Docker image accordingly, and instantiate a container to call above MBI in benchmarking pipeline.
 * MBI can be `a bash/python script`(requires a shebang line at the beginning), `a C/C++ binary`, or even `a symbolic link to a program` with executable file permission.
 * MBI can call any other program internally(say, MBI is a bash script calling multiple python programs, which call other C++ libraries)
 * MBI accepts a list of audio files and output their recognition results.
@@ -90,11 +97,28 @@ TST_00001__U_00001 I just watched the movie "The Pursuit of Happiness"
 
 For log_file, it only captures stderr, for debugging purpose. Submitters can dump anything they like into log_file.
 
-### Step2: upload your model resources
-* 
+### Step 2: upload your model resources
+* In China, we host submission model zoo on Aliyun OSS
+* Overseas, AWS S3? 
 
-### Step3: fill submission meta info
+### Step 3: fill submission meta info
+we require a yaml format submission form, e.g.:
+```
+sbumission_id: "zXT8c9P"
+submission_data: 2021-01-01
+author: Jerry
+entity: SpeechIO
+contact: jerry.jiayu.du@gmail.com
+description:
+  - training_toolkit: kaldi
+  - feature: 40 dim MFCC + speed_perturbation + spec_augment
+  - model_architecture: CNN*2 + TDNN-F*10
+  - num_params: 80M
+  - training_loss: LF-MMI
+```
 
 ## How long to wait for benchmarking results?
+Normally 2~6 days
 
 ## Where to get benchmarking results?
+TBD website? github repo?
