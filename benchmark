@@ -11,7 +11,7 @@ args = parser.parse_args()
 
 print('Leaderboard: Checking Submission ... ', end='', file=sys.stderr)
 d = os.path.join('zoo', args.submission_id)
-assert(os.isdir(d))
+assert(os.path.isdir(d))
 assert(os.path.isfile(os.path.join(d, 'info.yml')))
 assert(os.path.isfile(os.path.join(d, 'docker/Dockerfile')))
 assert(os.path.isfile(os.path.join(d, 'mbi')))
