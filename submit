@@ -4,5 +4,4 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('submission_id', type=str)
-parser.add_argument('submission_dir', type=str)
 args = parser.ParseArgument()

@@ -47,7 +47,7 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 
 ----------
 ## Leaderboard result as of 2021.Jan
-  ![result](assets/SpeechIO_TIOBE_2021_01.png)
+  ![result](misc/SpeechIO_TIOBE_2021_01.png)
 
 ----------
 ## How to submit your own benchmarking request?
@@ -101,14 +101,19 @@ For log_file, it only captures stderr, for debugging purpose. Submitters can dum
 * In China, we host submission model zoo on Aliyun OSS
 * Overseas, AWS S3? 
 
-### Step 3: fill submission meta info
+### Step 3: fill info.yml
 we require a yaml format submission form, e.g.:
 ```
-sbumission_id: "zXT8c9P"
-submission_data: 2021-01-01
 author: Jerry
 entity: SpeechIO
 contact: jerry.jiayu.du@gmail.com
+
+uuid: "zXT8c9P"
+assets: './model'
+environment: Dockerfile
+
+lang: 'zh'
+
 description:
   - training_toolkit: kaldi
   - feature: 40 dim MFCC + speed_perturbation + spec_augment
