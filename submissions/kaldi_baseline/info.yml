@@ -1,0 +1,21 @@
+--- # SpeechIO Leaderboard Submission
+key: kaldi_baseline
+task: ASR
+date: 2021-01-01
+entity: SpeechIO
+author: Jerry
+email: jerry.jiayu.du@gmail.com
+url: oss://speechio-leaderboard/hub/kaldi_baseline
+test_sets:
+  - zhibo_daihuo
+  - laoluo_yulu
+front_end: FBank(dim=80)
+model:
+  params: 40M
+  descripton: CNN + TDNN-F
+  components:
+    - conv: 1 layer of dim 256
+    - tdnn: 15 layers of 2048-dim with 256-dim bottleneck
+  objective_function: LF-MMI
+  optimizer: NG-SGD
+  open_source: True
