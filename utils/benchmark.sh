@@ -7,13 +7,13 @@ cd $LEADERBOARD/test_env && echo $PWD
 for testset in $(cat test_sets); do
     date=$(date +%Y%m%d)
     echo "==>Testing TEST_SET:$testset DATE:$date NUM_UTTS:$max_num_utts"
-    dir=${date}__${testset}__${max_num_utts}
+    dir=result/${date}__${testset}__${max_num_utts}
     mkdir -p $dir
 
     #nohup ${LEADERBOARD}/utils/test.sh $database/$testset $dir $max_num_utts >& $dir/log &
 
     testset=$(readlink -f ${LEADERBOARD}/dataset/$testset)
-    n=$(wc -l ${testset}/wav.scp | awk '{print$1}')
+    n=$(wc -l ${testset}/wav.scp | awk '{print $1}')
     if [ $n -gt $max_num_utts ]; then
         n=$max_num_utts
     fi
@@ -40,8 +40,7 @@ for testset in $(cat test_sets); do
             echo "ERROR, found wavs without trans, wavs:$num_wavs, trans:$num_trans"
             exit -1
         else
-            echo "  wavs:$num_wavs, trans:$num_trans"
-            echo -e "Done.\n"
+            echo "  num_wavs:$num_wavs, num_trans:$num_trans"
         fi
     fi
 
@@ -50,39 +49,38 @@ for testset in $(cat test_sets); do
         if [ -f 'MBI' ]; then
             chmod +x MBI
             ./MBI $dir/wav.scp $dir >& $dir/log.MBI
-            echo -e "Done.\n"
         else
             echo "ERROR: cannot find MBI program id $dir"
         fi
     fi
 
-    # if [ $stage -le 3 ]; then
-    #     echo "$0: computing WER/CER ... in $dir/log.compute_cer"
-    #     echo "-- <preparing reference"
-    #     python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/trans.txt $dir/tmp.ref_tn.txt  # TN
-    #     python3 ${LEADERBOARD}/utils/split_to_char.py $dir/tmp.ref_tn.txt $dir/ref.txt
-    #     echo -e "-- done>\n"
+    if [ $stage -le 3 ]; then
+        COMPUTE_WER=compute-WER
+        ALIGN_TEXT=align-text
+        echo "$0: computing WER/CER ... in $dir/log.compute_cer"
+        echo "-- <preparing reference"
+        python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/trans.txt $dir/tmp.ref_tn.txt  # TN
+        python3 ${LEADERBOARD}/utils/split_to_char.py $dir/tmp.ref_tn.txt $dir/ref.txt
 
-    #     echo "-- <preparing recognition text"
-    #     python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/raw_rec.txt $dir/tmp.rec_tn.txt
-    #     python3 ${LEADERBOARD}/utils/split_to_char.py $dir/tmp.rec_tn.txt $dir/rec.txt
-    #     grep -v $'\t$' $dir/rec.txt > $dir/rec_present.txt # filter away empty recognition result
-    #     rm $dir/tmp.*
-    #     echo -e "-- done>\n"
+        echo "-- <preparing recognition text"
+        python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/raw_rec.txt $dir/raw_rec_tn.txt
+        python3 ${LEADERBOARD}/utils/split_to_char.py $dir/raw_rec_tn.txt $dir/rec.txt
+        grep -v $'\t$' $dir/rec.txt > $dir/rec_present.txt # filter away empty recognition result
+        rm $dir/tmp.*
 
-    #     echo "-- <computing CER and text alignment"
-    #     $COMPUTE_WER --mode=present --text=true ark,t:$dir/ref.txt ark,t:$dir/rec.txt > $dir/CER
-    #     $ALIGN_TEXT ark,t:$dir/ref.txt ark,t:$dir/rec.txt ark,t:$dir/align.txt
-    #     echo ""
-    #     $COMPUTE_WER --mode=present --text=true ark,t:$dir/ref.txt ark,t:$dir/rec_present.txt > $dir/CER_present
-    #     $ALIGN_TEXT ark,t:$dir/ref.txt ark,t:$dir/rec_present.txt ark,t:$dir/align_present.txt
-    #     echo -e "-- done>\n"
+        echo "-- <computing CER and text alignment"
+        $COMPUTE_WER --mode=present --text=true ark,t:$dir/ref.txt ark,t:$dir/rec.txt > $dir/CER
+        $ALIGN_TEXT ark,t:$dir/ref.txt ark,t:$dir/rec.txt ark,t:$dir/align.txt
+        echo ""
+        $COMPUTE_WER --mode=present --text=true ark,t:$dir/ref.txt ark,t:$dir/rec_present.txt > $dir/CER_present
+        $ALIGN_TEXT ark,t:$dir/ref.txt ark,t:$dir/rec_present.txt ark,t:$dir/align_present.txt
+        echo -e "-- done>\n"
 
-    #     echo "-- <Getting pretty alignment"
-    #     ${LEADERBOARD}/utils/prettify_align.py $dir/align_present.txt $dir/CHECK.txt
-    #     echo -e "-- done>\n"
-    #     echo -e "Done.\n"
-    # fi
+        echo "-- <Getting pretty alignment"
+        ${LEADERBOARD}/utils/prettify_align.py $dir/align_present.txt $dir/CHECK.txt
+        echo -e "-- done>\n"
+        echo -e "Done.\n"
+    fi
 
     sleep 1
 done
