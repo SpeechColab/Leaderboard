@@ -53,7 +53,7 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 
 
 ## How to submit your own benchmarking request?
-To benmark your ASR system, leaderboard pipeline needs you to provide *a self-contained work directory*, containing:
+To benmark your ASR system, leaderboard pipeline needs you to provide a self-contained `submission directory`, containing:
 * `A program` that performs speech recognition to a list of audios, we call this program "Minimal Benchmarking Interface", MBI for short.
 * `A Dockerfile` that prepares runtime envrionment dependencies of your MBI program(e.g. ubuntu, centos, conda, pytorch, tf, kaldi etc)
 * `Resources`(models/config files) that are required by your MBI program 
@@ -79,7 +79,7 @@ This is `Minimal Benchmarking Interface(MBI)`, and it's the only concept you nee
   ...
   ```
 
-* MBI can write/read temporary files in <result_dir>, but final results need to be written to `<result_dir>/raw_rec.txt` with format:
+* MBI can write/read temporary files in <result_dir>, but final results need to be dumped into `<result_dir>/raw_rec.txt` with format:
   ```
   <audio_uuid> <speech_recognition_result>
   ```
@@ -100,10 +100,10 @@ This is `Minimal Benchmarking Interface(MBI)`, and it's the only concept you nee
 
 ---
 ### Step 2: prepare and upload your submission directory to leaderboard model hub.
-In this directory, you should have:
-* `MBI` program
-* a docker file `docker/Dockerfile`, it should provide installation of your MBI dependencies. 
-* all resources that are required by your MBI program, such as models, configs..., you can name and place these resources whatever you like, your MBI program read these, leaderboard pipeline don't care.
+This directory should have:
+* `MBI`: MBI program
+* `docker/Dockerfile`: dockerfile that setups all dependencies of your MBI program. 
+* all necessary resources of your MBI program(such as models, configs...), you can name and organize these resources whatever you like as long as they are inside your submission directory. Your MBI program read these, leaderboard pipeline don't care.
 
 for example, in a sample submission dir, `tree .` gives:
 ```
@@ -118,8 +118,15 @@ for example, in a sample submission dir, `tree .` gives:
     └── Dockerfile
 ```
 
+---
 ### Step 3: create a pull request for your submission
-we require a yaml format submission pull request github.com/speechio/leaderboard/submissions/{your_submission_key}/info.yml, 
+we accept a submission by merging a pull request from you to our github repo.
+
+your pull request should add a submission yaml as following:
+```
+github.com/speechio/leaderboard/submissions/{your_submission_key}/info.yml
+```
+
 currently, we let you define your own `submission key`.
 a sample submission can be found [here](https://github.com/speechio/leaderboard/tree/master/submissions/kaldi_baseline/info.yml) as followings:
 ```
@@ -147,8 +154,8 @@ model:
 
 ```
 some important fields here:
-* `url`: location of your submission directory
-* `test_sets`: containing which test sets you want to benchmark with
+* `url`: point to the location of your submission directory
+* `test_sets`: containing the test sets that you want to benchmark with
 
 ## How long to wait for benchmarking results?
 Once we merge your submission pull request, the leaderboard pipeline will:
