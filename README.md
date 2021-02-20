@@ -14,7 +14,7 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
   - open to anyone, to test and compare your models/algorithms with others.
 * performances of top companies' ASR APIs & reproduced paper models are added into leaderboard as "SOTA" references. 
 
-----------
+---
 ## Test Sets Infomations
 ### English Leaderboard
   * TBD
@@ -45,85 +45,117 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 | 纪录片    | 篮球明星、成长  | Documentary            | NBA Super Stars' Life & History               | 2.2      | ★★                 |
 
 
-----------
+---
 ## Leaderboard result as of 2021.Jan
   ![result](misc/SpeechIO_TIOBE_2021_01.png)
 
-----------
+---
+
+
 ## How to submit your own benchmarking request?
-To submit your model to leaderboard, you need to prepare 3 things:
-1. a Dockerfile that delivers an implemention of Minimal Benchmarking Interface(MBI)
-2. a model resource directory, containing your models, configs etc.
-3. fill a submission form with your refered ID, title, submission data, model architecture etc.
+To benmark your ASR system, leaderboard pipeline needs you to provide *a self-contained work directory*, containing:
+* `A program` that performs speech recognition to a list of audios, we call this program "Minimal Benchmarking Interface", MBI for short.
+* `A Dockerfile` that prepares runtime envrionment dependencies of your MBI program(e.g. ubuntu, centos, conda, pytorch, tf, kaldi etc)
+* `Resources`(models/config files) that are required by your MBI program 
 
-detailed informations:
-### Step 1: implement Minimal Benchmarking Interface(MBI) through a Dockerfile.
+---
+### Step 1: implement your Minimal Benchmarking Interface(MBI) program.
 ```
-/app/speechio/leaderboard/MBI <input_audio_list> <output_recognition_result> 2> <log_file>
+./MBI <input_audio_list> <result_dir>
 ```
-* we call above command `Minimal Benchmarking Interface(MBI)`, and this is the only concept you need to know to submit your benchmarking request.
-* `/app/speechio/leaderboard/MBI` is a program provided by submitters through a `Dockerfile`. Besides the "MBI" program, Dockerfile should also handle MBI's dependencies(e.g., python? conda? pip requirements? kaldi? pytorch? tensorflow? espnet? or a github repo?). SpeechIO will build a Docker image accordingly, and instantiate a container to call above MBI in benchmarking pipeline.
-* MBI can be `a bash/python script`(requires a shebang line at the beginning), `a C/C++ binary`, or even `a symbolic link to a program` with executable file permission.
-* MBI can call any other program internally(say, MBI is a bash script calling multiple python programs, which call other C++ libraries)
-* MBI accepts a list of audio files and output their recognition results.
-
-_input_audio_list_ line format and example:
-```
-<audio_uuid> <audio_path>
-```
-```
-TST_00001__U_00001 /home/dataset/TST_00001/U_00001.wav
-...
-...
-...
-```
-* SpeechIO benchmarking pipeline will prepare _input_audio_list_ for each existing test set, and feed it into your MBI program.
-* submitters can assume all audio files have standard 16k16bit mono(single channel) wav format
+This is `Minimal Benchmarking Interface(MBI)`, and it's the only concept you need to know to submit your benchmarking request:
+* `MBI` is an executable(`shebang bash/python/perl script`, `C/C++ binary`) that performs speech recognition to a list of audios.
+* `input_audio_list` specifies a test set containing short utterances(less than 30 secs), all in standard 16k16bit-mono wav format. Line format and example:
+  ```
+  <audio_uuid> <audio_path>
+  ```
 
 
-_output_recognition_result_ line format and example:
-```
-<audio_uuid> <speech_recognition_result>
-```
-```
-TST_00001__U_00001 I just watched the movie "The Pursuit of Happiness"
-...
-...
-...
-```
-* the output result file needs to be plain ASCII text or utf-8.
-* for each line, the first field is audio's uuid, followed by a `tab` or `space`, and then the rest of the line is recognition result. If the recognition fails, keep recogntion result empty and start a new line.
+  ```
+  TST_00001__U_00001 /home/dataset/TST_00001/U_00001.wav
+  TST_00001__U_00002 /home/dataset/TST_00001/U_00002.wav
+  ...
+  ...
+  ...
+  ```
+
+* MBI can write/read temporary files in <result_dir>, but final results need to be written to `<result_dir>/raw_rec.txt` with format:
+  ```
+  <audio_uuid> <speech_recognition_result>
+  ```
+  ```
+  TST_00001__U_00001 I just watched the movie "The Pursuit of Happiness"
+  ...
+  ...
+  ...
+  ```
+
+* `<result_dir>/raw_rec.txt` needs to be `ASCII/UTF-8 encoded`.
+* For each line, the first field is audio's uuid, followed by a `tab` or `space`, and the rest of the line is recognition result.
+* if recognition fails for an utterence, write a line with audio_uuid and empty recogntion result like this:
+  ```
+  TST_00001__U_00002  
+  ```
 * submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), SpeechIO leaderboard will apply universal text normalization to every submission.
 
-For log_file, it only captures stderr, for debugging purpose. Submitters can dump anything they like into log_file.
+---
+### Step 2: prepare and upload your submission directory to leaderboard model hub.
+In this directory, you should have:
+* `MBI` program
+* a docker file `docker/Dockerfile`, it should provide installation of your MBI dependencies. 
+* all resources that are required by your MBI program, such as models, configs..., you can name and place these resources whatever you like, your MBI program read these, leaderboard pipeline don't care.
 
-### Step 2: upload your model resources
-* In China, we host submission model zoo on Aliyun OSS
-* Overseas, AWS S3? 
-
-### Step 3: fill info.yml
-we require a yaml format submission form, e.g.:
+for example, in a sample submission dir, `tree .` gives:
 ```
-author: Jerry
+├── MBI
+├── assets
+│   ├── HCLG.fst
+│   ├── conf
+│   │   └── fbank_hires.conf
+│   ├── final.mdl
+│   └── words.txt
+└── docker
+    └── Dockerfile
+```
+
+### Step 3: create a pull request for your submission
+we require a yaml format submission pull request github.com/speechio/leaderboard/submissions/{your_submission_key}/info.yml, 
+currently, we let you define your own `submission key`.
+a sample submission can be found [here](https://github.com/speechio/leaderboard/tree/master/submissions/kaldi_baseline/info.yml) as followings:
+```
+--- # SpeechIO Leaderboard Submission
+key: kaldi_baseline
+task: ASR
+date: 2021-01-01
 entity: SpeechIO
-contact: jerry.jiayu.du@gmail.com
+author: Jerry
+email: kkk@gmail.com
+url: oss://speechio-leaderboard/hub/kaldi_baseline
+test_sets:
+  - zhibo_daihuo
+  - laoluo_yulu
+model:
+  params: 40M
+  front_end: FBank(dim=80)
+  descripton: CNN + TDNN-F
+  components:
+    - conv: 1 layer of dim 256
+    - tdnn: 15 layers of 2048-dim with 256-dim bottleneck
+  objective_function: LF-MMI
+  optimizer: NG-SGD
+  open_source: True
 
-uuid: "zXT8c9P"
-assets: './model'
-environment: Dockerfile
-
-lang: 'zh'
-
-description:
-  - training_toolkit: kaldi
-  - feature: 40 dim MFCC + speed_perturbation + spec_augment
-  - model_architecture: CNN*2 + TDNN-F*10
-  - num_params: 80M
-  - training_loss: LF-MMI
 ```
+some important fields here:
+* `url`: location of your submission directory
+* `test_sets`: containing which test sets you want to benchmark with
 
 ## How long to wait for benchmarking results?
-Normally 2~6 days
+Once we merge your submission pull request, the leaderboard pipeline will:
+* download your submission directory from leaderboard model hub
+* build a docker image according to your Dockerfile
+* start a container instance, use your MBI program to iterate over `test_sets` section one by one in your submission request
+* post processing all your results(word/char segmentation, text normalization) and calculate WER/CER
 
 ## Where to get benchmarking results?
 TBD website? github repo?
