@@ -99,11 +99,11 @@ This is `Minimal Benchmarking Interface(MBI)`, and it's the only concept you nee
 * submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), SpeechIO leaderboard will apply universal text normalization to every submission.
 
 ---
-### Step 2: prepare and upload your submission directory to leaderboard model hub.
+### Step 2: prepare and upload your submission directory to leaderboard model hub
 This directory should have:
 * `MBI`: MBI program
 * `docker/Dockerfile`: dockerfile that setups all dependencies of your MBI program. 
-* all necessary resources of your MBI program(such as models, configs...), you can name and organize these resources whatever you like as long as they are inside your submission directory. Your MBI program read these, leaderboard pipeline don't care.
+* all necessary resources of your MBI program(such as models, configs...), you can name and organize these resources whatever you like as long as they are inside your submission directory. Your MBI program read these, leaderboard pipeline doesn't care.
 
 for example, in a sample submission dir, `tree .` gives:
 ```
@@ -143,7 +143,7 @@ test_sets:
   - laoluo_yulu
 model:
   params: 40M
-  front_end: FBank(dim=80)
+  front_end: FBank(dim=80) + specaug
   descripton: CNN + TDNN-F
   components:
     - conv: 1 layer of dim 256
