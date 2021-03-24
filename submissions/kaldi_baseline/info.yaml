@@ -7,8 +7,8 @@ author: Jerry
 email: jerry.jiayu.du@gmail.com
 url: oss://speechio-leaderboard/hub/kaldi_baseline
 test_sets:
-  - zhibo_daihuo
-  - laoluo_yulu
+  - SIO_ZH_TST001
+  - SIO_ZH_TST015
 front_end: FBank(dim=80)
 model:
   params: 40M

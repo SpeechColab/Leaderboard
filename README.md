@@ -139,8 +139,8 @@ author: Jerry
 email: kkk@gmail.com
 url: oss://speechio-leaderboard/hub/kaldi_baseline
 test_sets:
-  - zhibo_daihuo
-  - laoluo_yulu
+  - SIO_ZH_TST001
+  - SIO_ZH_TST015
 model:
   params: 40M
   front_end: FBank(dim=80) + specaug
