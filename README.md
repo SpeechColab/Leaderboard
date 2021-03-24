@@ -21,29 +21,29 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
   
 ### Chinese Leaderboard
 
-| 场景     | 内容领域     | Scenario               | Topic Domain                                  | hours 时长 | Difficulty 难度(1-5) |
-| ------ | -------- | ---------------------- | --------------------------------------------- | -------- | ------------------ |
-| 新闻播报   | 时政       | TV News                | news & politics                               | 9        | ★                  |
-| 访谈电视节目 | 名人工作、生活  | TV interview           | celebrity & film & music & daily              | 3        | ★★☆                |
-| 专题电视节目 | 足球       | TV program             | Sports & Football & Worldcup                  | 2.7      | ★★☆                |
-| 会场演讲   | 社会、人文、商业 | Stadium Public Speech  | Society & Culture & Business Trend            | 2.7      | ★★                 |
-| 在线教育   | 科普       | Online Education       | Popular Science                               | 4.4      | ★★★                |
-| 直播     | 游戏       | Live Broadcasting      | Game                                          | 1.6      | ★★★☆               |
-| 直播     | 电商、美妆    | Live Broadcasting      | Advertising                                   | 0.9      | ★★★★☆              |
-| 线下培训   | 段子、做人    | Offline lecture        | Life & Purpose & Ethics                       | 1.3      | ★★★★☆              |
-| 播客     | 人生故事、见闻  | Podcast                | Ordinary Life Story Telling                   | 4.5      | ★★☆                |
-| 播客     | 创业、产品、投资 | Podcast                | Startup & Enterprenuer & Product & Investment | 4.2      | ★★☆                |
-| 在线教育   | 法律 法考    | Online Education       | Law & Lawyer Qualification Exams              | 3.4      | ★★☆                |
-| 在线教育   | 考研 高校报考  | Online Education       | University & Graduate School Entrance Exams   | 3.4      | ★★★☆               |
-| 短视频    | 电影剪辑     | Short Video            | Movie Cuts                                    | 1.8      | ★★★                |
-| 短视频    | 美食、烹饪    | Short Video            | Food & Cooking & Gourmet                      | 1        | ★★★☆               |
-| 评书     | 江湖、武侠    | Traditional Podcast    | Kongfu Fiction                                | 2.2      | ★★☆                |
-| 相声     | 包袱段子     | Theater Crosstalk Show | Funny Stories                                 | 1        | ★★★                |
-| 脱口秀    | 明星糗事     | Standup Comedy         | Celebrity Jokes                               | 1.8      | ★★☆                |
-| 少儿动画   | 童话故事、日常  | Children Cartoon       | Fairy Tale                                    | 0.9      | ★☆                 |
-| 体育赛事解说 | 篮球、NBA   | Sports Game Live       | NBA Game                                      | 0.7      | ★★★                |
-| 纪录片    | 篮球明星、成长  | Documentary            | NBA Super Stars' Life & History               | 2.2      | ★★                 |
-
+| 编号 ID | 场景 Scenario | 内容领域 Topic Domain | 时长 hours | Difficulty 难度(1-5) |
+| --- | --- | --- | --- | --- |
+|SIO_ZH_TST001| 新闻播报 TV News |时政 news & politics | 9 | ★ |
+|SIO_ZH_TST002| 访谈电视节目 TV interview | 名人工作/生活 celebrity & film & music & daily | 3 | ★★☆ |
+|SIO_ZH_TST003| 专题电视节目 TV program | 足球 Sports & Football & Worldcup | 2.7 | ★★☆ |
+|SIO_ZH_TST004| 会场演讲 Stadium Public Speech | 社会、人文、商业 Society & Culture & Business Trend | 2.7 | ★★ |
+|SIO_ZH_TST005| 在线教育 Online Education | 科普 Popular Science | 4.4 | ★★★ |
+|SIO_ZH_TST006| 直播 Live Broadcasting | 游戏 Game | 1.6 | ★★★☆ |
+|SIO_ZH_TST007| 直播 Live Broadcasting | 电商、美妆 Advertising | 0.9 | ★★★★☆ |
+|SIO_ZH_TST008| 线下培训 Offline lecture | 段子、做人 Life & Purpose & Ethics | 1.3 | ★★★★☆ |
+|SIO_ZH_TST009| 播客 Podcast | 人生故事、见闻 Ordinary Life Story Telling | 4.5 | ★★☆ |
+|SIO_ZH_TST010| 播客 Podcast | 创业、产品、投资 Startup & Enterprenuer & Product & Investment | 4.2 | ★★☆ |
+|SIO_ZH_TST011| 在线教育 Online Education | 法律 法考 Law & Lawyer Qualification Exams | 3.4 | ★★☆ |
+|SIO_ZH_TST012| 在线教育 Online Education | 考研 高校报考 University & Graduate School Entrance Exams | 3.4 | ★★★☆ |
+|SIO_ZH_TST013| 短视频 VLog | 电影剪辑  Movie Cuts | 1.8 | ★★★ |
+|SIO_ZH_TST014| 短视频 VLog | 美食、烹饪 Food & Cooking & Gourmet | 1 | ★★★☆ |
+|SIO_ZH_TST015| 评书 Traditional Podcast | 江湖、武侠 Kongfu Fiction | 2.2 | ★★☆ |
+|SIO_ZH_TST016| 相声 Theater Crosstalk Show | 包袱段子 Funny Stories | 1 | ★★★ |
+|SIO_ZH_TST017| 脱口秀 Standup Comedy | 明星糗事 Celebrity Jokes | 1.8 | ★★☆ |
+|SIO_ZH_TST018| 少儿动画 Children Cartoon | 童话故事、日常 Fairy Tale | 0.9 | ★☆ |
+|SIO_ZH_TST019| 体育赛事解说 Sports Game Live | 篮球、NBA NBA Game | 0.7 | ★★★ |
+|SIO_ZH_TST020| 纪录片 Documentary | 篮球明星、成长 NBA Super Stars' Life & History | 2.2 | ★★ |
+|SIO_ZH_TST021| 视频会议、论坛演讲 video conference & forum speech | 经济、货币、金融 economy, currency, finance | 1.0 | ★★☆ |
 
 ---
 ## Leaderboard result as of 2021.Jan
