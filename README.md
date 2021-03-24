@@ -23,27 +23,27 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 
 | 编号 ID | 场景 Scenario | 内容领域 Topic Domain | 时长 hours | Difficulty 难度(1-5) |
 | --- | --- | --- | --- | --- |
-|SIO_ZH_TST001| 新闻播报 TV News |时政 news & politics | 9 | ★ |
-|SIO_ZH_TST002| 访谈电视节目 TV interview | 名人工作/生活 celebrity & film & music & daily | 3 | ★★☆ |
-|SIO_ZH_TST003| 专题电视节目 TV program | 足球 Sports & Football & Worldcup | 2.7 | ★★☆ |
-|SIO_ZH_TST004| 会场演讲 Stadium Public Speech | 社会、人文、商业 Society & Culture & Business Trend | 2.7 | ★★ |
-|SIO_ZH_TST005| 在线教育 Online Education | 科普 Popular Science | 4.4 | ★★★ |
-|SIO_ZH_TST006| 直播 Live Broadcasting | 游戏 Game | 1.6 | ★★★☆ |
-|SIO_ZH_TST007| 直播 Live Broadcasting | 电商、美妆 Advertising | 0.9 | ★★★★☆ |
-|SIO_ZH_TST008| 线下培训 Offline lecture | 段子、做人 Life & Purpose & Ethics | 1.3 | ★★★★☆ |
-|SIO_ZH_TST009| 播客 Podcast | 人生故事、见闻 Ordinary Life Story Telling | 4.5 | ★★☆ |
-|SIO_ZH_TST010| 播客 Podcast | 创业、产品、投资 Startup & Enterprenuer & Product & Investment | 4.2 | ★★☆ |
-|SIO_ZH_TST011| 在线教育 Online Education | 法律 法考 Law & Lawyer Qualification Exams | 3.4 | ★★☆ |
-|SIO_ZH_TST012| 在线教育 Online Education | 考研 高校报考 University & Graduate School Entrance Exams | 3.4 | ★★★☆ |
-|SIO_ZH_TST013| 短视频 VLog | 电影剪辑  Movie Cuts | 1.8 | ★★★ |
-|SIO_ZH_TST014| 短视频 VLog | 美食、烹饪 Food & Cooking & Gourmet | 1 | ★★★☆ |
-|SIO_ZH_TST015| 评书 Traditional Podcast | 江湖、武侠 Kongfu Fiction | 2.2 | ★★☆ |
-|SIO_ZH_TST016| 相声 Theater Crosstalk Show | 包袱段子 Funny Stories | 1 | ★★★ |
-|SIO_ZH_TST017| 脱口秀 Standup Comedy | 明星糗事 Celebrity Jokes | 1.8 | ★★☆ |
-|SIO_ZH_TST018| 少儿动画 Children Cartoon | 童话故事、日常 Fairy Tale | 0.9 | ★☆ |
-|SIO_ZH_TST019| 体育赛事解说 Sports Game Live | 篮球、NBA NBA Game | 0.7 | ★★★ |
-|SIO_ZH_TST020| 纪录片 Documentary | 篮球明星、成长 NBA Super Stars' Life & History | 2.2 | ★★ |
-|SIO_ZH_TST021| 视频会议、论坛演讲 video conference & forum speech | 经济、货币、金融 economy, currency, finance | 1.0 | ★★☆ |
+|SIO_ASR_CN0001| 新闻播报 TV News |时政 news & politics | 9 | ★ |
+|SIO_ASR_CN0002| 访谈电视节目 TV interview | 名人工作/生活 celebrity & film & music & daily | 3 | ★★☆ |
+|SIO_ASR_CN0003| 专题电视节目 TV program | 足球 Sports & Football & Worldcup | 2.7 | ★★☆ |
+|SIO_ASR_CN0004| 会场演讲 Stadium Public Speech | 社会、人文、商业 Society & Culture & Business Trend | 2.7 | ★★ |
+|SIO_ASR_CN0005| 在线教育 Online Education | 科普 Popular Science | 4.4 | ★★★ |
+|SIO_ASR_CN0006| 直播 Live Broadcasting | 游戏 Game | 1.6 | ★★★☆ |
+|SIO_ASR_CN0007| 直播 Live Broadcasting | 电商、美妆 Advertising | 0.9 | ★★★★☆ |
+|SIO_ASR_CN0008| 线下培训 Offline lecture | 段子、做人 Life & Purpose & Ethics | 1.3 | ★★★★☆ |
+|SIO_ASR_CN0009| 播客 Podcast | 人生故事、见闻 Ordinary Life Story Telling | 4.5 | ★★☆ |
+|SIO_ASR_CN0010| 播客 Podcast | 创业、产品、投资 Startup & Enterprenuer & Product & Investment | 4.2 | ★★☆ |
+|SIO_ASR_CN0011| 在线教育 Online Education | 法律 法考 Law & Lawyer Qualification Exams | 3.4 | ★★☆ |
+|SIO_ASR_CN0012| 在线教育 Online Education | 考研 高校报考 University & Graduate School Entrance Exams | 3.4 | ★★★☆ |
+|SIO_ASR_CN0013| 短视频 VLog | 电影剪辑  Movie Cuts | 1.8 | ★★★ |
+|SIO_ASR_CN0014| 短视频 VLog | 美食、烹饪 Food & Cooking & Gourmet | 1 | ★★★☆ |
+|SIO_ASR_CN0015| 评书 Traditional Podcast | 江湖、武侠 Kongfu Fiction | 2.2 | ★★☆ |
+|SIO_ASR_CN0016| 相声 Theater Crosstalk Show | 包袱段子 Funny Stories | 1 | ★★★ |
+|SIO_ASR_CN0017| 脱口秀 Standup Comedy | 明星糗事 Celebrity Jokes | 1.8 | ★★☆ |
+|SIO_ASR_CN0018| 少儿动画 Children Cartoon | 童话故事、日常 Fairy Tale | 0.9 | ★☆ |
+|SIO_ASR_CN0019| 体育赛事解说 Sports Game Live | 篮球、NBA NBA Game | 0.7 | ★★★ |
+|SIO_ASR_CN0020| 纪录片 Documentary | 篮球明星、成长 NBA Super Stars' Life & History | 2.2 | ★★ |
+|SIO_ASR_CN0021| 视频会议、论坛演讲 video conference & forum speech | 经济、货币、金融 economy, currency, finance | 1.0 | ★★☆ |
 
 ---
 ## Leaderboard result as of 2021.Jan
@@ -72,8 +72,8 @@ This is `Minimal Benchmarking Interface(MBI)`, and it's the only concept you nee
 
 
   ```
-  TST_00001__U_00001 /home/dataset/TST_00001/U_00001.wav
-  TST_00001__U_00002 /home/dataset/TST_00001/U_00002.wav
+  TST_00001__U_00001 /home/dataset/SIO_ASR_CN0001/U_00001.wav
+  TST_00001__U_00002 /home/dataset/SIO_ASR_CN0001/U_00002.wav
   ...
   ...
   ...
@@ -84,7 +84,7 @@ This is `Minimal Benchmarking Interface(MBI)`, and it's the only concept you nee
   <audio_uuid> <speech_recognition_result>
   ```
   ```
-  TST_00001__U_00001 I just watched the movie "The Pursuit of Happiness"
+  SIO_ASR_CN0001__U_00001 I just watched the movie "The Pursuit of Happiness"
   ...
   ...
   ...
@@ -94,7 +94,7 @@ This is `Minimal Benchmarking Interface(MBI)`, and it's the only concept you nee
 * For each line, the first field is audio's uuid, followed by a `tab` or `space`, and the rest of the line is recognition result.
 * if recognition fails for an utterence, write a line with audio_uuid and empty recogntion result like this:
   ```
-  TST_00001__U_00002  
+  SIO_ASR_CN0001__U_00002  
   ```
 * submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), SpeechIO leaderboard will apply universal text normalization to every submission.
 
@@ -139,8 +139,8 @@ author: Jerry
 email: kkk@gmail.com
 url: oss://speechio-leaderboard/hub/kaldi_baseline
 test_sets:
-  - SIO_ZH_TST001
-  - SIO_ZH_TST015
+  - SIO_ASR_CN0001
+  - SIO_ASR_CN0015
 model:
   params: 40M
   front_end: FBank(dim=80) + specaug
