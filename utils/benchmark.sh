@@ -55,7 +55,7 @@ for testset in $(cat test_sets); do
     fi
 
     if [ $stage -le 3 ]; then
-        COMPUTE_WER=compute-WER
+        COMPUTE_WER=compute-wer
         ALIGN_TEXT=align-text
         echo "$0: computing WER/CER ... in $dir/log.compute_cer"
         echo "-- <preparing reference"

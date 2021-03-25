@@ -21,7 +21,7 @@ def fix_oss_url(oss_url):
   else:
     return oss_url + '/'
 
-DATASETS = MountPoint('/Users/jerry/work/tiobe/test_env/dataset', '/app/speechio/leaderboard/dataset', 'ro')
+DATASETS = MountPoint(os.path.abspath('dataset'), '/app/speechio/leaderboard/dataset', 'ro')
 UTILS = MountPoint(os.path.abspath('utils'), '/app/speechio/leaderboard/utils')
 
 parser = argparse.ArgumentParser()
@@ -54,6 +54,6 @@ with open(os.path.join(work_dir, 'test_sets'), 'w+') as f:
     print(x, file=f)
 
 # instantiate a benchmark container
-docker_run_cmd = F'docker run {DATASETS.DockerMountOption} {UTILS.DockerMountOption} -v {work_dir}:/app/speechio/leaderboard/test_env {docker_image} /app/speechio/leaderboard/utils/benchmark.sh'
+docker_run_cmd = F'docker run {DATASETS.DockerMountOption()} {UTILS.DockerMountOption()} -v {work_dir}:/app/speechio/leaderboard/test_env {docker_image} /app/speechio/leaderboard/utils/benchmark.sh'
 print(docker_run_cmd, file=sys.stderr)
 os.system(docker_run_cmd)
