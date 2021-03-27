@@ -16,10 +16,7 @@ class MountPoint:
       return F'-v {self.src}:{self.dst}'
 
 def fix_oss_url(oss_url):
-  if oss_url.endswith('/'):
-    return oss_url
-  else:
-    return oss_url + '/'
+  return oss_url if oss_url.endswith('/') else oss_url + '/'
 
 DATASETS = MountPoint(os.path.abspath('dataset'), '/app/speechio/leaderboard/dataset', 'ro')
 UTILS = MountPoint(os.path.abspath('utils'), '/app/speechio/leaderboard/utils')
