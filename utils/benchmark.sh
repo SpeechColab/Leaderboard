@@ -55,27 +55,18 @@ for testset in $(cat test_sets); do
     fi
 
     if [ $stage -le 3 ]; then
-        COMPUTE_WER=compute-wer
-        ALIGN_TEXT=align-text
-        echo "$0: --> preparing reference for WER computation..."
+        echo "$0: --> preparing reference text for WER computation..."
         python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/trans.txt $dir/tmp.ref_tn.txt  # TN
         python3 ${LEADERBOARD}/utils/split_to_char.py $dir/tmp.ref_tn.txt $dir/ref.txt
 
-        echo "$0: --> preparing recognition text for WER computation ..."
+        echo "$0: --> preparing hypothesis text for WER computation ..."
         python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/raw_rec.txt $dir/raw_rec_tn.txt
         python3 ${LEADERBOARD}/utils/split_to_char.py $dir/raw_rec_tn.txt $dir/rec.txt
         grep -v $'\t$' $dir/rec.txt > $dir/rec_present.txt # filter away empty recognition result
         rm $dir/tmp.*
 
-        echo "$0: --> computing CER and alignment ..."
-        $COMPUTE_WER --mode=present --text=true ark,t:$dir/ref.txt ark,t:$dir/rec.txt > $dir/CER
-        $ALIGN_TEXT ark,t:$dir/ref.txt ark,t:$dir/rec.txt ark,t:$dir/align.txt
-        echo ""
-        $COMPUTE_WER --mode=present --text=true ark,t:$dir/ref.txt ark,t:$dir/rec_present.txt > $dir/CER_present
-        $ALIGN_TEXT ark,t:$dir/ref.txt ark,t:$dir/rec_present.txt ark,t:$dir/align_present.txt
-
-        echo "$0: --> Getting pretty alignment ..."
-        ${LEADERBOARD}/utils/prettify_align.py $dir/align_present.txt $dir/CHECK.txt
+        echo "$0: --> computing WER/CER and alignment ..."
+        ${LEADERBOARD}/utils/compute-wer --ref $dir/ref.txt --hyp $dir/rec_present.txt  $dir/EVAL_DETAILS  1> $dir/EVAL_SUMMARY
     fi
 
     sleep 1
