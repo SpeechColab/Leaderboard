@@ -16,22 +16,21 @@ if __name__ == '__main__':
       else:
         return F'-v {self.src}:{self.dst}'
 
-  DATASETS = MountPoint(os.path.abspath('dataset'), '/app/speechio/leaderboard/dataset', 'ro')
+  DATASETS = MountPoint(os.path.abspath('datasets'), '/app/speechio/leaderboard/datasets', 'ro')
   UTILS    = MountPoint(os.path.abspath('utils'),   '/app/speechio/leaderboard/utils')
-
 
   parser = argparse.ArgumentParser()
   parser.add_argument('--begin_stage', type=int, default=0, help='only run stages inside [begin, end)')
   parser.add_argument('--end_stage', type=int, default=100, help='only run stages inside [begin, end)')
-  parser.add_argument('--repo', choices=['public', 'private'], default='public', type=str)
+  parser.add_argument('--type', choices=['public', 'private'], default='public', type=str)
   parser.add_argument('submission_key', type=str)
   args = parser.parse_args()
 
   if args.begin_stage <= 1 and 1 < args.end_stage:
-    # Download model from leaderboard model hub
-    model_hub_url = F'oss://speechio-leaderboard/hub/{args.repo}/{args.submission_key}'
-    work_dir = os.path.abspath(os.path.join('workspace', args.submission_key))
-    cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {model_hub_url}/ {work_dir}"
+    print(F'Downloading submission dir from model hub ...', file = sys.stderr)
+    submission_dir_url = os.path.join('oss://speechio-leaderboard/hub', args.type, args.submission_key)
+    work_dir = os.path.abspath(os.path.join('workspace', args.type, args.submission_key))
+    cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {submission_dir_url}/ {work_dir}"
     print(cmd, file=sys.stderr)
     os.system(cmd)
 
@@ -39,7 +38,7 @@ if __name__ == '__main__':
     # build docker image
     docker_context = os.path.join(work_dir, 'docker')
     docker_file    = os.path.join(work_dir, 'docker', 'Dockerfile')
-    docker_image = F'speechio/leaderboard:{args.repo}_{args.submission_key}'
+    docker_image = F'speechio/leaderboard:{args.type}_{args.submission_key}'
     docker_build_cmd = F'docker build -f {docker_file} -t {docker_image} {docker_context}'
     print(docker_build_cmd, file=sys.stderr)
     os.system(docker_build_cmd)

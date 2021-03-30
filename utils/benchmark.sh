@@ -10,9 +10,7 @@ for testset in $(cat test_sets); do
     dir=result/${date}__${testset}__${max_num_utts}
     mkdir -p $dir
 
-    #nohup ${LEADERBOARD}/utils/test.sh $database/$testset $dir $max_num_utts >& $dir/log &
-
-    testset=$(readlink -f ${LEADERBOARD}/dataset/$testset)
+    testset=$(readlink -f ${LEADERBOARD}/datasets/$testset)
     n=$(wc -l ${testset}/wav.scp | awk '{print $1}')
     if [ $n -gt $max_num_utts ]; then
         n=$max_num_utts
@@ -63,7 +61,7 @@ for testset in $(cat test_sets); do
         grep -v $'\t$' $dir/rec.txt > $dir/rec_present.txt # remove empty utts from hypothesis
 
         echo "$0: --> computing WER/CER and alignment ..."
-        ${LEADERBOARD}/utils/asr-score \
+        python3 ${LEADERBOARD}/utils/asr-score \
             --tokenizer char \
             --ref $dir/ref.txt \
             --hyp $dir/rec_present.txt \

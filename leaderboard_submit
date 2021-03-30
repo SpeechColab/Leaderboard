@@ -1,25 +1,25 @@
 #!/usr/bin/env python3
 import sys, os
 import argparse
-import yaml
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--repo', choices=['public', 'private'], default='public')
+    parser.add_argument('--type', choices=['public', 'private'], default='public')
+    parser.add_argument('submission_key', type=str, help='submission key')
     parser.add_argument('submission_dir', type=str, help='submission directory')
     args = parser.parse_args()
     print(args, file=sys.stderr)
 
     info_file_path = os.path.join(args.submission_dir, 'info.yaml')
-    MBI_bin_path = os.path.join(args.submission_dir, 'MBI')
-    print(F'Checking existence of {args.submission_dir}/{{info.yaml,MBI}}')
-    for f in info_file_path, MBI_bin_path:
-        assert(os.path.isfile(f))
+    assert(os.path.isfile(info_file_path))
+    mbi_bin_path = os.path.join(args.submission_dir, 'MBI')
+    assert(os.path.isfile(mbi_bin_path))
+    docker_dir = os.path.join(args.submission_dir, 'docker')
+    assert(os.path.isdir(docker_dir))
+    assert(os.path.isfile(os.path.join(docker_dir, 'Dockerfile')))
 
-    with open(info_file_path, 'r') as info_file:
-        info = yaml.safe_load(info_file)
-        key = info['submission_key']
-        dst_url = F'oss://speechio-leaderboard/hub/{args.repo}/{key}/'
-        upload_cmd = F'./oss -c SAFEBOX/oss.cfg cp -ur {args.submission_dir} {dst_url}'
-        print(upload_cmd, file=sys.stderr)
-        os.system(upload_cmd)
+    src = args.submission_dir
+    dst = os.path.join('oss://speechio-leaderboard/hub', args.type, args.submission_key)
+    cmd = F'./oss -c SAFEBOX/oss.cfg cp -ur {src} {dst}/'
+    print(cmd, file=sys.stderr)
+    os.system(cmd)
