@@ -19,7 +19,7 @@ if __name__ == '__main__':
     assert(os.path.isfile(os.path.join(docker_dir, 'Dockerfile')))
 
     src = args.submission_dir
-    dst = os.path.join('oss://speechio-leaderboard/hub', args.type, args.submission_key)
-    cmd = F'./oss -c SAFEBOX/oss.cfg cp -ur {src} {dst}/'
+    dst = os.path.join('oss://speechio-leaderboard/hub', args.type, args.submission_key) + '/'
+    cmd = F'./oss -c SAFEBOX/oss.cfg cp -ur {src} {dst}'
     print(cmd, file=sys.stderr)
     os.system(cmd)
