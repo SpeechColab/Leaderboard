@@ -55,18 +55,19 @@ for testset in $(cat test_sets); do
     fi
 
     if [ $stage -le 3 ]; then
-        echo "$0: --> preparing reference text for WER computation..."
-        python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/trans.txt $dir/tmp.ref_tn.txt  # TN
-        python3 ${LEADERBOARD}/utils/split_to_char.py $dir/tmp.ref_tn.txt $dir/ref.txt
+        echo "$0: --> preparing reference text for WER calculation..."
+        python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/trans.txt $dir/ref.txt
 
-        echo "$0: --> preparing hypothesis text for WER computation ..."
-        python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/raw_rec.txt $dir/raw_rec_tn.txt
-        python3 ${LEADERBOARD}/utils/split_to_char.py $dir/raw_rec_tn.txt $dir/rec.txt
-        grep -v $'\t$' $dir/rec.txt > $dir/rec_present.txt # filter away empty recognition result
-        rm $dir/tmp.*
+        echo "$0: --> preparing hypothesis text for WER calculation ..."
+        python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/raw_rec.txt $dir/rec.txt
+        grep -v $'\t$' $dir/rec.txt > $dir/rec_present.txt # remove empty utts from hypothesis
 
         echo "$0: --> computing WER/CER and alignment ..."
-        ${LEADERBOARD}/utils/compute-wer --ref $dir/ref.txt --hyp $dir/rec_present.txt  $dir/EVAL_DETAILS  1> $dir/EVAL_SUMMARY
+        ${LEADERBOARD}/utils/asr-score \
+            --tokenizer char \
+            --ref $dir/ref.txt \
+            --hyp $dir/rec_present.txt \
+            $dir/CHECK 1> $dir/CER
     fi
 
     sleep 1
