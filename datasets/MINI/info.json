@@ -1,0 +1,25 @@
+{
+    "dataset": "MINI",
+    "description": "MINI",
+    "type": "short",
+    "utterances": [
+        {
+            "utt": "e5oipIfM49I__20190201_CCTV_1",
+            "path": "audio/e5oipIfM49I__20190201_CCTV_1.wav",
+            "channels": 1,
+            "sample_rate": 16000,
+            "duration": 1.28,
+            "text": "各位观众晚上好",
+            "speaker": "N/A"
+        },
+        {
+            "utt": "e5oipIfM49I__20190201_CCTV_104",
+            "path": "audio/e5oipIfM49I__20190201_CCTV_104.wav",
+            "channels": 1,
+            "sample_rate": 16000,
+            "duration": 5.24,
+            "text": "春节是团圆是温暖是亲情是说不尽的家长里短",
+            "speaker": "N/A"
+        }
+    ]
+}

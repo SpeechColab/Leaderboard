@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys, os
 import argparse
-import yaml
+import yaml # pip install pyyaml
 
 if __name__ == '__main__':
     LEADERBOARD = '/app/speechio/leaderboard'
