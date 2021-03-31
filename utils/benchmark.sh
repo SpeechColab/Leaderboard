@@ -1,45 +1,28 @@
 #!/usr/bin/env bash
 max_num_utts=10
 #----------------------------
-LEADERBOARD=/app/speechio/leaderboard
-cd $LEADERBOARD/test_env && echo $PWD
+#LEADERBOARD=/app/speechio/leaderboard
+LEADERBOARD=/home/dophist/work/git/leaderboard/
+TEST_SETS="MINI SPEECHIO_ASR_CN0001"
 
-for testset in $(cat test_sets); do
+if [ -z $LEADERBOARD ] || [ -z $TEST_SETS ]; then
+    echo "ERROR, variable LEADERBOARD or TEST_SETS empty."
+    exit 1
+fi
+
+cd $LEADERBOARD/test_env && echo $PWD
+stage=0
+
+for testset in $TEST_SETS; do
     date=$(date +%Y%m%d)
-    echo "$0 --> Testing TEST_SET:$testset DATE:$date NUM_UTTS:$max_num_utts"
+    echo "========== Testing TEST_SET:$testset DATE:$date NUM_UTTS:$max_num_utts =========="
     dir=result/${date}__${testset}__${max_num_utts}
     mkdir -p $dir
 
     testset=$(readlink -f ${LEADERBOARD}/datasets/$testset)
-    n=$(wc -l ${testset}/wav.scp | awk '{print $1}')
-    if [ $n -gt $max_num_utts ]; then
-        n=$max_num_utts
-    fi
-
-    stage=0
-    if [ ! -f ${testset}/wav.scp ] || [ ! -f ${testset}/trans.txt ]; then
-        echo "$0: ERROR, missing wav.scp or trans.txt in test set"
-        exit 1;
-    fi
-
     if [ $stage -le 1 ]; then
-        echo "$0: --> preparing test set from $testset to $dir"
-        awk -v d=$testset '{print $1"\t"d"/"$2}' ${testset}/wav.scp | head -n $n > $dir/wav.scp
-        awk '{print $1}' $dir/wav.scp > $dir/keys
-
-        cat /dev/null > $dir/trans.txt
-        for key in `cat $dir/keys`; do
-            grep -- "$key[[:space:]]" ${testset}/trans.txt >> $dir/trans.txt
-        done
-
-        num_wavs=`cat $dir/wav.scp | wc -l`
-        num_trans=`cat $dir/trans.txt | wc -l`
-        if [ $num_wavs != $num_trans ]; then
-            echo "$0: ERROR, found wavs without trans, wavs:$num_wavs, trans:$num_trans"
-            exit -1
-        else
-            echo "  num_wavs:$num_wavs, num_trans:$num_trans"
-        fi
+        echo "$0: Generating test data from $testset to $dir"
+        $LEADERBOARD/utils/generate_test_data.py --max_num_utts $max_num_utts $testset $dir
     fi
 
     if [ $stage -le 2 ]; then
@@ -54,14 +37,14 @@ for testset in $(cat test_sets); do
 
     if [ $stage -le 3 ]; then
         echo "$0: --> preparing reference text for WER calculation..."
-        python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/trans.txt $dir/ref.txt
+        ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/trans.txt $dir/ref.txt
 
         echo "$0: --> preparing hypothesis text for WER calculation ..."
-        python3 ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/raw_rec.txt $dir/rec.txt
+        ${LEADERBOARD}/utils/cn_tn.py --has_key --to_upper $dir/raw_rec.txt $dir/rec.txt
         grep -v $'\t$' $dir/rec.txt > $dir/rec_present.txt # remove empty utts from hypothesis
 
         echo "$0: --> computing WER/CER and alignment ..."
-        python3 ${LEADERBOARD}/utils/asr-score \
+        ${LEADERBOARD}/utils/asr-score \
             --tokenizer char \
             --ref $dir/ref.txt \
             --hyp $dir/rec_present.txt \

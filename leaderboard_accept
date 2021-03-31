@@ -4,7 +4,9 @@ import argparse
 import yaml # pip install pyyaml
 
 if __name__ == '__main__':
+    #LEADERBOARD = '/home/dophist/work/git/leaderboard'
     LEADERBOARD = '/app/speechio/leaderboard'
+
     DATASETS = os.path.abspath('datasets')
     UTILS = os.path.abspath('utils')
 
@@ -32,22 +34,25 @@ if __name__ == '__main__':
         print(docker_build_cmd, file=sys.stderr)
         os.system(docker_build_cmd)
 
+    test_sets = []
     if args.begin_stage <= 3 < args.end_stage:
         print(F'preparing test env ...', file = sys.stderr)
         info_file_path = os.path.join(work_dir, 'info.yaml')
         with open(info_file_path, 'r') as info_file:
             info = yaml.safe_load(info_file)
-            with open(os.path.join(work_dir, 'test_sets'), 'w+') as f:
-                for x in info['test_sets']:
-                    print(x, file=f)
+            for x in info['test_sets']:
+                test_sets.append(x)
 
     if args.begin_stage <= 4 < args.end_stage:
         print(F'Pulling up benchmarking container ...', file = sys.stderr)
         docker_run_cmd = (
-            F'docker run {docker_image} {LEADERBOARD}/utils/benchmark.sh '
+            F'docker run '
+            F'-e LEADERBOARD={LEADERBOARD} '
+            F'-e TEST_SETS=\"{" ".join(test_sets)}\" '
             F'-v {DATASETS}:{LEADERBOARD}/datasets:ro '
             F'-v {UTILS}:{LEADERBOARD}/utils '
             F'-v {work_dir}:{LEADERBOARD}/test_env '
+            F'{docker_image} {LEADERBOARD}/utils/benchmark.sh '
         )
         print(docker_run_cmd, file=sys.stderr)
         os.system(docker_run_cmd)

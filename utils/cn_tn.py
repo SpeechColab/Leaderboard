@@ -1,4 +1,6 @@
+#!/usr/bin/env python3
 # coding=utf-8
+
 # Authors: 
 #   2019.5 Zhiyang Zhou (https://github.com/Joee1995/chn_text_norm.git)
 #   2019.9 Jiayu DU

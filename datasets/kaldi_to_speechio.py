@@ -56,6 +56,7 @@ if __name__ == '__main__':
                 'speaker' : 'N/A',
             }
             info['utterances'].append(utt)
+        info['utterances'].sort(key = lambda e : e['utt'])
     
     with open(os.path.join(args.dst, 'info.json'), 'w+', encoding = 'utf-8') as fo:
         print(json.dumps(info, indent = 4, ensure_ascii=False), file = fo)
