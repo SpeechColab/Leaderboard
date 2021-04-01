@@ -72,17 +72,17 @@ def normalize_text_en(text):
     res = ' '.join(w for w in text.split() if w not in sclite_conversational_filler + unk_tags + gigaspeech_punctuations + gigaspeech_garbage_utterance_tags)
     return res
 
-def normalize_text_cn(text):
+def normalize_text_zh(text):
     # TODO
     return text
 
 def normalize_text(text, normalizer):
     if normalizer == '':
         return text
-    elif normalizer == 'EN':
+    elif normalizer == 'en':
         return normalize_text_en(text)
-    elif normalizer == 'CN':
-        return normalize_text_cn(text)
+    elif normalizer == 'zh':
+        return normalize_text_zh(text)
     else:
         print(F'ERROR: Unsupported normalizer {normalizer}', file=sys.stderr)
         raise RuntimeError
@@ -326,7 +326,7 @@ class EvaluationResult:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # optional
-    parser.add_argument('--normalizer', choices=['', 'EN', 'CN'], default='', help='by default this option is empty, which means no TN is performed towards loaded text')
+    parser.add_argument('--normalizer', choices=['', 'en', 'zh'], default='', help='ISO639-1 language code for text normaliztion, skip this option if you do not want TN processing.')
     parser.add_argument('--tokenizer', choices=['whitespace', 'char'], default='whitespace', help='whitespace for WER, char for CER')
     parser.add_argument('--ref-format', choices=['text'], default='text', help='reference format, first col is utt_id, the rest is text')
     parser.add_argument('--hyp-format', choices=['text'], default='text', help='hypothesis format, first col is utt_id, the rest is text')
@@ -396,6 +396,8 @@ if __name__ == '__main__':
     r.sentence_error_rate = ComputeSentenceErrorRate(r.num_utts_with_error, r.num_eval_utts)
     r.token_error_rate = ComputeTokenErrorRate(r.C, r.S, r.I, r.D)
 
-    print(r.to_summary(), file=fo); fo.close()
+    #print(r.to_summary(), file=fo);
+    fo.close()
+
     print(r.to_json())
     print(r.to_kaldi())
