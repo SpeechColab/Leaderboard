@@ -4,3 +4,5 @@ workspace/*
 datasets/download
 datasets/SPEECHIO_*
 oss
+tmp.sh
+test_env

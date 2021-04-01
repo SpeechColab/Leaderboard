@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-max_num_utts=10
+# Copyright  2021  Jiayu DU
+
+max_num_utts=50
 #----------------------------
 #LEADERBOARD=/app/speechio/leaderboard
 LEADERBOARD=/home/dophist/work/git/leaderboard/
@@ -7,7 +9,7 @@ TEST_SETS="MINI SPEECHIO_ASR_CN0001"
 TEST_LANG="zh"
 
 if [ -z $LEADERBOARD ] || [ -z $TEST_SETS ] || [ -z ! $TEST_LANG ]; then
-    echo "ERROR, need LEADERBOARD & TEST_SETS & TEST_LANG env variables ."
+    echo "ERROR, need LEADERBOARD & TEST_SETS & TEST_LANG env variables."
     exit 1
 fi
 
@@ -23,12 +25,12 @@ for testset in $TEST_SETS; do
 
     testset=$(readlink -f ${LEADERBOARD}/datasets/$testset)
     if [ $stage -le 1 ]; then
-        echo "$0 --> Generating $testset data into $dir ..."
+        echo "$0 --> Generating test data in $dir"
         $LEADERBOARD/utils/generate_test_data.py --max_num_utts $max_num_utts $testset $dir
     fi
 
     if [ $stage -le 2 ]; then
-        echo "$0: --> Recognizing $test_set, LOG=$dir/log.MBI ..."
+        echo "$0 --> Recognizing $test_set, LOG=$dir/log.MBI ..."
         if [ -f 'MBI' ]; then
             chmod +x MBI
             ./MBI $dir/wav.scp $dir >& $dir/log.MBI
@@ -50,7 +52,7 @@ for testset in $TEST_SETS; do
             --tokenizer char \
             --ref $dir/ref.txt \
             --hyp $dir/rec_non_empty.txt \
-            $dir/CHECK 1> $dir/CER
+            $dir/CHECK | tee $dir/CER
     fi
 
     sleep 1
