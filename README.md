@@ -23,27 +23,27 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 
 | 编号 ID | 名称 Name |场景 Scenario | 内容领域 Topic Domain | 时长 hours | Difficulty 难度(1-5) |
 | --- | --- | --- | --- | --- | --- |
-|SPEECHIO_ASR_CN0001| 新闻联播 | 新闻播报 TV News | 时政 news & politics | 9 | ★ |
-|SPEECHIO_ASR_CN0002| 鲁豫有约 | 访谈电视节目 TV interview | 名人工作/生活 celebrity & film & music & daily | 3 | ★★☆ |
-|SPEECHIO_ASR_CN0003| 天下足球 | 专题电视节目 TV program | 足球 Sports & Football & Worldcup | 2.7 | ★★☆ |
-|SPEECHIO_ASR_CN0004| 罗振宇跨年演讲 | 会场演讲 Stadium Public Speech | 社会、人文、商业 Society & Culture & Business Trend | 2.7 | ★★ |
-|SPEECHIO_ASR_CN0005| 李永乐老师在线讲堂 | 在线教育 Online Education | 科普 Popular Science | 4.4 | ★★★ |
-|SPEECHIO_ASR_CN0006| 张大仙 & 骚白 王者荣耀直播 | 直播 Live Broadcasting | 游戏 Game | 1.6 | ★★★☆ |
-|SPEECHIO_ASR_CN0007| 李佳琪 & 薇娅 直播带货 | 直播 Live Broadcasting | 电商、美妆 Advertising | 0.9 | ★★★★☆ |
-|SPEECHIO_ASR_CN0008| 老罗语录 | 线下培训 Offline lecture | 段子、做人 Life & Purpose & Ethics | 1.3 | ★★★★☆ |
-|SPEECHIO_ASR_CN0009| 故事FM | 播客 Podcast | 人生故事、见闻 Ordinary Life Story Telling | 4.5 | ★★☆ |
-|SPEECHIO_ASR_CN0010| 创业内幕 | 播客 Podcast | 创业、产品、投资 Startup & Enterprenuer & Product & Investment | 4.2 | ★★☆ |
-|SPEECHIO_ASR_CN0011| 罗翔 刑法法考培训讲座 | 在线教育 Online Education | 法律 法考 Law & Lawyer Qualification Exams | 3.4 | ★★☆ |
-|SPEECHIO_ASR_CN0012| 张雪峰 考研线上小讲堂 | 在线教育 Online Education | 考研 高校报考 University & Graduate School Entrance Exams | 3.4 | ★★★☆ |
-|SPEECHIO_ASR_CN0013| 谷阿莫&牛叔说电影 | 短视频 VLog | 电影剪辑  Movie Cuts | 1.8 | ★★★ |
-|SPEECHIO_ASR_CN0014| 贫穷料理 & 琼斯爱生活 | 短视频 VLog | 美食、烹饪 Food & Cooking & Gourmet | 1 | ★★★☆ |
-|SPEECHIO_ASR_CN0015| 单田芳 白眉大侠 | 评书 Traditional Podcast | 江湖、武侠 Kongfu Fiction | 2.2 | ★★☆ |
-|SPEECHIO_ASR_CN0016| 德云社相声演出 | 剧场相声 Theater Crosstalk Show | 包袱段子 Funny Stories | 1 | ★★★ |
-|SPEECHIO_ASR_CN0017| 吐槽大会 | 脱口秀电视节目 Standup Comedy | 明星糗事 Celebrity Jokes | 1.8 | ★★☆ |
-|SPEECHIO_ASR_CN0018| 小猪佩奇 & 熊触摸 | 少儿动画 Children Cartoon | 童话故事、日常 Fairy Tale | 0.9 | ★☆ |
-|SPEECHIO_ASR_CN0019| CCTV5 NBA 比赛转播 | 体育赛事解说 Sports Game Live | 篮球、NBA NBA Game | 0.7 | ★★★ |
-|SPEECHIO_ASR_CN0020| 篮球人物 | 纪录片 Documentary | 篮球明星、成长 NBA Super Stars' Life & History | 2.2 | ★★ |
-|SPEECHIO_ASR_CN0021| 周小川 & 周其仁 & 达里奥团队 线上、线下峰会、视频讲座 | 视频会议、论坛演讲 video conference & forum speech | 经济、货币、金融 economy, currency, finance | 1.0 | ★★☆ |
+|SPEECHIO_ASR_ZH00001| 新闻联播 | 新闻播报 TV News | 时政 news & politics | 9 | ★ |
+|SPEECHIO_ASR_ZH00002| 鲁豫有约 | 访谈电视节目 TV interview | 名人工作/生活 celebrity & film & music & daily | 3 | ★★☆ |
+|SPEECHIO_ASR_ZH00003| 天下足球 | 专题电视节目 TV program | 足球 Sports & Football & Worldcup | 2.7 | ★★☆ |
+|SPEECHIO_ASR_ZH00004| 罗振宇跨年演讲 | 会场演讲 Stadium Public Speech | 社会、人文、商业 Society & Culture & Business Trend | 2.7 | ★★ |
+|SPEECHIO_ASR_ZH00005| 李永乐老师在线讲堂 | 在线教育 Online Education | 科普 Popular Science | 4.4 | ★★★ |
+|SPEECHIO_ASR_ZH00006| 张大仙 & 骚白 王者荣耀直播 | 直播 Live Broadcasting | 游戏 Game | 1.6 | ★★★☆ |
+|SPEECHIO_ASR_ZH00007| 李佳琪 & 薇娅 直播带货 | 直播 Live Broadcasting | 电商、美妆 Advertising | 0.9 | ★★★★☆ |
+|SPEECHIO_ASR_ZH00008| 老罗语录 | 线下培训 Offline lecture | 段子、做人 Life & Purpose & Ethics | 1.3 | ★★★★☆ |
+|SPEECHIO_ASR_ZH00009| 故事FM | 播客 Podcast | 人生故事、见闻 Ordinary Life Story Telling | 4.5 | ★★☆ |
+|SPEECHIO_ASR_ZH00010| 创业内幕 | 播客 Podcast | 创业、产品、投资 Startup & Enterprenuer & Product & Investment | 4.2 | ★★☆ |
+|SPEECHIO_ASR_ZH00011| 罗翔 刑法法考培训讲座 | 在线教育 Online Education | 法律 法考 Law & Lawyer Qualification Exams | 3.4 | ★★☆ |
+|SPEECHIO_ASR_ZH00012| 张雪峰 考研线上小讲堂 | 在线教育 Online Education | 考研 高校报考 University & Graduate School Entrance Exams | 3.4 | ★★★☆ |
+|SPEECHIO_ASR_ZH00013| 谷阿莫&牛叔说电影 | 短视频 VLog | 电影剪辑  Movie Cuts | 1.8 | ★★★ |
+|SPEECHIO_ASR_ZH00014| 贫穷料理 & 琼斯爱生活 | 短视频 VLog | 美食、烹饪 Food & Cooking & Gourmet | 1 | ★★★☆ |
+|SPEECHIO_ASR_ZH00015| 单田芳 白眉大侠 | 评书 Traditional Podcast | 江湖、武侠 Kongfu Fiction | 2.2 | ★★☆ |
+|SPEECHIO_ASR_ZH00016| 德云社相声演出 | 剧场相声 Theater Crosstalk Show | 包袱段子 Funny Stories | 1 | ★★★ |
+|SPEECHIO_ASR_ZH00017| 吐槽大会 | 脱口秀电视节目 Standup Comedy | 明星糗事 Celebrity Jokes | 1.8 | ★★☆ |
+|SPEECHIO_ASR_ZH00018| 小猪佩奇 & 熊触摸 | 少儿动画 Children Cartoon | 童话故事、日常 Fairy Tale | 0.9 | ★☆ |
+|SPEECHIO_ASR_ZH00019| CCTV5 NBA 比赛转播 | 体育赛事解说 Sports Game Live | 篮球、NBA NBA Game | 0.7 | ★★★ |
+|SPEECHIO_ASR_ZH00020| 篮球人物 | 纪录片 Documentary | 篮球明星、成长 NBA Super Stars' Life & History | 2.2 | ★★ |
+|SPEECHIO_ASR_ZH00021| 周小川 & 周其仁 & 达里奥团队 线上、线下峰会、视频讲座 | 视频会议、论坛演讲 video conference & forum speech | 经济、货币、金融 economy, currency, finance | 1.0 | ★★☆ |
 
 ---
 ## Leaderboard result as of 2021.Jan
@@ -72,8 +72,8 @@ This is `Minimal Benchmarking Interface(MBI)`, and it's the only concept you nee
 
 
   ```
-  TST_00001__U_00001 /home/dataset/SPEECHIO_ASR_CN0001/U_00001.wav
-  TST_00001__U_00002 /home/dataset/SPEECHIO_ASR_CN0001/U_00002.wav
+  TST_00001__U_00001 /home/dataset/SPEECHIO_ASR_ZH00001/U_00001.wav
+  TST_00001__U_00002 /home/dataset/SPEECHIO_ASR_ZH00001/U_00002.wav
   ...
   ...
   ...
@@ -84,7 +84,7 @@ This is `Minimal Benchmarking Interface(MBI)`, and it's the only concept you nee
   <audio_uuid> <speech_recognition_result>
   ```
   ```
-  SPEECHIO_ASR_CN0001__U_00001 I just watched the movie "The Pursuit of Happiness"
+  SPEECHIO_ASR_ZH00001__U_00001 I just watched the movie "The Pursuit of Happiness"
   ...
   ...
   ...
@@ -94,7 +94,7 @@ This is `Minimal Benchmarking Interface(MBI)`, and it's the only concept you nee
 * For each line, the first field is audio's uuid, followed by a `tab` or `space`, and the rest of the line is recognition result.
 * if recognition fails for an utterence, write a line with audio_uuid and empty recogntion result like this:
   ```
-  SPEECHIO_ASR_CN0001__U_00002  
+  SPEECHIO_ASR_ZH00001__U_00002  
   ```
 * submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), SpeechIO leaderboard will apply universal text normalization to every submission.
 
@@ -139,8 +139,8 @@ author: Jerry
 email: kkk@gmail.com
 url: oss://speechio-leaderboard/hub/kaldi_baseline
 test_sets:
-  - SPEECHIO_ASR_CN0001
-  - SPEECHIO_ASR_CN0015
+  - SPEECHIO_ASR_ZH00001
+  - SPEECHIO_ASR_ZH00015
 model:
   params: 40M
   front_end: FBank(dim=80) + specaug

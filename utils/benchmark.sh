@@ -4,9 +4,9 @@
 max_num_utts=50
 #----------------------------
 #LEADERBOARD=/app/speechio/leaderboard
-LEADERBOARD=/home/dophist/work/git/leaderboard/
-TEST_SETS="MINI SPEECHIO_ASR_CN0001"
-TEST_LANG="zh"
+#LEADERBOARD=/home/dophist/work/git/leaderboard/
+#TEST_SETS="MINI SPEECHIO_ASR_ZH0001"
+#TEST_LANG="zh"
 
 if [ -z $LEADERBOARD ] || [ -z $TEST_SETS ] || [ -z ! $TEST_LANG ]; then
     echo "ERROR, need LEADERBOARD & TEST_SETS & TEST_LANG env variables."
@@ -30,7 +30,7 @@ for testset in $TEST_SETS; do
     fi
 
     if [ $stage -le 2 ]; then
-        echo "$0 --> Recognizing $test_set, LOG=$dir/log.MBI ..."
+        echo "$0 --> Recognizing test set, logging in $dir/log.MBI ..."
         if [ -f 'MBI' ]; then
             chmod +x MBI
             ./MBI $dir/wav.scp $dir >& $dir/log.MBI
