@@ -4,22 +4,25 @@ import argparse
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--type', choices=['public', 'private'], default='public')
+    parser.add_argument('--type', choices=['model', 'dataset'], default='model')
     parser.add_argument('submission_key', type=str, help='submission key')
-    parser.add_argument('submission_dir', type=str, help='submission directory')
+    parser.add_argument('submission_dir', type=str, help='local submission directory')
     args = parser.parse_args()
     print(args, file=sys.stderr)
 
-    info_file_path = os.path.join(args.submission_dir, 'info.yaml')
-    assert(os.path.isfile(info_file_path))
-    mbi_bin_path = os.path.join(args.submission_dir, 'MBI')
-    assert(os.path.isfile(mbi_bin_path))
-    docker_dir = os.path.join(args.submission_dir, 'docker')
-    assert(os.path.isdir(docker_dir))
-    assert(os.path.isfile(os.path.join(docker_dir, 'Dockerfile')))
+    if args.type == 'model':
+        model_info_file = os.path.join(args.submission_dir, 'model.yaml')
+        assert(os.path.isfile(model_info_file))
+        sbi_bin_path = os.path.join(args.submission_dir, 'SBI')
+        assert(os.path.isfile(sbi_bin_path))
+        docker_dir = os.path.join(args.submission_dir, 'docker')
+        assert(os.path.isdir(docker_dir))
+        assert(os.path.isfile(os.path.join(docker_dir, 'Dockerfile')))
+    else:
+        pass
 
     src = args.submission_dir
-    dst = os.path.join('oss://speechio-leaderboard/hub', args.type, args.submission_key) + '/'
+    dst = os.path.join('oss://speechio-leaderboard/{args.type}-zoo', args.submission_key) + '/'
     cmd = F'./oss -c SAFEBOX/oss.cfg cp -ur {src} {dst}'
     print(cmd, file=sys.stderr)
     os.system(cmd)

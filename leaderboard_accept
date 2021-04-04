@@ -4,6 +4,8 @@ import argparse
 import yaml # pip install pyyaml
 
 if __name__ == '__main__':
+    MODEL_ZOO = 'oss://speechio-leaderboard/model-zoo'
+
     #LEADERBOARD = '/home/dophist/work/git/leaderboard'
     LEADERBOARD = '/app/speechio/leaderboard'
 
@@ -13,45 +15,60 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--begin_stage', type=int, default=0, help='only run stages inside [begin, end)')
     parser.add_argument('--end_stage', type=int, default=100, help='only run stages inside [begin, end)')
-    parser.add_argument('--type', choices=['public', 'private'], default='public', type=str)
-    parser.add_argument('submission_key', type=str)
+    parser.add_argument('request_file_path', type=str, help='request.yaml')
     args = parser.parse_args()
 
-    if args.begin_stage <= 1 and 1 < args.end_stage:
-        print(F'Downloading submission dir from model hub ...', file = sys.stderr)
-        remote_url = os.path.join('oss://speechio-leaderboard/hub', args.type, args.submission_key) + '/'
-        work_dir = os.path.abspath(os.path.join('workspace', args.type, args.submission_key))
-        cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {remote_url} {work_dir}"
+    model = ''
+    test_sets = []
+    print(F'Processing benchmark request ...', file = sys.stderr)
+    with open(args.request_file_path, 'r', encoding = 'utf-8') as request_file:
+        request = yaml.safe_load(request_file)
+        model = request['model']
+        for x in request['test_sets']:
+            test_sets.append(x)
+    assert(model)
+    assert(test_sets)
+
+    if args.begin_stage <= 1 < args.end_stage:
+        # downloading
+        print(F'Downloading {model} from model zoo ...', file = sys.stderr)
+        url = os.path.join(MODEL_ZOO, model) + '/'
+        work_dir = os.path.abspath(os.path.join('workspace', model))
+        cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {url} {work_dir}"
         print(cmd, file=sys.stderr)
         os.system(cmd)
 
+    # checking
+    model_info_path = os.path.join(work_dir, 'info.yaml')
+    assert os.path.isfile(model_info_path)
+    sbi_bin_path = os.path.join(work_dir, 'SBI')
+    assert os.path.isfile(sbi_bin_path)
+    docker_context = os.path.join(work_dir, 'docker')
+    assert os.path.isdir(docker_context)
+    docker_file = os.path.join(docker_context, 'Dockerfile')
+    assert os.path.isfile(docker_file)
+
+    with open(model_info_path, 'r', encoding = 'utf-8') as model_info_file:
+        model_info = yaml.safe_load(model_info_file)
+        task = model_info['task']
+        language = model_info['language']
+    assert task == 'ASR'
+    assert language
+
+    docker_image = F'speechio/leaderboard:{model}'
     if args.begin_stage <= 2 < args.end_stage:
         print(F'Building docker image ...', file = sys.stderr)
-        docker_context = os.path.join(work_dir, 'docker')
-        docker_file = os.path.join(work_dir, 'docker', 'Dockerfile')
-        docker_image = F'speechio/leaderboard:{args.type}_{args.submission_key}'
         docker_build_cmd = F'docker build -f {docker_file} -t {docker_image} {docker_context}'
         print(docker_build_cmd, file=sys.stderr)
         os.system(docker_build_cmd)
 
-    test_sets = []
-    language = ''
     if args.begin_stage <= 3 < args.end_stage:
-        print(F'preparing test env ...', file = sys.stderr)
-        info_file_path = os.path.join(work_dir, 'info.yaml')
-        with open(info_file_path, 'r') as info_file:
-            info = yaml.safe_load(info_file)
-            lang = info['language']
-            for x in info['test_sets']:
-                test_sets.append(x)
-
-    if args.begin_stage <= 4 < args.end_stage:
         print(F'Pulling up benchmarking container ...', file = sys.stderr)
         docker_run_cmd = (
             F'docker run '
             F'-e LEADERBOARD={LEADERBOARD} '
             F'-e TEST_SETS=\"{" ".join(test_sets)}\" '
-            F'-e SUBMISSION_LANG={language} '
+            F'-e TEST_LANG={language} '
             F'-v {DATASETS}:{LEADERBOARD}/datasets:ro '
             F'-v {UTILS}:{LEADERBOARD}/utils '
             F'-v {work_dir}:{LEADERBOARD}/test_env '

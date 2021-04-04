@@ -1,4 +1,5 @@
 ./kaldi_to_speechio.py  download/MINI MINI
+./kaldi_to_speechio.py  download/economy_finance_currency	SPEECHIO_ASR_ZH00000
 ./kaldi_to_speechio.py  download/cctv_news	SPEECHIO_ASR_ZH00001
 ./kaldi_to_speechio.py  download/luyu_yirixing	SPEECHIO_ASR_ZH00002
 ./kaldi_to_speechio.py  download/tianxiazuqiu	SPEECHIO_ASR_ZH00003
@@ -19,4 +20,3 @@
 ./kaldi_to_speechio.py  download/children_cartoon	SPEECHIO_ASR_ZH00018
 ./kaldi_to_speechio.py  download/nba_cctv_commentator	SPEECHIO_ASR_ZH00019
 ./kaldi_to_speechio.py  download/nba_lanqiurenwu	SPEECHIO_ASR_ZH00020
-./kaldi_to_speechio.py  download/economy_finance_currency	SPEECHIO_ASR_ZH00021

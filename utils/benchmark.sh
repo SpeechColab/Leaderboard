@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # Copyright  2021  Jiayu DU
 
-max_num_utts=50
+max_num_utts=2
 #----------------------------
 #LEADERBOARD=/app/speechio/leaderboard
 #LEADERBOARD=/home/dophist/work/git/leaderboard/
 #TEST_SETS="MINI SPEECHIO_ASR_ZH0001"
 #TEST_LANG="zh"
 
-if [ -z $LEADERBOARD ] || [ -z $TEST_SETS ] || [ -z ! $TEST_LANG ]; then
+if [ -z $LEADERBOARD ] || [ -z $TEST_SETS ] || [ -z $TEST_LANG ]; then
     echo "ERROR, need LEADERBOARD & TEST_SETS & TEST_LANG env variables."
     exit 1
 fi
@@ -20,7 +20,7 @@ for testset in $TEST_SETS; do
     date=$(date +%Y%m%d)
     echo "========== Testing TEST_SET:$testset DATE:$date NUM_UTTS:$max_num_utts =========="
 
-    dir=result/${date}__${testset}__${max_num_utts}
+    dir=$LEADERBOARD/result/${date}__${testset}__${max_num_utts}
     mkdir -p $dir
 
     testset=$(readlink -f ${LEADERBOARD}/datasets/$testset)
@@ -30,12 +30,12 @@ for testset in $TEST_SETS; do
     fi
 
     if [ $stage -le 2 ]; then
-        echo "$0 --> Recognizing test set, logging in $dir/log.MBI ..."
-        if [ -f 'MBI' ]; then
-            chmod +x MBI
-            ./MBI $dir/wav.scp $dir >& $dir/log.MBI
+        echo "$0 --> Recognizing in $dir"
+        if [ -f 'SBI' ]; then
+            chmod +x SBI
+            ./SBI $dir/wav.scp $dir >& $dir/log.SBI
         else
-            echo "$0: ERROR, cannot find MBI program"
+            echo "$0: ERROR, cannot find SBI program"
         fi
     fi
 

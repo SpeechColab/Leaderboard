@@ -20,8 +20,13 @@ if __name__ == '__main__':
     scp_path = os.path.join(args.dir, 'wav.scp')
     trans_path = os.path.join(args.dir, 'trans.txt')
     with open(scp_path, 'w+', encoding='utf-8') as scp_fp, open(trans_path, 'w+', encoding='utf-8') as trans_fp:
-        for e in info['utterances'][:args.max_num_utts]:
-            print(F"{e['utt']}\t{os.path.join(os.path.abspath(args.dataset), e['path'])}", file = scp_fp)
-            print(F"{e['utt']}\t{e['text']}", file = trans_fp)
+        for audio in info['audios'][:args.max_num_utts]:
+            for segment in audio['segments']:
+                line = (
+                    F"{segment['sid']}"
+                    F"\t{os.path.join(os.path.abspath(args.dataset), audio['path'])}"
+                )
+                print(line, file = scp_fp)
+                print(F"{segment['sid']}\t{segment['text_raw']}", file = trans_fp)
 
     

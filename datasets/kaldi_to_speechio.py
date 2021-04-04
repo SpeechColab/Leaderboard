@@ -7,6 +7,7 @@ import wave
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--language', type=str, choices = ['ZH', 'EN'], default='ZH')
     parser.add_argument('src', type=str)
     parser.add_argument('dst', type=str)
     args = parser.parse_args()
@@ -34,29 +35,40 @@ if __name__ == '__main__':
     trans = LoadKaldiArk(trans_path)
 
     info = {
+        'version' : 'v0.1',
         'dataset' : os.path.basename(args.dst),
         'description' : os.path.basename(args.src),
-        'type' : 'short',
-        'utterances' : [],
+        'language' : args.language,
+        'magic' : '',
+        'audios' : [],
     }
 
-    for key in scp.keys():
-        text = trans.get(key)
-        path = scp[key].replace('wav', 'audio', 1)
+    for audio_id in scp.keys():
+        path = scp[audio_id].replace('wav', 'audio', 1)
         wav = wave.open(os.path.join(args.dst, path), 'r')
-        text = trans.get(key)
+        audio_duration = wav.getnframes() / wav.getframerate()
+        text = trans.get(audio_id)
         if text:
-            utt = {
-                'utt' : key,
+            audio = {
+                'aid' : audio_id,
                 'path' : path,
-                'channels' : wav.getnchannels(),
                 'sample_rate' : wav.getframerate(),
-                'duration' : wav.getnframes() / wav.getframerate(),
-                'text' : text,
-                'speaker' : 'N/A',
+                'channels' : wav.getnchannels(),
+                'duration' : audio_duration,
+                'segments' : [],
             }
-            info['utterances'].append(utt)
-        info['utterances'].sort(key = lambda e : e['utt'])
+            for s in range(0,1):
+                seg = {
+                    'sid': audio_id,
+                    'speaker' : 'N/A',
+                    'begin_time' : 0.0,
+                    'end_time' : audio_duration,
+                    'text_raw' : text,
+                }
+                audio['segments'].append(seg)
+            info['audios'].append(audio)
+
+        info['audios'].sort(key = lambda e : e['aid'])
     
     with open(os.path.join(args.dst, 'info.json'), 'w+', encoding = 'utf-8') as fo:
         print(json.dumps(info, indent = 4, ensure_ascii=False), file = fo)

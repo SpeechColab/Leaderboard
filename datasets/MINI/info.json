@@ -1,25 +1,41 @@
 {
+    "version": "v0.1",
     "dataset": "MINI",
     "description": "MINI",
-    "type": "short",
-    "utterances": [
+    "language": "ZH",
+    "magic": "",
+    "audios": [
         {
-            "utt": "e5oipIfM49I__20190201_CCTV_1",
+            "aid": "e5oipIfM49I__20190201_CCTV_1",
             "path": "audio/e5oipIfM49I__20190201_CCTV_1.wav",
-            "channels": 1,
             "sample_rate": 16000,
+            "channels": 1,
             "duration": 1.28,
-            "text": "各位观众晚上好",
-            "speaker": "N/A"
+            "segments": [
+                {
+                    "sid": "e5oipIfM49I__20190201_CCTV_1",
+                    "speaker": "N/A",
+                    "begin_time": 0.0,
+                    "end_time": 1.28,
+                    "text_raw": "各位观众晚上好"
+                }
+            ]
         },
         {
-            "utt": "e5oipIfM49I__20190201_CCTV_104",
+            "aid": "e5oipIfM49I__20190201_CCTV_104",
             "path": "audio/e5oipIfM49I__20190201_CCTV_104.wav",
-            "channels": 1,
             "sample_rate": 16000,
+            "channels": 1,
             "duration": 5.24,
-            "text": "春节是团圆是温暖是亲情是说不尽的家长里短",
-            "speaker": "N/A"
+            "segments": [
+                {
+                    "sid": "e5oipIfM49I__20190201_CCTV_104",
+                    "speaker": "N/A",
+                    "begin_time": 0.0,
+                    "end_time": 5.24,
+                    "text_raw": "春节是团圆是温暖是亲情是说不尽的家长里短"
+                }
+            ]
         }
     ]
 }
