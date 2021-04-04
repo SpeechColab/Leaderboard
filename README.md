@@ -43,8 +43,7 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 |SPEECHIO_ASR_ZH00018| 小猪佩奇 & 熊触摸 | 少儿动画 Children Cartoon | 童话故事、日常 Fairy Tale | 0.9 | ★☆ |
 |SPEECHIO_ASR_ZH00019| CCTV5 NBA 比赛转播 | 体育赛事解说 Sports Game Live | 篮球、NBA NBA Game | 0.7 | ★★★ |
 |SPEECHIO_ASR_ZH00020| 篮球人物 | 纪录片 Documentary | 篮球明星、成长 NBA Super Stars' Life & History | 2.2 | ★★ |
-|SPEECHIO_ASR_ZH00000| 周小川 & 周其仁 & 达里奥团队 线上、线下峰会、视频讲座 | 视频会议、论坛演讲 video conference & forum speech | 经济、货币、金融 economy, currency, finance | 1.0 | 
-★★☆ |
+|SPEECHIO_ASR_ZH00000| 周小川 & 周其仁 & 达里奥团队 线上、线下峰会、视频讲座 | 视频会议、论坛演讲 video conference & forum speech | 经济、货币、金融 economy, currency, finance | 1.0 | ★★☆ |
 
 ---
 ## Leaderboard result as of 2021.Jan

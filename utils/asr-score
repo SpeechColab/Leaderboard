@@ -302,22 +302,29 @@ class EvaluationResult:
         )
         return info
     
+    def to_sclite(self):
+        return "TODO"
+    
     def to_espnet(self):
         return "TODO"
     
     def to_summary(self):
+        #return json.dumps(self.__dict__, indent=4)
         summary = (
             '==================== Overall Statistics ====================\n'
-            F'REF: {self.num_ref_utts} utterances\n'
-            F'HYP: {self.num_hyp_utts} utterances\n'
-            F'HYP with REF: {self.num_eval_utts} utterances\n'
-            F'HYP without REF: {self.num_hyp_without_ref} utterances\n'
-            F'Sentence Error Rate: {self.sentence_error_rate:.2f}\n'
-            F'Token Error Rate: {self.token_error_rate:.2f}\n'
-            F'  - Correct:      {self.C}\n'
-            F'  - Substitution: {self.S}\n'
-            F'  - Insertion:    {self.I}\n'
-            F'  - Deletion:     {self.D}\n'
+            F'num_ref_utts: {self.num_ref_utts}\n'
+            F'num_hyp_utts: {self.num_hyp_utts}\n'
+            F'num_hyp_without_ref: {self.num_hyp_without_ref}\n'
+            F'num_eval_utts: {self.num_eval_utts}\n'
+            F'sentence_error_rate: {self.sentence_error_rate:.2f}%\n'
+            F'token_error_rate: {self.token_error_rate:.2f}%\n'
+            F'token_stats:\n'
+            F'  - tokens:{self.C + self.S + self.D:>7}\n'
+            F'  - edits: {self.S + self.I + self.D:>7}\n'
+            F'  - cor:   {self.C:>7}\n'
+            F'  - sub:   {self.S:>7}\n'
+            F'  - ins:   {self.I:>7}\n'
+            F'  - del:   {self.D:>7}\n'
             '============================================================\n'
         )
         return summary
@@ -396,7 +403,7 @@ if __name__ == '__main__':
     r.sentence_error_rate = ComputeSentenceErrorRate(r.num_utts_with_error, r.num_eval_utts)
     r.token_error_rate = ComputeTokenErrorRate(r.C, r.S, r.I, r.D)
 
-    #print(r.to_summary(), file=fo);
+    print(r.to_summary(), file=fo)
     fo.close()
 
     print(r.to_json())
