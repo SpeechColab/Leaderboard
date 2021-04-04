@@ -20,10 +20,10 @@ for testset in $TEST_SETS; do
     date=$(date +%Y%m%d)
     echo "========== Testing TEST_SET:$testset DATE:$date NUM_UTTS:$max_num_utts =========="
 
-    dir=$LEADERBOARD/result/${date}__${testset}__${max_num_utts}
+    dir=$LEADERBOARD/results/${date}__${testset}__${max_num_utts}
     mkdir -p $dir
 
-    testset=$(readlink -f ${LEADERBOARD}/datasets/$testset)
+    testset=$(readlink -f ${LEADERBOARD}/dataset/$testset)
     if [ $stage -le 1 ]; then
         echo "$0 --> Generating test data in $dir"
         $LEADERBOARD/utils/generate_test_data.py --max_num_utts $max_num_utts $testset $dir
