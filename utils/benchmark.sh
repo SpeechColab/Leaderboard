@@ -23,7 +23,7 @@ for testset in $TEST_SETS; do
     dir=$LEADERBOARD/results/${date}__${testset}__${max_num_utts}
     mkdir -p $dir
 
-    testset=$(readlink -f ${LEADERBOARD}/dataset/$testset)
+    testset=$(readlink -f ${LEADERBOARD}/datasets/$testset)
     if [ $stage -le 1 ]; then
         echo "$0 --> Generating test data in $dir"
         $LEADERBOARD/utils/generate_test_data.py --max_num_utts $max_num_utts $testset $dir

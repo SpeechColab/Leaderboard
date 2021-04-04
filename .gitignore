@@ -1,9 +1,9 @@
 .DS_Store
 SAFEBOX/*
 workspace
-dataset/download
-dataset/SPEECHIO_*
+datasets/download
+datasets/SPEECHIO_*
 oss
 tmp.sh
 test_env
-result
+results

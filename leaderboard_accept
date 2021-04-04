@@ -6,9 +6,7 @@ import yaml # pip install pyyaml
 if __name__ == '__main__':
     MODEL_ZOO = 'oss://speechio-leaderboard/model-zoo'
 
-    #LEADERBOARD = '/home/dophist/work/git/leaderboard'
     LEADERBOARD = '/app/speechio/leaderboard'
-
     DATASETS = os.path.abspath('datasets')
     UTILS = os.path.abspath('utils')
 
@@ -29,17 +27,16 @@ if __name__ == '__main__':
     assert(model)
     assert(test_sets)
 
-    if args.begin_stage <= 1 < args.end_stage:
-        # downloading
-        print(F'Downloading {model} from model zoo ...', file = sys.stderr)
-        url = os.path.join(MODEL_ZOO, model) + '/'
-        work_dir = os.path.abspath(os.path.join('workspace', model))
-        cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {url} {work_dir}"
-        print(cmd, file=sys.stderr)
-        os.system(cmd)
+    # download model
+    print(F'Downloading {model} from model zoo ...', file = sys.stderr)
+    url = os.path.join(MODEL_ZOO, model) + '/'
+    work_dir = os.path.abspath(os.path.join('workspace', model))
+    cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {url} {work_dir}"
+    print(cmd, file=sys.stderr)
+    os.system(cmd)
 
-    # checking
-    model_info_path = os.path.join(work_dir, 'info.yaml')
+    # check model
+    model_info_path = os.path.join(work_dir, 'model.yaml')
     assert os.path.isfile(model_info_path)
     sbi_bin_path = os.path.join(work_dir, 'SBI')
     assert os.path.isfile(sbi_bin_path)
@@ -55,12 +52,14 @@ if __name__ == '__main__':
     assert task == 'ASR'
     assert language
 
+
     docker_image = F'speechio/leaderboard:{model}'
     if args.begin_stage <= 2 < args.end_stage:
         print(F'Building docker image ...', file = sys.stderr)
         docker_build_cmd = F'docker build -f {docker_file} -t {docker_image} {docker_context}'
         print(docker_build_cmd, file=sys.stderr)
         os.system(docker_build_cmd)
+
 
     if args.begin_stage <= 3 < args.end_stage:
         print(F'Pulling up benchmarking container ...', file = sys.stderr)
