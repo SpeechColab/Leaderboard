@@ -59,7 +59,7 @@ if __name__ == '__main__':
     docker_image = F'speechio/leaderboard:{model}'
     if args.begin_stage <= 2 < args.end_stage:
         print(F'Building docker image ...', file = sys.stderr)
-        docker_build_cmd = F'docker build -f {docker_file} -t {docker_image} {docker_context}'
+        docker_build_cmd = F'docker build -f {docker_file} -t {docker_image} --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) {docker_context}'
         print(docker_build_cmd, file=sys.stderr)
         os.system(docker_build_cmd)
 
@@ -74,6 +74,7 @@ if __name__ == '__main__':
             F'docker run '
             F'-e TEST_LANG={language} '
             F'-v {host_leaderboard}:{docker_leaderboard} '
+            F'--user "$(id -u):$(id -g)" '
             F'{docker_image} '
             F'{docker_leaderboard}/utils/benchmark.sh {docker_leaderboard} {model} "{test_sets_argument}" '
         )
