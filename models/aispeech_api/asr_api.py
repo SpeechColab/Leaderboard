@@ -53,9 +53,8 @@ if __name__ == '__main__':
 
     num_utts = 0
     with open(args.scp_path, 'r',  encoding='utf8') as scp, open(args.trans_path, 'w+', encoding='utf8') as trans:
-        lines = [ l.strip() for l in scp if l.strip() ]
-        for l in lines:
-            cols = l.split()
+        for line in [ l.strip() for l in scp if l.strip() ]:
+            cols = line.split()
             if (len(cols) == 2):
                 key, audio = cols
                 print(F'{num_utts}\tkey:{key}\taudio:{audio}', file=sys.stderr, flush=True)
@@ -63,4 +62,4 @@ if __name__ == '__main__':
                 print(key + '\t' + text, file=trans, flush=True)
                 num_utts += 1
             else:
-                print(F'Invalid line: {l}', file=sys.stderr, flush=True)
+                print(F'Invalid line: {line}', file=sys.stderr, flush=True)
