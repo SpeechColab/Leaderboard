@@ -5,10 +5,9 @@ code is based on DUI official doc at:
     https://www.duiopen.com/docs/ct_asr_sentence
 '''
 
-import os
+import os, sys
+import argparse
 import time
-import sys
-import codecs
 import subprocess
 import json
 
@@ -27,65 +26,41 @@ URL=SERVICE_URL + '?' + 'productId=' + PRODUCT_ID + '&' + 'apiKey=' + API_KEY
 
 PARAMS='\'{"request_id":"", "audio": {"audio_type": "wav","sample_rate": 16000,"channel": 1,"sample_bytes": 2}, "asr":{"use_vad":true, "use_itn":true, "use_puctuation":true}}\''
 
-#f = 'test.wav'
-#cmd='curl -X POST -s -H "Content-Type: multipart/form-data"' + ' -F params=' + PARAMS + ' -F file=@' + f + ' "' + URL + '"'
-#print(cmd)
-#
-#r = subprocess.getoutput(cmd)
-#print(json.loads(r)['data']['result'][0]['onebest'])
-
 def recognize(audio):
-    text = ''
     for i in range(MAX_RETRY):
-        try:
-            rec=''
-            cmd='curl -X POST -s -H "Content-Type: multipart/form-data"' + ' -F params=' + PARAMS + ' -F file=@' + audio + ' "' + URL + '"'
-            #print(cmd)
-            r = subprocess.run(cmd, shell=True, capture_output=True, encoding='utf-8').stdout
-            sys.stderr.write(r + '\n')
-            sys.stderr.flush()
-            
-            sentences = json.loads(r)['data']['result']
-            for s in sentences:
-                rec += s['onebest']
+        cmd='curl -X POST -s -H "Content-Type: multipart/form-data"' + ' -F params=' + PARAMS + ' -F file=@' + audio + ' "' + URL + '"'
+        #print(cmd)
+        r = subprocess.run(cmd, shell=True, capture_output=True, encoding='utf-8')
+        print(r.stdout, file=sys.stderr, flush=True)
+        
+        rec=''
+        for s in json.loads(r.stdout)['data']['result']:
+            rec += s['onebest']
 
-            if (rec != None) and (rec != ''):
-                text = rec
-                break
-            else:
-                sys.stderr.write("empty result or null response, retrying.\n")
-                time.sleep(RETRY_INTERVAL)
-        except:
-            sys.stderr.write("exception, retrying.\n")
+        if (rec != None) and (rec != ''):
+            return rec
+        else:
+            print("empty result or null response, retrying.", file=sys.stderr, flush=True)
             time.sleep(RETRY_INTERVAL)
 
-    return text
+    return ''
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        sys.stderr.write("asr_api.py <in_scp> <out_trans>\n")
-        exit(-1)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('scp_path', type=str)
+    parser.add_argument('trans_path', type=str)
+    args = parser.parse_args()
 
-    scp   = codecs.open(sys.argv[1], 'r',  'utf8')
-    trans = codecs.open(sys.argv[2], 'w+', 'utf8')
-
-    n = 0
-    for l in scp:
-        l = l.strip()
-        if (len(l.split('\t')) == 2): # scp format: "key\taudio"
-            key, audio = l.split(sep="\t", maxsplit=1)
-            sys.stderr.write(str(n) + '\tkey:' + key + '\taudio:' + audio + '\n')
-            sys.stderr.flush()
-
-            text = ''
-            text = recognize(audio)
-
-            trans.write(key + '\t' + text + '\n')
-            trans.flush()
-            n += 1
-        else:
-            sys.stderr.write("Invalid line: " + l + "\n")
-            sys.stderr.flush()
-
-    scp.close()
-    trans.close()
+    num_utts = 0
+    with open(args.scp_path, 'r',  encoding='utf8') as scp, open(args.trans_path, 'w+', encoding='utf8') as trans:
+        lines = [ l.strip() for l in scp if l.strip() ]
+        for l in lines:
+            cols = l.split()
+            if (len(cols) == 2):
+                key, audio = cols
+                print(F'{num_utts}\tkey:{key}\taudio:{audio}', file=sys.stderr, flush=True)
+                text = recognize(audio)
+                print(key + '\t' + text, file=trans, flush=True)
+                num_utts += 1
+            else:
+                print(F'Invalid line: {l}', file=sys.stderr, flush=True)
