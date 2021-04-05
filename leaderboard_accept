@@ -4,17 +4,21 @@ import argparse
 import yaml # pip install pyyaml
 
 if __name__ == '__main__':
-    MODEL_ZOO = 'oss://speechio-leaderboard/model-zoo'
-
-    LEADERBOARD = '/app/speechio/leaderboard'
-    DATASETS = os.path.abspath('datasets')
-    UTILS = os.path.abspath('utils')
-
     parser = argparse.ArgumentParser()
     parser.add_argument('--begin_stage', type=int, default=0, help='only run stages inside [begin, end)')
     parser.add_argument('--end_stage', type=int, default=100, help='only run stages inside [begin, end)')
     parser.add_argument('request_file_path', type=str, help='request.yaml')
     args = parser.parse_args()
+
+    LEADERBOARD = '/app/speechio/leaderboard'
+    
+    utils_dir = os.path.abspath('utils')
+
+    remote_model_zoo = 'oss://speechio-leaderboard/model-zoo'
+    model_zoo = os.path.abspath('models')
+
+    remote_dataset_zoo = 'oss://speechio-leaderboard/dataset-zoo'
+    dataset_zoo = os.path.abspath('datasets')
 
     model = ''
     test_sets = []
@@ -29,18 +33,18 @@ if __name__ == '__main__':
 
     # download model
     print(F'Downloading {model} from model zoo ...', file = sys.stderr)
-    url = os.path.join(MODEL_ZOO, model) + '/'
-    work_dir = os.path.abspath(os.path.join('workspace', model))
-    cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {url} {work_dir}"
+    remote_model_dir = os.path.join(remote_model_zoo, model) + '/'
+    model_dir = os.path.join(model_zoo, model)
+    cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {remote_model_dir} {model_dir}"
     print(cmd, file=sys.stderr)
     os.system(cmd)
 
     # check model
-    model_info_path = os.path.join(work_dir, 'model.yaml')
+    model_info_path = os.path.join(model_dir, 'model.yaml')
     assert os.path.isfile(model_info_path)
-    sbi_bin_path = os.path.join(work_dir, 'SBI')
+    sbi_bin_path = os.path.join(model_dir, 'SBI')
     assert os.path.isfile(sbi_bin_path)
-    docker_context = os.path.join(work_dir, 'docker')
+    docker_context = os.path.join(model_dir, 'docker')
     assert os.path.isdir(docker_context)
     docker_file = os.path.join(docker_context, 'Dockerfile')
     assert os.path.isfile(docker_file)
@@ -68,9 +72,9 @@ if __name__ == '__main__':
             F'-e LEADERBOARD={LEADERBOARD} '
             F'-e TEST_SETS=\"{" ".join(test_sets)}\" '
             F'-e TEST_LANG={language} '
-            F'-v {DATASETS}:{LEADERBOARD}/datasets:ro '
-            F'-v {UTILS}:{LEADERBOARD}/utils '
-            F'-v {work_dir}:{LEADERBOARD}/test_env '
+            F'-v {dataset_zoo}:{LEADERBOARD}/datasets:ro '
+            F'-v {utils_dir}:{LEADERBOARD}/utils '
+            F'-v {model_dir}:{LEADERBOARD}/test_env '
             F'{docker_image} {LEADERBOARD}/utils/benchmark.sh '
         )
         print(docker_run_cmd, file=sys.stderr)
