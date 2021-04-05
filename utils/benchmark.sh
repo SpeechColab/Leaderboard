@@ -8,12 +8,18 @@ if [ -z "$LEADERBOARD" ] || [ -z "$TEST_SETS" ] || [ -z "$TEST_LANG" ]; then
     exit 1
 fi
 
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <MODEL_KEY>"
+    exit 1
+fi
+
+model=$1
 cd $LEADERBOARD/test_env && echo $PWD
 stage=0
 
 for x in $TEST_SETS; do
     date=$(date +%Y%m%d)
-    echo "========== Testing TEST_SET:$x DATE:$date NUM_UTTS:$max_num_utts =========="
+    echo "========== Testing MODEL:$model TEST_SET:$x DATE:$date NUM_UTTS:$max_num_utts =========="
 
     dir=$LEADERBOARD/results/${date}__${x}__${max_num_utts}
     mkdir -p $dir

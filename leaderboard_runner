@@ -76,7 +76,7 @@ if __name__ == '__main__':
             F'-v {utils_dir}:{LEADERBOARD}/utils '
             F'-v {model_dir}:{LEADERBOARD}/test_env '
             F'{docker_image} '
-            F'{LEADERBOARD}/utils/benchmark.sh '
+            F'{LEADERBOARD}/utils/benchmark.sh {model}'
         )
         print(docker_run_cmd, file=sys.stderr)
         os.system(docker_run_cmd)
