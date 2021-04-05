@@ -14,6 +14,10 @@ models/speechio_kaldi
 models/aispeech_api/API_KEY
 models/aispeech_api/PRODUCT_ID
 
+# baidu credential
+models/baidu_pro_api/API_KEY
+models/baidu_pro_api/SECRET_KEY
+
 # yitu api credential
 models/yitu_api/DEV_ID
 models/yitu_api/DEV_KEY

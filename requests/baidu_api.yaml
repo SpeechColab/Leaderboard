@@ -1,9 +1,9 @@
 date: 2021-04-05
 requester: Jiayu
 entity: SpeechIO
-email: 
+email:
   - xxx@gmail.com
-model: aispeech_api
+model: baidu_pro_api
 test_sets:
   - MINI
   - SPEECHIO_ASR_ZH00000

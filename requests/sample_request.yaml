@@ -1,7 +1,8 @@
 date: 2021-01-01
 requester: xxx
 entity: yyy
-email: xxx@gmail.com
+email: 
+  - xxx@gmail.com
 model: speechio_kaldi
 test_sets:
   - MINI
