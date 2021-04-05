@@ -35,9 +35,10 @@ if __name__ == '__main__':
     print(F'Downloading {model} from model zoo ...', file = sys.stderr)
     remote_model_dir = os.path.join(remote_model_zoo, model) + '/'
     model_dir = os.path.join(model_zoo, model)
-    cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {remote_model_dir} {model_dir}"
-    print(cmd, file=sys.stderr)
-    os.system(cmd)
+    if args.begin_stage <= 1 < args.end_stage:
+        cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {remote_model_dir} {model_dir}"
+        print(cmd, file=sys.stderr)
+        os.system(cmd)
 
     # check model
     model_info_path = os.path.join(model_dir, 'model.yaml')

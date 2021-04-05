@@ -1,9 +1,15 @@
 .DS_Store
 SAFEBOX/*
-models
 datasets/download
 datasets/SPEECHIO_*
 oss
 tmp.sh
 test_env
 results
+
+# not ready yet
+models/speechio_kaldi
+
+# yitu api credential
+models/yitu_api/DEV_ID
+models/yitu_api/DEV_KEY

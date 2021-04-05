@@ -1,0 +1,8 @@
+date: 2021-04-05
+requester: xxx
+entity: yyy
+email: xxx@gmail.com
+model: yitu_api
+test_sets:
+  - MINI
+  - SPEECHIO_ASR_ZH00000
