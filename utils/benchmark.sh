@@ -1,36 +1,32 @@
 #!/usr/bin/env bash
 # Copyright  2021  Jiayu DU
 
-max_num_utts=2
-#----------------------------
-if [ -z "$TEST_LANG" ]; then
-    echo "ERROR, need LEADERBOARD & TEST_LANG env variables."
-    exit 1
-fi
-
-if [ $# -ne 3 ]; then
-    echo "Usage: $0 <leaderboard_dir> <model> <space_seperated_test_sets>"
+if [ $# -ne 4 ]; then
+    echo "Usage: $0 <leaderboard_dir> <model> <space_seperated_test_sets> <max_num_utts>"
     exit 1
 fi
 
 LEADERBOARD=$1
 model=$2
-testsets="$3"
+test_sets="$3"
+max_num_utts=$4
 
 cd $LEADERBOARD/models/$model && echo $PWD
 stage=0
 
-for x in $testsets; do
+for x in $test_sets; do
     date=$(date +%Y%m%d)
-    echo "========== Testing MODEL:$model TEST_SET:$x DATE:$date NUM_UTTS:$max_num_utts =========="
+    echo "===== MODEL:$model TEST_SET:$x DATE:$date NUM_UTTS:$max_num_utts ====="
 
     dir=$LEADERBOARD/results/${date}__${model}__${x}__${max_num_utts}
     mkdir -p $dir
 
-    testset=$(readlink -f ${LEADERBOARD}/datasets/$x)
     if [ $stage -le 1 ]; then
         echo "$0 --> Generating test data in $dir"
-        $LEADERBOARD/utils/generate_test_data.py --max_num_utts $max_num_utts $testset $dir
+        $LEADERBOARD/utils/generate_test_data.py \
+            --max_num_utts $max_num_utts \
+            $(readlink -f ${LEADERBOARD}/datasets/$x) \
+            $dir
     fi
 
     if [ $stage -le 2 ]; then
@@ -44,11 +40,18 @@ for x in $testsets; do
     fi
 
     if [ $stage -le 3 ]; then
+        language=$(grep language model.yaml | awk -F: '{print $NF}' | tr -d " ")
         echo "$0 --> Normalizing REF text ..."
-        ${LEADERBOARD}/utils/tn_${TEST_LANG}.py --has_key --to_upper $dir/trans.txt $dir/ref.txt
+        ${LEADERBOARD}/utils/tn_${language}.py \
+            --has_key --to_upper \
+            $dir/trans.txt \
+            $dir/ref.txt
 
         echo "$0 --> Normalizing HYP text ..."
-        ${LEADERBOARD}/utils/tn_${TEST_LANG}.py --has_key --to_upper $dir/raw_rec.txt $dir/rec.txt
+        ${LEADERBOARD}/utils/tn_${language}.py \
+            --has_key --to_upper \
+            $dir/raw_rec.txt \
+            $dir/rec.txt
         grep -v $'\t$' $dir/rec.txt > $dir/rec_non_empty.txt
 
         echo "$0 --> computing WER/CER and alignment ..."

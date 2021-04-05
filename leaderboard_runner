@@ -7,6 +7,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--begin_stage', type=int, default=0, help='only run stages inside [begin, end)')
     parser.add_argument('--end_stage', type=int, default=100, help='only run stages inside [begin, end)')
+    parser.add_argument('--max_num_utts', type=int, default=2, help='only run stages inside [begin, end)')
     parser.add_argument('request_file_path', type=str, help='request.yaml')
     args = parser.parse_args()
 
@@ -55,28 +56,31 @@ if __name__ == '__main__':
     assert task == 'ASR'
     assert language
 
-
+    # build docker image
     docker_image = F'speechio/leaderboard:{model}'
     if args.begin_stage <= 2 < args.end_stage:
         print(F'Building docker image ...', file = sys.stderr)
-        docker_build_cmd = F'docker build -f {docker_file} -t {docker_image} --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) {docker_context}'
+        docker_build_cmd = (
+            F'docker build -f {docker_file} -t {docker_image} '
+            F'--build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) '
+            F'{docker_context}'
+        )
         print(docker_build_cmd, file=sys.stderr)
         os.system(docker_build_cmd)
 
-
+    # run benchmarking docker
     if args.begin_stage <= 3 < args.end_stage:
         print(F'Pulling up benchmarking container ...', file = sys.stderr)
         
         test_sets_argument = ' '.join(test_sets)
-        host_leaderboard = os.path.dirname(os.path.realpath(__file__))
-        docker_leaderboard = '/app/speechio/leaderboard'
+        leaderboard = os.path.dirname(os.path.realpath(__file__))
+        LEADERBOARD = '/app/speechio/leaderboard'
         docker_run_cmd = (
             F'docker run '
-            F'-e TEST_LANG={language} '
-            F'-v {host_leaderboard}:{docker_leaderboard} '
+            F'-v {leaderboard}:{LEADERBOARD} '
             F'--user "$(id -u):$(id -g)" '
             F'{docker_image} '
-            F'{docker_leaderboard}/utils/benchmark.sh {docker_leaderboard} {model} "{test_sets_argument}" '
+            F'{LEADERBOARD}/utils/benchmark.sh {LEADERBOARD} {model} "{test_sets_argument}" {args.max_num_utts}'
         )
         print(docker_run_cmd, file=sys.stderr)
         os.system(docker_run_cmd)
