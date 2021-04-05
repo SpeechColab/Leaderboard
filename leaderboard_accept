@@ -11,7 +11,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     LEADERBOARD = '/app/speechio/leaderboard'
-    
+
     utils_dir = os.path.abspath('utils')
 
     remote_model_zoo = 'oss://speechio-leaderboard/model-zoo'
@@ -75,7 +75,8 @@ if __name__ == '__main__':
             F'-v {dataset_zoo}:{LEADERBOARD}/datasets:ro '
             F'-v {utils_dir}:{LEADERBOARD}/utils '
             F'-v {model_dir}:{LEADERBOARD}/test_env '
-            F'{docker_image} {LEADERBOARD}/utils/benchmark.sh '
+            F'{docker_image} '
+            F'{LEADERBOARD}/utils/benchmark.sh '
         )
         print(docker_run_cmd, file=sys.stderr)
         os.system(docker_run_cmd)
