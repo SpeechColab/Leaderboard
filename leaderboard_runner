@@ -10,8 +10,6 @@ if __name__ == '__main__':
     parser.add_argument('request_file_path', type=str, help='request.yaml')
     args = parser.parse_args()
 
-    LEADERBOARD = '/app/speechio/leaderboard'
-
     utils_dir = os.path.abspath('utils')
 
     remote_model_zoo = 'oss://speechio-leaderboard/model-zoo'
@@ -68,16 +66,16 @@ if __name__ == '__main__':
 
     if args.begin_stage <= 3 < args.end_stage:
         print(F'Pulling up benchmarking container ...', file = sys.stderr)
+        
+        test_sets_argument = ' '.join(test_sets)
+        host_leaderboard = os.path.dirname(os.path.realpath(__file__))
+        docker_leaderboard = '/app/speechio/leaderboard'
         docker_run_cmd = (
             F'docker run '
-            F'-e LEADERBOARD={LEADERBOARD} '
-            F'-e TEST_SETS=\"{" ".join(test_sets)}\" '
             F'-e TEST_LANG={language} '
-            F'-v {dataset_zoo}:{LEADERBOARD}/datasets:ro '
-            F'-v {utils_dir}:{LEADERBOARD}/utils '
-            F'-v {model_dir}:{LEADERBOARD}/test_env '
+            F'-v {host_leaderboard}:{docker_leaderboard} '
             F'{docker_image} '
-            F'{LEADERBOARD}/utils/benchmark.sh {model}'
+            F'{docker_leaderboard}/utils/benchmark.sh {docker_leaderboard} {model} "{test_sets_argument}" '
         )
         print(docker_run_cmd, file=sys.stderr)
         os.system(docker_run_cmd)

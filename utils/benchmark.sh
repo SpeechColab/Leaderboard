@@ -3,25 +3,28 @@
 
 max_num_utts=2
 #----------------------------
-if [ -z "$LEADERBOARD" ] || [ -z "$TEST_SETS" ] || [ -z "$TEST_LANG" ]; then
-    echo "ERROR, need LEADERBOARD & TEST_SETS & TEST_LANG env variables."
+if [ -z "$TEST_LANG" ]; then
+    echo "ERROR, need LEADERBOARD & TEST_LANG env variables."
     exit 1
 fi
 
-if [ $# -ne 1 ]; then
-    echo "Usage: $0 <MODEL_KEY>"
+if [ $# -ne 3 ]; then
+    echo "Usage: $0 <leaderboard_dir> <model> <space_seperated_test_sets>"
     exit 1
 fi
 
-model=$1
-cd $LEADERBOARD/test_env && echo $PWD
+LEADERBOARD=$1
+model=$2
+testsets="$3"
+
+cd $LEADERBOARD/models/$model && echo $PWD
 stage=0
 
-for x in $TEST_SETS; do
+for x in $testsets; do
     date=$(date +%Y%m%d)
     echo "========== Testing MODEL:$model TEST_SET:$x DATE:$date NUM_UTTS:$max_num_utts =========="
 
-    dir=$LEADERBOARD/results/${date}__${x}__${max_num_utts}
+    dir=$LEADERBOARD/results/${date}__${model}__${x}__${max_num_utts}
     mkdir -p $dir
 
     testset=$(readlink -f ${LEADERBOARD}/datasets/$x)

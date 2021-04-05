@@ -10,6 +10,10 @@ results
 # not ready yet
 models/speechio_kaldi
 
+# aispeech credential
+models/aispeech_api/API_KEY
+models/aispeech_api/PRODUCT_ID
+
 # yitu api credential
 models/yitu_api/DEV_ID
 models/yitu_api/DEV_KEY

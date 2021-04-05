@@ -1,0 +1,7 @@
+date: 2021-04-05
+requester: Jiayu
+entity: SpeechIO
+email: xxx@gmail.com
+model: aispeech_api
+test_sets:
+  - MINI
