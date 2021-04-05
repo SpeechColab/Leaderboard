@@ -14,6 +14,13 @@ models/speechio_kaldi
 models/aispeech_api/API_KEY
 models/aispeech_api/PRODUCT_ID
 
+# aliyun credential
+models/aliyun_api/APPKEY
+models/aliyun_api/ACCESS_KEY_ID
+models/aliyun_api/ACCESS_KEY_SECRET
+models/aliyun_api/TOKEN
+models/aliyun_api/TOKEN_EXPIRE_TIME
+
 # baidu credential
 models/baidu_pro_api/API_KEY
 models/baidu_pro_api/SECRET_KEY
