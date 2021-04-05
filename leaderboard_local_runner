@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-model=speechio_kaldi
+model=aispeech_api
 test_sets="MINI SPEECHIO_ASR_ZH00000"
 test_lang=zh
 

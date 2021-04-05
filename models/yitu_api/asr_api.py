@@ -32,8 +32,7 @@ with open('DEV_ID', 'r') as f:
 with open('DEV_KEY', 'r') as f:
     DevKey = f.readline().strip()
 
-MAX_RETRY = 10
-
+MAX_RETRY = 2
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:

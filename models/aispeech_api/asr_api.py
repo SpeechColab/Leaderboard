@@ -14,7 +14,7 @@ import json
 
 SERVICE_URL = 'https://lasr.duiopen.com/lasr-sentence-api/v2/sentence'
 
-MAX_RETRY = 10
+MAX_RETRY = 2
 RETRY_INTERVAL=1.0
 
 with open('PRODUCT_ID', 'r') as f:
@@ -40,9 +40,8 @@ def recognize(audio):
         try:
             rec=''
             cmd='curl -X POST -s -H "Content-Type: multipart/form-data"' + ' -F params=' + PARAMS + ' -F file=@' + audio + ' "' + URL + '"'
-            # print(cmd)
-            r = subprocess.getoutput(cmd)
-            # print(r)
+            #print(cmd)
+            r = subprocess.run(cmd, shell=True, capture_output=True, encoding='utf-8').stdout
             sys.stderr.write(r + '\n')
             sys.stderr.flush()
             
