@@ -125,13 +125,11 @@ then inside SBI code, SBI can always use `./model/asr.{mdl,cfg}` to locate those
 
 ## Sample submissions
 
-* Cloud API-based submission:
-a complete submission sample can be found here:
-
+* Cloud-API based submission:
   https://github.com/speechio/leaderboard/tree/master/models/aispeech_api
 
 * local model submission:
-
+  https://github.com/speechio/leaderboard/tree/master/models/sample_kaldi_model
 ---
 
 ## Step 2: Submit your model to leaderboard model-zoo
