@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-leaderboard=$(readlink -f .)
-model=aispeech_api
-test_sets="MINI SPEECHIO_ASR_ZH00000"
-max_num_utts=2
-
-utils/benchmark.sh $leaderboard $model "$test_sets" $max_num_utts
