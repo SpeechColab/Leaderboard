@@ -126,9 +126,11 @@ then inside SBI code, SBI can always use `./model/asr.{mdl,cfg}` to locate those
 ## Sample submissions
 
 * a sample submission of Cloud-API based ASR system:
+
   https://github.com/speechio/leaderboard/tree/master/models/aispeech_api
 
 * a sample submission of local ASR system in Kaldi framework:
+
   https://github.com/speechio/leaderboard/tree/master/models/sample_kaldi_model
 ---
 
