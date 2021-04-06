@@ -7,7 +7,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--begin_stage', type=int, default=0, help='only run stages inside [begin, end)')
     parser.add_argument('--end_stage', type=int, default=100, help='only run stages inside [begin, end)')
-    parser.add_argument('--max_num_utts', type=int, default=2, help='only run stages inside [begin, end)')
+    parser.add_argument('--max_num_utts', type=int, default=10000, help='only run stages inside [begin, end)')
     parser.add_argument('request_file_path', type=str, help='request.yaml')
     args = parser.parse_args()
 
