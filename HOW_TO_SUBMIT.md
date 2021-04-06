@@ -94,7 +94,8 @@ then inside SBI code, SBI can always use `./model/asr.{mdl,cfg}` to locate those
 
 ### 1.5 `SBI`
 `SBI` is a submitter implemented program that can decode audio files:
-* `SBI` is an executable, could be shebanged `bash`, `python`, `perl` script, or a `C/C++ binary`
+* `SBI` is an executable, could be shebanged `bash`, `python`, `perl` script, or `C/C++ binary`
+* `SBI` will be runned in your submission dir, so it can use relative path to refer to other programs, scripts and shared libraries inside this dir.
 * `SBI` performs speech recognition to a list of audios
   ```
   ./SBI <input_audio_list> <result_dir>
@@ -108,8 +109,7 @@ then inside SBI code, SBI can always use `./model/asr.{mdl,cfg}` to locate those
   ...
   ```
 
-* MBI can write/read temporary files in <result_dir>
-* final results need to be written to `<result_dir>/raw_rec.txt`, in `ASCII/UTF-8 encoded` encoding, with following format:
+* `SBI` can write/read arbitrary temporary files in <result_dir>, but final results need to be written to **`<result_dir>/raw_rec.txt`** with **`ASCII/UTF-8`** encoding, with format below:
   ```
   SPEECHIO_ASR_ZH00001__U_00001 I just watched the movie "The Pursuit of Happiness"
   SPEECHIO_ASR_ZH00001__U_00002 rock and roll like a rolling stone
@@ -125,33 +125,33 @@ then inside SBI code, SBI can always use `./model/asr.{mdl,cfg}` to locate those
 
 ## Sample submissions
 
-* Cloud-API based submission:
+* a sample submission of Cloud-API based ASR system:
   https://github.com/speechio/leaderboard/tree/master/models/aispeech_api
 
-* local model submission:
+* a sample submission of local ASR system in Kaldi framework:
   https://github.com/speechio/leaderboard/tree/master/models/sample_kaldi_model
 ---
 
-## Step 2: Submit your model to leaderboard model-zoo
+## Step 2: Submit your model to SpeechIO Leaderboard
 using following command:
 ```
-utils/install_oss.sh # this is official CLI of aliyun object-storage-service(as Amazon S3)
-./leaderboard_submit  model_key   ~/work/my_submission_dir_to_speechio_leaderboard
+utils/install_oss.sh # official CLI of aliyun object-storage-service(as Amazon S3), only need to be installed once 
+./leaderboard_submit  model_key  ~/work/my_submission_dir_to_speechio_leaderboard
 ```
-`model_key` is a unique identifier for your model, leaderboard let submitters to decide their model key.
+**`model_key`** is a unique identifier to refer to this model in future benchmark.
 
-model key should be meaningful, and should not collide with other models. sample submission_uuid
+We let submitters to decide their model key. Model key should be meaningful, and should not collide with others, for example:
 ```
 speechio_kaldi_pretrain
-alphacep_vosk_cn
+alphacep_vosk_en
 interspeech_xxx_paper_reproduced
 ```
 
 ---
-## Step 3: Create a benchmarking request pull request to leaderboard github repo
-once you have your model uploaded, you can submit a benchmark request by opening a PR to this github repo
+## Step 3: Create a pull request by adding a request file to leaderboard github repo
+once you have your model submitted, you can open a PR to this github repo, which add a benchmark request file to our repo such as:
 
-your pull request should add a request.yaml to `github.com/speechio/leaderboard/requests/xxx.yaml`
+**`github.com/speechio/leaderboard/requests/give_a_name_for_your_benchmark_request.yaml`**
 
 a sample request is as follows:
 ```
@@ -165,13 +165,11 @@ test_sets:
   - MINI
   - SPEECHIO_ASR_ZH00000
 ```
-
-some important fields here:
-
-`date`: benchmark request date
-`model`: which model you want to benchmark
-`test_sets`: which test sets you want to benchmark with
-`email`: a list of email addresses to receive benchmark results
+where:
+* `date`: benchmark request date
+* `model`: model key, specifying which model you want to benchmark
+* `test_sets`: test set id list, which test sets you want to benchmark with
+* `email`: a list of email addresses to receive benchmark results
 
 to lookup model id and test_sets id, refer to section 2 & section 3 [here](README.md)
 
