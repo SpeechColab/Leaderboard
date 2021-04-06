@@ -21,7 +21,10 @@ sample_submission_directory
 this is a contract between submitters and leaderboard, submitters should follow above file structure and file names, now let's explain this contract one by one.
 
 ### 1.1 `docker/Dockerfile`
-Dockerfile is used to describe your system dependencies.  Submitter should garentee it contains all environment requirements of your ASR system.
+Dockerfile is used to specify your ASR dependencies.  Submitter need to guarentee the Dockerfile properly setup all necessary dependencies of your ASR system.
+
+Besides your dependencies, leaderboard pipeline depends on **`Python3`**. So submitters need to add python3 in Dockerfile, python3 don't need to be default python. Your ASR system can depend on python2/3, and leaderboard pipeline related codes alway have a shebang of `#!/usr/bin/env python3` explicitly.
+
 A sample docker file for commercial clould ASR API call is shown below:
 ```
 FROM ubuntu:20.04
@@ -140,7 +143,7 @@ using following command:
 utils/install_oss.sh # official CLI of aliyun object-storage-service(as Amazon S3), only need to be installed once 
 ./leaderboard_submit  model_key  ~/work/my_submission_dir_to_speechio_leaderboard
 ```
-**`model_id`** is a unique identifier to refer to this model in future benchmark.
+**`model_id`** is a unique identifier, used to refer to this model in future benchmarks.
 
 We let submitters to decide their model id. It should be meaningful and unique, for example:
 ```
@@ -153,12 +156,12 @@ word2vec_v2
 ```
 
 ---
-## Step 3: Create a pull request by adding a request file to leaderboard github repo
-once you have your model submitted, you can open a PR to this github repo, which add a benchmark request file such as:
+## Step 3: Send a benchmark request by creating a pull request this github repo
+Once you have your model submitted, you can open a PR to this github repo, which adds a request file to `requests` directory:
 
 **`github.com/speechio/leaderboard/requests/give_a_name_for_your_benchmark_request.yaml`**
 
-a sample request contains following info:
+a sample request file contains following content:
 ```
 date: 2021-04-05
 requester: Jiayu
