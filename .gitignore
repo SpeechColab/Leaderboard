@@ -7,6 +7,7 @@ tmp.sh
 test_env
 results
 rest_api.sh
+requests/2021*
 
 # not ready yet
 models/speechio_kaldi
