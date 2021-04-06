@@ -13,7 +13,7 @@ import json
 
 SERVICE_URL = 'https://lasr.duiopen.com/lasr-sentence-api/v2/sentence'
 
-MAX_RETRY = 2
+MAX_RETRY = 10
 RETRY_INTERVAL=1.0
 
 with open('PRODUCT_ID', 'r') as f:
@@ -28,19 +28,23 @@ PARAMS='\'{"request_id":"", "audio": {"audio_type": "wav","sample_rate": 16000,"
 
 def recognize(audio):
     for i in range(MAX_RETRY):
-        cmd='curl -X POST -s -H "Content-Type: multipart/form-data"' + ' -F params=' + PARAMS + ' -F file=@' + audio + ' "' + URL + '"'
-        #print(cmd)
-        r = subprocess.run(cmd, shell=True, capture_output=True, encoding='utf-8')
-        print(r.stdout, file=sys.stderr, flush=True)
-        
-        rec=''
-        for s in json.loads(r.stdout)['data']['result']:
-            rec += s['onebest']
+        try:
+            cmd='curl -X POST -s -H "Content-Type: multipart/form-data"' + ' -F params=' + PARAMS + ' -F file=@' + audio + ' "' + URL + '"'
+            #print(cmd)
+            r = subprocess.run(cmd, shell=True, capture_output=True, encoding='utf-8')
+            print(r.stdout, file=sys.stderr, flush=True)
+            
+            rec=''
+            for s in json.loads(r.stdout)['data']['result']:
+                rec += s['onebest']
 
-        if (rec != None) and (rec != ''):
-            return rec
-        else:
-            print("empty result or null response, retrying.", file=sys.stderr, flush=True)
+            if (rec != None) and (rec != ''):
+                return rec
+            else:
+                print("empty result or null response, retrying.", file=sys.stderr, flush=True)
+                time.sleep(RETRY_INTERVAL)
+        except:
+            print("exception, retrying.", file=sys.stderr, flush=True)
             time.sleep(RETRY_INTERVAL)
 
     return ''
