@@ -66,5 +66,5 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 ---
 
 ## How to submit your own model to leaderboard
-Follow submission guide here [how_to_submit.md](how_to_submit.md)
+Follow submission guide here [HOW_TO_SUBMIT.md](HOW_TO_SUBMIT.md)
 
