@@ -6,6 +6,7 @@ oss
 tmp.sh
 test_env
 results
+rest_api.sh
 
 # not ready yet
 models/speechio_kaldi
@@ -24,6 +25,9 @@ models/aliyun_api/TOKEN_EXPIRE_TIME
 # baidu credential
 models/baidu_pro_api/API_KEY
 models/baidu_pro_api/SECRET_KEY
+
+# microsoft azure cognitive service credential
+models/microsoft_api/SUBSCRIPTION_KEY
 
 # yitu api credential
 models/yitu_api/DEV_ID
