@@ -138,7 +138,7 @@ xxx_ailab_interspeech_xxx_paper_reproduce
 
 
 ---
-### Step 3: create a benchmarking request
+## Step 3: create a benchmarking request
 once you have your model uploaded, you can submit a benchmark request by opening a PR to this github repo
 
 your pull request should add a request.yaml to `github.com/speechio/leaderboard/requests/xxx.yaml`
@@ -157,10 +157,13 @@ test_sets:
 ```
 
 some important fields here:
+
 `date`: benchmark request date
 `model`: which model you want to benchmark
 `test_sets`: which test sets you want to benchmark with
 `email`: a list of email addresses to receive benchmark results
+
+to lookup model id and test_sets id, refer to section 2 & section 3 [here](README.md)
 
 Once we merge your submission pull request, the leaderboard pipeline will:
 * init a docker runner to benchmark requested model with requested test sets

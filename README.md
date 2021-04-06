@@ -15,10 +15,10 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
   - open-source, submitters can expect an apple-to-apple comparison with other submitters(including above big-techs' commercial API)
 
 ---
-## 2. Test Sets Infomations
+## 2. Test Sets Zoo
 ### 2.1 Chinese Test Sets
 
-| 编号 ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
+| 编号 <br> ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
 | --- | --- | --- | --- | --- | --- |
 |SPEECHIO_ASR_ZH00000| 接入调试集 <br> For leaderboard submitter debugging | 视频会议、论坛演讲 <br> video conference & forum speech | 经济、货币、金融 <br> economy, currency, finance | 1.0 | ★★☆ |
 |SPEECHIO_ASR_ZH00001| 新闻联播 | 新闻播报 <br> TV News | 时政 <br> news & politics | 9 | ★ |
@@ -44,6 +44,18 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 
 ### 2.2 English Leaderboard
   * TBD
+
+## 3. Model Zoo
+| 编号 <br> ID | 模型 <br> model | 简介 <br> description | 网站 <br> url |
+| --- | --- | --- | --- |
+|aispeech_api|思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
+|aliyun_api|阿里巴巴 <br> Alibaba | 阿里云 | https://ai.aliyun.com/nls/asr|
+|baidu_pro_api|百度 <br> Baidu | 百度智能云 | https://cloud.baidu.com/product/speech/asr |
+||讯飞 <br> IFlyTek | 讯飞开放平台(听写服务) | https://www.xfyun.cn/services/voicedictation |
+|microsoft_api|微软 <br> Microsoft |Azure| https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
+|sogou_api|搜狗 <br> Sogou |AI开放平台| https://ai.sogou.com/product/one_recognition/ |
+|tencent_api|腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
+|yitu_api|依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
   
 ---
 ## 3. Latest Leaderboard result
