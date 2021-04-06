@@ -123,6 +123,15 @@ then inside SBI code, SBI can always use `./model/asr.{mdl,cfg}` to locate those
   ```
 * submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), SpeechIO leaderboard will apply universal text normalization to every submission.
 
+## Sample submissions
+
+* Cloud API-based submission:
+a complete submission sample can be found here:
+
+  https://github.com/speechio/leaderboard/tree/master/models/aispeech_api
+
+* local model submission:
+
 ---
 
 ## Step 2: Submit your model to leaderboard model-zoo

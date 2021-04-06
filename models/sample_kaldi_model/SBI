@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 2 ]; then
+  echo "MBI wav.scp <working_dir>"
+  exit 1;
+fi
+
+scp=$1
+dir=$2
+
+MODEL_DIR=`readlink -f assets`
+export PATH=$PWD:$PATH
+
+verbose=1
+acwt=1.0
+beam=15
+lattice_beam=8.0
+min_active=200
+max_active=7000
+
+# make fake spk2utt
+awk '{print $1" "$1}' $scp > $dir/spk2utt
+
+online2-wav-nnet3-latgen-faster \
+  --online=true \
+  --do-endpointing=false --endpoint.silence-phones=1 \
+  --feature-type=fbank --fbank-config=${MODEL_DIR}/conf/fbank_hires.conf \
+  --frame-subsampling-factor=3 \
+  --extra-left-context-initial=0 \
+  --frames-per-chunk=50 \
+  --min-active=$min_active --max-active=$max_active \
+  --beam=$beam --lattice-beam=$lattice_beam \
+  --acoustic-scale=$acwt \
+  --word-symbol-table=${MODEL_DIR}/words.txt \
+  --verbose=$verbose \
+  ${MODEL_DIR}/final.mdl \
+  ${MODEL_DIR}/HCLG.fst \
+  ark:${dir}/spk2utt \
+  scp:$scp \
+  ark:/dev/null \
+  2> ${dir}/log.kaldi_decoder
+
+cat ${dir}/log.kaldi_decoder | grep -v 'final.mdl' | grep -v 'LOG' | grep -v 'WARNING' | grep -v '\[D\]'  | tr '\t' ' ' > ${dir}/raw_rec.txt
