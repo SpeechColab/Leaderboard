@@ -1,0 +1,10 @@
+if [ $# -ne 2 ]; then
+  echo "recognize.sh wav.scp <working_dir>"
+  exit 1;
+fi
+
+scp=$1
+dir=$2
+
+./update_token.sh
+./asr_api.py $scp $dir/raw_rec.txt

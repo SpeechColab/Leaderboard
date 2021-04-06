@@ -29,6 +29,11 @@ models/baidu_pro_api/SECRET_KEY
 # microsoft azure cognitive service credential
 models/microsoft_api/SUBSCRIPTION_KEY
 
+# sogou api credential
+models/sogou_api/APP_ID
+models/sogou_api/APP_KEY
+models/sogou_api/TOKEN
+
 # yitu api credential
 models/yitu_api/DEV_ID
 models/yitu_api/DEV_KEY

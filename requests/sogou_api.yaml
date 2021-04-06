@@ -1,0 +1,9 @@
+date: 2021-04-05
+requester: Jiayu
+entity: SpeechIO
+email: 
+  - xxx@gmail.com
+model: sogou_api
+test_sets:
+  - MINI
+  - SPEECHIO_ASR_ZH00000
