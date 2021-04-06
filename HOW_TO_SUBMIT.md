@@ -20,7 +20,7 @@ sample_submission_directory
 ```
 this is a contract between submitters and leaderboard, submitters should follow above file structure and file names, now let's explain this contract one by one.
 
-### 1.1 docker/Dockerfile
+### 1.1 `docker/Dockerfile`
 Dockerfile is used to describe your system dependencies.  Submitter should garentee it contains all environment requirements of your ASR system.
 A sample docker file for commercial clould ASR API call is shown below:
 ```
@@ -39,8 +39,8 @@ basically it specifies a system build upon ubuntu 20.04 and requires curl to sen
 
 For submitters who want to benchmark their local system, they need to provide their Dockerfile to install various ML frameworks(such as TensorFlow, PyTorch, Kaldi, Espnet etc).Leaderboard can't help you to write your Dockerfile, we might provide some sample Dockerfiles with common ASR frameworks though.
 
-### 1.2 model.yaml
-This config specifies crucial property of your ASR system, example below:
+### 1.2 `model.yaml`
+This config list required properties of your ASR system, example below:
 ```
 date: 2021-04-05
 task: ASR
@@ -50,17 +50,18 @@ author: Jiayu
 entity: SpeechIO
 email: jerry.jiayu.du@gmail.com
 ```
-`date`: submission date of this model
-`task`: only `ASR` for now
-`language`: language of your ASR model, conforms to `ISO 639-1` language code, lowercase letters.
-`sample_rate`: sample rate of your ASR system. typically 8000(telephone) or 16000(other)
-`author`: submitter
-`entity`: submitter's entity
-`email`: sumitter's contact
+
+* `date`: submission date of this model
+* `task`: support `ASR` only
+* `language`: language of your ASR model, conforms to `ISO 639-1` language code, lowercase letters.
+* `sample_rate`: sample rate of your ASR system. typically 8000(telephone) or 16000(other)
+* `author`: submitter
+* `entity`: submitter's entity
+* `email`: sumitter's contact
 
 leaderboard need these infos to maintain the submitted models in model-zoo
 
-### 1.3 README.md
+### 1.3 `README.md`
 This markdown is optional, but we strongly suggest you provide more infomation about your model, such as:
 * number of parameters
 * amount of training data
@@ -73,7 +74,7 @@ This markdown is optional, but we strongly suggest you provide more infomation a
 
 recording these info is not only a good memo for submitter himself, but also a good way to help the community to share knowledge.
 
-### 1.4 model resources
+### 1.4 `model resources`
 leaderboard doesn't put any constraint on how submitter organize their model resources, as long as these resources are **inside submission dir**.
 
 `SBI`(the recognizer) is supposed to know how to read resources properly, and for example:
@@ -91,9 +92,9 @@ sample_submission_directory
 
 then inside SBI code, SBI can always use `./model/asr.{mdl,cfg}` to locate those resources.
 
-### 1.5 SBI program
+### 1.5 `SBI`
 `SBI` is a submitter implemented program that can decode audio files:
-* `SBI` is an executable(`shebang bash/python/perl script`, `C/C++ binary`)
+* `SBI` is an executable, could be shebanged `bash`, `python`, `perl` script, or a `C/C++ binary`
 * `SBI` performs speech recognition to a list of audios
   ```
   ./SBI <input_audio_list> <result_dir>
@@ -124,21 +125,23 @@ then inside SBI code, SBI can always use `./model/asr.{mdl,cfg}` to locate those
 
 ---
 
-## Step 2: upload your model leaderboard model-zoo
+## Step 2: Submit your model to leaderboard model-zoo
 using following command:
 ```
 utils/install_oss.sh # this is official CLI of aliyun object-storage-service(as Amazon S3)
-./leaderboard_submit  submission_model_uuid   ~/work/my_submission_dir_to_speechio_leaderboard
+./leaderboard_submit  model_key   ~/work/my_submission_dir_to_speechio_leaderboard
 ```
-`submission_model_uuid` is a unique identifier for your model, leaderboard let submitters to decide their model uuid.  Generally they should be meaningful, and should not collide with other models. sample submission_uuid
-```
-speechio_kaldi_baseline_20210401
-xxx_ailab_interspeech_xxx_paper_reproduce
-```
+`model_key` is a unique identifier for your model, leaderboard let submitters to decide their model key.
 
+model key should be meaningful, and should not collide with other models. sample submission_uuid
+```
+speechio_kaldi_pretrain
+alphacep_vosk_cn
+interspeech_xxx_paper_reproduced
+```
 
 ---
-## Step 3: create a benchmarking request
+## Step 3: Create a benchmarking request pull request to leaderboard github repo
 once you have your model uploaded, you can submit a benchmark request by opening a PR to this github repo
 
 your pull request should add a request.yaml to `github.com/speechio/leaderboard/requests/xxx.yaml`
