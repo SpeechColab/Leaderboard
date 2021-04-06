@@ -34,6 +34,10 @@ models/sogou_api/APP_ID
 models/sogou_api/APP_KEY
 models/sogou_api/TOKEN
 
+# tencent api credential
+models/tencent_api/SECRET_ID
+models/tencent_api/SECRET_KEY
+
 # yitu api credential
 models/yitu_api/DEV_ID
 models/yitu_api/DEV_KEY
