@@ -6,6 +6,8 @@ if [ $# -ne 4 ]; then
     exit 1
 fi
 
+echo "---------- Docker Runner Started ----------"
+
 LEADERBOARD=$1
 model=$2
 test_sets="$3"
@@ -16,7 +18,7 @@ stage=0
 
 for x in $test_sets; do
     date=$(date +%Y%m%d)
-    echo "===== MODEL:$model TEST_SET:$x DATE:$date NUM_UTTS:$max_num_utts ====="
+    echo "<<<<< MODEL:$model  TEST_SET:$x  DATE:$date  NUM_UTTS:$max_num_utts >>>>>"
 
     dir=$LEADERBOARD/results/${date}__${model}__${x}__${max_num_utts}
     mkdir -p $dir
@@ -64,4 +66,5 @@ for x in $test_sets; do
 
     sleep 1
 done
-echo "Done"
+
+echo "---------- Docker Runner Done ----------"

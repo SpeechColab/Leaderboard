@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 import sys, os
 import argparse
+import datetime
 import yaml # pip install pyyaml
 
 if __name__ == '__main__':
+    print(F'========== Runner Started ==========', file=sys.stderr, flush=True)
+    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file=sys.stderr, flush=True)
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--begin_stage', type=int, default=0, help='only run stages inside [begin, end)')
     parser.add_argument('--end_stage', type=int, default=100, help='only run stages inside [begin, end)')
@@ -84,3 +88,6 @@ if __name__ == '__main__':
         )
         print(docker_run_cmd, file=sys.stderr)
         os.system(docker_run_cmd)
+
+    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file=sys.stderr, flush=True)
+    print(F'========== Runner Done ==========', file=sys.stderr, flush=True)
