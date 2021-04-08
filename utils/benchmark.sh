@@ -1,20 +1,29 @@
 #!/usr/bin/env bash
 # Copyright  2021  Jiayu DU
 
-if [ $# -ne 4 ]; then
-    echo "Usage: $0 <leaderboard_dir> <model> <space_seperated_test_sets> <max_num_utts>"
+echo "---------- Docker Runner Started ----------"
+
+if [ -z "LEADERBOARD" ]; then
+    echo "$0: LEADERBOARD env variable is empty"
     exit 1
 fi
 
-echo "---------- Docker Runner Started ----------"
+stage=0
+max_num_utts=2
+. $LEADERBOARD/utils/parse_options.sh
 
-LEADERBOARD=$1
-model=$2
-test_sets="$3"
-max_num_utts=$4
+if [ $# -ne 2 ]; then
+    echo "Usage: $0 <model> <space_seperated_test_sets>"
+    echo "options:"
+    echo "  --stage <int>"
+    echo "  --max-num-utts <int>"
+    exit 1
+fi
+
+model=$1
+test_sets="$2"
 
 cd $LEADERBOARD/models/$model && echo $PWD
-stage=0
 
 for x in $test_sets; do
     date=$(date +%Y%m%d)

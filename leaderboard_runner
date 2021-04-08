@@ -9,9 +9,10 @@ if __name__ == '__main__':
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file=sys.stderr, flush=True)
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--begin_stage', type=int, default=0, help='only run stages inside [begin, end)')
-    parser.add_argument('--end_stage', type=int, default=100, help='only run stages inside [begin, end)')
-    parser.add_argument('--max_num_utts', type=int, default=10000, help='only run stages inside [begin, end)')
+    parser.add_argument('--runner_begin_stage', type=int, default=0, help='only run stages inside [begin, end)')
+    parser.add_argument('--runner_end_stage', type=int, default=100, help='only run stages inside [begin, end)')
+    parser.add_argument('--benchmark_stage', type=int, default=0, help='set stage variable in benchmark.sh')
+    parser.add_argument('--max_num_utts', type=int, default=10000, help='max number of utts to test in a test set')
     parser.add_argument('request_file_path', type=str, help='request.yaml')
     args = parser.parse_args()
 
@@ -38,7 +39,7 @@ if __name__ == '__main__':
     print(F'Downloading {model} from model zoo ...', file = sys.stderr)
     remote_model_dir = os.path.join(remote_model_zoo, model) + '/'
     model_dir = os.path.join(model_zoo, model)
-    if args.begin_stage <= 1 < args.end_stage:
+    if args.runner_begin_stage <= 1 < args.runner_end_stage:
         cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {remote_model_dir} {model_dir}"
         print(cmd, file=sys.stderr)
         os.system(cmd)
@@ -62,7 +63,7 @@ if __name__ == '__main__':
 
     # build docker image
     docker_image = F'speechio/leaderboard:{model}'
-    if args.begin_stage <= 2 < args.end_stage:
+    if args.runner_begin_stage <= 2 < args.runner_end_stage:
         print(F'Building docker image ...', file = sys.stderr)
         docker_build_cmd = (
             F'docker build -f {docker_file} -t {docker_image} '
@@ -73,7 +74,7 @@ if __name__ == '__main__':
         os.system(docker_build_cmd)
 
     # run benchmarking docker
-    if args.begin_stage <= 3 < args.end_stage:
+    if args.runner_begin_stage <= 3 < args.runner_end_stage:
         print(F'Pulling up benchmarking container ...', file = sys.stderr)
         
         test_sets_argument = ' '.join(test_sets)
@@ -83,8 +84,11 @@ if __name__ == '__main__':
             F'docker run '
             F'-v {leaderboard}:{LEADERBOARD} '
             F'--user "$(id -u):$(id -g)" '
+            F'-e LEADERBOARD={LEADERBOARD} '
             F'{docker_image} '
-            F'{LEADERBOARD}/utils/benchmark.sh {LEADERBOARD} {model} "{test_sets_argument}" {args.max_num_utts}'
+            F'{LEADERBOARD}/utils/benchmark.sh '
+            F'--stage {args.benchmark_stage} --max-num-utts {args.max_num_utts} '
+            F'{model} "{test_sets_argument}"'
         )
         print(docker_run_cmd, file=sys.stderr)
         os.system(docker_run_cmd)
