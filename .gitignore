@@ -10,9 +10,9 @@ rest_api.sh
 requests/2021*
 tiobe.sh
 log.*
+tmp*
 
-# not ready yet
-models/speechio_kaldi
+models/speechio_kaldi_pretrain_16k
 
 # aispeech credential
 models/aispeech_api/API_KEY
