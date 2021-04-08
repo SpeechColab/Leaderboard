@@ -1,13 +1,14 @@
 # How to submit your model to SpeechIO leaderboard
+## overall benchmarking pipeline
+![image](misc/leaderboard_design.png)
 
 ## Step 1. Prepare your submission
-### overall description
 Conceptually, for leaderboard to re-produce and benchmark your ASR system, you need to provide at least 3 things:
 * your system dependencies(operation system, software packages)
 * ASR resources (e.g. model, config)
 * an ASR program that can recognize audio files
 
-In practice, leaderboard requires you to submit a `submission directory`, containing:
+In practice, leaderboard requires you to submit a `model directory`, containing:
 ```
 leaderboard@ubuntu: tree ./sample_model_submission_directory
 
@@ -78,7 +79,7 @@ This markdown is optional, but we strongly suggest you provide more infomation a
 recording these info is not only a good memo for submitter himself, but also a good way to help the community to share knowledge.
 
 ### 1.4 `model resources`
-leaderboard doesn't put any constraint on how submitter organize their model resources, as long as these resources are **inside submission dir**.
+leaderboard doesn't put any constraint on how submitter organize their model resources, as long as these resources are **inside model dir**.
 
 `SBI`(the recognizer) is supposed to know how to read resources properly, and for example:
 ```
@@ -98,7 +99,7 @@ then inside SBI code, SBI can always use `./model/asr.{mdl,cfg}` to locate those
 ### 1.5 `SBI`
 `SBI` is a submitter implemented program that can decode audio files:
 * `SBI` is an executable, could be shebanged `bash`, `python`, `perl` script, or `C/C++ binary`
-* `SBI` will be runned in your submission dir, so it can use relative path to refer to other programs, scripts and shared libraries inside this dir.
+* `SBI` will be invoked in submitted model dir, so SBI can use relative path to refer to other programs, scripts and shared libraries inside model dir.
 * `SBI` performs speech recognition to a list of audios
   ```
   ./SBI <input_audio_list> <result_dir>
