@@ -2,7 +2,7 @@
 ## overall benchmarking pipeline
 ![image](misc/leaderboard_design.png)
 
-## Step 1. Prepare your submission
+## Step 1. Prepare your submission model directory
 Conceptually, for leaderboard to re-produce and benchmark your ASR system, you need to provide at least 3 things:
 * your system dependencies(operation system, software packages)
 * ASR resources (e.g. model, config)
@@ -10,9 +10,9 @@ Conceptually, for leaderboard to re-produce and benchmark your ASR system, you n
 
 In practice, leaderboard requires you to submit a `model directory`, containing:
 ```
-leaderboard@ubuntu: tree ./sample_model_submission_directory
+leaderboard@ubuntu: tree ./sample_model_directory
 
-sample_submission_directory
+sample_model_directory
 ├── docker
 │   └── Dockerfile
 ├── model.yaml
@@ -127,13 +127,13 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate thos
   ```
 * submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), SpeechIO leaderboard will apply universal text normalization to every submission.
 
-## Sample submissions
+## Sample submission model directories
 
-* a sample submission of Cloud-API based ASR system:
+* a sample model dir of Cloud-API based ASR system:
 
   https://github.com/speechio/leaderboard/tree/master/models/aispeech_api
 
-* a sample submission of local ASR system in Kaldi framework:
+* a sample model dir of local ASR system in Kaldi:
 
   https://github.com/speechio/leaderboard/tree/master/models/sample_kaldi_model
 ---
@@ -142,7 +142,7 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate thos
 using following command:
 ```
 utils/install_oss.sh # official CLI of aliyun object-storage-service(as Amazon S3), only need to be installed once 
-./leaderboard_submit  model_key  ~/work/my_submission_dir_to_speechio_leaderboard
+./leaderboard_submit  model_key  ~/work/prepared_local_model_dir
 ```
 **`model_id`** is a unique identifier, used to refer to this model in future benchmarks.
 
