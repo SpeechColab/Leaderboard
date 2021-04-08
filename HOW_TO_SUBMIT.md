@@ -79,14 +79,14 @@ This markdown is optional, but we strongly suggest you provide more infomation a
 recording these info is not only a good memo for submitter himself, but also a good way to help the community to share knowledge.
 
 ### 1.4 `model resources`
-leaderboard doesn't put any constraint on how submitter organize their model resources, as long as these resources are **inside model dir**.
+leaderboard doesn't put any constraint on how submitter organize ASR resources, as long as these resources are **inside model dir**.
 
-`SBI`(the recognizer) is supposed to know how to read resources properly, and for example:
+`SBI`(the recognizer) is supposed to know where and how to read their resources properly, and for example:
 ```
-leaderboard@ubuntu: tree ./sample_model_submission_directory
+leaderboard@ubuntu: tree ./sample_model_directory
 
-sample_submission_directory
-├── model
+sample_model_directory
+├── assets
     ├── asr.mdl
     ├── asr.cfg
     ...
@@ -94,7 +94,7 @@ sample_submission_directory
 └── SBI
 ```
 
-then inside SBI code, SBI can always use `./model/asr.{mdl,cfg}` to locate those resources.
+then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate those resources.
 
 ### 1.5 `SBI`
 `SBI` is a submitter implemented program that can decode audio files:
