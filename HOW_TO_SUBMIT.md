@@ -157,7 +157,7 @@ word2vec_v2
 ```
 
 ---
-## Step 3: Send a benchmark request by creating a pull request this github repo
+## Step 3: Send a benchmark request by creating a pull request to this github repo
 Once you have your model submitted, you can open a PR to this github repo, which adds a request file to `requests` directory:
 
 **`github.com/speechio/leaderboard/requests/give_a_name_for_your_benchmark_request.yaml`**
