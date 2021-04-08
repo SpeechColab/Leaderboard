@@ -170,7 +170,7 @@ entity: SpeechIO
 email: 
   - xxx@gmail.com
 model: aliyun_api
-test_sets:
+test_set:
   - MINI
   - SPEECHIO_ASR_ZH00000
 ```
