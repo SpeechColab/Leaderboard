@@ -12,7 +12,11 @@ tiobe.sh
 log.*
 tmp*
 
-models/speechio_kaldi_pretrain_16k
+# oss
+.ossutil_checkpoint
+ossutil_output
+
+models/speechio_kaldi_zh_16k
 
 # aispeech credential
 models/aispeech_api/API_KEY
