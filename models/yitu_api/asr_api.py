@@ -51,7 +51,7 @@ if __name__ == '__main__':
         if l == '':
             continue
 
-        key, audio = l.split('\t')
+        key, audio = l.split()
         sys.stderr.write(str(n) + '\tkey:' + key + '\taudio:' + audio + '\n')
         sys.stderr.flush()
 
@@ -79,19 +79,22 @@ if __name__ == '__main__':
                 # 发起请求
                 r = requests.post(ASR_URL, json=body, headers=headers)
                 if r.status_code == 200:
-                    sys.stderr.write('requests rtn:{} text:{}\n'.format(r.json()['rtn'], r.json()['resultText']))
-                    result = r.json()['resultText']
-                    if (result != None) and (result != ''):
-                        rec_text = result
+                    info = r.json()
+                    sys.stderr.write('requests rtn:{} text:{}\n'.format(info['rtn'], info['resultText']))
+                    sys.stderr.flush()
+                    if info['resultText']:
+                        rec_text = info['resultText']
                         break
                 else:
                     sys.stderr.write('requests fails code:{} details:{}\n'.format(r.status_code, r.json()))
                     sys.stderr.write('will retry.\n')
+                    sys.stderr.flush()
                     rec_text = ''
                     time.sleep(1)
                     continue
             except:
                 sys.stderr.write("exception, retrying.\n")
+                sys.stderr.flush()
                 rec_text = ''
                 time.sleep(1)
                 continue

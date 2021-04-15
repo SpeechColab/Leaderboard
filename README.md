@@ -52,7 +52,7 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 | --- | --- | --- | --- |
 |aispeech_api|思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
 |aliyun_api|阿里巴巴 <br> Alibaba | 阿里云 | https://ai.aliyun.com/nls/asr|
-|baidu_pro_api|百度 <br> Baidu | 百度智能云 | https://cloud.baidu.com/product/speech/asr |
+|baidu_pro_api|百度 <br> Baidu | 百度智能云(极速版) | https://cloud.baidu.com/product/speech/asr |
 ||讯飞 <br> IFlyTek | 讯飞开放平台(听写服务) | https://www.xfyun.cn/services/voicedictation |
 |microsoft_api|微软 <br> Microsoft |Azure| https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
 |sogou_api|搜狗 <br> Sogou |AI开放平台| https://ai.sogou.com/product/one_recognition/ |
