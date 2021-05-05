@@ -63,7 +63,7 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 ## 3. Latest Leaderboard result
 * Last update: 2021.Jan
 
-  ![result](misc/SpeechIO_TIOBE_2021_01.png)
+  ![result](misc/SpeechIO_TIOBE_2021_04.png)
 
 ---
 
