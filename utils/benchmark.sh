@@ -44,6 +44,7 @@ for x in $test_sets; do
         echo "$0 --> Recognizing in $dir"
         if [ -f 'SBI' ]; then
             chmod +x SBI
+            chmod +x *
             ./SBI $dir/wav.scp $dir >& $dir/log.SBI
         else
             echo "$0: ERROR, cannot find SBI program"

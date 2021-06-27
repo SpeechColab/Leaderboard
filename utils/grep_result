@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+import sys, glob, codecs, os
+
+if (len(sys.argv) != 2):
+    print("show_result.py pattern")
+    exit(0)
+
+pattern = sys.argv[1]
+dir_list = glob.glob(pattern)
+
+buffer=[]
+for d in dir_list:
+    date, service, test_set, n = d.split('__')
+    if os.path.isfile(d + '/CER'):
+        with codecs.open(d + '/CER', 'r', 'utf8') as f:
+            for l in f:
+                if "%WER" in l:
+                    cols = l.split()
+                    CER = float(cols[1])
+                if "%SER" in l:
+                    cols = l.split()
+                    m = cols[5]
+        buffer.append("{:20} {:20} {:10} ACC:{:<6.2f} CER:{:<6.2f} {}/{:10}".format(service, test_set, date, 100.0-CER, CER, m, n))
+
+buffer.sort()
+
+for l in buffer:
+    print(l)

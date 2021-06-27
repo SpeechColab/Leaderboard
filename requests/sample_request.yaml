@@ -6,4 +6,4 @@ email:
 model: speechio_kaldi_zh_16k
 test_set:
   - MINI
-  - SPEECHIO_ASR_ZH00022
+  - SPEECHIO_ASR_ZH00000

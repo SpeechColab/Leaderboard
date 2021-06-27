@@ -11,6 +11,7 @@ requests/2021*
 tiobe.sh
 log.*
 tmp*
+models/
 
 # oss
 .ossutil_checkpoint
