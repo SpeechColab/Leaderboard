@@ -1,5 +1,5 @@
 .DS_Store
-SAFEBOX/*
+SAFEBOX/*.cfg
 datasets/download
 datasets/SPEECHIO_*
 oss
