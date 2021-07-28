@@ -64,7 +64,7 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
   
 ---
 ## 3. Latest Leaderboard report
-  ![result](misc/SpeechIO_TIOBE_2021_04.png)
+  ![result](misc/SpeechIO_TIOBE_2021_07.png)
 
 ---
 
