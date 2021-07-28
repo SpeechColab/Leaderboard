@@ -1,10 +1,10 @@
 # SpeechIO ASR leaderboard
-## 1. What is this leaderboard all about?
+## 1. SpeechIO Leaderboard
 The architecture of mainstream Automatic Speech Recognition(ASR) system has been evolving rapidly for years.  People claim SOTA here and there(in research papers, in industrial PR articles).  But no one can actually quantitates "how these SOTA systems perform in real-life scenerios?".  People need an objective and comprehensive benchmark to measure ASR system performance.
 
 That's why SpeechIO leaderboard comes in, with emphasis on:
 * comprehensive & biggest-ever test sets:
-  - carefully curated by SpeechIO authers, crawled from publicly available sources(Youtube, TV programs, Podcast etc)
+  - carefully curated by SpeechIO authors, crawled from publicly available sources(Youtube, TV programs, Podcast etc)
   - covering various common acoustic scenarios(AM) and content domains(LM & vocabulary) that are familiar to the public.
   - labels from professional human annotators with great cautions and multi-iterations of quality checks.
 
@@ -15,8 +15,8 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
   - open-source, submitters can expect an apple-to-apple comparison with other submitters(including above big-techs' commercial API)
 
 ---
-## 2. SpeechIO TestSet Zoo
-### 2.1 Chinese Test Sets
+## 2. Test Sets
+### 2.1 Chinese
 
 | 编号 <br> ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
 | --- | --- | --- | --- | --- | --- |
@@ -50,7 +50,7 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 ### 2.2 English Leaderboard
   * TBD
 
-## 3. SpeechIO Model Zoo
+## 3. Models
 | 编号 <br> ID | 模型 <br> model | 简介 <br> description | 网站 <br> url |
 | --- | --- | --- | --- |
 |aispeech_api|思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
@@ -63,12 +63,11 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 |yitu_api|依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
   
 ---
-## 3. Latest Leaderboard result
-
+## 3. Latest Leaderboard report
   ![result](misc/SpeechIO_TIOBE_2021_04.png)
 
 ---
 
-## How to submit your own model to leaderboard
+## How to submit your own model and get your model benchmarked ?
 Follow submission guide here [HOW_TO_SUBMIT.md](HOW_TO_SUBMIT.md)
 
