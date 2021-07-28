@@ -15,7 +15,7 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
   - open-source, submitters can expect an apple-to-apple comparison with other submitters(including above big-techs' commercial API)
 
 ---
-## 2. Test Sets
+## 2. TestSet Zoo
 ### 2.1 Chinese
 
 | 编号 <br> ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
@@ -50,7 +50,7 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 ### 2.2 English Leaderboard
   * TBD
 
-## 3. Models
+## 3. Model Zoo
 | 编号 <br> ID | 模型 <br> model | 简介 <br> description | 网站 <br> url |
 | --- | --- | --- | --- |
 |aispeech_api|思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
