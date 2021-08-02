@@ -21,6 +21,15 @@ if __name__ == '__main__':
     else:
         pass
 
+    assert os.path.isfile('oss'), "Can't find oss, please run utils/install_oss.sh"
+    if not os.path.isfile('SAFEBOX/oss.cfg'):
+        EP='oss-cn-hangzhou.aliyuncs.com'
+        ID='LTAI5tDu3jkU2nCDUAZxtnGw'
+        SEC='uI6y4bt9yzN2wPoJRcxi7bnfMuya4L'
+        print('Please paste the following credential into SAFEBOX/oss.cfg:', file=sys.stderr)
+        print(f"[Credentials]\nlanguage=EN\nendpoint={EP}\naccessKeyID={ID}\naccessKeySecret={SEC}\n", file=sys.stderr)
+        sys.exit(-1)
+
     src = args.model_dir
     dst = os.path.join(F'oss://speechio-leaderboard/{args.type}-zoo', args.model_id) + '/'
     cmd = F'./oss -c SAFEBOX/oss.cfg cp -ur {src} {dst}'
