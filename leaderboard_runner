@@ -40,6 +40,15 @@ if __name__ == '__main__':
     remote_model_dir = os.path.join(remote_model_zoo, model) + '/'
     model_dir = os.path.join(model_zoo, model)
     if args.runner_begin_stage <= 1 < args.runner_end_stage:
+        assert os.path.isfile('oss'), "Can't find oss, please run utils/install_oss.sh"
+        if not os.path.isfile('SAFEBOX/oss.cfg'):
+            EP='oss-cn-hangzhou.aliyuncs.com'
+            ID='LTAI5tDu3jkU2nCDUAZxtnGw'
+            SEC='uI6y4bt9yzN2wPoJRcxi7bnfMuya4L'
+            print('Please paste the following credential into SAFEBOX/oss.cfg:', file=sys.stderr)
+            print(f"[Credentials]\nlanguage=EN\nendpoint={EP}\naccessKeyID={ID}\naccessKeySecret={SEC}\n", file=sys.stderr)
+            sys.exit(-1)
+
         cmd = F"./oss -c SAFEBOX/oss.cfg cp -ur {remote_model_dir} {model_dir}"
         print(cmd, file=sys.stderr)
         os.system(cmd)
