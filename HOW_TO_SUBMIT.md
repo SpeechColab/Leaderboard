@@ -6,7 +6,7 @@
 Conceptually, for leaderboard to re-produce and benchmark your ASR system, you need to provide at least 3 things:
 * your system dependencies(operation system, software packages)
 * ASR resources (e.g. model, config)
-* an ASR program that can recognize audio files
+* an ASR program that can decode audio files
 
 In practice, leaderboard requires you to submit a `model directory`, containing:
 ```
@@ -19,12 +19,14 @@ sample_model_directory
 ├── README.md
 └── SBI
 ```
-this is a contract between submitters and leaderboard, submitters should follow above file structure and file names, now let's explain this contract one by one.
+this is a contract between leaderboard and submitters, submitters should follow above file structure and file names, now let's explain this contract item by item.
 
 ### 1.1 `docker/Dockerfile`
-Dockerfile is used to specify your ASR dependencies.  Submitter need to guarentee the Dockerfile properly setup all necessary dependencies of your ASR system.
+Dockerfile is used to specify your ASR dependencies, which means:
+* if you are submitting a local ASR system, then Dockerfile should include all libraries and softwares requrired by your ASR engine (e.g. pytorch, tensorflow, kaldi).
+* if you are submitting a cloud-API ASR, then Dockerfile should setup dependencies for your client request (e.g. request, client packages).
 
-Besides your dependencies, leaderboard pipeline depends on **`Python3`**. So submitters need to add python3 in Dockerfile, python3 don't need to be default python. Your ASR system can depend on python2/3, and leaderboard pipeline related codes alway have a shebang of `#!/usr/bin/env python3` explicitly.
+Besides your dependencies, submitter needs to add **`Python3`** to Dockerfile, because leaderboard related codes alway have a shebang of `#!/usr/bin/env python3` explicitly.  However your ASR system can still depend on python2.
 
 A sample docker file for commercial clould ASR API call is shown below:
 ```
@@ -40,8 +42,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ...
 ``` 
 basically it specifies a system build upon ubuntu 20.04 and requires curl to sent http request to clould ASR API.
-
-For submitters who want to benchmark their local system, they need to provide their Dockerfile to install various ML frameworks(such as TensorFlow, PyTorch, Kaldi, Espnet etc).Leaderboard can't help you to write your Dockerfile, we might provide some sample Dockerfiles with common ASR frameworks though.
 
 ### 1.2 `model.yaml`
 This config list required properties of your ASR system, example below:
