@@ -1,5 +1,5 @@
 # SpeechIO ASR leaderboard
-## 1. SpeechIO Leaderboard
+## About SpeechIO Leaderboard
 The architecture of mainstream Automatic Speech Recognition(ASR) system has been evolving rapidly for years.  People claim SOTA here and there(in research papers, in industrial PR articles).  But no one can actually quantitates "how these SOTA systems perform in real-life scenerios?".  People need an objective and comprehensive benchmark to measure ASR system performance.
 
 That's why SpeechIO leaderboard comes in, with emphasis on:
@@ -15,8 +15,21 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
   - open-source, submitters can expect an apple-to-apple comparison with other submitters(including above big-techs' commercial API)
 
 ---
+
+## 1. Overview
+![Overview](misc/overview.png)
+
+By providing:
+* a cloud-storage for test-set zoo
+* a cloud-storage for model zoo
+* a simple pipeline to process benchmarking request
+
+SpeechIO Leaderboard provides a common platform for speech community to reproduce/compare ASR systems.
+
+We are gradually adding various domain-specific test sets(with human labels), so that leaderboard results are informative and convincing for ASR system evaluations.
+
 ## 2. TestSet Zoo
-### 2.1 Chinese
+### 2.1 Chinese(ZH)
 
 | 编号 <br> ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
 | --- | --- | --- | --- | --- | --- |
