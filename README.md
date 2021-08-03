@@ -20,16 +20,19 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 ![Overview](misc/overview.png)
 
 By providing:
-* a cloud-storage for test-set zoo
-* a cloud-storage for model zoo
-* a simple pipeline to process benchmarking request
+* a test-set zoo (via cloud-storage)
+* a model zoo (via cloud-storage)
+* a simple pipeline to process benchmarking request (via codes in this repo)
 
-SpeechIO Leaderboard provides a common platform for speech community to reproduce/compare ASR systems.
+SpeechIO Leaderboard serves as a platform for speech community,
+* to compare ASR performances
+* to publish models & datasets
+* to reproduce experiments and results
 
-We are gradually adding various domain-specific test sets(with human labels), so that leaderboard results are informative and convincing for ASR system evaluations.
+We are adding various domain-specific test sets(with human labels), to make sure our leaderboard results are robust, informative and convincing than any exisiting ASR benchmark.
 
 ## 2. TestSet Zoo
-### 2.1 Chinese(ZH)
+### 2.1 Chinese (ZH)
 
 | 编号 <br> ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
 | --- | --- | --- | --- | --- | --- |
@@ -79,7 +82,7 @@ We are gradually adding various domain-specific test sets(with human labels), so
 ### 3.2 Open Sourced Models
 | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |
-|speechio_kaldi_multicn | pretrained ASR model | 那兴宇 <br> Xingyu NA | Kaldi预训练模型 <br> Kaldi pretrained ASR | based on Kaldi recipe https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5 |
+|speechio_kaldi_multicn | pretrained local ASR model | 那兴宇 <br> Xingyu NA | Kaldi预训练模型 <br> Kaldi pretrained ASR | based on Kaldi recipe https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5 |
   
 ---
 ## 3. Latest Leaderboard report
