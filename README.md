@@ -65,7 +65,7 @@ We are gradually adding various domain-specific test sets(with human labels), so
 
 ## 3. Model Zoo
 ### 3.1 Commercial Models
-| 编号 <br> MODEL_ID | 类型 <br> type | 模型作者 <br> model owner | 简介 <br> description | 链接 <br> url |
+| 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |
 |aispeech_api | Cloud API |思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
 |aliyun_api | Cloud API |阿里巴巴 <br> Alibaba | 阿里云 | https://ai.aliyun.com/nls/asr|
@@ -77,7 +77,7 @@ We are gradually adding various domain-specific test sets(with human labels), so
 |yitu_api | Cloud API |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
 
 ### 3.2 Open Sourced Models
-| 编号 <br> MODEL_ID | 类型 <br> type | 模型作者 <br> model owner | 简介 <br> description | 链接 <br> url |
+| 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |
 |speechio_kaldi_multicn | pretrained ASR model | 那兴宇 <br> Xingyu NA | Kaldi预训练模型 <br> Kaldi pretrained ASR | based on Kaldi recipe https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5 |
   
