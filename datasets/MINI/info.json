@@ -1,5 +1,5 @@
 {
-    "version": "v0.1",
+    "version": "v0.2",
     "dataset": "MINI",
     "description": "MINI",
     "language": "ZH",
@@ -14,10 +14,11 @@
             "segments": [
                 {
                     "sid": "e5oipIfM49I__20190201_CCTV_1",
-                    "speaker": "N/A",
+                    "channel": 0,
                     "begin_time": 0.0,
-                    "end_time": 1.28,
-                    "text_raw": "各位观众晚上好"
+                    "duration": 1.28,
+                    "speaker": "N/A",
+                    "text": "各位观众晚上好"
                 }
             ]
         },
@@ -30,10 +31,11 @@
             "segments": [
                 {
                     "sid": "e5oipIfM49I__20190201_CCTV_104",
-                    "speaker": "N/A",
+                    "channel": 0,
                     "begin_time": 0.0,
-                    "end_time": 5.24,
-                    "text_raw": "春节是团圆是温暖是亲情是说不尽的家长里短"
+                    "duration": 5.24,
+                    "speaker": "N/A",
+                    "text": "春节是团圆是温暖是亲情是说不尽的家长里短"
                 }
             ]
         }

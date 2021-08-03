@@ -27,6 +27,6 @@ if __name__ == '__main__':
                     F"\t{os.path.join(os.path.abspath(args.dataset), audio['path'])}"
                 )
                 print(line, file = scp_fp)
-                print(F"{segment['sid']}\t{segment['text_raw']}", file = trans_fp)
+                print(F"{segment['sid']}\t{segment['text']}", file = trans_fp)
 
     

@@ -35,7 +35,7 @@ if __name__ == '__main__':
     trans = LoadKaldiArk(trans_path)
 
     info = {
-        'version' : 'v0.1',
+        'version' : 'v0.2',
         'dataset' : os.path.basename(args.dst),
         'description' : os.path.basename(args.src),
         'language' : args.language,
@@ -58,13 +58,19 @@ if __name__ == '__main__':
                 'segments' : [],
             }
             for s in range(0,1):
+                # each audio contains only one segment
+                segment_id = audio_id
+                segment_duration = audio_duration
+
                 seg = {
-                    'sid': audio_id,
-                    'speaker' : 'N/A',
+                    'sid': segment_id,
+                    'channel': 0,
                     'begin_time' : 0.0,
-                    'end_time' : audio_duration,
-                    'text_raw' : text,
+                    'duration' : segment_duration,
+                    'speaker' : 'N/A',
+                    'text' : text,
                 }
+
                 audio['segments'].append(seg)
             info['audios'].append(audio)
 
