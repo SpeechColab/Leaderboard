@@ -67,7 +67,9 @@ We are adding various domain-specific test sets(with human labels), to make sure
   * TBD
 
 ## 3. Model Zoo
-### 3.1 Commercial Models
+### 3.1 Chinese(ZH) ASR Models
+#### Commercial Models (Sample Rate = 16k)
+
 | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |
 |aispeech_api | Cloud API |思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
@@ -79,13 +81,17 @@ We are adding various domain-specific test sets(with human labels), to make sure
 |tencent_api | Cloud API |腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
 |yitu_api | Cloud API |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
 
-### 3.2 Open Sourced Models
+#### Open Sourced Models (Sample Rate = 16k)
+
 | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |
-|speechio_kaldi_multicn | pretrained local ASR model | 那兴宇 <br> Xingyu NA | Kaldi预训练模型 <br> Kaldi pretrained ASR | based on Kaldi recipe https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5 |
-  
+|speechio_kaldi_multicn | pretrained ASR model | 那兴宇 <br> Xingyu NA | Kaldi预训练模型 <br> Kaldi pretrained ASR | based on Kaldi recipe https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5 |
+
+### 3.2 English ASR Models
+* TBD
+
 ---
-## 3. Latest Leaderboard report
+## 4. Latest Leaderboard report
   ![result](misc/SpeechIO_TIOBE_2021_07.png)
 
 ---
