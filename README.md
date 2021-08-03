@@ -64,17 +64,22 @@ We are gradually adding various domain-specific test sets(with human labels), so
   * TBD
 
 ## 3. Model Zoo
-| 编号 <br> ID | 类型 <br> type | 模型作者 <br> model owner | 简介 <br> description | 链接 <br> url |
+### 3.1 Commercial Models
+| 编号 <br> MODEL_ID | 类型 <br> type | 模型作者 <br> model owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |
-|aispeech_api | Commercial Cloud Service |思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
-|aliyun_api | Commercial Cloud Service |阿里巴巴 <br> Alibaba | 阿里云 | https://ai.aliyun.com/nls/asr|
-|baidu_pro_api | Commercial Cloud Service |百度 <br> Baidu | 百度智能云(极速版) | https://cloud.baidu.com/product/speech/asr |
-| | Commercial Cloud Service | 讯飞 <br> IFlyTek | 讯飞开放平台(听写服务) | https://www.xfyun.cn/services/voicedictation |
-|microsoft_api | Commercial Cloud Service |微软 <br> Microsoft |Azure| https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
-|sogou_api | Commercial Cloud Service |搜狗 <br> Sogou |AI开放平台| https://ai.sogou.com/product/one_recognition/ |
-|tencent_api | Commercial Cloud Service |腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
-|yitu_api | Commercial Cloud Service |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
-|speechio_kaldi_multicn | Open-Source pretrained model | 那兴宇 <br> Xingyu NA | Kaldi预训练模型 <br> Kaldi pretrained ASR | based on Kaldi recipe https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5 |
+|aispeech_api | Cloud API |思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
+|aliyun_api | Cloud API |阿里巴巴 <br> Alibaba | 阿里云 | https://ai.aliyun.com/nls/asr|
+|baidu_pro_api | Cloud API |百度 <br> Baidu | 百度智能云(极速版) | https://cloud.baidu.com/product/speech/asr |
+| | Cloud API | 讯飞 <br> IFlyTek | 讯飞开放平台(听写服务) | https://www.xfyun.cn/services/voicedictation |
+|microsoft_api | Cloud API |微软 <br> Microsoft |Azure| https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
+|sogou_api | Cloud API |搜狗 <br> Sogou |AI开放平台| https://ai.sogou.com/product/one_recognition/ |
+|tencent_api | Cloud API |腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
+|yitu_api | Cloud API |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
+
+### 3.2 Open Sourced Models
+| 编号 <br> MODEL_ID | 类型 <br> type | 模型作者 <br> model owner | 简介 <br> description | 链接 <br> url |
+| --- | --- | --- | --- | --- |
+|speechio_kaldi_multicn | pretrained ASR model | 那兴宇 <br> Xingyu NA | Kaldi预训练模型 <br> Kaldi pretrained ASR | based on Kaldi recipe https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5 |
   
 ---
 ## 3. Latest Leaderboard report
