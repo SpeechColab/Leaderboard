@@ -19,20 +19,21 @@ That's why SpeechIO leaderboard comes in, with emphasis on:
 ## 1. Overview
 ![Overview](misc/overview.png)
 
-By providing:
+SpeechIO leaderboard provides:
 * a test-set zoo (via cloud-storage)
 * a model zoo (via cloud-storage)
-* a simple pipeline to process benchmarking request (via codes in this repo)
+* a simple pipeline to process benchmarking request (via this github repo)
 
-SpeechIO Leaderboard serves as a platform for speech community,
-* to compare ASR performances
-* to publish models & datasets
-* to reproduce experiments and results
+SpeechIO Leaderboard serves as a platform for speech community:
+* to compare/reproduce ASR systems
+* to publish ASR systems, models and datasets
 
-We are adding various domain-specific test sets(with human labels), to make sure our leaderboard results are robust, informative and convincing than any exisiting ASR benchmark.
+---
 
 ## 2. TestSet Zoo
-### 2.1 Chinese (ZH)
+We are adding various domain-specific test sets(with human labels), to make sure our leaderboard results are robust, informative and convincing than any exisiting ASR benchmark.
+
+<details><summary> Existing Test Sets (ZH) </summary><p>
 
 | 编号 <br> ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
 | --- | --- | --- | --- | --- | --- |
@@ -63,12 +64,12 @@ We are adding various domain-specific test sets(with human labels), to make sure
 |SPEECHIO_ASR_ZH00024| 付老师种植技术 | 短视频 <br> VLog | 农业、种植 <br> Agriculture, Planting | 2.7 | ★★★☆ |
 |SPEECHIO_ASR_ZH00025| 石国鹏讲古希腊哲学 | 线下培训 <br> Offline lecture | 历史，古希腊哲学 <br> History, Greek philosophy | 1.3 | ★★☆ |
 
-### 2.2 English Leaderboard
-  * TBD
+</p></details>
+
+---
 
 ## 3. Model Zoo
-### 3.1 Chinese(ZH) ASR Models
-#### Commercial Models (Sample Rate = 16k)
+<details><summary> Commercial Models (ZH) </summary><p>
 
 | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |
@@ -80,19 +81,19 @@ We are adding various domain-specific test sets(with human labels), to make sure
 |sogou_api | Cloud API |搜狗 <br> Sogou |AI开放平台| https://ai.sogou.com/product/one_recognition/ |
 |tencent_api | Cloud API |腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
 |yitu_api | Cloud API |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
+</p></details>
 
-#### Open Sourced Models (Sample Rate = 16k)
+<details><summary> Open Sourced Models (ZH) </summary><p>
 
 | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |
 |speechio_kaldi_multicn | pretrained ASR model | 那兴宇 <br> Xingyu NA | Kaldi预训练模型 <br> Kaldi pretrained ASR | based on Kaldi recipe https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5 |
 
-### 3.2 English ASR Models
-* TBD
+</p></details>
 
 ---
-## 4. Latest Leaderboard report
-  ![result](misc/SpeechIO_TIOBE_2021_07.png)
+## 4. Latest Leaderboard Report
+![result](misc/SpeechIO_TIOBE_2021_07.png)
 
 ---
 
