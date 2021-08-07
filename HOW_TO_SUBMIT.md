@@ -17,7 +17,7 @@ Conceptually, for leaderboard to re-produce and benchmark submitters' ASR system
 * runtime resources (e.g. model, config, cloud-api credentials)
 * a program that can decode local audio list
 
-So the main purpose of leaderboard pipeline is to formalize above aspects down to a concrete contract. Let's start with `submission model dir`:
+So the main purpose of leaderboard pipeline is to formalize above aspects down to a concrete specification. Let's start with `submission model dir`:
 ```
 jiayu@ubuntu: tree ./sample_submission_model_dir
 

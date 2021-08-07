@@ -23,9 +23,8 @@ As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platfo
   - open for people who are willing to share/publish their ASR models
 
 3. an open benchmarking pipeline:
-  - defines a simplest-possible contract on the format of test sets, recognition result etc.
-  - defines a simplest-possible benchmarking interface for model submitters
-  - a fully automated pipeline to perform `prepare` -> `recognize` -> `process` -> `evaluate`, leaderboard users don't need to write code.
+  - defines a simplest-possible specification on recognition interface, the format of input test sets, the format of output recognition results.
+  - As long as model submitters conform to this specification, a fully automated pipeline will take care of the rest (e.g. data preparation -> recognition invocation -> text post processing -> WER/CER/SER evaluation)
 
 With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances with arbitrary combinations between test-set zoo and model zoo, by simply filling a request form [example form](requests/sample_request.yaml)
 
