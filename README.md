@@ -91,11 +91,16 @@ With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances w
 </p></details>
 
 ---
-## 4. Latest Leaderboard Report
+
+## 4. Benchmark Pipeline
+How to submit your own model and get your model benchmarked ?
+
+Follow submission guideline here [HOW_TO_SUBMIT.md](HOW_TO_SUBMIT.md)
+
+---
+## 5. Latest Leaderboard Report
 ![result](misc/SpeechIO_TIOBE_2021_07.png)
 
 ---
 
-## How to submit your own model and get your model benchmarked ?
-Follow submission guide here [HOW_TO_SUBMIT.md](HOW_TO_SUBMIT.md)
 
