@@ -1,11 +1,11 @@
 # SpeechIO ASR leaderboard
 ## 1. Overview
 
-> "If you can’t measure it, you can’t improve it." -- by *Peter Drucker*
+> "If you can’t measure it, you can’t improve it." -- *Peter Drucker*
 
-In domain of Automatic Speech Recognition(ASR), people claim SOTA in research papers, in industrial PR articles.  The claim of SOTA is problematic because:
+Regarding to the field of Automatic Speech Recognition(ASR) today, people often claim there systems to be SOTA, in research papers, in industrial PR articles etc.  The claim of SOTA is not as informative as one might expect, because:
 * For industry, there is no objective and quantative benchmark on how these commercial APIs perform in real-life scenarios, at least in public domain.
-* For academia, it is becoming harder today to compare ASR models due to the fragmentation of deep learning frameworks and speech toolkits.
+* For academia, it is becoming harder today to compare ASR models due to the fragmentation of research toolkits and ecosystem.
 * How are academic SOTA and industrial SOTA related ?
 ---
 
@@ -91,6 +91,7 @@ With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances w
 |sogou_api | Cloud API |搜狗 <br> Sogou |AI开放平台| https://ai.sogou.com/product/one_recognition/ |
 |tencent_api | Cloud API |腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
 |yitu_api | Cloud API |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
+
 </p></details>
 
 <details><summary> Open-Sourced Pretrained Models (ZH) </summary><p>
