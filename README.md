@@ -1,39 +1,37 @@
 # SpeechIO ASR leaderboard
-## About SpeechIO Leaderboard
-The architecture of mainstream Automatic Speech Recognition(ASR) system has been evolving rapidly for years.  People claim SOTA here and there(in research papers, in industrial PR articles).  But no one can actually quantitates "how these SOTA systems perform in real-life scenerios?".  People need an objective and comprehensive benchmark to measure ASR system performance.
+## 1. Overview
 
-That's why SpeechIO leaderboard comes in, with emphasis on:
-* comprehensive & biggest-ever test sets:
-  - carefully curated by SpeechIO authors, crawled from publicly available sources(Youtube, TV programs, Podcast etc)
-  - covering various common acoustic scenarios(AM) and content domains(LM & vocabulary) that are familiar to the public.
-  - labels from professional human annotators with great cautions and multi-iterations of quality checks.
+> "If you can’t measure it, you can’t improve it." -- by *Peter Drucker*
 
-* an open benchmarking platform:
-  - an objective stand-point
-  - aggregate benchmarkings of public commercial ASR APIs by default(e.g. google, aws, baidu, alibaba, tencent, iflytek, etc)
-  - a simplest interface to implement for submitters
-  - open-source, submitters can expect an apple-to-apple comparison with other submitters(including above big-techs' commercial API)
-
+In domain of Automatic Speech Recognition(ASR), people claim SOTA in research papers, in industrial PR articles.  The claim of SOTA is problematic because:
+* For industry, there is no objective and quantative benchmark on how these commercial APIs perform in real-life scenarios, at least in public domain.
+* For academia, it is becoming harder today to compare ASR models due to the fragmentation of deep learning frameworks and speech toolkits.
+* How are academic SOTA and industrial SOTA related ?
 ---
 
-## 1. Overview
 ![Overview](misc/overview.png)
+As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platform, by providing 3 components:
 
-SpeechIO leaderboard provides:
-* a test-set zoo (via cloud-storage)
-* a model zoo (via cloud-storage)
-* a simple pipeline to process benchmarking request (via this github repo)
+1. TestSet Zoo:
+  - SpeechIO test sets: carefully curated by SpeechIO authors, crawled from publicly available sources(Youtube, TV programs, Podcast etc), covering various common acoustic scenarios(AM) and content domains(LM & vocabulary) that are familiar to the public, labeled by professional annotators with great cautions.
+  - open-sourced test sets: collected from all sorts of open-sourced datasets
+  - open for people who are willing to contribute their own test sets
 
-SpeechIO Leaderboard serves as a platform for speech community:
-* to compare/reproduce ASR systems
-* to publish ASR systems, models and datasets
+2. Model Zoo
+  - aggregates commercial ASR APIs (e.g. google, aws, baidu, alibaba, tencent, iflytek, etc)
+  - incorporate well-known open-sourced models
+  - open for people who are willing to share/publish their ASR models
+
+3. an open benchmark pipeline:
+  - defines a simplest-possible contract on the format of test sets, recognition result etc.
+  - defines a simplest-possible benchmarking interface for model submitters
+
+With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances with arbitrary combinations between test-set zoo and model zoo.
 
 ---
 
 ## 2. TestSet Zoo
-We are adding various domain-specific test sets(with human labels), to make sure our leaderboard results are robust, informative and convincing than any exisiting ASR benchmark.
-
-<details><summary> Existing Test Sets (ZH) </summary><p>
+<details><summary> Test Sets (ZH) </summary><p>
 
 | 编号 <br> ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
 | --- | --- | --- | --- | --- | --- |
@@ -83,7 +81,7 @@ We are adding various domain-specific test sets(with human labels), to make sure
 |yitu_api | Cloud API |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
 </p></details>
 
-<details><summary> Open Sourced Models (ZH) </summary><p>
+<details><summary> Open-Sourced Models (ZH) </summary><p>
 
 | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |
