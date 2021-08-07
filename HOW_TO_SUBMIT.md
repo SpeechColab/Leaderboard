@@ -1,16 +1,25 @@
 # How to submit your model to SpeechIO leaderboard
-## overall benchmarking pipeline
+## Benchmarking Pipeline Overview
 ![image](misc/leaderboard_design.png)
 
-## Step 1. Prepare your submission model directory
-Conceptually, for leaderboard to re-produce and benchmark your ASR system, you need to provide at least 3 things:
-* your system dependencies(operation system, software packages)
-* ASR resources (e.g. model, config)
-* an ASR program that can decode audio files
+As above figure demonstrates, a benchmark cycle contains following steps:
+1. submitter prepares their model on their local machine
+2. submitter submits model dir to leaderboard model-zoo
+3. submitter creates a benchmarking request by adding a benchmark config(yaml) via github pull request
+4. SpeechIO invokes leaderboard pipeline on a benchmarking machine and emails final results back to submitter.
 
-In practice, leaderboard requires you to submit a `model directory`, containing:
+---
+
+## Step 1. Prepare model dir for submission
+
+Conceptually, for leaderboard to re-produce and benchmark submitters' ASR system, submitters need to provide at least 3 things:
+* system dependencies (operation system, softwares, libraries, packages)
+* runtime resources (e.g. model, config, cloud-api credentials)
+* a program that can decode local audio list
+
+A sample submission `model directory` is listed below:
 ```
-leaderboard@ubuntu: tree ./sample_model_directory
+jiayu@ubuntu: tree ./sample_model_directory
 
 sample_model_directory
 ├── docker
@@ -19,29 +28,38 @@ sample_model_directory
 ├── README.md
 └── SBI
 ```
-this is a contract between leaderboard and submitters, submitters should follow above file structure and file names, now let's explain this contract item by item.
+**submitters should follow above file names and dir structures**, now let's explain this item by item.
+
+---
 
 ### 1.1 `docker/Dockerfile`
-Dockerfile is used to specify your ASR dependencies, which means:
-* if you are submitting a local ASR system, then Dockerfile should include all libraries and softwares requrired by your ASR engine (e.g. pytorch, tensorflow, kaldi).
-* if you are submitting a cloud-API ASR, then Dockerfile should setup dependencies for your client request (e.g. request, client packages).
+Dockerfile is used to construct your runtime envrionment for benchmarking, it should specifies all dependencies of your ASR system.
 
-Besides your dependencies, submitter needs to add **`Python3`** to Dockerfile, because leaderboard related codes alway have a shebang of `#!/usr/bin/env python3` explicitly.  However your ASR system can still depend on python2.
+<details><summary> cloud-API ASR Dockerfile example </summary><p>
 
-A sample docker file for commercial clould ASR API call is shown below:
-```
-FROM ubuntu:20.04
-LABEL maintainer="xxx@gmail.com"
+| model_id | Dockerfile |
+| -- | -- |
+| aispeech_api | [example](models/aispeech_api/docker/Dockerfile) |
+| aliyun_api | [example](models/aliyun_api/docker/Dockerfile) |
+| baidu_pro_api | [example](models/baidu_pro_api/docker/Dockerfile) |
+| microsoft_api | [example](models/microsoft_api/docker/Dockerfile) |
+| sogou_api | [example](models/sogou_api/docker/Dockerfile) |
+| tencent_api | [example](models/tencent_api/docker/Dockerfile) |
+| yitu_api | [example](models/yitu_api/docker/Dockerfile) |
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-        python3 && \
-    rm -rf /var/lib/apt/lists/*
-...
-...
-``` 
-basically it specifies a system build upon ubuntu 20.04 and requires curl to sent http request to clould ASR API.
+</p></details>
+
+<details><summary> local ASR Dockerfile example </summary><p>
+
+| model_id | Dockerfile |
+| -- | -- |
+| sample_kaldi_model | [example](models/sample_kaldi_model/docker/Dockerfile) |
+
+</p></details>
+
+Besides your dependencies, submitter should always add **`Python3`** to Dockerfile, because leaderboard pipeline code requests python3 (this doesn't affect that your model can still depend on python2).
+
+---
 
 ### 1.2 `model.yaml`
 This config list required properties of your ASR system, example below:
@@ -55,18 +73,18 @@ entity: SpeechIO
 email: jerry.jiayu.du@gmail.com
 ```
 
-* `date`: submission date of this model
-* `task`: support `ASR` only
-* `language`: language of your ASR model, conforms to `ISO 639-1` language code, lowercase letters.
-* `sample_rate`: sample rate of your ASR system. typically 8000(telephone) or 16000(other)
-* `author`: submitter
-* `entity`: submitter's entity
-* `email`: sumitter's contact
+* `date`: date of submission
+* `task`: only support `ASR` for now
+* `language`: lowercase language code (`ISO 639-1`) of this model, e.g `en`, `zh`
+* `sample_rate`: sample rate. typically 8000(telephone) or 16000(other)
+* `author`: model author/owner
+* `entity`: model author/owner's entity
+* `email`: model author/owner's contact
 
-leaderboard need these infos to maintain the submitted models in model-zoo
+---
 
-### 1.3 `README.md`
-This markdown is optional, but we strongly suggest you provide more infomation about your model, such as:
+### 1.3 `README.md` (optinal)
+Although optional, we strongly suggest you provide more info about your model for community knowledge sharing, such as:
 * number of parameters
 * amount of training data
 * training framework
@@ -76,27 +94,9 @@ This markdown is optional, but we strongly suggest you provide more infomation a
 * front end feature type
 * ...
 
-recording these info is not only a good memo for submitter himself, but also a good way to help the community to share knowledge.
+---
 
-### 1.4 `model resources`
-leaderboard doesn't put any constraint on how submitter organize ASR resources, as long as these resources are **inside model dir**.
-
-`SBI`(the recognizer) is supposed to know where and how to read their resources properly, and for example:
-```
-leaderboard@ubuntu: tree ./sample_model_directory
-
-sample_model_directory
-├── assets
-    ├── asr.mdl
-    ├── asr.cfg
-    ...
-...
-└── SBI
-```
-
-then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate those resources.
-
-### 1.5 `SBI`
+### 1.4 `SBI`
 `SBI` is a submitter implemented program that can decode audio files:
 * `SBI` is an executable, could be shebanged `bash`, `python`, `perl` script, or `C/C++ binary`
 * `SBI` will be invoked in submitted model dir, so SBI can use relative path to refer to other programs, scripts and shared libraries inside model dir.
@@ -127,6 +127,26 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate thos
   ```
 * submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), SpeechIO leaderboard will apply universal text normalization to every submission.
 
+### 1.5 `Runtime Resources`
+Runtime resources refers to `models`, `configs`, `cloud-api credentials` etc. Leaderboard pipeline has no constraints on how resources are organized, as long as they are **inside submission model dir**, `SBI` code is responsible and is supposed to know how to locate them properly.
+
+For example:
+```
+jiayu@ubuntu: tree ./sample_model_directory
+
+sample_model_directory
+├── assets
+    ├── asr.mdl
+    ├── asr.cfg
+    ...
+...
+└── SBI
+```
+
+then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate ASR resources.
+
+---
+
 ## Sample submission model directories
 
 * a sample model dir of Cloud-API based ASR system:
@@ -138,10 +158,15 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate thos
   https://github.com/speechio/leaderboard/tree/master/models/sample_kaldi_model
 ---
 
-## Step 2: Submit your model to SpeechIO Leaderboard
-using following command:
+## Step 2: Submit your model
+2.1 Install aliyun object-storage-service client (This needs to run only once)
 ```
-utils/install_oss.sh # official CLI of aliyun object-storage-service(as Amazon S3), only need to be installed once 
+# you should run this in leaderboard repo root
+utils/install_oss.sh
+```
+
+2.2 Upload your model to leaderboard model-zoo
+```
 ./leaderboard_submit  model_key  ~/work/prepared_local_model_dir
 ```
 **`model_id`** is a unique identifier, used to refer to this model in future benchmarks.
@@ -157,7 +182,7 @@ word2vec_v2
 ```
 
 ---
-## Step 3: Send a benchmark request by creating a pull request to this github repo
+## Step 3: Send a benchmark request via a pull request to leaderboard repo
 Once you have your model submitted, you can open a PR to this github repo, which adds a request file to `requests` directory:
 
 **`github.com/speechio/leaderboard/requests/give_a_name_for_your_benchmark_request.yaml`**
@@ -180,8 +205,11 @@ where:
 * `test_set`: test set id list, which test sets you want to benchmark with
 * `email`: a list of email addresses to receive benchmark results
 
-to lookup model id and test_sets id, refer to section 2 & section 3 [here](README.md)
+to lookup `model id` and `test_sets id`, refer to section 2 & section 3 [here](README.md)
 
 Once we merge your submission pull request, the leaderboard pipeline will:
 * init a docker runner to benchmark requested model with requested test sets
 * email results to requester
+
+## Contacts
+Contact leaderboard@speechio.ai if you have further inqueires.
