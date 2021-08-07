@@ -83,7 +83,7 @@ email: jerry.jiayu.du@gmail.com
 
 ---
 
-### 1.3 `README.md` (optinal)
+### 1.3 `README.md` (optional)
 Although optional, we strongly suggest you provide more info about your model for community knowledge sharing, such as:
 * number of parameters
 * amount of training data
