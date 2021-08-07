@@ -116,5 +116,4 @@ Follow submission guideline here [HOW_TO_SUBMIT.md](HOW_TO_SUBMIT.md)
 ---
 
 ## Contacts
-email: leaderboard@speechio.ai
-wechat: JerryEjwt
+Email: leaderboard@speechio.ai
