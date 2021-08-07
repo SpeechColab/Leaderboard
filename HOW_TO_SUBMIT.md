@@ -10,18 +10,18 @@ As above figure demonstrates, a benchmark cycle contains following steps:
 
 ---
 
-## Step 1. Prepare model dir for submission
+## Step 1. Prepare submission model dir
 
 Conceptually, for leaderboard to re-produce and benchmark submitters' ASR system, submitters need to provide at least 3 things:
 * system dependencies (operation system, softwares, libraries, packages)
 * runtime resources (e.g. model, config, cloud-api credentials)
 * a program that can decode local audio list
 
-A sample submission `model directory` is listed below:
+So the main purpose of leaderboard pipeline is to formalize above aspects down to a concrete contract. Let's start with `submission model dir`:
 ```
-jiayu@ubuntu: tree ./sample_model_directory
+jiayu@ubuntu: tree ./sample_submission_model_dir
 
-sample_model_directory
+sample_submission_model_dir
 ├── docker
 │   └── Dockerfile
 ├── model.yaml
@@ -33,7 +33,7 @@ sample_model_directory
 ---
 
 ### 1.1 `docker/Dockerfile`
-Dockerfile is used to construct your runtime envrionment for benchmarking, it should specifies all dependencies of your ASR system.
+Dockerfile serves as a specification of your ASR runtime environment, pipeline will build docker image to reproduce your system on local machine. Here, `runtime` can be a cloud-API client, or a  local ASR engine.
 
 <details><summary> cloud-API ASR Dockerfile example </summary><p>
 

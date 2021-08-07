@@ -2,6 +2,7 @@
 SAFEBOX/*.cfg
 datasets/download
 datasets/SPEECHIO_*
+datasets/*_TEST
 oss
 tmp.sh
 test_env

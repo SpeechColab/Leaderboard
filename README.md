@@ -32,9 +32,20 @@ With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances w
 ---
 
 ## 2. TestSet Zoo
-<details><summary> Test Sets (ZH) </summary><p>
+<details><summary> Test Sets from Open-Sourced Dataset (ZH) </summary><p>
 
-| 编号 <br> ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
+| 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION |
+| --- | --- |
+| AISHELL-1_TEST | test set of AISHELL-1 |
+| AISHELL-2_IOS_TEST | test set of AISHELL-2 (iOS channel) |
+| AISHELL-2_ANDROID_TEST | test set of AISHELL-2 (Android channel) |
+| AISHELL-2_MIC_TEST | test set of AISHELL-2 (Microphone channel) |
+
+</p></details>
+
+<details><summary> SpeechIO Test Sets (ZH) </summary><p>
+
+| 编号 <br> TEST_SET_ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
 | --- | --- | --- | --- | --- | --- |
 |SPEECHIO_ASR_ZH00000| 接入调试集 <br> For leaderboard submitter debugging | 视频会议、论坛演讲 <br> video conference & forum speech | 经济、货币、金融 <br> economy, currency, finance | 1.0 | ★★☆ |
 |SPEECHIO_ASR_ZH00001| 新闻联播 | 新闻播报 <br> TV News | 时政 <br> news & politics | 9 | ★ |
@@ -68,7 +79,7 @@ With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances w
 ---
 
 ## 3. Model Zoo
-<details><summary> Commercial Models (ZH) </summary><p>
+<details><summary> Commercial API (ZH) </summary><p>
 
 | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |
@@ -82,7 +93,7 @@ With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances w
 |yitu_api | Cloud API |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
 </p></details>
 
-<details><summary> Open-Sourced Models (ZH) </summary><p>
+<details><summary> Open-Sourced Pretrained Models (ZH) </summary><p>
 
 | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |

@@ -1,4 +1,13 @@
+# mini debug test set
 ./kaldi_to_speechio.py download/MINI MINI
+
+# open-sourced test sets
+./kaldi_to_speechio.py download/AISHELL-1_test AISHELL-1_TEST
+./kaldi_to_speechio.py download/AISHELL-2_iOS_test AISHELL-2_IOS_TEST
+./kaldi_to_speechio.py download/AISHELL-2_Android_test AISHELL-2_ANDROID_TEST
+./kaldi_to_speechio.py download/AISHELL-2_Mic_test AISHELL-2_MIC_TEST
+
+# SpeechIO test sets
 ./kaldi_to_speechio.py download/economy_finance_currency SPEECHIO_ASR_ZH00000
 ./kaldi_to_speechio.py download/cctv_news SPEECHIO_ASR_ZH00001
 ./kaldi_to_speechio.py download/luyu_yirixing SPEECHIO_ASR_ZH00002
