@@ -99,7 +99,7 @@ Although optional, we strongly suggest you provide more info about your model fo
 ### 1.4 `SBI`
 `SBI` is a submitter implemented program that can decode audio files:
 * `SBI` is an executable, could be shebanged `bash`, `python`, `perl` script, or `C/C++ binary`
-* `SBI` will be invoked in submitted model dir, so SBI can use relative path to refer to other programs, scripts and shared libraries inside model dir.
+* `SBI` will be invoked in submission model dir, so SBI can use relative path to refer to other programs, scripts and shared libraries inside model dir.
 * `SBI` performs speech recognition to a list of audios
   ```
   ./SBI <input_audio_list> <result_dir>
