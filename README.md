@@ -22,7 +22,7 @@ As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platfo
   - incorporate well-known open-sourced models
   - open for people who are willing to share/publish their ASR models
 
-3. an open benchmark pipeline:
+3. an open benchmarking pipeline:
   - defines a simplest-possible contract on the format of test sets, recognition result etc.
   - defines a simplest-possible benchmarking interface for model submitters
   - a fully automated pipeline to perform `prepare` -> `recognize` -> `process` -> `evaluate`, leaderboard users don't need to write code.
@@ -92,7 +92,7 @@ With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances w
 
 ---
 
-## 4. Benchmark Pipeline
+## 4. Benchmarking Pipeline
 How to submit your own model and get your model benchmarked ?
 
 Follow submission guideline here [HOW_TO_SUBMIT.md](HOW_TO_SUBMIT.md)
