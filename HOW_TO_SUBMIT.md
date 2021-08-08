@@ -147,7 +147,7 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate ASR 
 
 ---
 
-## Sample submission model directories
+### 1.6 Sample submission model dir
 
 * a sample model dir of Cloud-API based ASR system:
 
@@ -156,6 +156,27 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate ASR 
 * a sample model dir of local ASR system in Kaldi:
 
   https://github.com/speechio/leaderboard/tree/master/models/sample_kaldi_model
+
+---
+### 1.7 Debugging and validating your submission model dir
+Once you have prepared submission model dir following above specification, you need to validate everything works as expected. Here is what you can do:
+
+1. make sure you can find a `MINI` test set in your local testset-zoo, i.e. `{leaderboard_git_repo}/datasets/MINI`
+2. move prepared submission model to your local model-zoo
+    ```
+    mv {prepared_submission_model_dir} {leaderboard_git_repo}/models/{model_id_that_you_chose}
+    ```
+3. create a benchmark request(as described later in this guideline) under `{leaderboard_git_repo}/requests/mini_debug.yaml`
+
+4. run a MINI benchmark:
+    ```
+    cd {leaderboard_git_repo}
+    ./leaderboard_runner requests/mini_debug.yaml
+    ```
+5. check `{leaderboard_git_repo}/results/{CER,CHECK}`
+
+This basically invokes a benchmarking pipeline locally on your machine, testing your model accuracy against MINI test set. If you can pass this validation, then congratulations, you have successfully made your ASR system reproducible, it's now safe to share and publish.
+
 ---
 
 ## Step 2: Submit your model
