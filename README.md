@@ -36,8 +36,6 @@ Collected from all sorts of open-sourced datasets
 | AISHELL-2_MIC_TEST | test set of AISHELL-2 (Microphone channel) |
 </p></details>
 
-<br/>
-
 ### 2.2 SpeechIO Test Sets
 Carefully curated by SpeechIO authors, crawled from publicly available sources (Youtube, TV programs, Podcast etc), covering various well-known acoustic scenarios(AM) and content domains(LM & vocabulary), labeled by professional annotators.
 
