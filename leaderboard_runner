@@ -18,10 +18,10 @@ if __name__ == '__main__':
 
     utils_dir = os.path.abspath('utils')
 
-    remote_model_zoo = 'oss://speechio-leaderboard/model-zoo'
+    remote_model_zoo = 'oss://speechio-leaderboard/models'
     model_zoo = os.path.abspath('models')
 
-    remote_dataset_zoo = 'oss://speechio-leaderboard/dataset-zoo'
+    remote_dataset_zoo = 'oss://speechio-leaderboard/datasets'
     dataset_zoo = os.path.abspath('datasets')
 
     model = ''
