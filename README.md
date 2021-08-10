@@ -7,42 +7,41 @@ Regarding to the field of Automatic Speech Recognition(ASR) today, people often 
 * For industry, there is no objective and quantative benchmark on how these commercial APIs perform in real-life scenarios, at least in public domain.
 * For academia, it is becoming harder today to compare ASR models due to the fragmentation of research toolkits and ecosystem.
 * How are academic SOTA and industrial SOTA related ?
+
 ---
 
 ![Overview](misc/overview.png)
 As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platform, by providing 3 components:
 
-1. TestSet Zoo:
-  - SpeechIO test sets: carefully curated by SpeechIO authors, crawled from publicly available sources(Youtube, TV programs, Podcast etc), covering various common acoustic scenarios(AM) and content domains(LM & vocabulary) that are familiar to the public, labeled by professional annotators with great cautions.
-  - open-sourced test sets: collected from all sorts of open-sourced datasets
-  - open for people who are willing to contribute their own test sets
-
-2. Model Zoo
-  - aggregates commercial ASR APIs (e.g. google, aws, baidu, alibaba, tencent, iflytek, etc)
-  - incorporate well-known open-sourced models
-  - open for people who are willing to share/publish their ASR models
-
+1. TestSet Zoo: A collection of test sets covering wide range of speech recognition scenarios
+2. Model Zoo: A collection of models including commercial APIs and open-sourced pretrained models
 3. an open benchmarking pipeline:
-  - defines a simplest-possible specification on recognition interface, the format of input test sets, the format of output recognition results.
-  - As long as model submitters conform to this specification, a fully automated pipeline will take care of the rest (e.g. data preparation -> recognition invocation -> text post processing -> WER/CER/SER evaluation)
+   - defines a simplest-possible specification on recognition interface, the format of input test sets, the format of output recognition results.
+   - As long as model submitters conform to this specification, a fully automated pipeline will take care of the rest (e.g. data preparation -> recognition invocation -> text post processing -> WER/CER/SER evaluation)
 
 With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances with arbitrary combinations between test-set zoo and model zoo, by simply filling a request form [example form](requests/sample_request.yaml)
 
 ---
 
 ## 2. TestSet Zoo
-<details><summary> Test Sets from Open-Sourced Dataset (ZH) </summary><p>
 
+### 2.1 Open-Sourced Test Sets
+Collected from all sorts of open-sourced datasets
+<details><summary> List of Open-Sourced Test Sets (ZH) </summary><p>
 | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION |
 | --- | --- |
 | AISHELL-1_TEST | test set of AISHELL-1 |
 | AISHELL-2_IOS_TEST | test set of AISHELL-2 (iOS channel) |
 | AISHELL-2_ANDROID_TEST | test set of AISHELL-2 (Android channel) |
 | AISHELL-2_MIC_TEST | test set of AISHELL-2 (Microphone channel) |
-
 </p></details>
 
-<details><summary> SpeechIO Test Sets (ZH) </summary><p>
+<br/>
+
+### 2.2 SpeechIO Test Sets
+Carefully curated by SpeechIO authors, crawled from publicly available sources (Youtube, TV programs, Podcast etc), covering various well-known acoustic scenarios(AM) and content domains(LM & vocabulary), labeled by professional annotators.
+
+<details><summary> List of SpeechIO Test Sets (ZH) </summary><p>
 
 | 编号 <br> TEST_SET_ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
 | --- | --- | --- | --- | --- | --- |
