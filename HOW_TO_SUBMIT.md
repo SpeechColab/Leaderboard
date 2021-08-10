@@ -233,4 +233,4 @@ Once we merge your submission pull request, the leaderboard pipeline will:
 * email results to requester
 
 ## Contacts
-Contact leaderboard@speechio.ai if you have further inqueires.
+Contact leaderboard@speechio.ai if you have further inquiries.
