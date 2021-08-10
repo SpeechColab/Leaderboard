@@ -28,12 +28,14 @@ With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances w
 ### 2.1 Open-Sourced Test Sets
 Collected from all sorts of open-sourced datasets
 <details><summary> List of Open-Sourced Test Sets (ZH) </summary><p>
+
 | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION |
 | --- | --- |
 | AISHELL-1_TEST | test set of AISHELL-1 |
 | AISHELL-2_IOS_TEST | test set of AISHELL-2 (iOS channel) |
 | AISHELL-2_ANDROID_TEST | test set of AISHELL-2 (Android channel) |
 | AISHELL-2_MIC_TEST | test set of AISHELL-2 (Microphone channel) |
+
 </p></details>
 
 ### 2.2 SpeechIO Test Sets
