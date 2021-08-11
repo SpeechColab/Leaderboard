@@ -88,7 +88,7 @@ if __name__ == '__main__':
         print(F'Pulling up benchmarking container ...', file = sys.stderr)
         
         test_sets_argument = ' '.join(test_sets)
-        leaderboard = os.path.dirname(os.path.realpath(__file__))
+        leaderboard = os.getcwd()
         LEADERBOARD = '/app/speechio/leaderboard'
         docker_run_cmd = (
             F'docker run '
