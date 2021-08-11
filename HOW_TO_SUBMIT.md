@@ -186,10 +186,11 @@ This basically invokes a benchmarking pipeline locally on your machine, testing 
 utils/install_oss.sh
 ```
 
-2.2 Upload your model to leaderboard model-zoo
+2.2 Move prepared submission model dir into local model zoo
 ```
-./leaderboard_submit  model_key  ~/work/prepared_local_model_dir
+mv prepared_model_dir leaderboard/models/<model_id>
 ```
+
 **`model_id`** is a unique identifier, used to refer to this model in future benchmarks.
 
 We let submitters to decide their model id. It should be meaningful and unique, for example:
@@ -201,6 +202,12 @@ stanford_open_conformer
 deepspeech_v1
 word2vec_v2
 ```
+
+2.3 Upload your model to leaderboard model-zoo
+```
+ops/push model <model_id>
+```
+This will upload submission model from your local model zoo to cloud-storage model zoo, so that SpeechIO/others can download/sync this model.
 
 ---
 ## Step 3: Send a benchmark request via a pull request to leaderboard repo
