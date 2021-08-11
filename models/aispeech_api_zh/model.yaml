@@ -1,6 +1,7 @@
+date: 2021-04-05
 task: ASR
 language: zh
 sample_rate: 16000
 author: Jiayu
 entity: SpeechIO
-email: jerry.jiayu.du@gmail.com
+email: leaderboard@speechio.ai

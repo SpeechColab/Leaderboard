@@ -39,13 +39,13 @@ Dockerfile serves as a specification of your ASR runtime environment, pipeline w
 
 | model_id | Dockerfile |
 | -- | -- |
-| aispeech_api | [example](models/aispeech_api/docker/Dockerfile) |
-| aliyun_api | [example](models/aliyun_api/docker/Dockerfile) |
-| baidu_pro_api | [example](models/baidu_pro_api/docker/Dockerfile) |
-| microsoft_api | [example](models/microsoft_api/docker/Dockerfile) |
-| sogou_api | [example](models/sogou_api/docker/Dockerfile) |
-| tencent_api | [example](models/tencent_api/docker/Dockerfile) |
-| yitu_api | [example](models/yitu_api/docker/Dockerfile) |
+| aispeech_api_zh | [example](models/aispeech_api/docker/Dockerfile) |
+| aliyun_api_zh | [example](models/aliyun_api/docker/Dockerfile) |
+| baidu_pro_api_zh | [example](models/baidu_pro_api/docker/Dockerfile) |
+| microsoft_api_zh | [example](models/microsoft_api/docker/Dockerfile) |
+| sogou_api_zh | [example](models/sogou_api/docker/Dockerfile) |
+| tencent_api_zh | [example](models/tencent_api/docker/Dockerfile) |
+| yitu_api_zh | [example](models/yitu_api/docker/Dockerfile) |
 
 </p></details>
 
@@ -151,7 +151,7 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate ASR 
 
 * a sample model dir of Cloud-API based ASR system:
 
-  https://github.com/speechio/leaderboard/tree/master/models/aispeech_api
+  https://github.com/speechio/leaderboard/tree/master/models/aispeech_api_zh
 
 * a sample model dir of local ASR system in Kaldi:
 
