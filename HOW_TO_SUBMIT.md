@@ -171,7 +171,7 @@ Once you have prepared submission model dir following above specification, you n
 4. run a MINI benchmark:
     ```
     cd <leaderboard_git_repo>
-    ./leaderboard_runner requests/mini_debug.yaml
+    ops/leaderboard_runner requests/mini_debug.yaml
     ```
 5. check `<leaderboard_git_repo>/results/{CER,CHECK}`
 
