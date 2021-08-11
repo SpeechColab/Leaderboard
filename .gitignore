@@ -21,32 +21,32 @@ ossutil_output
 models/speechio_kaldi_zh_16k
 
 # aispeech credential
-models/aispeech_api/API_KEY
-models/aispeech_api/PRODUCT_ID
+models/aispeech_api_zh/API_KEY
+models/aispeech_api_zh/PRODUCT_ID
 
 # aliyun credential
-models/aliyun_api/APPKEY
-models/aliyun_api/ACCESS_KEY_ID
-models/aliyun_api/ACCESS_KEY_SECRET
-models/aliyun_api/TOKEN
-models/aliyun_api/TOKEN_EXPIRE_TIME
+models/aliyun_api_zh/APPKEY
+models/aliyun_api_zh/ACCESS_KEY_ID
+models/aliyun_api_zh/ACCESS_KEY_SECRET
+models/aliyun_api_zh/TOKEN
+models/aliyun_api_zh/TOKEN_EXPIRE_TIME
 
 # baidu credential
-models/baidu_pro_api/API_KEY
-models/baidu_pro_api/SECRET_KEY
+models/baidu_pro_api_zh/API_KEY
+models/baidu_pro_api_zh/SECRET_KEY
 
 # microsoft azure cognitive service credential
-models/microsoft_api/SUBSCRIPTION_KEY
+models/microsoft_api_zh/SUBSCRIPTION_KEY
 
 # sogou api credential
-models/sogou_api/APP_ID
-models/sogou_api/APP_KEY
-models/sogou_api/TOKEN
+models/sogou_api_zh/APP_ID
+models/sogou_api_zh/APP_KEY
+models/sogou_api_zh/TOKEN
 
 # tencent api credential
-models/tencent_api/SECRET_ID
-models/tencent_api/SECRET_KEY
+models/tencent_api_zh/SECRET_ID
+models/tencent_api_zh/SECRET_KEY
 
 # yitu api credential
-models/yitu_api/DEV_ID
-models/yitu_api/DEV_KEY
+models/yitu_api_zh/DEV_ID
+models/yitu_api_zh/DEV_KEY
