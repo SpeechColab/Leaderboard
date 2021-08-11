@@ -1,6 +1,6 @@
 # How to submit your model to SpeechIO leaderboard
 ## Benchmarking Pipeline Overview
-![image](misc/leaderboard_design.png)
+![image](misc/pipeline.png)
 
 As above figure demonstrates, a benchmark cycle contains following steps:
 1. submitter prepares their model on their local machine
