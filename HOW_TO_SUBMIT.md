@@ -123,6 +123,8 @@ These kind of knowledge sharing is especially benefical to the speech community.
   ```
 * Once submitters can successfully debug and run SBI to decode their local audio list inside model-image dir, then prepared model-image should be good to work with leaderboard pipeline.  Submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), WER/CER calculation etc.
 
+---
+
 ### 1.5 Runtime Resources
 Runtime resources refers to *models*, *configs*, *cloud-api credentials* etc. These resources can be freely organized by submitters, as long as they are **inside model-image**.  **SBI** code is responsible and is supposed to know how to locate them using relative path.
 
