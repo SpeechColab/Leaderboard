@@ -26,7 +26,7 @@ Now let's explain this item by item.
 
 ---
 
-### 1.1 `docker/Dockerfile`
+### 1.1 docker/Dockerfile
 `docker/Dockerfile` should specify all dependencies of your ASR system, so a docker image can be built by leaderboard pipeline to reproduce your ASR runtime envrionment. Here, `runtime` can be a cloud-API client, or a local ASR engine.
 
 <details><summary> cloud-API ASR Dockerfile example </summary><p>
@@ -55,7 +55,7 @@ Now let's explain this item by item.
 
 ---
 
-### 1.2 `model.yaml`
+### 1.2 model.yaml
 This config list required properties of your ASR system, example below:
 ```
 date: 2021-04-05
@@ -77,7 +77,7 @@ email: leaderboard@speechio.ai
 
 ---
 
-### 1.3 `README.md` (optional)
+### 1.3 README.md (optional)
 Although this is not a mandatory requirement for model-image, we strongly suggest that you provide a summary about your model in this markdown, such as:
 
 * number of parameters
@@ -92,7 +92,7 @@ These kind of knowledge sharing is especially benefical to the speech community.
 
 ---
 
-### 1.4 `SBI`
+### 1.4 SBI
 `SBI` is a submitter implemented `executable` implementing a simple benchmarking interface:
 * **SBI** can be *C/C++ binary*, *bash, python* scripts (with shebang line such as `#!/usr/bin/env bash`) 
 * **SBI** is always invoked in model-image dir, so its code can always use relative path to refer to other programs, scripts and shared libraries inside model-image.
@@ -123,7 +123,7 @@ These kind of knowledge sharing is especially benefical to the speech community.
   ```
 * Once submitters can successfully debug and run SBI to decode their local audio list inside model-image dir, then prepared model-image is guarenteed to work with leaderboard pipeline.  Submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), WER/CER calculation etc.
 
-### 1.5 `Runtime Resources`
+### 1.5 Runtime Resources
 Runtime resources refers to *models*, *configs*, *cloud-api credentials* etc. These resources are freely organized by submitters, as long as they are **inside model-image**.  **SBI** code is responsible and is supposed to know how to locate them using relative path.
 
 For example:
