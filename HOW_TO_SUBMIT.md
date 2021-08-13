@@ -95,8 +95,8 @@ These kind of knowledge sharing is especially benefical to the speech community.
 ### 1.4 SBI
 `SBI` is a submitter implemented `executable` for ASR benchmarking inference:
 * **SBI** can be *C/C++ binary*, *bash, python* scripts (with shebang line such as `#!/usr/bin/env bash`) 
-* **SBI** is always invoked in model-image dir, so its code can always use relative path to refer to other programs, scripts and shared libraries inside model-image.
-* **SBI** should implement an audio-list ASR interface:
+* **SBI** is always invoked in model-image dir, so its code can use relative path to refer to other resources inside model-image(such as models, configs, credentials, libraries, other programs/scripts)
+* **SBI** should implement an audio-list ASR decoding:
   ```
   ./SBI <input_audio_list> <result_dir>
   ```
@@ -121,10 +121,10 @@ These kind of knowledge sharing is especially benefical to the speech community.
   ```
   SPEECHIO_ASR_ZH00001__U_00003  
   ```
-* Once submitters can successfully debug and run SBI to decode their local audio list inside model-image dir, then prepared model-image is guarenteed to work with leaderboard pipeline.  Submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), WER/CER calculation etc.
+* Once submitters can successfully debug and run SBI to decode their local audio list inside model-image dir, then prepared model-image should be good to work with leaderboard pipeline.  Submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), WER/CER calculation etc.
 
 ### 1.5 Runtime Resources
-Runtime resources refers to *models*, *configs*, *cloud-api credentials* etc. These resources are freely organized by submitters, as long as they are **inside model-image**.  **SBI** code is responsible and is supposed to know how to locate them using relative path.
+Runtime resources refers to *models*, *configs*, *cloud-api credentials* etc. These resources can be freely organized by submitters, as long as they are **inside model-image**.  **SBI** code is responsible and is supposed to know how to locate them using relative path.
 
 For example:
 ```
@@ -145,16 +145,16 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate runt
 
 ### 1.6 Sample model-image
 
-* a sample model dir of Cloud-API based ASR system:
+* a sample model-image of Cloud-API ASR system:
 
   https://github.com/speechio/leaderboard/tree/master/models/aispeech_api_zh
 
-* a sample model dir of local ASR system in Kaldi:
+* a sample model-image of local ASR system in Kaldi framework:
 
   https://github.com/speechio/leaderboard/tree/master/models/sample_kaldi_model
 
 ---
-### 1.7 Debug and validate model-image with leaderboard pipeline on your local machine
+### 1.7 Validate prepared model-image with leaderboard pipeline on your local machine
 1. make sure you can find `MINI` in your local testset-zoo, i.e. `leaderboard/datasets/MINI`
 2. move prepared model-image to your local model-zoo
     ```
@@ -171,20 +171,20 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate runt
     test_set:
       - MINI
     ```
-
-1. run a MINI benchmark:
+4. run a MINI benchmark:
     ```
-    cd leaderboard
+    # run this in leaderboard repo
     ops/leaderboard_runner requests/mini_debug.yaml
     ```
-2. you can check `leaderboard/results/<***_your_model_id_***>/{CER,CHECK}`
 
-If you can pass this local validation, then congratulations, you have successfully made your ASR system reproducible, it's now safe to share and publish.
+5. you can check `leaderboard/results/<***_your_model_id_***>/{CER,CHECK}`
+
+If you can pass above local validation, then congratulations, you have successfully made your ASR system reproducible, it's now safe to share and publish.
 
 ---
 
 ## Step 2: Submit your model-image
-2.1 Install aliyun object-storage-service client (one-time installation)
+2.1 Install aliyun object-storage-service client (one-time-only installation)
 ```
 # run this in leaderboard repo
 utils/install_oss.sh
@@ -218,11 +218,11 @@ This will upload prepared model-image from your local model-zoo to cloud model-z
 ## Step 3: Send a benchmark request via a pull request to leaderboard repo
 Once you have your model submitted, you can open a PR to this github repo, which adds a request file to `requests` directory:
 
-**`github.com/speechio/leaderboard/requests/give_a_name_for_your_benchmark_request.yaml`**
+**`github.com/speechio/leaderboard/requests/<your_benchmark_request>.yaml`**
 
 a sample request file contains following content:
 ```
-date: 2021-04-05
+date: '2021-04-05'
 requester: Jiayu
 entity: SpeechIO
 email: 
@@ -238,7 +238,7 @@ where:
 * `test_set`: test set id list, which test sets you want to benchmark with
 * `email`: a list of email addresses to receive benchmark results
 
-to lookup `model id` and `test_sets id`, refer to section 2/3 tables in [README](README.md)
+you can lookup `model id` and `test_sets id` tables from section 2&3 in [README](README.md)
 
 Once we merge your submission pull request, the leaderboard pipeline will:
 * init a docker runner to benchmark requested model with requested test sets
