@@ -31,10 +31,10 @@ Collected from all sorts of open-sourced datasets
 
 | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION |
 | --- | --- |
-| AISHELL-1_TEST | test set of AISHELL-1 |
-| AISHELL-2_IOS_TEST | test set of AISHELL-2 (iOS channel) |
-| AISHELL-2_ANDROID_TEST | test set of AISHELL-2 (Android channel) |
-| AISHELL-2_MIC_TEST | test set of AISHELL-2 (Microphone channel) |
+| AISHELL1_TEST | test set of AISHELL-1 |
+| AISHELL2_IOS_TEST | test set of AISHELL-2 (iOS channel) |
+| AISHELL2_ANDROID_TEST | test set of AISHELL-2 (Android channel) |
+| AISHELL2_MIC_TEST | test set of AISHELL-2 (Microphone channel) |
 
 </p></details>
 

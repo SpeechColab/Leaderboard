@@ -2,10 +2,10 @@
 ./kaldi_to_speechio.py download/MINI MINI
 
 # open-sourced test sets
-./kaldi_to_speechio.py download/AISHELL-1_test AISHELL-1_TEST
-./kaldi_to_speechio.py download/AISHELL-2_iOS_test AISHELL-2_IOS_TEST
-./kaldi_to_speechio.py download/AISHELL-2_Android_test AISHELL-2_ANDROID_TEST
-./kaldi_to_speechio.py download/AISHELL-2_Mic_test AISHELL-2_MIC_TEST
+./kaldi_to_speechio.py download/AISHELL1_test AISHELL1_TEST
+./kaldi_to_speechio.py download/AISHELL2_iOS_test AISHELL2_IOS_TEST
+./kaldi_to_speechio.py download/AISHELL2_Android_test AISHELL2_ANDROID_TEST
+./kaldi_to_speechio.py download/AISHELL2_Mic_test AISHELL2_MIC_TEST
 
 # SpeechIO test sets
 ./kaldi_to_speechio.py download/economy_finance_currency SPEECHIO_ASR_ZH00000
