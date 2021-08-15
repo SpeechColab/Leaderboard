@@ -80,7 +80,7 @@ if __name__ == '__main__':
         print(F'Building docker image ...', file = sys.stderr)
         docker_build_cmd = (
             F'docker build -f {docker_file} -t {docker_image} '
-            F'--build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) '
+            #F'--build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) '
             F'{docker_context}'
         )
         print(docker_build_cmd, file=sys.stderr)
