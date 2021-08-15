@@ -1,22 +1,28 @@
 .DS_Store
-SAFEBOX/*.cfg
-datasets/download
-datasets/SPEECHIO_*
-datasets/*_TEST
-oss
+credentials/*.cfg
+
+models/
+!models/zoo.yaml
+!models/test.wav
+
+datasets/*
+!datasets/MINI
+!datasets/zoo.yaml
+!datasets/kaldi_to_speechio.py
+!datasets/run_kaldi_to_speechio.sh
+
 tmp.sh
-test_env
 results
 rest_api.sh
 requests/2021*
 tiobe.sh
 log.*
 tmp*
-models/
 
 # oss
 .ossutil_checkpoint
 ossutil_output
+utils/oss
 
 models/speechio_kaldi_zh_16k
 

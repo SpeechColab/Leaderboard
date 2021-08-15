@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 import sys, os
 import argparse
-
-REMOTE_URI = 'oss://speechio-leaderboard/'
+import yaml  # pip install pyyaml
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -11,46 +10,52 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(args, file=sys.stderr)
 
-    remote_model_zoo = os.path.join(REMOTE_URI, 'models')
-    model_zoo = 'models'
+    if not os.path.isfile('utils/oss'):
+        print("Please install oss via utils/install_aliyun_oss_client.sh", file=sys.stderr)
+        sys.exit(-1)
 
-    remote_dataset_zoo = os.path.join(REMOTE_URI, 'datasets')
-    dataset_zoo = 'datasets'
-
-    assert os.path.isfile('oss'), "Cannot find oss, please run utils/install_oss.sh"
-    if not os.path.isfile('SAFEBOX/oss.cfg'):
+    if not os.path.isfile('credentials/aliyun_oss.cfg'):
         instructions_to_get_credential = (
             'You need credential to use the leaderboard:\n  '
             'Please send email with title "oss.cfg" to leaderboard@speechio.ai, '
-            'and paste replied content to SAFEBOX/oss.cfg'
+            'and paste replied content to credentials/aliyun_oss.cfg'
         )
         print(instructions_to_get_credential, file=sys.stderr)
         sys.exit(-1)
+
+    model_zoo = 'models'
+    dataset_zoo = 'datasets'
 
     if args.resource_type == 'model':
         model_id = args.resource_id
         dir = os.path.join(model_zoo, model_id)
 
+        # precheck
         requirements = [ os.path.join(dir, x) for x in ['model.yaml', 'SBI', 'docker/Dockerfile'] ]
         for r in requirements:
             assert(os.path.isfile(r))
         
         src = dir
-        dst = os.path.join(remote_model_zoo, model_id) + '/'
+        with open(os.path.join(model_zoo, 'zoo.yaml'), 'r', encoding='utf8') as f:
+            remote_model_zoo = yaml.safe_load(f)
+        dst = remote_model_zoo[model_id]['url']
 
     elif args.resource_type == 'dataset':
         dataset_id = args.resource_id
         dir = os.path.join(dataset_zoo, dataset_id)
 
+        # precheck
         assert(os.path.isdir(os.path.join(dir, 'audio')))
         assert(os.path.isfile(os.path.join(dir, 'info.json')))
 
         src = dir
-        dst = os.path.join(remote_dataset_zoo, dataset_id) + '/'
+        with open(os.path.join(dataset_zoo, 'zoo.yaml'), 'r', encoding='utf8') as f:
+            remote_dataset_zoo = yaml.safe_load(f)
+        dst = remote_dataset_zoo[dataset_id]['url']
 
     else:
         raise NotImplementedError
 
-    cmd = F'./oss -c SAFEBOX/oss.cfg cp -ur {src} {dst}'
+    cmd = F'utils/oss -c credentials/aliyun_oss.cfg cp -ur {src} {dst}'
     print(cmd, file=sys.stderr)
     os.system(cmd)

@@ -1,0 +1,19 @@
+# toy
+MINI:
+  url: oss://speechio-leaderboard/datasets/MINI/
+
+# open-sourced
+AISHELL1_TEST:
+  url: oss://speechio-leaderboard/datasets/AISHELL1_TEST/
+AISHELL2_MIC_TEST:
+  url: oss://speechio-leaderboard/datasets/AISHELL2_MIC_TEST/
+AISHELL2_IOS_TEST:
+  url: oss://speechio-leaderboard/datasets/AISHELL2_IOS_TEST/
+AISHELL2_ANDROID_TEST:
+  url: oss://speechio-leaderboard/datasets/AISHELL2_ANDROID_TEST/
+
+# speechio
+SPEECHIO_ASR_ZH00000:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00000/
+SPEECHIO_ASR_ZH00001:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00001/
