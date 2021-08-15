@@ -1,9 +1,8 @@
 .DS_Store
 credentials/*.cfg
 
-models/
-!models/zoo.yaml
-!models/test.wav
+models/trush
+models/speechio_kaldi_zh_16k
 
 datasets/*
 !datasets/MINI
@@ -23,8 +22,6 @@ tmp*
 .ossutil_checkpoint
 ossutil_output
 utils/oss
-
-models/speechio_kaldi_zh_16k
 
 # aispeech credential
 models/aispeech_api_zh/API_KEY
