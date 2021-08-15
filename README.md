@@ -15,7 +15,7 @@ As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platfo
 
 1. TestSet Zoo: A collection of test sets covering wide range of speech recognition scenarios
 2. Model Zoo: A collection of models including commercial APIs and open-sourced pretrained models
-3. an open benchmarking pipeline:
+3. An automated benchmarking pipeline:
    - defines a simplest-possible specification on recognition interface, the format of input test sets, the format of output recognition results.
    - As long as model submitters conform to this specification, a fully automated pipeline will take care of the rest (e.g. data preparation -> recognition invocation -> text post processing -> WER/CER/SER evaluation)
 
