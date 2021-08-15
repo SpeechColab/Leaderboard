@@ -1,4 +1,2 @@
-speechio_kaldi_zh_16k:
-  url: oss://speechio-leaderboard/models/speechio_kaldi_zh_16k/
 speechio_kaldi_multicn:
   url: oss://speechio-leaderboard/models/speechio_kaldi_multicn/
