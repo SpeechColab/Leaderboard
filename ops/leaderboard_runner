@@ -33,7 +33,7 @@ if __name__ == '__main__':
     # download model
     if not os.path.isdir(model_dir):
         pull_model_cmd = F'ops/pull model {model_id}'
-        logging.info(F'Please pull model to your local machine via: {pull_model_cmd}')
+        logging.info(F'Please pull model-image to your local machine via: {pull_model_cmd}')
         sys.exit(-1)
     assert os.path.isdir(model_dir)
 
