@@ -10,52 +10,32 @@ if __name__ == '__main__':
     logging.info('Host Runner Started')
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--runner_begin_stage', type=int, default=0, help='only run stages inside [begin, end)')
-    parser.add_argument('--runner_end_stage', type=int, default=100, help='only run stages inside [begin, end)')
-    parser.add_argument('--benchmark_stage', type=int, default=0, help='set stage variable in benchmark.sh')
+    parser.add_argument('--stage', type=int, default=0, help='set stage variable in benchmark.sh')
     parser.add_argument('--max_num_utts', type=int, default=10000, help='max number of utts to test in a test set')
     parser.add_argument('request_file_path', type=str, help='request.yaml')
     args = parser.parse_args()
 
-    utils_dir = os.path.abspath('utils')
+    model_zoo   = os.path.abspath('models');   assert os.path.isdir(model_zoo)
+    dataset_zoo = os.path.abspath('datasets'); assert os.path.isdir(dataset_zoo)
 
-    remote_model_zoo = 'oss://speechio-leaderboard/models'
-    model_zoo = os.path.abspath('models')
-
-    remote_dataset_zoo = 'oss://speechio-leaderboard/datasets'
-    dataset_zoo = os.path.abspath('datasets')
-
-    model = ''
-    test_sets = []
     logging.info('Processing benchmark request ...')
     with open(args.request_file_path, 'r', encoding = 'utf-8') as request_file:
         request = yaml.safe_load(request_file)
-        model = request['model']
+        model_id = request['model']
+        test_sets = []
         for x in request['test_set']:
             test_sets.append(x)
-    assert(model)
+    assert(model_id)
     assert(test_sets)
 
+    model_dir = os.path.join(model_zoo, model_id)
+
     # download model
-    remote_model_dir = os.path.join(remote_model_zoo, model) + '/'
-    model_dir = os.path.join(model_zoo, model)
-    if args.runner_begin_stage <= 1 < args.runner_end_stage:
-        if not os.path.isfile('utils/oss'):
-            logging.error("Please install oss via utils/install_aliyun_oss_client.sh")
-            sys.exit(-1)
-
-        if not os.path.isfile('credentials/aliyun_oss.cfg'):
-            instructions_to_get_credential = (
-                'You need credential to use the leaderboard:\n  '
-                'Please send email with title "oss.cfg" to leaderboard@speechio.ai, '
-                'and paste auto-replied content to credentials/aliyun_oss.cfg'
-            )
-            logging.error(instructions_to_get_credential)
-            sys.exit(-1)
-
-        cmd = F"utils/oss -c credentials/aliyun_oss.cfg cp -ur {remote_model_dir} {model_dir}"
-        logging.info(F'Downloading {model} from model zoo: {cmd}')
-        os.system(cmd)
+    if not os.path.isdir(model_dir):
+        pull_model_cmd = F'ops/pull model {model_id}'
+        logging.info(F'Please pull model to your local machine via: {pull_model_cmd}')
+        sys.exit(-1)
+    assert os.path.isdir(model_dir)
 
     # check model
     model_info_path = os.path.join(model_dir, 'model.yaml')
@@ -75,32 +55,28 @@ if __name__ == '__main__':
     assert language
 
     # build docker image
-    docker_image = F'speechio/leaderboard:{model}'
-    if args.runner_begin_stage <= 2 < args.runner_end_stage:
-        docker_build_cmd = (
-            F'docker build -f {docker_file} -t {docker_image} '
-            #F'--build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) '
-            F'{docker_context}'
-        )
-        logging.info(F'Building docker image: {docker_build_cmd}')
-        os.system(docker_build_cmd)
+    docker_image = F'speechio/leaderboard:{model_id}'
+    docker_build_cmd = (
+        F'docker build -f {docker_file} -t {docker_image} '
+        #F'--build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) '
+        F'{docker_context}'
+    )
+    logging.info(F'Building docker image: {docker_build_cmd}')
+    os.system(docker_build_cmd)
 
     # run benchmarking docker
-    if args.runner_begin_stage <= 3 < args.runner_end_stage:
-        test_sets_argument = ' '.join(test_sets)
-        leaderboard = os.getcwd()
-        LEADERBOARD = '/app/speechio/leaderboard'
-        docker_run_cmd = (
-            F'docker run '
-            F'-v {leaderboard}:{LEADERBOARD} '
-            F'--user "$(id -u):$(id -g)" '
-            F'-e LEADERBOARD={LEADERBOARD} '
-            F'{docker_image} '
-            F'{LEADERBOARD}/utils/benchmark.sh '
-            F'--stage {args.benchmark_stage} --max-num-utts {args.max_num_utts} '
-            F'{model} "{test_sets_argument}"'
-        )
-        logging.info(F'Pulling up benchmarking container: {docker_run_cmd}')
-        os.system(docker_run_cmd)
+    testset_ids = ' '.join(test_sets)
+    leaderboard = os.getcwd()
+    LEADERBOARD = '/app/speechio/leaderboard'
+    docker_run_cmd = (
+        F'docker run '
+        F'--user "$(id -u):$(id -g)" '
+        F'-e LEADERBOARD={LEADERBOARD} '
+        F'-v {leaderboard}:{LEADERBOARD} '
+        F'{docker_image} '
+        F'{LEADERBOARD}/utils/benchmark.sh --stage {args.stage} --max-num-utts {args.max_num_utts} {model_id} "{testset_ids}"'
+    )
+    logging.info(F'Pulling up benchmarking container: {docker_run_cmd}')
+    os.system(docker_run_cmd)
 
     logging.info('Host Runner Done')

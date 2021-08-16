@@ -343,7 +343,7 @@ if __name__ == '__main__':
 
     parser.add_argument('diagnostic_output', type=str)
     args = parser.parse_args()
-    print(args, file=sys.stderr)
+    print(args, file=sys.stderr, flush=True)
 
     ref_utts = LoadUtterances(args.ref, args.ref_format); # print(F'{len(ref_utts)} REF utterances loaded.', file=sys.stderr)
     hyp_utts = LoadUtterances(args.hyp, args.hyp_format); # print(F'{len(hyp_utts)} HYP utterances loaded.', file=sys.stderr)
