@@ -54,7 +54,7 @@ for x in $test_sets; do
     if [ $stage -le 3 ]; then
         language=$(grep language model.yaml | awk -F: '{print $NF}' | tr -d " ")
         echo "$0 --> Normalizing REF text ..."
-        ${LEADERBOARD}/utils/tn_${language}.py \
+        ${LEADERBOARD}/utils/textnorm_${language}.py \
             --has_key --to_upper \
             $dir/trans.txt \
             $dir/ref.txt
