@@ -27,7 +27,7 @@ Now let's explain this item by item.
 ---
 
 ### 1.1 docker/Dockerfile
-`docker/Dockerfile` should specify all dependencies of your ASR system, so a docker image can be built by leaderboard pipeline to reproduce your ASR runtime envrionment. Here, `runtime` can be a cloud-API client, or a local ASR engine.
+`docker/Dockerfile` should specify all dependencies of your ASR system, so a docker image can be built by leaderboard pipeline to reproduce your runtime envrionment. Here, `runtime` can be a cloud-API client, or a local ASR engine.
 
 <details><summary> cloud-API ASR Dockerfile example </summary><p>
 
@@ -162,6 +162,19 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate runt
     ```
     mv <prepared_model_image> leaderboard/models/<your_model_id>
     ```
+
+    **`model_id`** is a unique identifier, used to refer to this model in future benchmarks.
+
+    We let submitters to decide their model id. It should be meaningful and unique, for example:
+    ```
+    speechio_kaldi_pretrain
+    alphacep_vosk_en
+    interspeech_xxx_paper_reproduced
+    stanford_open_conformer
+    deepspeech_v1
+    word2vec_v2
+    ```
+
 3. create a benchmark request under `leaderboard/requests/mini_debug.yaml`, replace <your_model_id> field with your model_id:
     ```
     date: '2021-01-01'
@@ -189,25 +202,14 @@ If you can pass above local validation, then congratulations, you have successfu
 2.1 Install aliyun object-storage-service client (one-time-only installation)
 ```
 # run this in leaderboard repo
-utils/install_oss.sh
+utils/install_aliyun_oss_client.sh
 ```
 
-2.2 Move prepared model-image dir into local model zoo (this should have been done already if you did local validation)
+2.2 Move prepared model-image dir into local model zoo
 ```
 mv <prepared_model_image> leaderboard/models/<model_id>
 ```
-
-**`model_id`** is a unique identifier, used to refer to this model in future benchmarks.
-
-We let submitters to decide their model id. It should be meaningful and unique, for example:
-```
-speechio_kaldi_pretrain
-alphacep_vosk_en
-interspeech_xxx_paper_reproduced
-stanford_open_conformer
-deepspeech_v1
-word2vec_v2
-```
+This should have been done already if you did local validation.
 
 2.3 Upload your model to leaderboard model-zoo
 ```
