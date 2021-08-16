@@ -3,7 +3,7 @@
 
 > "If you can’t measure it, you can’t improve it." -- *Peter Drucker*
 
-Regarding to the field of Automatic Speech Recognition(ASR) today, people often claim there systems to be SOTA, in research papers, in industrial PR articles etc.  The claim of SOTA is not as informative as one might expect, because:
+Regarding to the field of Automatic Speech Recognition(ASR) today, people often claim their systems to be SOTA, in research papers, in industrial PR articles etc.  The claim of SOTA is not as informative as one might expect, because:
 * For industry, there is no objective and quantative benchmark on how these commercial APIs perform in real-life scenarios, at least in public domain.
 * For academia, it is becoming harder today to compare ASR models due to the fragmentation of research toolkits and ecosystem.
 * How are academic SOTA and industrial SOTA related ?
