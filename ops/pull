@@ -2,16 +2,18 @@
 import sys, os
 import argparse
 import yaml  # pip install pyyaml
+import logging
+logging.basicConfig(stream=sys.stderr, level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('resource_type', choices=['model', 'dataset'])
     parser.add_argument('resource_id', type=str, help='submission model/dataset id')
     args = parser.parse_args()
-    print(args, file=sys.stderr)
+    logging.info(args)
 
     if not os.path.isfile('utils/oss'):
-        print("Please install oss via utils/install_aliyun_oss_client.sh", file=sys.stderr)
+        logging.error("Please install oss via utils/install_aliyun_oss_client.sh")
         sys.exit(-1)
 
     if not os.path.isfile('credentials/aliyun_oss.cfg'):
@@ -20,7 +22,7 @@ if __name__ == '__main__':
             'Please send email with title "oss.cfg" to leaderboard@speechio.ai, '
             'and paste replied content to credentials/aliyun_oss.cfg'
         )
-        print(instructions_to_get_credential, file=sys.stderr)
+        logging.error(instructions_to_get_credential)
         sys.exit(-1)
 
     model_zoo = 'models'
@@ -44,5 +46,5 @@ if __name__ == '__main__':
         raise NotImplementedError
 
     cmd = F'utils/oss -c credentials/aliyun_oss.cfg cp -ur {src} {dst}'
-    print(cmd, file=sys.stderr)
+    logging.info(cmd)
     os.system(cmd)

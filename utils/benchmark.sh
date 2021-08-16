@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Copyright  2021  Jiayu DU
 
-echo "---------- Docker Runner Started ----------"
+echo "---------- Benchmarking Started ----------"
 
 if [ -z "LEADERBOARD" ]; then
     echo "$0: LEADERBOARD env variable is empty"
@@ -77,4 +77,4 @@ for x in $test_sets; do
     sleep 1
 done
 
-echo "---------- Docker Runner Done ----------"
+echo "---------- Benchmarking Done ----------"

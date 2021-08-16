@@ -3,10 +3,11 @@ import sys, os
 import argparse
 import datetime
 import yaml # pip install pyyaml
+import logging
+logging.basicConfig(stream=sys.stderr, level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 
 if __name__ == '__main__':
-    print(F'========== Host Runner Started ==========', file=sys.stderr, flush=True)
-    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file=sys.stderr, flush=True)
+    logging.info('Host Runner Started')
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--runner_begin_stage', type=int, default=0, help='only run stages inside [begin, end)')
@@ -26,7 +27,7 @@ if __name__ == '__main__':
 
     model = ''
     test_sets = []
-    print(F'Processing benchmark request ...', file = sys.stderr)
+    logging.info('Processing benchmark request ...')
     with open(args.request_file_path, 'r', encoding = 'utf-8') as request_file:
         request = yaml.safe_load(request_file)
         model = request['model']
@@ -36,12 +37,11 @@ if __name__ == '__main__':
     assert(test_sets)
 
     # download model
-    print(F'Downloading {model} from model zoo ...', file = sys.stderr)
     remote_model_dir = os.path.join(remote_model_zoo, model) + '/'
     model_dir = os.path.join(model_zoo, model)
     if args.runner_begin_stage <= 1 < args.runner_end_stage:
         if not os.path.isfile('utils/oss'):
-            print("Please install oss via utils/install_aliyun_oss_client.sh", file=sys.stderr)
+            logging.error("Please install oss via utils/install_aliyun_oss_client.sh")
             sys.exit(-1)
 
         if not os.path.isfile('credentials/aliyun_oss.cfg'):
@@ -50,11 +50,11 @@ if __name__ == '__main__':
                 'Please send email with title "oss.cfg" to leaderboard@speechio.ai, '
                 'and paste auto-replied content to credentials/aliyun_oss.cfg'
             )
-            print(instructions_to_get_credential, file=sys.stderr)
+            logging.error(instructions_to_get_credential)
             sys.exit(-1)
 
         cmd = F"utils/oss -c credentials/aliyun_oss.cfg cp -ur {remote_model_dir} {model_dir}"
-        print(cmd, file=sys.stderr)
+        logging.info(F'Downloading {model} from model zoo: {cmd}')
         os.system(cmd)
 
     # check model
@@ -77,19 +77,16 @@ if __name__ == '__main__':
     # build docker image
     docker_image = F'speechio/leaderboard:{model}'
     if args.runner_begin_stage <= 2 < args.runner_end_stage:
-        print(F'Building docker image ...', file = sys.stderr)
         docker_build_cmd = (
             F'docker build -f {docker_file} -t {docker_image} '
             #F'--build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) '
             F'{docker_context}'
         )
-        print(docker_build_cmd, file=sys.stderr)
+        logging.info(F'Building docker image: {docker_build_cmd}')
         os.system(docker_build_cmd)
 
     # run benchmarking docker
     if args.runner_begin_stage <= 3 < args.runner_end_stage:
-        print(F'Pulling up benchmarking container ...', file = sys.stderr)
-        
         test_sets_argument = ' '.join(test_sets)
         leaderboard = os.getcwd()
         LEADERBOARD = '/app/speechio/leaderboard'
@@ -103,8 +100,7 @@ if __name__ == '__main__':
             F'--stage {args.benchmark_stage} --max-num-utts {args.max_num_utts} '
             F'{model} "{test_sets_argument}"'
         )
-        print(docker_run_cmd, file=sys.stderr)
+        logging.info(F'Pulling up benchmarking container: {docker_run_cmd}')
         os.system(docker_run_cmd)
 
-    print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file=sys.stderr, flush=True)
-    print(F'========== Host Runner Done ==========', file=sys.stderr, flush=True)
+    logging.info('Host Runner Done')
