@@ -189,7 +189,7 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate runt
 4. run a MINI benchmark:
     ```
     # run this in leaderboard repo
-    ops/leaderboard_runner requests/mini_debug.yaml
+    ops/leaderboard_runner --runner_begin_stage 2 requests/mini_debug.yaml
     ```
 
 5. you can check `leaderboard/results/<***_your_model_id_***>/{CER,CHECK}`
@@ -213,7 +213,10 @@ This should have been done already if you did local validation.
 
 2.3 Upload your model to leaderboard model-zoo
 ```
-ops/push model <model_id>
+model_id=<model_id>
+echo "$model_id:" >> models/zoo.yaml
+echo "  url: oss://speechio-leaderboard/models/$model_id/" >> models/zoo.yaml
+ops/push model $model_id
 ```
 This will upload prepared model-image from your local model-zoo to cloud model-zoo, so that SpeechIO/others can download/reproduce.
 
