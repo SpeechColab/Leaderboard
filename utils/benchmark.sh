@@ -60,7 +60,7 @@ for x in $test_sets; do
             $dir/ref.txt
 
         echo "$0 --> Normalizing HYP text ..."
-        ${LEADERBOARD}/utils/tn_${language}.py \
+        ${LEADERBOARD}/utils/textnorm_${language}.py \
             --has_key --to_upper \
             $dir/raw_rec.txt \
             $dir/rec.txt
