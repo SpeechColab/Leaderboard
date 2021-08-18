@@ -189,7 +189,7 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate runt
 4. run a MINI benchmark:
     ```
     # run this in leaderboard repo
-    ops/leaderboard_runner --runner_begin_stage 2 requests/mini_debug.yaml
+    ops/leaderboard_runner requests/mini_debug.yaml
     ```
 
 5. you can check `leaderboard/results/<***_your_model_id_***>/{CER,CHECK}`
