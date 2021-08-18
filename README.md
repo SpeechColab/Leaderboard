@@ -97,7 +97,7 @@ Carefully curated by SpeechIO authors, crawled from publicly available sources (
 | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
 | --- | --- | --- | --- | --- |
 | [speechio_kaldi_multicn](models/speechio_kaldi_multicn/) | pretrained ASR model | 那兴宇 <br> Xingyu NA | Kaldi预训练模型 <br> Kaldi pretrained ASR | based on Kaldi recipe https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5 |
-| [wenet_multi_cn](models/wenet_multi_cn/) | pretrained ASR model | [wenet-e2e](https://github.com/wenet-e2e/) | WeNet pretrained model on mulit_cn dataset  | WeNet multi_cn recipe https://github.com/wenet-e2e/wenet/tree/main/examples/multi_cn/s0 |
+| wenet_multi_cn | pretrained ASR model | Binbin Zhang@<br> [wenet-e2e](https://github.com/wenet-e2e/) | WeNet pretrained model on mulit_cn dataset  | WeNet multi_cn recipe https://github.com/wenet-e2e/wenet/tree/main/examples/multi_cn/s0 |
 
 </p></details>
 
