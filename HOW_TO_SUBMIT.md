@@ -205,20 +205,31 @@ If you can pass above local validation, then congratulations, you have successfu
 utils/install_aliyun_oss_client.sh
 ```
 
-2.2 Move prepared model-image dir into local model zoo
+2.2 Move prepared model-image dir into local model-zoo
 ```
 mv <prepared_model_image> leaderboard/models/<model_id>
 ```
 This should have been done already if you did local validation.
 
-2.3 Upload your model to leaderboard model-zoo
+2.3 Register your model-image at the end of `leaderboard/models/zoo.yaml`:
 ```
-model_id=<model_id>
-echo "$model_id:" >> models/zoo.yaml
-echo "  url: oss://speechio-leaderboard/models/$model_id/" >> models/zoo.yaml
+speechio_kaldi_multicn:
+  url: oss://speechio-leaderboard/models/speechio_kaldi_multicn/
+wenet_multi_cn:
+  url: oss://speechio-leaderboard/models/wenet_multi_cn/
+...
+...
+...
+<model_id>:
+  url: oss://speechio-leaderboard/models/<model_id>/
+```
+
+2.3 Upload your model-image to leaderboard model-zoo
+```
 ops/push model $model_id
 ```
 This will upload prepared model-image from your local model-zoo to cloud model-zoo, so that SpeechIO/others can download/reproduce.
+And you can always re-run above `ops/push` command to update your model-image in the cloud.
 
 ---
 

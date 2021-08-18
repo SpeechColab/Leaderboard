@@ -1,8 +1,8 @@
 .DS_Store
 credentials/*.cfg
 
-models/trush
-models/speechio_kaldi_zh_16k
+models/*
+!models/zoo.yaml
 
 datasets/*
 !datasets/MINI
