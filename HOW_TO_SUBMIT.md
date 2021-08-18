@@ -224,7 +224,7 @@ wenet_multi_cn:
   url: oss://speechio-leaderboard/models/<model_id>/
 ```
 
-2.3 Upload your model-image to leaderboard model-zoo
+2.4 Upload your model-image to leaderboard model-zoo
 ```
 ops/push model $model_id
 ```
