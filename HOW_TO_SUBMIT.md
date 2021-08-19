@@ -238,7 +238,7 @@ Once you have your model submitted, you can open a PR to this github repo, which
 
 **`github.com/speechio/leaderboard/requests/<your_benchmark_request>.yaml`**
 
-a sample request file contains following content:
+a sample request can be found [here](requests/sample_request.yaml):
 ```
 date: '2021-04-05'
 requester: Jiayu
@@ -252,11 +252,11 @@ test_set:
 ```
 where:
 * `date`: benchmark request date
-* `model`: model key, specifying which model you want to benchmark
+* `model`: model id, specifying which model you want to benchmark
 * `test_set`: test set id list, which test sets you want to benchmark with
 * `email`: a list of email addresses to receive benchmark results
 
-you can lookup `model id` and `test_sets id` tables from section 2&3 in [README](README.md)
+you can lookup `model` and `test_set` in section 2&3 of [README](README.md)
 
 Once we merge your submission pull request, the leaderboard pipeline will:
 * init a docker runner to benchmark requested model with requested test sets
