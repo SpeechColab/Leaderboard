@@ -9,11 +9,6 @@ import json
 
 DEBUG = None
 
-class Utterance:
-    def __init__(self, uid, text):
-        self.uid = uid
-        self.text = text
-
 def GetEditType(ref_token, hyp_token):
     if ref_token == None and hyp_token != None:
         return 'I'
@@ -33,68 +28,6 @@ class AlignmentArc:
         self.ref = ref
         self.hyp = hyp
         self.edit_type = GetEditType(ref, hyp)
-
-def LoadUtterances(filepath, format):
-    utts = {}
-    if format == 'text': # utt_id word1 word2 ...
-        with open(filepath, 'r', encoding='utf8') as f:
-            for line in f:
-                line = line.strip()
-                if line:
-                    cols = line.split(maxsplit=1)
-                    assert(len(cols) == 2 or len(cols) == 1)
-                    uid = cols[0]
-                    text = cols[1] if len(cols) == 2 else ''
-                    if utts.get(uid) != None:
-                        print(F'found duplicated utterence id {uid}', file = sys.stderr)
-                        raise RuntimeError
-                    utts[uid] = Utterance(uid, text)
-    else:
-        print(F'Unsupported text format {format}', file=sys.stderr)
-        raise RuntimeError
-    return utts
-
-def normalize_text_en(text):
-    text = text.upper()
-
-    # remove residual punctuations
-    text = text.replace('-', ' ')
-    text = text.replace('"', ' ')
-
-    # reference of following conversational fillers
-    #   https://github.com/kaldi-asr/kaldi/blob/master/egs/swbd/s5c/local/score_sclite.sh#L66-L84
-    sclite_conversational_filler = ['UH', 'UHH', 'UM', 'EH', 'MM', 'HM', 'AH', 'HUH', 'HA', 'ER', 'OOF', 'HEE' , 'ACH', 'EEE', 'EW']
-    unk_tags = ['<UNK>', '<unk>']
-    gigaspeech_punctuations = ['<COMMA>', '<PERIOD>', '<QUESTIONMARK>', '<EXCLAMATIONPOINT>']
-    gigaspeech_garbage_utterance_tags = ['<SIL>', '<NOISE>', '<MUSIC>', '<OTHER>'] # these utterances should have been removed
-
-    # TODO: need efficiency improvement ?
-    res = ' '.join(w for w in text.split() if w not in sclite_conversational_filler + unk_tags + gigaspeech_punctuations + gigaspeech_garbage_utterance_tags)
-    return res
-
-def normalize_text_zh(text):
-    # TODO
-    return text
-
-def normalize_text(text, normalizer):
-    if normalizer == '':
-        return text
-    elif normalizer == 'en':
-        return normalize_text_en(text)
-    elif normalizer == 'zh':
-        return normalize_text_zh(text)
-    else:
-        print(F'ERROR: Unsupported normalizer {normalizer}', file=sys.stderr)
-        raise RuntimeError
-
-def tokenize_text(text, tokenizer):
-    if tokenizer == 'whitespace':
-        return text.split()
-    elif tokenizer == 'char':
-        return [ ch for ch in ''.join(text.split()) ]
-    else:
-        print(F'ERROR: Unsupported tokenizer {tokenizer}', file=sys.stderr)
-        raise RuntimeError
 
 def similarity_score_function(ref_token, hyp_token):
     return 0 if (ref_token == hyp_token) else -1.0
@@ -330,10 +263,43 @@ class EvaluationResult:
         return summary
 
 
+class Utterance:
+    def __init__(self, uid, text):
+        self.uid = uid
+        self.text = text
+
+
+def LoadUtterances(filepath, format):
+    utts = {}
+    if format == 'text': # utt_id word1 word2 ...
+        with open(filepath, 'r', encoding='utf8') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    cols = line.split(maxsplit=1)
+                    assert(len(cols) == 2 or len(cols) == 1)
+                    uid = cols[0]
+                    text = cols[1] if len(cols) == 2 else ''
+                    if utts.get(uid) != None:
+                        raise RuntimeError(F'Found duplicated utterence id {uid}')
+                    utts[uid] = Utterance(uid, text)
+    else:
+        raise RuntimeError(F'Unsupported text format {format}')
+    return utts
+
+
+def tokenize_text(text, tokenizer):
+    if tokenizer == 'whitespace':
+        return text.split()
+    elif tokenizer == 'char':
+        return [ ch for ch in ''.join(text.split()) ]
+    else:
+        raise RuntimeError(F'ERROR: Unsupported tokenizer {tokenizer}')
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # optional
-    parser.add_argument('--normalizer', choices=['', 'en', 'zh'], default='', help='ISO639-1 language code for text normaliztion, skip this option if you do not want TN processing.')
     parser.add_argument('--tokenizer', choices=['whitespace', 'char'], default='whitespace', help='whitespace for WER, char for CER')
     parser.add_argument('--ref-format', choices=['text'], default='text', help='reference format, first col is utt_id, the rest is text')
     parser.add_argument('--hyp-format', choices=['text'], default='text', help='hypothesis format, first col is utt_id, the rest is text')
@@ -347,13 +313,6 @@ if __name__ == '__main__':
 
     ref_utts = LoadUtterances(args.ref, args.ref_format); # print(F'{len(ref_utts)} REF utterances loaded.', file=sys.stderr)
     hyp_utts = LoadUtterances(args.hyp, args.hyp_format); # print(F'{len(hyp_utts)} HYP utterances loaded.', file=sys.stderr)
-
-    # text normalization
-    if args.normalizer:
-        for uid, utt in ref_utts.items():
-            utt.text = normalize_text(utt.text, args.normalizer)
-        for uid, utt in hyp_utts.items():
-            utt.text = normalize_text(utt.text, args.normalizer)
 
     r = EvaluationResult()
 
