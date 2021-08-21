@@ -192,7 +192,7 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate runt
     ops/leaderboard_runner requests/mini_debug.yaml
     ```
 
-5. you can check `leaderboard/results/<***_your_model_id_***>/{CER,CHECK}`
+5. you can check `leaderboard/results/...<your_model_id>.../{RESULTS,DETAILS}.txt`
 
 If you can pass above local validation, then congratulations, you have successfully made your ASR system reproducible, it's now safe to share and publish.
 
@@ -230,6 +230,8 @@ ops/push model $model_id
 ```
 This will upload prepared model-image from your local model-zoo to cloud model-zoo, so that SpeechIO/others can download/reproduce.
 And you can always re-run above `ops/push` command to update your model-image in the cloud.
+
+**Notes**: *Model-images can be large, so you don't have to commit/push model-image to this github repo, leaderboard syncs model-images via cloud-based model-zoo.*
 
 ---
 

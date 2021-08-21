@@ -71,7 +71,7 @@ for x in $test_sets; do
             --tokenizer char \
             --ref $dir/ref.txt \
             --hyp $dir/rec_non_empty.txt \
-            $dir/CHECK | tee $dir/CER
+            $dir/DETAILS.txt | tee $dir/RESULTS.txt
     fi
 
     sleep 1

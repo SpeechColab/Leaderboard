@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-import sys, glob, codecs, os
+import sys, glob, os
+import json
 
 if (len(sys.argv) != 2):
     print("show_result.py pattern")
@@ -9,18 +10,23 @@ pattern = sys.argv[1]
 dir_list = glob.glob(pattern)
 
 buffer=[]
-for d in dir_list:
-    date, service, test_set, n = d.split('__')
-    if os.path.isfile(d + '/CER'):
-        with codecs.open(d + '/CER', 'r', 'utf8') as f:
+
+print('MODEL,DATE,TESTSET,ACC,TER,n:H:R:MAX')
+for dir in dir_list:
+    date, service, test_set, max_utts = dir.split('__')
+    results = os.path.join(dir, 'RESULTS.txt')
+    try:
+        with open(results, 'r', encoding = 'utf8') as f:
             for l in f:
-                if "%WER" in l:
-                    cols = l.split()
-                    CER = float(cols[1])
-                if "%SER" in l:
-                    cols = l.split()
-                    m = cols[5]
-        buffer.append("{:20} {:20} {:10} ACC:{:<6.2f} CER:{:<6.2f} {}/{:10}".format(service, test_set, date, 100.0-CER, CER, m, n))
+                if 'token_error_rate' in l:
+                    r = json.loads(l)
+                    TER = r['token_error_rate']
+                    R = r['num_ref_utts']
+                    H = r['num_hyp_utts']
+                    n = r['num_eval_utts']
+                    buffer.append(F"{service},{date},{test_set},{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts}")
+    except:
+        continue
 
 buffer.sort()
 
