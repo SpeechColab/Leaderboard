@@ -6,6 +6,8 @@
 import sys
 import argparse
 import json
+import logging
+logging.basicConfig(stream=sys.stderr, level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 DEBUG = None
 
@@ -52,12 +54,12 @@ def EditDistance(
             self.prev_r = None
             self.prev_h = None
     
-    def print_search_grid(S, R, H, file_stream):
-        print(file=file_stream)
+    def print_search_grid(S, R, H, fstream):
+        print(file=fstream)
         for r in range(R):
             for h in range(H):
-                print(F'[{r},{h}]:{S[r][h].score:4.3f}:({S[r][h].prev_r},{S[r][h].prev_h}) ', end='', file=file_stream)
-            print(file=file_stream)
+                print(F'[{r},{h}]:{S[r][h].score:4.3f}:({S[r][h].prev_r},{S[r][h].prev_h}) ', end='', file=fstream)
+            print(file=fstream)
 
     R = len(ref) + 1
     H = len(hyp) + 1
@@ -309,10 +311,10 @@ if __name__ == '__main__':
 
     parser.add_argument('diagnostic_output', type=str)
     args = parser.parse_args()
-    print(args, file=sys.stderr, flush=True)
+    logging.info(args)
 
-    ref_utts = LoadUtterances(args.ref, args.ref_format); # print(F'{len(ref_utts)} REF utterances loaded.', file=sys.stderr)
-    hyp_utts = LoadUtterances(args.hyp, args.hyp_format); # print(F'{len(hyp_utts)} HYP utterances loaded.', file=sys.stderr)
+    ref_utts = LoadUtterances(args.ref, args.ref_format)
+    hyp_utts = LoadUtterances(args.hyp, args.hyp_format)
 
     r = EvaluationResult()
 
@@ -324,9 +326,9 @@ if __name__ == '__main__':
             if ref_utts[uid].text.strip(): # non-empty reference
                 eval_utts.append(uid)
             else:
-                print(F'WARNING: found {uid} with empty reference, skipping...', file=sys.stderr)
+                logging.warn(F'Found {uid} with empty reference, skipping...')
         else:
-            print(F'WARNING: found {uid} without reference, skipping...', file=sys.stderr)
+            logging.warn(F'Found {uid} without reference, skipping...')
             r.num_hyp_without_ref += 1
 
     r.num_hyp_utts = len(hyp_utts)
