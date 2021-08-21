@@ -11,7 +11,7 @@ dir_list = glob.glob(pattern)
 
 buffer=[]
 
-print('MODEL,DATE,TESTSET,ACC,TER,n:H:R:MAX')
+print('MODEL,TESTSET,ACC,TER,n:H:R:MAX,DATE')
 for dir in dir_list:
     date, service, test_set, max_utts = dir.split('__')
     results = os.path.join(dir, 'RESULTS.txt')
@@ -24,7 +24,7 @@ for dir in dir_list:
                     R = r['num_ref_utts']
                     H = r['num_hyp_utts']
                     n = r['num_eval_utts']
-                    buffer.append(F"{service},{date},{test_set},{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts}")
+                    buffer.append(F"{service},{test_set},{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts},{date}")
     except:
         continue
 
