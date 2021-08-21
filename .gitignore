@@ -9,6 +9,7 @@ datasets/*
 !datasets/zoo.yaml
 !datasets/kaldi_to_speechio.py
 !datasets/run_kaldi_to_speechio.sh
+!datasets/kaldi_to_json.py
 
 tmp.sh
 results

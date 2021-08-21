@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
         # precheck
         assert(os.path.isdir(os.path.join(dir, 'audio')))
-        assert(os.path.isfile(os.path.join(dir, 'info.json')))
+        assert(os.path.isfile(os.path.join(dir, 'metadata.tsv')))
 
         src = dir
         with open(os.path.join(dataset_zoo, 'zoo.yaml'), 'r', encoding='utf8') as f:

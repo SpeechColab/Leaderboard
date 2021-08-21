@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os, sys
 import argparse
-import json
+import csv
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -11,22 +11,20 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(args, file = sys.stderr)
 
-    dataset_info_path = os.path.join(args.dataset, 'info.json'); assert(os.path.isfile(dataset_info_path))
+    metadata_path = os.path.join(args.dataset, 'metadata.tsv'); assert(os.path.isfile(metadata_path))
     audio_dir_path = os.path.join(args.dataset, 'audio'); assert(os.path.isdir(audio_dir_path))
 
-    with open(dataset_info_path, 'r', encoding='utf-8') as dataset_info_fp:
-        info = json.load(dataset_info_fp)
+    utts = []
+    with open(metadata_path, 'r', encoding='utf-8') as metadata_fp:
+        reader = csv.DictReader(metadata_fp, delimiter='\t')
+        for utt in reader:
+            utts.append(utt)
     
-    scp_path = os.path.join(args.dir, 'wav.scp')
-    trans_path = os.path.join(args.dir, 'trans.txt')
-    with open(scp_path, 'w+', encoding='utf-8') as scp_fp, open(trans_path, 'w+', encoding='utf-8') as trans_fp:
-        for audio in info['audios'][:args.max_num_utts]:
-            for segment in audio['segments']:
-                line = (
-                    F"{segment['sid']}"
-                    F"\t{os.path.join(os.path.abspath(args.dataset), audio['path'])}"
-                )
-                print(line, file = scp_fp)
-                print(F"{segment['sid']}\t{segment['text']}", file = trans_fp)
+    with open(os.path.join(args.dir, 'wav.scp'), 'w+', encoding='utf-8') as fp:
+        for utt in utts[:args.max_num_utts]:
+            # convert audio path to absolute path
+            print(F"{utt['ID']}\t{os.path.join(os.path.abspath(args.dataset), utt['AUDIO'])}", file = fp)
 
-    
+    with open(os.path.join(args.dir, 'trans.txt'), 'w+', encoding='utf-8') as fp:
+        for utt in utts[:args.max_num_utts]:
+            print(F"{utt['ID']}\t{utt['TEXT']}", file = fp)
