@@ -94,7 +94,7 @@ These kind of knowledge sharing is especially benefical to the speech community.
 
 ### 1.4 SBI
 `SBI` is a submitter implemented `executable` for ASR benchmarking inference:
-* **SBI** can be *C/C++ binary*, *bash, python* scripts (with shebang line such as `#!/usr/bin/env bash`) 
+* **SBI** can be written in any programming language, *C/C++, Rust, Go, Java, bash, perl, python etc* (with shebang line such as `#!/usr/bin/env bash`) 
 * **SBI** is always invoked in model-image dir, so its code can use relative path to refer to other resources inside model-image(such as models, configs, credentials, libraries, other programs/scripts)
 * **SBI** should implement an audio-list ASR decoding:
   ```
