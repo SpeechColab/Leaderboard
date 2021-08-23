@@ -309,7 +309,7 @@ if __name__ == '__main__':
     parser.add_argument('--ref', type=str, required=True, help='input reference file')
     parser.add_argument('--hyp', type=str, required=True, help='input hypothesis file')
 
-    parser.add_argument('diagnostic_output', type=str)
+    parser.add_argument('result_file', type=str)
     args = parser.parse_args()
     logging.info(args)
 
@@ -335,37 +335,36 @@ if __name__ == '__main__':
     r.num_ref_utts = len(ref_utts)
     r.num_eval_utts = len(eval_utts)
 
-    fo = open(args.diagnostic_output, 'w+', encoding='utf8')
-    for uid in eval_utts:
-        ref = ref_utts[uid]
-        hyp = hyp_utts[uid]
+    with open(args.result_file, 'w+', encoding='utf8') as fo:
+        for uid in eval_utts:
+            ref = ref_utts[uid]
+            hyp = hyp_utts[uid]
 
-        alignment, score = EditDistance(
-            tokenize_text(ref.text, args.tokenizer),
-            tokenize_text(hyp.text, args.tokenizer)
-        )
-        
-        c, s, i, d = CountEdits(alignment)
-        utt_ter = ComputeTokenErrorRate(c, s, i, d)
+            alignment, score = EditDistance(
+                tokenize_text(ref.text, args.tokenizer),
+                tokenize_text(hyp.text, args.tokenizer)
+            )
+            
+            c, s, i, d = CountEdits(alignment)
+            utt_ter = ComputeTokenErrorRate(c, s, i, d)
 
-        # utt-level evaluation result
-        print(F'{{"uid":{uid}, "score":{score}, "ter":{utt_ter:.2f}, "cor":{c}, "sub":{s}, "ins":{i}, "del":{d}}}', file=fo)
-        PrettyPrintAlignment(alignment, fo)
+            # utt-level evaluation result
+            print(F'{{"uid":{uid}, "score":{score}, "ter":{utt_ter:.2f}, "cor":{c}, "sub":{s}, "ins":{i}, "del":{d}}}', file=fo)
+            PrettyPrintAlignment(alignment, fo)
 
-        r.C += c
-        r.S += s
-        r.I += i
-        r.D += d
+            r.C += c
+            r.S += s
+            r.I += i
+            r.D += d
 
-        if utt_ter > 0:
-            r.num_utts_with_error += 1
+            if utt_ter > 0:
+                r.num_utts_with_error += 1
 
-    # corpus level evaluation result
-    r.sentence_error_rate = ComputeSentenceErrorRate(r.num_utts_with_error, r.num_eval_utts)
-    r.token_error_rate = ComputeTokenErrorRate(r.C, r.S, r.I, r.D)
+        # corpus level evaluation result
+        r.sentence_error_rate = ComputeSentenceErrorRate(r.num_utts_with_error, r.num_eval_utts)
+        r.token_error_rate = ComputeTokenErrorRate(r.C, r.S, r.I, r.D)
 
-    print(r.to_summary(), file=fo)
-    fo.close()
+        print(r.to_summary(), file=fo)
 
     print(r.to_json())
     print(r.to_kaldi())

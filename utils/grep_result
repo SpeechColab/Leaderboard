@@ -3,20 +3,19 @@ import sys, glob, os
 import json
 
 if (len(sys.argv) != 2):
-    print("show_result.py pattern")
+    print('show_result.py "result_dir_pattern"')
     exit(0)
 
 pattern = sys.argv[1]
-dir_list = glob.glob(pattern)
+directories = glob.glob(pattern)
 
 buffer=[]
 
 print('MODEL,TESTSET,ACC,TER,n:H:R:MAX,DATE')
-for dir in dir_list:
-    date, service, test_set, max_utts = dir.split('__')
-    results = os.path.join(dir, 'RESULTS.txt')
+for dir in directories:
     try:
-        with open(results, 'r', encoding = 'utf8') as f:
+        date, service, test_set, max_utts = dir.split('__')
+        with open(os.path.join(dir, 'RESULTS.txt'), 'r', encoding = 'utf8') as f:
             for l in f:
                 if 'token_error_rate' in l:
                     r = json.loads(l)
