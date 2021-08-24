@@ -18,6 +18,8 @@ jiayu@ubuntu: tree ./a_sample_model_image
 a_sample_model_image
 ├── docker
 │   └── Dockerfile
+├── assets
+│   └── <runtime resources, e.g. models, configs, API credentials etc>
 ├── model.yaml
 ├── README.md
 └── SBI
@@ -126,7 +128,7 @@ These kind of knowledge sharing is especially benefical to the speech community.
 ---
 
 ### 1.5 Runtime Resources
-Runtime resources refers to *models*, *configs*, *cloud-api credentials* etc. These resources can be freely organized by submitters, as long as they are **inside model-image**.  **SBI** code is responsible and is supposed to know how to locate them using relative path.
+Runtime resources refers to *model files*, *configs*, *cloud-api credentials* etc. These resources can be freely organized by submitters, as long as they are **inside model-image**, but we strongly suggest that submitter put all runtime resources into `<model-image>/assets` directory.  **SBI** code is responsible and is supposed to know how to locate them using relative path.
 
 For example:
 ```
