@@ -1,9 +1,23 @@
 .DS_Store
 credentials/*.cfg
 
+# model zoo
 models/*
 !models/zoo.yaml
 
+# zh models
+!models/aispeech_api_zh
+!models/aliyun_api_zh
+!models/baidu_pro_api_zh
+!models/microsoft_api_zh
+!models/sogou_api_zh
+!models/tencent_api_zh
+!models/yitu_api_zh
+
+# en models
+!models/aliyun_api_en
+
+# dataset zoo
 datasets/*
 !datasets/MINI
 !datasets/zoo.yaml
@@ -34,6 +48,12 @@ models/aliyun_api_zh/ACCESS_KEY_ID
 models/aliyun_api_zh/ACCESS_KEY_SECRET
 models/aliyun_api_zh/TOKEN
 models/aliyun_api_zh/TOKEN_EXPIRE_TIME
+
+models/aliyun_api_en/APPKEY
+models/aliyun_api_en/ACCESS_KEY_ID
+models/aliyun_api_en/ACCESS_KEY_SECRET
+models/aliyun_api_en/TOKEN
+models/aliyun_api_en/TOKEN_EXPIRE_TIME
 
 # baidu credential
 models/baidu_pro_api_zh/API_KEY

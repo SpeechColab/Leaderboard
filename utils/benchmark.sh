@@ -67,8 +67,17 @@ for x in $test_sets; do
         grep -v $'\t$' $dir/rec.txt > $dir/rec_non_empty.txt
 
         echo "$0 --> computing WER/CER and alignment ..."
+        if [ $language == 'zh' ]; then
+            tokenizer=char
+        elif [ $language == 'en' ]; then
+            tokenizer=whitespace
+        else
+            echo "$0: Error, unsupported language code ${language}"
+            exit -1
+        fi
+        
         ${LEADERBOARD}/utils/asr-score \
-            --tokenizer char \
+            --tokenizer ${tokenizer} \
             --ref $dir/ref.txt \
             --hyp $dir/rec_non_empty.txt \
             $dir/DETAILS.txt | tee $dir/RESULTS.txt
