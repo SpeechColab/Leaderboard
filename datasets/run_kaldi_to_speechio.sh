@@ -2,6 +2,9 @@
 ./kaldi_to_speechio.py download/MINI MINI
 
 # open-sourced test sets
+./kaldi_to_speechio.py download/librispeech_test_clean LIBRISPEECH_TEST_CLEAN
+./kaldi_to_speechio.py download/librispeech_test_other LIBRISPEECH_TEST_OTHER
+
 ./kaldi_to_speechio.py download/AISHELL1_test AISHELL1_TEST
 ./kaldi_to_speechio.py download/AISHELL2_iOS_test AISHELL2_IOS_TEST
 ./kaldi_to_speechio.py download/AISHELL2_Android_test AISHELL2_ANDROID_TEST

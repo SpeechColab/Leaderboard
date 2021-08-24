@@ -3,6 +3,11 @@ MINI:
   url: oss://speechio-leaderboard/datasets/MINI/
 
 # open-sourced
+LIBRISPEECH_TEST_CLEAN:
+  url: oss://speechio-leaderboard/datasets/LIBRISPEECH_TEST_CLEAN/
+LIBRISPEECH_TEST_OTHER:
+  url: oss://speechio-leaderboard/datasets/LIBRISPEECH_TEST_OTHER/
+
 AISHELL1_TEST:
   url: oss://speechio-leaderboard/datasets/AISHELL1_TEST/
 AISHELL2_MIC_TEST:

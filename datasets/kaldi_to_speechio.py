@@ -19,7 +19,6 @@ def LoadKaldiArk(path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--language', type=str, choices = ['ZH', 'EN'], default='ZH')
     parser.add_argument('src', type=str)
     parser.add_argument('dst', type=str)
     args = parser.parse_args()
@@ -39,7 +38,7 @@ if __name__ == '__main__':
     else:
         text_path = {}
 
-    # load utt2spk   
+    # load utt2spk
     if os.path.isfile(os.path.join(args.src, 'utt2spk')):
         utt2spk = LoadKaldiArk(os.path.join(args.src, 'utt2spk'))
     else:
@@ -74,14 +73,14 @@ if __name__ == '__main__':
             utt['TEXT'] = utt2text.get(uttid)
         utts.append(utt)
     utts.sort(key = lambda e: e['ID'])
-    
+
     with open(os.path.join(args.dst, 'metadata.tsv'), 'w+', encoding = 'utf-8') as fo:
         csv_header_fields = ['ID', 'AUDIO', 'DURATION']
         if utt2spk:
             csv_header_fields.append('SPEAKER')
         if utt2text:
             csv_header_fields.append('TEXT')
-            
+
         csv_writer = csv.DictWriter(fo, delimiter='\t', fieldnames=csv_header_fields)
         csv_writer.writeheader()
         for audio in utts:
