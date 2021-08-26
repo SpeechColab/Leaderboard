@@ -16,6 +16,7 @@ models/*
 
 # en models
 !models/aliyun_api_en
+!models/google_api_en
 
 # dataset zoo
 datasets/*
@@ -58,6 +59,9 @@ models/aliyun_api_en/TOKEN_EXPIRE_TIME
 # baidu credential
 models/baidu_pro_api_zh/API_KEY
 models/baidu_pro_api_zh/SECRET_KEY
+
+# google api
+models/google_api_en/CREDENTIALS.json
 
 # microsoft azure cognitive service credential
 models/microsoft_api_zh/SUBSCRIPTION_KEY
