@@ -5,11 +5,8 @@ Cloud Speech-to-Text API documentation entry can be found here:
     https://cloud.google.com/speech-to-text/
     https://cloud.google.com/speech-to-text/docs/sync-recognize#speech-sync-recognize-python
 '''
-
-# [START speech_transcribe_sync]
-from google.cloud import speech
-
 import io, sys
+from google.cloud import speech
 
 def transcribe_file(client, file_name):
     """
@@ -17,17 +14,8 @@ def transcribe_file(client, file_name):
     Args:
       local_file_path Path to local audio file, e.g. /path/audio.wav
     """
-    # Instantiates a client
-    #client = speech_v1.SpeechClient()
-
-    # The language of the supplied audio
-    #language_code = "en-US"
     language_code = "en-US"
-
-    # Sample rate in Hertz of the audio data sent
     sample_rate_hertz = 16000
-
-    # Encoding of audio data sent. This sample sets this explicitly.
     # This field is optional for FLAC and WAV audio formats.
     encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16
     model_type="video"
@@ -44,16 +32,10 @@ def transcribe_file(client, file_name):
 
     response = client.recognize(config=config, audio=audio)
 
-    #for result in response.results:
-    #    # First alternative is the most probable result
-    #    alternative = result.alternatives[0]
-    #    print(u"Transcript: {}".format(alternative.transcript))
-
     rec_text = ''
     for result in response.results:
         rec_text += result.alternatives[0].transcript
     return rec_text
-# [END speech_transcribe_sync]
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
