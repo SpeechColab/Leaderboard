@@ -17,6 +17,7 @@ models/*
 # en models
 !models/aliyun_api_en
 !models/google_api_en
+!models/microsoft_api_en
 
 # dataset zoo
 datasets/*
@@ -65,6 +66,7 @@ models/google_api_en/CREDENTIALS.json
 
 # microsoft azure cognitive service credential
 models/microsoft_api_zh/SUBSCRIPTION_KEY
+models/microsoft_api_en/SUBSCRIPTION_KEY
 
 # sogou api credential
 models/sogou_api_zh/APP_ID
