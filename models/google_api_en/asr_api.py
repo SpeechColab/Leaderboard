@@ -10,7 +10,6 @@ Cloud Speech-to-Text API documentation entry can be found here:
 from google.cloud import speech
 
 import io, sys
-import codecs
 
 def transcribe_file(client, file_name):
     """
