@@ -20,8 +20,8 @@ SAMPLE_RATE = 16000
 MAX_RETRY=10
 RETRY_INTERVAL=1.0
 
-PUNC = True
-ITN = True
+PUNC = False
+ITN = False
 VAD = False
 
 APPKEY = ''
@@ -39,7 +39,7 @@ URL += '&format=' + FORMAT
 URL += '&sample_rate=' + str(SAMPLE_RATE)
 
 if PUNC:
-    URL += '&enable_punctuation_prediction=' + 'false'
+    URL += '&enable_punctuation_prediction=' + 'true'
 if ITN:
     URL += '&enable_inverse_text_normalization=' + 'true'
 if VAD:
