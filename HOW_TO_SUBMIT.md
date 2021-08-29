@@ -11,7 +11,7 @@ As above figure demonstrates, a benchmark cycle contains following steps:
 ---
 
 ## Step 1. Prepare a model-image
-A **model-image** is just an **ordinary directory** that includes a self-contained ASR system, internally with following files and structure:
+A **model-image** is just an **ordinary directory** with a self-contained ASR system inside. e.g.:
 ```
 jiayu@ubuntu: tree ./a_sample_model_image
 
@@ -24,7 +24,7 @@ a_sample_model_image
 ├── README.md
 └── SBI
 ```
-Now let's explain this item by item.
+**You should follow above file names and structures strictly.**  Now let's explain these item by item.
 
 ---
 
