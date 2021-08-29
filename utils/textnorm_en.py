@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
 
         # Punctuations removal
-        old_chars = '!"#$%&()*+,-./:;<=>?@[\]^_`{|}~' # includes all EN punctuations, except ' (e.g. in I'm, that's)
+        old_chars = '!"#$%&()*+,-./:;<=>?@[\]^_`{|}~' # string.punctuation except ' (e.g. in I'm, that's)
         new_chars = ' ' * len(old_chars)
         del_chars = ''
         text = text.translate(str.maketrans(old_chars, new_chars, del_chars))
