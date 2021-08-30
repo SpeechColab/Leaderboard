@@ -12,6 +12,7 @@ import json
 import os
 import sys
 import time
+
 import requests
 
 # interface name
@@ -25,6 +26,8 @@ with open('APPID', 'r') as f:
 SECRET_KEY = ''
 with open('SECRET_KEY', 'r') as f:
     SECRET_KEY = f.readline().strip()
+
+MAX_WORKER = 10
 
 api_prepare = '/prepare'
 api_upload = '/upload'
@@ -210,6 +213,44 @@ class RequestApi(object):
         return self.get_result_request(taskid=taskid)
 
 
+def tt(temp):
+    temp = temp.strip()
+    # print(temp)
+    if len(temp.split()) == 2:  # source_info_list format: "key\taudio"
+        key, audio = temp.split(maxsplit=1)
+        sys.stderr.write('\tkey:' + key + '\taudio:' + audio + '\n')
+        sys.stderr.flush()
+
+        api = RequestApi(appid=APPID, secret_key=SECRET_KEY, upload_file_path=audio)
+        text = api.all_api_request()
+
+        # print('text--------->', text)
+        print(f'{key} is success')
+        return '{0}'.format(key + '\t' + text + '\n')
+
+    else:
+        return '{0}'.format("Invalid line: " + temp + "\n")
+
+
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+
+def main():
+    source_info_list = codecs.open(sys.argv[1], 'r', 'utf8')
+    result_file_path = codecs.open(sys.argv[2], 'w+', 'utf8')
+    # audio_num = len(source_info_list.readlines())
+    # Enable a thread pool of up to 10 threads
+    executor = ThreadPoolExecutor(max_workers=MAX_WORKER)
+    # Create a task and add it to the list
+    all_task = [executor.submit(tt, (temp)) for temp in source_info_list]
+    for future in as_completed(all_task):
+        data = future.result()
+        result_file_path.write(data)
+        result_file_path.flush()
+    source_info_list.close()
+    result_file_path.close()
+
+
 '''
 If the requests module reports an error: "NoneType" object has no attribute 'read', try updating the requests
 module to 2.20.0 or later
@@ -218,29 +259,4 @@ if __name__ == '__main__':
     if len(sys.argv) != 3:
         print("asr_api.py <in_scp> <out_trans>")
         exit(-1)
-
-    source_info_list = codecs.open(sys.argv[1], 'r', 'utf8')
-    result_file_path = codecs.open(sys.argv[2], 'w+', 'utf8')
-    n = 0
-    for temp in source_info_list:
-        temp = temp.strip()
-        # print(temp)
-        if len(temp.split()) == 2:  # source_info_list format: "key\taudio"
-            key, audio = temp.split(maxsplit=1)
-            sys.stderr.write(str(n) + '\tkey:' + key + '\taudio:' + audio + '\n')
-            sys.stderr.flush()
-
-            api = RequestApi(appid=APPID, secret_key=SECRET_KEY, upload_file_path=audio)
-            text = api.all_api_request()
-
-            # print('text--------->', text)
-
-            result_file_path.write(key + '\t' + text + '\n')
-            result_file_path.flush()
-            n += 1
-
-        else:
-            sys.stderr.write("Invalid line: " + temp + "\n")
-            sys.stderr.flush()
-    source_info_list.close()
-    result_file_path.close()
+    main()
