@@ -1,0 +1,6 @@
+task: ASR
+language: zh
+sample_rate: 16000
+author: xlliu24
+entity: iflytek
+email: xlliu24@iflytek.com

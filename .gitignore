@@ -9,6 +9,7 @@ models/*
 !models/aispeech_api_zh
 !models/aliyun_api_zh
 !models/baidu_pro_api_zh
+!models/iflytek_lfasr_api_zh
 !models/microsoft_api_zh
 !models/sogou_api_zh
 !models/tencent_api_zh
@@ -63,6 +64,10 @@ models/baidu_pro_api_zh/SECRET_KEY
 
 # google api
 models/google_api_en/CREDENTIALS.json
+
+# iflytek
+models/iflytek_lfasr_api_zh/APPID
+models/iflytek_lfasr_api_zh/SECRET_KEY
 
 # microsoft azure cognitive service credential
 models/microsoft_api_zh/SUBSCRIPTION_KEY
