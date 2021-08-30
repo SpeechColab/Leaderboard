@@ -19,9 +19,9 @@ import requests
 API_HOST = 'https://raasr.xfyun.cn/api'
 
 # get message by this address—> https://console.xfyun.cn/services/lfasr
-APPID = ''
-with open('APPID', 'r') as f:
-    APPID = f.readline().strip()
+APP_ID = ''
+with open('APP_ID', 'r') as f:
+    APP_ID = f.readline().strip()
 
 SECRET_KEY = ''
 with open('SECRET_KEY', 'r') as f:
@@ -221,7 +221,7 @@ def tt(temp):
         sys.stderr.write('\tkey:' + key + '\taudio:' + audio + '\n')
         sys.stderr.flush()
 
-        api = RequestApi(appid=APPID, secret_key=SECRET_KEY, upload_file_path=audio)
+        api = RequestApi(appid=APP_ID, secret_key=SECRET_KEY, upload_file_path=audio)
         text = api.all_api_request()
 
         # print('text--------->', text)

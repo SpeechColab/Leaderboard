@@ -66,7 +66,7 @@ models/baidu_pro_api_zh/SECRET_KEY
 models/google_api_en/CREDENTIALS.json
 
 # iflytek
-models/iflytek_lfasr_api_zh/APPID
+models/iflytek_lfasr_api_zh/APP_ID
 models/iflytek_lfasr_api_zh/SECRET_KEY
 
 # microsoft azure cognitive service credential
