@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [ $# -ne 2 ]; then
   echo "recognize.sh wav.scp <working_dir>"
   exit 1;
