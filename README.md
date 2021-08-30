@@ -11,6 +11,7 @@ Regarding to the field of Automatic Speech Recognition(ASR) today, people often 
 ---
 
 ![Overview](misc/overview.png)
+
 As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platform, by providing 3 components:
 
 1. TestSet Zoo: A collection of test sets covering wide range of speech recognition scenarios
@@ -25,9 +26,7 @@ With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances w
 
 ## 2. TestSet Zoo
 
-### 2.1 Open-Sourced Test Sets
-Collected from all sorts of open-sourced datasets
-<details><summary> List of Open-Sourced Test Sets </summary><p>
+<details><summary> Open-Sourced Test Sets (EN & ZH) </summary><p>
 
 | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION | 语言 <br> LANGUAGE |
 | --- | --- | --- |
@@ -40,10 +39,9 @@ Collected from all sorts of open-sourced datasets
 
 </p></details>
 
-### 2.2 SpeechIO Test Sets
-Carefully curated by SpeechIO authors, crawled from publicly available sources (Youtube, TV programs, Podcast etc), covering various well-known acoustic scenarios(AM) and content domains(LM & vocabulary), labeled by professional annotators.
+<details><summary> SpeechIO Test Sets (ZH) </summary><p>
 
-<details><summary> List of SpeechIO Test Sets (ZH) </summary><p>
+SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publicly available sources (Youtube, TV programs, Podcast etc), covering various well-known acoustic scenarios(AM) and content domains(LM & vocabulary), labeled by professional annotators.
 
 | 编号 <br> TEST_SET_ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
 | --- | --- | --- | --- | --- | --- |
@@ -79,6 +77,16 @@ Carefully curated by SpeechIO authors, crawled from publicly available sources (
 ---
 
 ## 3. Model Zoo
+<details><summary> Commercial API (EN) </summary><p>
+
+| 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
+| --- | --- | --- | --- | --- |
+| [aliyun_api_en](models/aispeech_api_en/) | Cloud API | 阿里云 <br> Alibaba Cloud | 阿里云智能语音交互 | https://www.alibabacloud.com/product/intelligent-speech-interaction |
+| [google_api_en](models/google_api_en/) | Cloud API | 谷歌 <br> Google Cloud Speech API | 谷歌云平台语音识别 | https://cloud.google.com/speech-to-text |
+| [microsoft_api_en](models/microsoft_api_en/) | Cloud API |微软 <br> Microsoft | Azure认知服务 | https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/ |
+
+</p></details>
+
 <details><summary> Commercial API (ZH) </summary><p>
 
 | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
@@ -87,6 +95,7 @@ Carefully curated by SpeechIO authors, crawled from publicly available sources (
 | [aliyun_api_zh](models/aliyun_api_zh/) | Cloud API |阿里巴巴 <br> Alibaba | 阿里云 | https://ai.aliyun.com/nls/asr|
 | [baidu_pro_api_zh](models/baidu_pro_api_zh/) | Cloud API |百度 <br> Baidu | 百度智能云(极速版) | https://cloud.baidu.com/product/speech/asr |
 | | Cloud API | 讯飞 <br> IFlyTek | 讯飞开放平台(听写服务) | https://www.xfyun.cn/services/voicedictation |
+| [iflytek_lfasr_api_zh](models/iflytek_lfasr_api_zh/) | Cloud API | 讯飞 <br> IFlyTek | 讯飞开放平台(转写服务) | https://www.xfyun.cn/services/lfasr |
 | [microsoft_api_zh](models/microsoft_api_zh/) | Cloud API |微软 <br> Microsoft |Azure| https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
 | [sogou_api_zh](models/sogou_api_zh/) | Cloud API |搜狗 <br> Sogou |AI开放平台| https://ai.sogou.com/product/one_recognition/ |
 | [tencent_api_zh](models/tencent_api_zh/) | Cloud API |腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
