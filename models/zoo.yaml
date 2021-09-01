@@ -2,3 +2,5 @@ speechio_kaldi_multicn:
   url: oss://speechio-leaderboard/models/speechio_kaldi_multicn/
 wenet_multi_cn:
   url: oss://speechio-leaderboard/models/wenet_multi_cn/
+hiasr_api_zh:
+  url: oss://speechio-leaderboard/models/hiasr_api_zh/
