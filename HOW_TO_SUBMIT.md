@@ -228,7 +228,7 @@ wenet_multi_cn:
 
 2.4 Upload your model-image to leaderboard model-zoo
 ```
-ops/push model $model_id
+ops/push model <model_id>
 ```
 This will upload prepared model-image from your local model-zoo to cloud model-zoo, so that SpeechIO/others can download/reproduce.
 And you can always re-run above `ops/push` command to update your model-image in the cloud.
