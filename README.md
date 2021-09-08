@@ -26,7 +26,7 @@ With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances w
 
 ## 2. TestSet Zoo
 
-To pull a test set from cloud-storage to your local testset-zoo (`leaderboard/datasets/*`):
+To pull a test set from cloud to your local zoo (`leaderboard/datasets/*`):
 ```
 ops/pull dataset <TEST_SET_ID>
 ```
@@ -86,7 +86,7 @@ Conceptually, there are two types of models in leaderboard model-zoo(`leaderboar
 
 `API models` are usually small(basically client scripts), so we normally keep them along with github repo
 
-`Local models` are normally too large for github, so we store these models in cloud storage. To synchronize these models to your local:
+`Local models` are normally too large for github, so we store these models in cloud. To synchronize these models from cloud to your local:
 ```
 ops/pull model <MODEL_ID>
 ```
