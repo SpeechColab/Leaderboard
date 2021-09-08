@@ -129,15 +129,13 @@ ops/pull model <MODEL_ID>
 ---
 
 ## 4. Benchmarking Pipeline
-To benchmark your model with unreleased test sets, you need to submit your model following this [Guideline](HOW_TO_SUBMIT.md)
+To benchmark your model with unreleased test sets, you need to submit your model following this [Specification](HOW_TO_SUBMIT.md)
 
 For publicly released models & test sets, you can pull them first, and then trigger benchmarking pipeline on your local machine via:
 ```
-ops/leaderboard_runner requests/xxx.request
+ops/leaderboard_runner requests/xxx_request.yaml
 ```
-where xxx.request is the benchmarking config, you can refer to requests in `leaderbaord/requests/`
-
-
+the content of request.yaml is described in above specification.
 
 ---
 ## 5. Latest Leaderboard Report
