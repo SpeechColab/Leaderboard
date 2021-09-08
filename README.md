@@ -26,7 +26,7 @@ With SpeechIO leaderboard, anyone can benchmark/reproduce/compare performances w
 
 ## 2. TestSet Zoo
 
-To pull a released test set:
+To pull a test set from cloud-storage to your local testset-zoo (`leaderboard/datasets/*`):
 ```
 ops/pull dataset <TEST_SET_ID>
 ```
@@ -82,15 +82,18 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 ---
 
 ## 3. Model Zoo
+Conceptually, there are two types of models in leaderboard model-zoo(`leaderboard/models/*`):
 
-To pull a released model:
+`API models` are usually small(basically client scripts), so we normally keep them along with github repo
+
+`Local models` are normally too large for github, so we store these models in cloud storage. To synchronize these models to your local:
 ```
 ops/pull model <MODEL_ID>
 ```
 
 <details><summary> Commercial API (EN) </summary><p>
 
-| 已公开 <br> Released | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
+| 已公开 <br> Released | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> Service URL |
 | --- | --- | --- | --- | --- | --- |
 | &check; | [aliyun_api_en](models/aispeech_api_en/) | Cloud API | 阿里云 <br> Alibaba Cloud | 阿里云智能语音交互 | https://www.alibabacloud.com/product/intelligent-speech-interaction |
 | &check; | [google_api_en](models/google_api_en/) | Cloud API | 谷歌 <br> Google Cloud Speech API | 谷歌云平台语音识别 | https://cloud.google.com/speech-to-text |
@@ -100,7 +103,7 @@ ops/pull model <MODEL_ID>
 
 <details><summary> Commercial API (ZH) </summary><p>
 
-| 已公开 <br> Released | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> url |
+| 已公开 <br> Released | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> Service URL |
 | --- | --- | --- | --- | --- | --- |
 | &check; | [aispeech_api_zh](models/aispeech_api_zh/) | Cloud API |思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
 | &check; | [aliyun_api_zh](models/aliyun_api_zh/) | Cloud API |阿里巴巴 <br> Alibaba | 阿里云 | https://ai.aliyun.com/nls/asr|
@@ -125,8 +128,16 @@ ops/pull model <MODEL_ID>
 
 ---
 
-## 4. Benchmarking Pipeline Specification
-To submit your own model and get it benchmarked, please follow benchmarking pipeline specification here: [HOW_TO_SUBMIT](HOW_TO_SUBMIT.md)
+## 4. Benchmarking Pipeline
+To benchmark your model with unreleased test sets, you need to submit your model following this [Guideline](HOW_TO_SUBMIT.md)
+
+For publicly released models & test sets, you can pull them first, and then trigger benchmarking pipeline on your local machine via:
+```
+ops/leaderboard_runner requests/xxx.request
+```
+where xxx.request is the benchmarking config, you can refer to requests in `leaderbaord/requests/`
+
+
 
 ---
 ## 5. Latest Leaderboard Report
