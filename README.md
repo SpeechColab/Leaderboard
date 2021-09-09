@@ -89,14 +89,14 @@ ops/pull dataset <TEST_SET_ID>
 | 已公开 <br> Released | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> Service URL |
 | --- | --- | --- | --- | --- | --- |
 | &check; | [aispeech_api_zh](models/aispeech_api_zh/) | Cloud API |思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
-| &check; | [aliyun_api_en](models/aliyun_api_en/) | Cloud API | 阿里云 <br> Aliyun | 阿里云 | https://www.alibabacloud.com/product/intelligent-speech-interaction |
-| &check; | [aliyun_api_zh](models/aliyun_api_zh/) | Cloud API |阿里巴巴 <br> Aliyun | 阿里云 | https://ai.aliyun.com/nls/asr|
+| &check; | [aliyun_api_en](models/aliyun_api_en/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 | https://www.alibabacloud.com/product/intelligent-speech-interaction |
+| &check; | [aliyun_api_zh](models/aliyun_api_zh/) | Cloud API |阿里巴巴 <br> Alibaba | 阿里云 | https://ai.aliyun.com/nls/asr|
 | &check; | [baidu_pro_api_zh](models/baidu_pro_api_zh/) | Cloud API |百度 <br> Baidu | 百度智能云(极速版) | https://cloud.baidu.com/product/speech/asr |
 | &check; | [google_api_en](models/google_api_en/) | Cloud API | 谷歌 <br> Google | 谷歌云 | https://cloud.google.com/speech-to-text |
 | &cross; | | Cloud API | 讯飞 <br> IFlyTek | 讯飞开放平台(听写) | https://www.xfyun.cn/services/voicedictation |
 | &check; | [iflytek_lfasr_api_zh](models/iflytek_lfasr_api_zh/) | Cloud API | 讯飞 <br> IFlyTek | 讯飞开放平台(转写) | https://www.xfyun.cn/services/lfasr |
-| &check; | [microsoft_api_en](models/microsoft_api_en/) | Cloud API |微软 <br> Microsoft | Azure认知服务 | https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/ |
-| &check; | [microsoft_api_zh](models/microsoft_api_zh/) | Cloud API |微软 <br> Microsoft |Azure| https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
+| &check; | [microsoft_api_en](models/microsoft_api_en/) | Cloud API |微软 <br> Microsoft | Azure | https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/ |
+| &check; | [microsoft_api_zh](models/microsoft_api_zh/) | Cloud API |微软 <br> Microsoft |Azure | https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
 | &check; | [sogou_api_zh](models/sogou_api_zh/) | Cloud API |搜狗 <br> Sogou |AI开放平台| https://ai.sogou.com/product/one_recognition/ |
 | &check; | [tencent_api_zh](models/tencent_api_zh/) | Cloud API |腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
 | &check; | [yitu_api_zh](models/yitu_api_zh/) | Cloud API |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
