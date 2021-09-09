@@ -20,7 +20,7 @@ As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platfo
    - defines a simplest-possible specification on recognition interface, the format of input test sets, the format of output recognition results.
    - As long as model submitters conform to this specification, a fully automated pipeline will take care of the rest (e.g. data preparation -> recognition invocation -> text post processing -> WER/CER/SER evaluation)
 
-With SpeechIO leaderboard, anyone can benchmark/reproduce/compare systems in model-zoo over various application scenarios in testset-zoo.
+With SpeechIO leaderboard, anyone can benchmark/reproduce/compare systems in model-zoo over various tasks in testset-zoo.
 
 ---
 
