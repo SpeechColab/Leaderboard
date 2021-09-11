@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 2 ]; then
+  echo "transcribe_scp.py wav.scp <result_dir>/raw_rec.txt>"
+  exit 1;
+fi
+
+
+scp=$1
+dir=$2
+
+./transcribe_scp.py $scp $dir/raw_rec.txt
