@@ -3,7 +3,7 @@ requester: tonko22
 entity: Alpha Cephei Inc
 email: 
   - contact@alphacephei.com
-model: vosk_model_cn_0.1
+model: vosk_model_cn
 test_set:
   - AISHELL1_TEST
   - AISHELL2_IOS_TEST
