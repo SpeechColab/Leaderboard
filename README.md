@@ -111,6 +111,7 @@ These models are usually small (basically client programs), so we normally put t
 | --- | --- | --- | --- | --- | --- |
 | &check; | speechio_kaldi_multicn | pretrained ASR model | 那兴宇 <br> Xingyu NA | Kaldi预训练模型 <br> Kaldi pretrained ASR | based on Kaldi recipe https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5 |
 | &check; | wenet_multi_cn | pretrained ASR model | Binbin Zhang@<br> [wenet-e2e](https://github.com/wenet-e2e/) | WeNet pretrained model on mulit_cn dataset  | WeNet multi_cn recipe https://github.com/wenet-e2e/wenet/tree/main/examples/multi_cn/s0 |
+| &check; | [vosk_model_cn](models/vosk_model_cn/) | local ASR engine | alphacephei | vosk chinese model | vosk website https://alphacephei.com/vosk/models |
 
 </p></details>
 
