@@ -20,7 +20,7 @@ As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platfo
    - defines a simplest-possible specification on recognition interface, the format of input test sets, the format of output recognition results.
    - As long as model submitters conform to this specification, a fully automated pipeline will take care of the rest (e.g. data preparation -> recognition invocation -> text post processing -> WER/CER/SER evaluation)
 
-With SpeechIO leaderboard, anyone can benchmark/reproduce/compare systems in model-zoo over various tasks in testset-zoo.
+With SpeechIO leaderboard, _**anyone can benchmark, reproduce, compare others' systems on local machine**_, as long as they are published in model zoo and test-set zoo.
 
 ---
 
@@ -75,7 +75,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 </p></details>
 
 
-To pull a test set from cloud to your local dataset-zoo (`leaderboard/datasets/*`):
+To pull a **released** test set from cloud to your local dataset-zoo (`leaderboard/datasets/*`):
 ```
 ops/pull dataset <TEST_SET_ID>
 ```
@@ -123,7 +123,7 @@ ops/pull model <MODEL_ID>
 ---
 
 ## 4. Benchmarking Pipeline
-To submit your model to leaderboard and get it benchmarked over all test sets(including unreleased), follow this [Specification](HOW_TO_SUBMIT.md)
+To submit your model to leaderboard and get it benchmarked over all(including unreleased) test sets, follow this [Specification](HOW_TO_SUBMIT.md)
 
 Also you can pull publicly released models & test sets, and trigger benchmarking pipeline on your local machine via:
 ```
