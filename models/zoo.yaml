@@ -4,3 +4,5 @@ wenet_multi_cn:
   url: oss://speechio-leaderboard/models/wenet_multi_cn/
 hiasr_api_zh:
   url: oss://speechio-leaderboard/models/hiasr_api_zh/
+vosk_model_cn:
+  url: oss://speechio-leaderboard/models/vosk_model_cn/
