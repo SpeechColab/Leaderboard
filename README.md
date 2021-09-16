@@ -20,7 +20,7 @@ As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platfo
    - defines a simplest-possible specification on recognition interface, the format of input test sets, the format of output recognition results.
    - As long as model submitters conform to this specification, a fully automated pipeline will take care of the rest (e.g. data preparation -> recognition invocation -> text post processing -> WER/CER/SER evaluation)
 
-With SpeechIO leaderboard, _**anyone can benchmark, reproduce, compare others' systems on local machine**_, as long as they are published in model zoo and test-set zoo.
+With SpeechIO leaderboard, _**anyone can benchmark, reproduce, compare others' systems on local machine**_, as long as they are released in model zoo and test-set zoo.
 
 ---
 
@@ -77,7 +77,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 </p></details>
 
 
-To pull a **released** test set from cloud to your local dataset-zoo (`leaderboard/datasets/*`):
+To pull a **released** test set from cloud to your local dataset-zoo `leaderboard/datasets/*`:
 ```
 ops/pull dataset <TEST_SET_ID>
 ```
@@ -87,6 +87,7 @@ ops/pull dataset <TEST_SET_ID>
 ## 3. Model Zoo
 
 <details><summary> Cloud API Models </summary><p>
+API models are usually small (basically client programs), so we normally put them in this github repo.
 
 | 已公开 <br> Released | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> Service URL |
 | --- | --- | --- | --- | --- | --- |
@@ -105,9 +106,9 @@ ops/pull dataset <TEST_SET_ID>
 
 </p></details>
 
-These models are usually small (basically client programs), so we normally put them along with github repo in `leaderboard/models/*`
-
 <details><summary> Local Engine (Open-sourced Pretrained ASR Models) </summary><p>
+
+Local models/engines are normally too large for github, so we store these models in cloud.
 
 | 已公开 <br> Released | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description |
 | --- | --- | --- | --- | --- |
@@ -117,7 +118,7 @@ These models are usually small (basically client programs), so we normally put t
 
 </p></details>
 
-These models are normally too large for github, so we store these models in cloud. To synchronize them to your local:
+To pull a **released** model from cloud to your local model-zoo `leaderboard/models/*`:
 ```
 ops/pull model <MODEL_ID>
 ```
