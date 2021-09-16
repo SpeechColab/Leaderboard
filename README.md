@@ -28,16 +28,16 @@ With SpeechIO leaderboard, _**anyone can benchmark, reproduce, compare others' s
 
 <details><summary> Test Sets From Public Academic Datasets </summary><p>
 
-| 已公开 <br> Released | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION | 语言 <br> LANGUAGE | 链接 <br> URL |
-| --- | --- | --- | --- | --- |
-| &check; | LIBRISPEECH_TEST_CLEAN | "test_clean" set of LibriSpeech | en | https://www.openslr.org/12 |
-| &check; | LIBRISPEECH_TEST_OTHER | "test_other" set of LibriSpeech | en | https://www.openslr.org/12 |
-| &check; | GIGASPEECH_V1.0.0_DEV | dev set of GigaSpeech Dataset | en | https://github.com/SpeechColab/GigaSpeech |
-| &check; | GIGASPEECH_V1.0.0_TEST | test set of GigaSpeech Dataset | en | https://github.com/SpeechColab/GigaSpeech |
-| &check; | AISHELL1_TEST | test set of AISHELL-1 | zh | https://www.openslr.org/33/ |
-| &check; | AISHELL2_IOS_TEST | test set of AISHELL-2 (iOS channel) | zh | http://www.aishelltech.com/aishell_2 |
-| &check; | AISHELL2_ANDROID_TEST | test set of AISHELL-2 (Android channel) | zh | http://www.aishelltech.com/aishell_2 |
-| &check; | AISHELL2_MIC_TEST | test set of AISHELL-2 (Microphone channel) | zh | http://www.aishelltech.com/aishell_2 |
+| 已公开 <br> Released | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION | 语言 <br> LANGUAGE |
+| --- | --- | --- | --- |
+| &check; | LIBRISPEECH_TEST_CLEAN | "test_clean" set of [LibriSpeech](https://www.openslr.org/12) | en |
+| &check; | LIBRISPEECH_TEST_OTHER | "test_other" set of [LibriSpeech](https://www.openslr.org/12) | en |
+| &check; | GIGASPEECH_V1.0.0_DEV | dev set of [GigaSpeech](https://github.com/SpeechColab/GigaSpeech) | en |
+| &check; | GIGASPEECH_V1.0.0_TEST | test set of [GigaSpeech](https://github.com/SpeechColab/GigaSpeech) | en |
+| &check; | AISHELL1_TEST | test set of [AISHELL-1](https://www.openslr.org/33/) | zh |
+| &check; | AISHELL2_IOS_TEST | test set of [AISHELL-2](http://www.aishelltech.com/aishell_2) (iOS channel) | zh |
+| &check; | AISHELL2_ANDROID_TEST | test set of [AISHELL-2](http://www.aishelltech.com/aishell_2) (Android channel) | zh |
+| &check; | AISHELL2_MIC_TEST | test set of [AISHELL-2](http://www.aishelltech.com/aishell_2) (Microphone channel) | zh |
 
 </p></details>
 
