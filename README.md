@@ -1,4 +1,4 @@
-# SpeechIO ASR leaderboard
+# SpeechColab ASR leaderboard
 ## 1. Overview
 
 > "If you can’t measure it, you can’t improve it." -- *Peter Drucker*
