@@ -34,6 +34,7 @@ rest_api.sh
 requests/2021*
 tiobe.sh
 log.*
+*.log
 tmp*
 
 # oss
