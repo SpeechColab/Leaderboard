@@ -73,6 +73,9 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &cross; |SPEECHIO_ASR_ZH00023| 无聊开箱 & Zealer评测 | 短视频 <br> VLog | 产品开箱评测 <br> Unboxing | 2 | ★★★ |
 | &cross; |SPEECHIO_ASR_ZH00024| 付老师种植技术 | 短视频 <br> VLog | 农业、种植 <br> Agriculture, Planting | 2.7 | ★★★☆ |
 | &cross; |SPEECHIO_ASR_ZH00025| 石国鹏讲古希腊哲学 | 线下培训 <br> Offline lecture | 历史，古希腊哲学 <br> History, Greek philosophy | 1.3 | ★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00026| zzggs |  |  |  |  |
+| &cross; |SPEECHIO_ASR_ZH00027| bls |  |  |  |  |
+| &cross; |SPEECHIO_ASR_ZH00028| tscy |  |  |  |  |
 
 </p></details>
 
