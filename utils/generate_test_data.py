@@ -12,7 +12,6 @@ if __name__ == '__main__':
     print(args, file = sys.stderr)
 
     metadata_path = os.path.join(args.dataset, 'metadata.tsv'); assert(os.path.isfile(metadata_path))
-    audio_dir_path = os.path.join(args.dataset, 'audio'); assert(os.path.isdir(audio_dir_path))
 
     utts = []
     with open(metadata_path, 'r', encoding='utf-8') as metadata_fp:
