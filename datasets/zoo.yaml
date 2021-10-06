@@ -2,14 +2,23 @@
 MINI:
   url: oss://speechio-leaderboard/datasets/MINI/
 
-# open-sourced
+# LibriSpeech
 LIBRISPEECH_TEST_CLEAN:
   url: oss://speechio-leaderboard/datasets/LIBRISPEECH_TEST_CLEAN/
 LIBRISPEECH_TEST_OTHER:
   url: oss://speechio-leaderboard/datasets/LIBRISPEECH_TEST_OTHER/
 
+# GigaSpeech
+GIGASPEECH_V1.0.0_DEV:
+  url: oss://speechio-leaderboard/datasets/GIGASPEECH_V1.0.0_DEV/
+GIGASPEECH_V1.0.0_DEV:
+  url: oss://speechio-leaderboard/datasets/GIGASPEECH_V1.0.0_TEST/
+
+# AISHELL-1
 AISHELL1_TEST:
   url: oss://speechio-leaderboard/datasets/AISHELL1_TEST/
+
+# AISHELL-2
 AISHELL2_MIC_TEST:
   url: oss://speechio-leaderboard/datasets/AISHELL2_MIC_TEST/
 AISHELL2_IOS_TEST:
@@ -17,7 +26,7 @@ AISHELL2_IOS_TEST:
 AISHELL2_ANDROID_TEST:
   url: oss://speechio-leaderboard/datasets/AISHELL2_ANDROID_TEST/
 
-# speechio
+# Leaderboard
 SPEECHIO_ASR_ZH00000:
   url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00000/
 SPEECHIO_ASR_ZH00001:
