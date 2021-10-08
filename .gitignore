@@ -36,6 +36,7 @@ tiobe.sh
 log.*
 *.log
 tmp*
+*.csv
 
 # oss
 .ossutil_checkpoint
