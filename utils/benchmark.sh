@@ -3,7 +3,7 @@
 
 echo "---------- Benchmarking Started ----------"
 
-if [ -z "LEADERBOARD" ]; then
+if [ -z "$LEADERBOARD" ]; then
     echo "$0: LEADERBOARD env variable is empty"
     exit 1
 fi
