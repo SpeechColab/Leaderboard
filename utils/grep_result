@@ -11,7 +11,7 @@ directories = glob.glob(pattern)
 
 buffer=[]
 
-print('MODEL,TESTSET,ACC,TER,n:H:R:MAX,DATE')
+print('MODEL,TESTSET,ACC,TER,N:HYP:REF:MAX,DATE')
 for dir in directories:
     try:
         date, service, test_set, max_utts = dir.split('__')
