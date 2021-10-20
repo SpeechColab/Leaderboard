@@ -32,6 +32,7 @@ tmp.sh
 results
 rest_api.sh
 requests/2021*
+requests/*.py
 log.*
 *.log
 tmp*
