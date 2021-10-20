@@ -27,7 +27,7 @@ SECRET_KEY = ''
 with open('SECRET_KEY', 'r') as f:
     SECRET_KEY = f.readline().strip()
 
-MAX_WORKER = 10
+MAX_WORKER = 4
 
 api_prepare = '/prepare'
 api_upload = '/upload'
