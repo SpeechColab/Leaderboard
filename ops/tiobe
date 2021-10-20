@@ -10,6 +10,7 @@ models=
 models="$models aispeech_api_zh"
 models="$models aliyun_api_zh"
 models="$models baidu_pro_api_zh"
+models="$models hiasr_api_zh"
 models="$models iflytek_lfasr_api_zh"
 models="$models microsoft_api_zh"
 models="$models sogou_api_zh"
@@ -44,6 +45,9 @@ test_sets="$test_sets MINI"
 # test_sets="$test_sets SPEECHIO_ASR_ZH00023"
 # test_sets="$test_sets SPEECHIO_ASR_ZH00024"
 # test_sets="$test_sets SPEECHIO_ASR_ZH00025"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00026"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00027"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00028"
 
 . $LEADERBOARD/utils/parse_options.sh
 
