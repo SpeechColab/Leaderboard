@@ -110,7 +110,7 @@ These kind of knowledge sharing is especially benefical to the speech community.
   ...
   ```
 
-  there are no restrictions on <audio_id>, just keep in mind that audio_id string should be unique for each audio.
+  there are no restrictions on <audio_id>, just keep in mind that audio_id is an *unique* string-identifier for each audio.
 
 * **SBI** can write/read arbitrary temporary files in <result_dir>, but final results need to be written to **ASCII/UTF-8** encoded text file **<result_dir>/raw_rec.txt**:
   ```
