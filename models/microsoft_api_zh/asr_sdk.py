@@ -10,10 +10,10 @@ import azure.cognitiveservices.speech as speechsdk
 
 MAX_RETRY=10
 RETRY_INTERVAL=1.0
-Region='westus'
+Region='chinaeast2'
 Locale="zh-CN"
 SUBSCRIPTION_KEY=''
-with open('', 'r') as f:
+with open('SUBSCRIPTION_KEY', 'r') as f:
     SUBSCRIPTION_KEY = f.readline().strip()
 
 def recognize(audio):
@@ -28,18 +28,19 @@ def recognize(audio):
         try:
             result = speech_recognizer.recognize_once_async().get()
             if result.reason == speechsdk.ResultReason.RecognizedSpeech:
-                text = result.text
-                sys.stdout.write("Recognized: {}".format(result.text))
+                text = result.text   
+                sys.stderr.write(result.json+ '\n')
+                sys.stderr.flush()
                 break
             elif result.reason == speechsdk.ResultReason.NoMatch:
                 sys.stderr.write("No speech could be recognized: {}".format(result.no_match_details))
+                time.sleep(RETRY_INTERVAL)
             elif result.reason == speechsdk.ResultReason.Canceled:
                 cancellation_details = result.cancellation_details
                 sys.stderr.write("Speech Recognition canceled: {}".format(cancellation_details.reason))
                 if cancellation_details.reason == speechsdk.CancellationReason.Error:
                     sys.stderr.write("Error details: {}".format(cancellation_details.error_details))
-            sys.stderr.flush()
-            time.sleep(RETRY_INTERVAL)
+                time.sleep(RETRY_INTERVAL)
         except:
             sys.stderr.write("exception, retrying\n")
             time.sleep(RETRY_INTERVAL)
