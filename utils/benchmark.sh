@@ -43,6 +43,7 @@ for x in $test_sets; do
     if [ $stage -le 2 ]; then
         echo "$0 --> Recognizing in $dir"
         if [ -f 'SBI' ]; then
+            dos2unix *
             chmod +x SBI
             chmod +x *
             ./SBI $dir/wav.scp $dir >& $dir/log.SBI
