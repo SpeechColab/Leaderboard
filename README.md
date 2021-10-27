@@ -139,7 +139,7 @@ the content of `request.yaml` is described in above specification.
 
 ---
 ## 5. Latest Leaderboard Report
-![result](misc/SpeechIO_TIOBE_2021_07.png)
+![result](misc/SpeechIO_TIOBE_2021_10.png)
 
 ---
 
