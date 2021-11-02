@@ -8,4 +8,4 @@ fi
 scp=$1
 dir=$2
 
-./asr_sdk_api.py $scp $dir/raw_rec.txt
+./asr_sdk.py $scp $dir/raw_rec.txt
