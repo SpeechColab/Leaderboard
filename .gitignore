@@ -11,7 +11,7 @@ models/*
 !models/baidu_pro_api_zh
 !models/iflytek_lfasr_api_zh
 !models/microsoft_rest_api_zh
-!models/microsoft_sdk_api_zh
+!models/microsoft_sdk_zh
 !models/sogou_api_zh
 !models/tencent_api_zh
 !models/yitu_api_zh
@@ -20,7 +20,7 @@ models/*
 !models/aliyun_api_en
 !models/google_api_en
 !models/microsoft_rest_api_en
-!models/microsoft_sdk_api_en
+!models/microsoft_sdk_en
 
 # dataset zoo
 datasets/*
@@ -77,8 +77,8 @@ models/iflytek_lfasr_api_zh/SECRET_KEY
 models/microsoft_rest_api_zh/SUBSCRIPTION_KEY
 models/microsoft_rest_api_en/SUBSCRIPTION_KEY
 
-models/microsoft_sdk_api_zh/SUBSCRIPTION_KEY
-models/microsoft_sdk_api_en/SUBSCRIPTION_KEY
+models/microsoft_sdk_zh/SUBSCRIPTION_KEY
+models/microsoft_sdk_en/SUBSCRIPTION_KEY
 
 # sogou api credential
 models/sogou_api_zh/APP_ID
