@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# Copyright  2021  Jiayu DU
+
+echo "---------- Benchmarking Started ----------"
+export LEADERBOARD=/home/dophist/work/git/leaderboard
+stage=0
+max_num_utts=10000
+
+models=
+models="$models aispeech_api_zh"
+models="$models aliyun_api_zh"
+models="$models baidu_pro_api_zh"
+models="$models hiasr_api_zh"
+models="$models iflytek_lfasr_api_zh"
+models="$models microsoft_api_zh"
+models="$models sogou_api_zh"
+models="$models tencent_api_zh"
+models="$models yitu_api_zh"
+
+test_sets=
+test_sets="$test_sets MINI"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00028"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00027"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00026"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00025"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00024"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00023"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00022"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00021"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00020"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00019"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00018"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00017"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00016"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00015"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00014"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00013"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00012"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00011"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00010"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00009"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00008"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00007"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00006"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00005"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00004"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00003"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00002"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00001"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00000"
+
+. $LEADERBOARD/utils/parse_options.sh
+
+echo "models: $models"
+echo "test_sets: $test_sets"
+
+for model in $models; do
+    nohup utils/benchmark.sh --stage $stage --max_num_utts $max_num_utts $model "$test_sets" >& results/log.$model &
+done
+wait

@@ -1,0 +1,6 @@
+task: ASR
+language: en
+sample_rate: 16000
+author: LiangHui
+entity: Microsoft
+email: v-huilia@microsoft.com

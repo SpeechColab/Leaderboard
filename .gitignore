@@ -10,7 +10,8 @@ models/*
 !models/aliyun_api_zh
 !models/baidu_pro_api_zh
 !models/iflytek_lfasr_api_zh
-!models/microsoft_api_zh
+!models/microsoft_rest_api_zh
+!models/microsoft_sdk_zh
 !models/sogou_api_zh
 !models/tencent_api_zh
 !models/yitu_api_zh
@@ -18,7 +19,8 @@ models/*
 # en models
 !models/aliyun_api_en
 !models/google_api_en
-!models/microsoft_api_en
+!models/microsoft_rest_api_en
+!models/microsoft_sdk_en
 
 # dataset zoo
 datasets/*
@@ -32,6 +34,7 @@ tmp.sh
 results
 rest_api.sh
 requests/2021*
+requests/*.py
 log.*
 *.log
 tmp*
@@ -71,8 +74,11 @@ models/iflytek_lfasr_api_zh/APP_ID
 models/iflytek_lfasr_api_zh/SECRET_KEY
 
 # microsoft azure cognitive service credential
-models/microsoft_api_zh/SUBSCRIPTION_KEY
-models/microsoft_api_en/SUBSCRIPTION_KEY
+models/microsoft_rest_api_zh/SUBSCRIPTION_KEY
+models/microsoft_rest_api_en/SUBSCRIPTION_KEY
+
+models/microsoft_sdk_zh/SUBSCRIPTION_KEY
+models/microsoft_sdk_en/SUBSCRIPTION_KEY
 
 # sogou api credential
 models/sogou_api_zh/APP_ID

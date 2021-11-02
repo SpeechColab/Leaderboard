@@ -34,6 +34,8 @@ POINT = [u'点', u'點']
 # PLUS = [u'加', u'加']
 # SIL = [u'杠', u'槓']
 
+FILLER_CHARS = ['呃', '啊']
+
 # 中文数字系统类型
 NUMBERING_TYPES = ['low', 'mid', 'high']
 
@@ -737,6 +739,7 @@ if __name__ == '__main__':
     p.add_argument('--to_upper', action='store_true', help='convert to upper case')
     p.add_argument('--to_lower', action='store_true', help='convert to lower case')
     p.add_argument('--has_key', action='store_true', help="input text has Kaldi's key as first field.")
+    p.add_argument('--remove_fillers', type=bool, default=True, help='remove filler chars such as "呃, 啊"')
     p.add_argument('--log_interval', type=int, default=10000, help='log interval in number of processed lines')
     args = p.parse_args()
 
@@ -765,6 +768,11 @@ if __name__ == '__main__':
             text = text.upper()
         if args.to_lower:
             text = text.lower()
+
+        # Filler chars removal
+        if args.remove_fillers:
+            for ch in FILLER_CHARS:
+                text = text.replace(ch, '')
 
         # NSW(Non-Standard-Word) normalization
         text = NSWNormalizer(text).normalize()
