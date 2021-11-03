@@ -6,3 +6,5 @@ hiasr_api_zh:
   url: oss://speechio-leaderboard/models/hiasr_api_zh/
 vosk_model_cn:
   url: oss://speechio-leaderboard/models/vosk_model_cn/
+wenet_wenetspeech:
+  url: oss://speechio-leaderboard/models/wenet_wenetspeech/
