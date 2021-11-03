@@ -10,3 +10,5 @@ duihua0427_16k_all_1w:
   url: oss://speechio-leaderboard/models/duihua0427_16k_all_1w/
 25_s1_0930_decode_10:
   url: oss://speechio-leaderboard/models/25_s1_0930_decode_10/
+wenet_wenetspeech:
+  url: oss://speechio-leaderboard/models/wenet_wenetspeech/
