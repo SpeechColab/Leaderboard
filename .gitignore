@@ -36,8 +36,7 @@ datasets/*
 tmp.sh
 results
 rest_api.sh
-requests/2021*
-requests/*.py
+requests/trash
 log.*
 *.log
 tmp*
