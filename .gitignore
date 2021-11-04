@@ -1,6 +1,7 @@
 .DS_Store
 nohup.out
 credentials/*.cfg
+__pycache__
 
 # model zoo
 models/*
@@ -10,6 +11,7 @@ models/*
 !models/aispeech_api_zh
 !models/aliyun_api_zh
 !models/baidu_pro_api_zh
+!models/hiasr_api_zh
 !models/iflytek_lfasr_api_zh
 !models/microsoft_rest_api_zh
 !models/microsoft_sdk_zh
@@ -69,6 +71,9 @@ models/baidu_pro_api_zh/SECRET_KEY
 
 # google api
 models/google_api_en/CREDENTIALS.json
+
+# hiasr
+models/hiasr_api_zh/assets
 
 # iflytek
 models/iflytek_lfasr_api_zh/APP_ID
