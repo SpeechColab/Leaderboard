@@ -101,8 +101,10 @@ API models are usually small (basically client programs), so we normally put the
 | &check; | [google_api_en](models/google_api_en/) | Cloud API | 谷歌 <br> Google | 谷歌云 | https://cloud.google.com/speech-to-text |
 | &cross; | | Cloud API | 讯飞 <br> IFlyTek | 讯飞开放平台(听写) | https://www.xfyun.cn/services/voicedictation |
 | &check; | [iflytek_lfasr_api_zh](models/iflytek_lfasr_api_zh/) | Cloud API | 讯飞 <br> IFlyTek | 讯飞开放平台(转写) | https://www.xfyun.cn/services/lfasr |
-| &check; | [microsoft_api_en](models/microsoft_api_en/) | Cloud API |微软 <br> Microsoft | Azure | https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/ |
-| &check; | [microsoft_api_zh](models/microsoft_api_zh/) | Cloud API |微软 <br> Microsoft |Azure | https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
+| &check; | [microsoft_rest_api_en](models/microsoft_rest_api_en/) | Cloud API |微软 <br> Microsoft | Azure | https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/ |
+| &check; | [microsoft_rest_api_zh](models/microsoft_rest_api_zh/) | Cloud API |微软 <br> Microsoft |Azure | https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
+| &check; | [microsoft_sdk_en](models/microsoft_sdk_en/) | Cloud API |微软 <br> Microsoft | Azure | https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/ |
+| &check; | [microsoft_sdk_zh](models/microsoft_sdk_zh/) | Cloud API |微软 <br> Microsoft |Azure | https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
 | &check; | [sogou_api_zh](models/sogou_api_zh/) | Cloud API |搜狗 <br> Sogou |AI开放平台| https://ai.sogou.com/product/one_recognition/ |
 | &check; | [tencent_api_zh](models/tencent_api_zh/) | Cloud API |腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
 | &check; | [yitu_api_zh](models/yitu_api_zh/) | Cloud API |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
