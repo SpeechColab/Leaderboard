@@ -33,3 +33,5 @@ SPEECHIO_ASR_ZH00001:
   url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00001/
 SPEECHIO_ASR_ZH00002:
   url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00002/
+SPEECHIO_ASR_ZH00003:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00003/
