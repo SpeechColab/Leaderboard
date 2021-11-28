@@ -29,7 +29,7 @@ a_sample_model_image
 ---
 
 ### 1.1 docker/Dockerfile
-`docker/Dockerfile` should specify all dependencies of your ASR system, so a docker image can be built by leaderboard pipeline to reproduce your runtime envrionment. Here, `runtime` can be a cloud-API client, or a local ASR engine.
+`docker/Dockerfile` specifies all dependencies of your runtime envrionment. Here, `runtime` can be a client program of cloud-ASR API, or a local ASR engine.
 
 <details><summary> cloud-API ASR Dockerfile example </summary><p>
 
@@ -53,7 +53,7 @@ a_sample_model_image
 
 </p></details>
 
-**important note**: leaderboard pipeline code depends on python3, so submitter should always add **`Python3`** as an extra dependency in Dockerfile, even when your model depends on python2.
+**important note**: you need to add **`python3`** in Dockerfile, because leaderboard pipeline depends on it.
 
 ---
 
@@ -80,39 +80,39 @@ email: leaderboard@speechio.ai
 ---
 
 ### 1.3 README.md (optional)
-Although this is not a mandatory requirement for model-image, we strongly suggest that you provide a summary about your model in this markdown, such as:
+Although not mandatory, we strongly suggest that you provide a summary about your model in this markdown, such as:
 
 * number of parameters
 * amount of training data
 * front end feature type
 * neural net structure & topology
 * objective function
-* optimizater
+* optimizer
 * ...
 
-These kind of knowledge sharing is especially benefical to the speech community.
+Sharing these knowledge is benefical to the speech community.
 
 ---
 
 ### 1.4 SBI
-`SBI` is a submitter implemented `executable` for ASR benchmarking inference:
-* **SBI** can be written in any programming language, *C/C++, Rust, Go, Java, bash, perl, python etc* (with shebang line such as `#!/usr/bin/env bash`) 
-* **SBI** is always invoked in model-image dir, so its code can use relative path to refer to other resources inside model-image(such as models, configs, credentials, libraries, other programs/scripts)
-* **SBI** should implement an audio-list ASR decoding:
+`SBI` is an `executable`, implemented by you, for ASR inference:
+* **SBI** can be written in any programming language: *C/C++, Rust, Go, Java, bash, perl, python etc* (with shebang line such as `#!/usr/bin/env bash`) 
+* **SBI** will be invoked in model-image dir, so SBI code can use relative path to refer to other resources in model-image(such as models, configs, credentials, libraries, other programs/scripts)
+* **SBI** needs to be able to decode an audio-list via following command:
   ```
   ./SBI <input_audio_list> <result_dir>
   ```
 
-* where <input_audio_list> is a list of 16k16bit wavs(less then 30 secs), each line contains two fields <audio_id> and <abs_audio_path>, seperated by whitespace:
+* leaderboard pipeline feeds <input_audio_list> to SBI as 1st argument. It is a list of 16k16bit wavs(less then 30 secs), with two fields <audio_id> and <abs_audio_path>, seperated by whitespace:
   ```
   SPEECHIO_ASR_ZH00001__U_00001 /home/dataset/SPEECHIO_ASR_ZH00001/U_00001.wav
   SPEECHIO_ASR_ZH00001__U_00002 /home/dataset/SPEECHIO_ASR_ZH00001/U_00002.wav
   ...
   ```
 
-  there are no restrictions on <audio_id>, just keep in mind that audio_id is an *unique* string-identifier for each audio.
+  <audio_id> is a *unique* string-identifier for an audio file.
 
-* **SBI** can write/read arbitrary temporary files in <result_dir>, but final results need to be written to **ASCII/UTF-8** encoded text file **<result_dir>/raw_rec.txt**:
+* leaderboard pipeline provides a <result_dir> to SBI as 2nd argument, **SBI** can write/read arbitrary temporary files in it, but final results must be written to **<result_dir>/raw_rec.txt**, with **ASCII/UTF-8** encoding and following format:
   ```
   SPEECHIO_ASR_ZH00001__U_00001 I just watched the movie "The Pursuit of Happiness"
   SPEECHIO_ASR_ZH00001__U_00002 rock and roll like a rolling stone
@@ -123,12 +123,12 @@ These kind of knowledge sharing is especially benefical to the speech community.
   ```
   SPEECHIO_ASR_ZH00001__U_00003  
   ```
-* Once submitters can successfully debug and run SBI to decode their local audio list inside model-image dir, then prepared model-image should be good to work with leaderboard pipeline.  Submitters don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), WER/CER calculation etc.
+* You can try to run and debug your SBI implementation inside your model-image dir, to decode an audio list on your local machine.  Once you can get expected recognition results, then you are ready to go. You don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), WER/CER calculation etc.
 
 ---
 
 ### 1.5 Runtime Resources
-Runtime resources refers to *model files*, *configs*, *cloud-api credentials* etc. These resources can be freely organized by submitters, as long as they are **inside model-image**, but we strongly suggest that submitter put all runtime resources into `<model-image>/assets` directory.  **SBI** code is responsible and is supposed to know how to locate them using relative path.
+Runtime resources refers to *model files*, *configs*, *cloud-api credentials* etc. These resources can be freely organized by submitters, as long as they are **inside model-image**. We strongly suggest that submitter put all runtime resources into `<model-image>/assets/` directory.  **SBI** code can reach them by using relative path:
 
 For example:
 ```
