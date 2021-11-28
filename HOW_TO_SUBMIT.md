@@ -29,7 +29,7 @@ a_sample_model_image
 ---
 
 ### 1.1 docker/Dockerfile
-`docker/Dockerfile` specifies all dependencies of your runtime envrionment. Here, `runtime` can be a client program of cloud-ASR API, or a local ASR engine.
+`docker/Dockerfile` specifies all dependencies of your system. Here, `system` can be a client of cloud-ASR, or a local ASR engine.
 
 <details><summary> cloud-API ASR Dockerfile example </summary><p>
 
@@ -98,12 +98,12 @@ Sharing these knowledge is benefical to the speech community.
 `SBI` is an `executable`, implemented by you, for ASR inference:
 * **SBI** can be written in any programming language: *C/C++, Rust, Go, Java, bash, perl, python etc* (with shebang line such as `#!/usr/bin/env bash`) 
 * **SBI** will be invoked in model-image dir, so SBI code can use relative path to refer to other resources in model-image(such as models, configs, credentials, libraries, other programs/scripts)
-* **SBI** needs to be able to decode an audio-list via following command:
+* **SBI** needs to be able to decode an audio-list via following command line:
   ```
-  ./SBI <input_audio_list> <result_dir>
+  ./SBI <input_audio_list> <working_dir>
   ```
 
-* leaderboard pipeline feeds <input_audio_list> to SBI as 1st argument. It is a list of 16k16bit wavs(less then 30 secs), with two fields <audio_id> and <abs_audio_path>, seperated by whitespace:
+* leaderboard pipeline provides <input_audio_list> to SBI as 1st argument. It is a list of 16k16bit wavs(less then 30 secs), with two fields <audio_id> and <audio_absolute_path>, seperated by whitespace:
   ```
   SPEECHIO_ASR_ZH00001__U_00001 /home/dataset/SPEECHIO_ASR_ZH00001/U_00001.wav
   SPEECHIO_ASR_ZH00001__U_00002 /home/dataset/SPEECHIO_ASR_ZH00001/U_00002.wav
@@ -112,7 +112,7 @@ Sharing these knowledge is benefical to the speech community.
 
   <audio_id> is a *unique* string-identifier for an audio file.
 
-* leaderboard pipeline provides a <result_dir> to SBI as 2nd argument, **SBI** can write/read arbitrary temporary files in it, but final results must be written to **<result_dir>/raw_rec.txt**, with **ASCII/UTF-8** encoding and following format:
+* leaderboard pipeline provides a <working_dir> to SBI as 2nd argument, **SBI** can write/read arbitrary temporary files inside, but final results must be written to **<working_dir>/raw_rec.txt**, with **ASCII/UTF-8** encoding and following format:
   ```
   SPEECHIO_ASR_ZH00001__U_00001 I just watched the movie "The Pursuit of Happiness"
   SPEECHIO_ASR_ZH00001__U_00002 rock and roll like a rolling stone
@@ -172,12 +172,10 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate runt
     speechio_kaldi_pretrain
     alphacep_vosk_en
     interspeech_xxx_paper_reproduced
-    stanford_open_conformer
     deepspeech_v1
-    word2vec_v2
     ```
 
-3. create a benchmark request under `leaderboard/requests/mini_debug.yaml`, replace <your_model_id> field with your model_id:
+3. create a benchmark request under `leaderboard/requests/mini.yaml`, replace <your_model_id> field with your model_id:
     ```
     date: '2021-01-01'
     requester: xxx
@@ -191,7 +189,7 @@ then inside SBI code, SBI can always use `./assets/asr.{mdl,cfg}` to locate runt
 4. run a MINI benchmark:
     ```
     # run this in leaderboard repo
-    ops/leaderboard_runner requests/mini_debug.yaml
+    ops/leaderboard_runner requests/mini.yaml
     ```
 
 5. you can check `leaderboard/results/...<your_model_id>.../{RESULTS,DETAILS}.txt`
@@ -233,7 +231,7 @@ ops/push model <model_id>
 This will upload prepared model-image from your local model-zoo to cloud model-zoo, so that SpeechIO/others can download/reproduce.
 And you can always re-run above `ops/push` command to update your model-image in the cloud.
 
-**Notes**: *Model-images can be large, so you don't have to commit/push model-image to this github repo, leaderboard syncs model-images via cloud-based model-zoo.*
+**Notes**: *Unlike large-scale submission for local engines via ops/push, API Model-images are normally small, you can commit API model-images to this github repo via pull request.*
 
 ---
 
