@@ -20,7 +20,7 @@ As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platfo
    - defines a simplest-possible specification on recognition interface, the format of input test sets, the format of output recognition results.
    - As long as model submitters conform to this specification, a fully automated pipeline will take care of the rest (e.g. data preparation -> recognition invocation -> text post processing -> WER/CER/SER evaluation)
 
-With SpeechIO leaderboard, _**anyone can benchmark, reproduce, compare others' systems on local machine**_, as long as they are released in model zoo and test-set zoo.
+With SpeechIO leaderboard, _**anyone can benchmark, reproduce, compare others' systems on local machine**_, as long as they are published in model zoo and test-set zoo.
 
 ---
 
@@ -28,7 +28,7 @@ With SpeechIO leaderboard, _**anyone can benchmark, reproduce, compare others' s
 
 <details><summary> Test Sets From Public Academic Datasets </summary><p>
 
-| 已公开 <br> Released | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION | 语言 <br> LANGUAGE |
+| 已公开 <br> Unlocked | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION | 语言 <br> LANGUAGE |
 | --- | --- | --- | --- |
 | &check; | LIBRISPEECH_TEST_CLEAN | "test_clean" set of [LibriSpeech](https://www.openslr.org/12) | en |
 | &check; | LIBRISPEECH_TEST_OTHER | "test_other" set of [LibriSpeech](https://www.openslr.org/12) | en |
@@ -45,7 +45,7 @@ With SpeechIO leaderboard, _**anyone can benchmark, reproduce, compare others' s
 
 SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publicly available sources (Youtube, TV programs, Podcast etc), covering various well-known acoustic scenarios(AM) and content domains(LM & vocabulary), labeled by professional annotators.
 
-| 已公开 <br> Released | 编号 <br> TEST_SET_ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
+| 已公开 <br> Unlocked | 编号 <br> TEST_SET_ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
 | --- | --- | --- | --- | --- | --- | --- |
 | &check; |SPEECHIO_ASR_ZH00000| 接入调试集 <br> For leaderboard submitter debugging | 视频会议、论坛演讲 <br> video conference & forum speech | 经济、货币、金融 <br> economy, currency, finance | 1.0 | ★★☆ |
 | &check; |SPEECHIO_ASR_ZH00001| 新闻联播 | 新闻播报 <br> TV News | 时政 <br> news & politics | 9 | ★ |
@@ -80,7 +80,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 </p></details>
 
 
-To pull a **released** test set from cloud to your local dataset-zoo `leaderboard/datasets/*`:
+To pull a **unlocked** test set from cloud to your local dataset-zoo `leaderboard/datasets/*`:
 ```
 ops/pull dataset <TEST_SET_ID>
 ```
@@ -92,7 +92,7 @@ ops/pull dataset <TEST_SET_ID>
 <details><summary> Cloud API Models </summary><p>
 API models are usually small (basically client programs), so we normally put them in this github repo.
 
-| 已公开 <br> Released | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> Service URL |
+| 已公开 <br> Unlocked | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> Service URL |
 | --- | --- | --- | --- | --- | --- |
 | &check; | [aispeech_api_zh](models/aispeech_api_zh/) | Cloud API |思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
 | &check; | [aliyun_api_en](models/aliyun_api_en/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 | https://www.alibabacloud.com/product/intelligent-speech-interaction |
@@ -115,7 +115,7 @@ API models are usually small (basically client programs), so we normally put the
 
 Local models/engines are normally too large for github, so we store these models in cloud.
 
-| 已公开 <br> Released | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description |
+| 已公开 <br> Unlocked | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description |
 | --- | --- | --- | --- | --- |
 | &check; | speechio_kaldi_multicn | pretrained model | Xingyu NA(那兴宇) | Kaldi multi_cn [recipe](https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5) |
 | &check; | wenet_multi_cn | pretrained model | Binbin Zhang(张彬彬)@[wenet-e2e](https://github.com/wenet-e2e/) |  WeNet multi_cn [recipe](https://github.com/wenet-e2e/wenet/tree/main/examples/multi_cn/s0) |
@@ -124,7 +124,7 @@ Local models/engines are normally too large for github, so we store these models
 
 </p></details>
 
-To pull a **released** model from cloud to your local model-zoo `leaderboard/models/*`:
+To pull a **unlocked** model from cloud to your local model-zoo `leaderboard/models/*`:
 ```
 ops/pull model <MODEL_ID>
 ```
@@ -132,9 +132,9 @@ ops/pull model <MODEL_ID>
 ---
 
 ## 4. Benchmarking Pipeline
-To submit your model to leaderboard and get it benchmarked over all(including unreleased) test sets, follow this [Specification](HOW_TO_SUBMIT.md)
+To submit your model to leaderboard and get it benchmarked over all(including locked) test sets, follow this [Specification](HOW_TO_SUBMIT.md)
 
-Also you can pull publicly released models & test sets, and trigger benchmarking pipeline on your local machine via:
+Also you can pull publicly unlocked models & test sets, and trigger benchmarking pipeline on your local machine via:
 ```
 ops/leaderboard_runner requests/request.yaml
 ```
