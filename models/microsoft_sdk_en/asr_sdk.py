@@ -12,7 +12,7 @@ import azure.cognitiveservices.speech as speechsdk
 MAX_RETRY = 10
 RETRY_INTERVAL = 1.0
 REGION = 'chinaeast2'
-Locale = "en-US"
+LOCALE = "en-US"
 with open('SUBSCRIPTION_KEY', 'r') as f:
     SUBSCRIPTION_KEY = f.readline().strip()
 
@@ -36,7 +36,8 @@ def do_recognition(audio):
 
     try:
         speech_config = speechsdk.SpeechConfig(subscription=SUBSCRIPTION_KEY, region=REGION)
-        speech_config.speech_recognition_language = Locale
+        speech_config.speech_recognition_language = LOCALE
+        speech_config.set_profanity(speechsdk.ProfanityOption.Raw)
         audio_input = speechsdk.AudioConfig(filename=audio)
         speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_input)
 
