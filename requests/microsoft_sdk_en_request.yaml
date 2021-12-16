@@ -1,0 +1,11 @@
+date: '2021-12-16'
+requester: Huiliang
+entity: Microsoft
+email: 
+  - v-huilia@microsoft.com
+model: microsoft_sdk_en
+test_set:
+  - LIBRISPEECH_TEST_CLEAN
+  - LIBRISPEECH_TEST_OTHER
+  - GIGASPEECH_V1.0.0_DEV
+  - GIGASPEECH_V1.0.0_TEST
