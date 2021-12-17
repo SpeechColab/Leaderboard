@@ -4,7 +4,7 @@ entity: AsiaInfo Technologies Limited
 email:
   - lixiufeng1213@163.com
   - wyuanru@gmail.com
-model: 26_wenetspeech_s2_decode_9
+model: 27_s1_decode_11
 test_set:
   - SPEECHIO_ASR_ZH00001
   - SPEECHIO_ASR_ZH00002
