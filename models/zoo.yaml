@@ -6,3 +6,5 @@ wenet_multi_cn:
   url: oss://speechio-leaderboard/models/wenet_multi_cn/
 wenet_wenetspeech:
   url: oss://speechio-leaderboard/models/wenet_wenetspeech/
+seewo_api_zh:
+  url: oss://speechio-leaderboard/models/seewo_api_zh/
