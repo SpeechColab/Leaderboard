@@ -38,6 +38,7 @@ def do_recognition(audio):
         speech_config = speechsdk.SpeechConfig(subscription=SUBSCRIPTION_KEY, region=REGION)
         speech_config.speech_recognition_language = LOCALE
         speech_config.set_profanity(speechsdk.ProfanityOption.Raw)
+        speech_config.output_format = speechsdk.OutputFormat.Detailed
         audio_input = speechsdk.AudioConfig(filename=audio)
         speech_recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_input)
 
@@ -58,7 +59,8 @@ def do_recognition(audio):
         def recognized(evt):
             result = evt.result
             if result.reason == speechsdk.ResultReason.RecognizedSpeech:
-                result_list.append(json.loads(result.json)['DisplayText'])
+                nBest = json.loads(result.json)['NBest']
+                result_list.append(nBest[0]['Lexical'])
 
         speech_recognizer.recognized.connect(recognized)
         speech_recognizer.session_stopped.connect(stop_recognition)
