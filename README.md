@@ -132,9 +132,9 @@ ops/pull model <MODEL_ID>
 ---
 
 ## 4. Benchmarking Pipeline
-To submit your model to leaderboard and get it benchmarked over all(including locked) test sets, follow this [Specification](HOW_TO_SUBMIT.md)
+To submit your model to leaderboard and get it benchmarked over all test sets, follow this specification [How to submit](HOW_TO_SUBMIT.md)
 
-Also you can pull publicly unlocked models & test sets, and trigger benchmarking pipeline on your local machine via:
+Also you can pull unlocked models & test sets, and trigger benchmarking pipeline on your local machine via:
 ```
 ops/leaderboard_runner requests/request.yaml
 ```
