@@ -35,6 +35,10 @@ POINT = [u'点', u'點']
 # SIL = [u'杠', u'槓']
 
 FILLER_CHARS = ['呃', '啊']
+ALLOW_ER_WRD='(儿女|儿子|儿孙|女儿|儿媳|妻儿|' \
+             '胎儿|婴儿|新生儿|婴幼儿|幼儿|少儿|小儿|儿歌|儿童|儿科|托儿所|孤儿|' \
+             '儿戏|儿化|台儿庄|鹿儿岛|正儿八经|吊儿郎当|生儿育女|托儿带女|养儿防老|痴儿呆女|' \
+             '佳儿佳妇|儿怜兽扰|儿无常父|儿不嫌母丑|儿行千里母担忧|儿大不由爷)'
 
 # 中文数字系统类型
 NUMBERING_TYPES = ['low', 'mid', 'high']
@@ -601,6 +605,33 @@ class Percentage:
         return '百分之' + num2chn(self.percentage.strip().strip('%'))
 
 
+def remove_er(text,allow_er_wrd):                                                                                                                                                                           
+    """
+    去除儿化音词中的儿:
+    他女儿在那边儿 -> 他女儿在那边
+    """
+
+    er_pattern = re.compile(allow_er_wrd)
+    new_str=''
+    while re.search('儿',text):
+        a = re.search('儿',text).span()
+        remove_er_flag = 0
+
+        if er_pattern.search(text):
+            b = er_pattern.search(text).span()
+            if b[0] <= a[0]:
+                remove_er_flag = 1
+
+        if remove_er_flag == 0 :
+            new_str = new_str + text[0:a[0]]
+            text = text[a[1]:]
+        else:
+            new_str = new_str + text[0:b[1]]
+            text = text[b[1]:]
+
+    text = new_str + text
+    return text      
+      
 # ================================================================================ #
 #                            NSW Normalizer
 # ================================================================================ #
@@ -773,6 +804,8 @@ if __name__ == '__main__':
         if args.remove_fillers:
             for ch in FILLER_CHARS:
                 text = text.replace(ch, '')
+                
+            text = remove_er(text,ALLOW_ER_WRD)    
 
         # NSW(Non-Standard-Word) normalization
         text = NSWNormalizer(text).normalize()
