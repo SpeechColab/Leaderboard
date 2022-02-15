@@ -14,7 +14,7 @@ models="$models hiasr_api_zh"
 models="$models iflytek_lfasr_api_zh"
 #models="$models microsoft_rest_api_zh"
 models="$models microsoft_sdk_zh"
-models="$models sogou_api_zh"
+#models="$models sogou_api_zh"
 models="$models tencent_api_zh"
 models="$models yitu_api_zh"
 
