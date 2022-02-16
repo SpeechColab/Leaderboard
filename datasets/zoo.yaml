@@ -76,3 +76,7 @@ SPEECHIO_ASR_ZH00027:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00027/
 SPEECHIO_ASR_ZH00028:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00028/
+SPEECHIO_ASR_ZH00029:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00029/
+SPEECHIO_ASR_ZH00030:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00030/
