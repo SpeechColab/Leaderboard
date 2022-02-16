@@ -72,6 +72,8 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &cross; |SPEECHIO_ASR_ZH00026| 张震鬼故事 | 广播节目 <br> Broadcasting Program | 鬼故事 <br> Horror Stories | 2.4 | ★★★ |
 | &cross; |SPEECHIO_ASR_ZH00027| 华语辩论世界杯 | 辩论赛 <br> Debates Contest | 兴趣、技能、成长 <br> Hobby, Skill, Growth | 1.4 | ★★★ |
 | &cross; |SPEECHIO_ASR_ZH00028| 时政现场同传 | 同声传译 <br> Simultaneous Translation | 时政、社会公共治理 <br> News & Events on Public Governance | 2.1 | ★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00029| 港台明星访谈 <br> 周杰伦、曾志伟、张家辉、陈小春、周星驰 | 口音(港台) <br> Accent(HongKong & Taiwan) | 娱乐、生活、演艺 <br> Entertainment, Acting, Musics | 1.5 | ★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00030| 世界青年说 | 口音(老外) <br> Accent(Foreigner) | 异国文化比较 <br> Cultural Difference | 2 | ★★★☆ |
 
 </p></details>
 
