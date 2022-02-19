@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
-# Authors: 
+# Authors:
 #   2019.5 Zhiyang Zhou (https://github.com/Joee1995/chn_text_norm.git)
 #   2019.9 Jiayu DU
 #
@@ -35,6 +35,10 @@ POINT = [u'点', u'點']
 # SIL = [u'杠', u'槓']
 
 FILLER_CHARS = ['呃', '啊']
+ER_WHITELIST = '(儿女|儿子|儿孙|女儿|儿媳|妻儿|' \
+             '胎儿|婴儿|新生儿|婴幼儿|幼儿|少儿|小儿|儿歌|儿童|儿科|托儿所|孤儿|' \
+             '儿戏|儿化|台儿庄|鹿儿岛|正儿八经|吊儿郎当|生儿育女|托儿带女|养儿防老|痴儿呆女|' \
+             '佳儿佳妇|儿怜兽扰|儿无常父|儿不嫌母丑|儿行千里母担忧|儿大不由爷|苏乞儿)'
 
 # 中文数字系统类型
 NUMBERING_TYPES = ['low', 'mid', 'high']
@@ -601,14 +605,41 @@ class Percentage:
         return '百分之' + num2chn(self.percentage.strip().strip('%'))
 
 
+def remove_erhua(text, er_whitelist):
+    """
+    去除儿化音词中的儿:
+    他女儿在那边儿 -> 他女儿在那边
+    """
+
+    er_pattern = re.compile(er_whitelist)
+    new_str=''
+    while re.search('儿',text):
+        a = re.search('儿',text).span()
+        remove_er_flag = 0
+
+        if er_pattern.search(text):
+            b = er_pattern.search(text).span()
+            if b[0] <= a[0]:
+                remove_er_flag = 1
+
+        if remove_er_flag == 0 :
+            new_str = new_str + text[0:a[0]]
+            text = text[a[1]:]
+        else:
+            new_str = new_str + text[0:b[1]]
+            text = text[b[1]:]
+
+    text = new_str + text
+    return text
+
 # ================================================================================ #
 #                            NSW Normalizer
 # ================================================================================ #
-class NSWNormalizer:                                                                                                                                                        
-    def __init__(self, raw_text):                                   
-        self.raw_text = '^' + raw_text + '$'                                        
-        self.norm_text = ''                                                  
-                                                                                    
+class NSWNormalizer:
+    def __init__(self, raw_text):
+        self.raw_text = '^' + raw_text + '$'
+        self.norm_text = ''
+
     def _particular(self):
         text = self.norm_text
         pattern = re.compile(r"(([a-zA-Z]+)二([a-zA-Z]+))")
@@ -740,6 +771,7 @@ if __name__ == '__main__':
     p.add_argument('--to_lower', action='store_true', help='convert to lower case')
     p.add_argument('--has_key', action='store_true', help="input text has Kaldi's key as first field.")
     p.add_argument('--remove_fillers', type=bool, default=True, help='remove filler chars such as "呃, 啊"')
+    p.add_argument('--remove_erhua', type=bool, default=True, help='remove erhua chars such as "这儿"')
     p.add_argument('--log_interval', type=int, default=10000, help='log interval in number of processed lines')
     args = p.parse_args()
 
@@ -774,6 +806,9 @@ if __name__ == '__main__':
             for ch in FILLER_CHARS:
                 text = text.replace(ch, '')
 
+        if args.remove_erhua:
+            text = remove_erhua(text, ER_WHITELIST)
+
         # NSW(Non-Standard-Word) normalization
         text = NSWNormalizer(text).normalize()
 
@@ -783,17 +818,17 @@ if __name__ == '__main__':
         del_chars = ''
         text = text.translate(str.maketrans(old_chars, new_chars, del_chars))
 
-        # 
+        #
         if args.has_key:
             ofile.write(key + '\t' + text + '\n')
         else:
             ofile.write(text + '\n')
-        
+
         n += 1
         if n % args.log_interval == 0:
             sys.stderr.write("text norm: {} lines done.\n".format(n))
-    
+
     sys.stderr.write("text norm: {} lines done in total.\n".format(n))
-    
+
     ifile.close()
     ofile.close()
