@@ -46,7 +46,11 @@ def do_recognition(audio):
         result_list = []
         done = False
 
-        def stop_recognition(evt):
+        def session_stopped(evt):
+            nonlocal done
+            done = True
+
+        def canceled(evt):
             nonlocal done
             done = True
             result = evt.result
@@ -63,8 +67,8 @@ def do_recognition(audio):
                 result_list.append(nBest[0]['Lexical'])
 
         speech_recognizer.recognized.connect(recognized)
-        speech_recognizer.session_stopped.connect(stop_recognition)
-        speech_recognizer.canceled.connect(stop_recognition)
+        speech_recognizer.session_stopped.connect(session_stopped)
+        speech_recognizer.canceled.connect(canceled)
 
         # Start continuous speech recognition
         speech_recognizer.start_continuous_recognition()
