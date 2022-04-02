@@ -32,14 +32,14 @@ SPEECHIO_ASR_ZH00006:
   url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00006/
 SPEECHIO_ASR_ZH00007:
   url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00007/
+SPEECHIO_ASR_ZH00008:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00008/
+SPEECHIO_ASR_ZH00009:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00009/
+SPEECHIO_ASR_ZH00010:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00010/
 
 ## To be released monthly
-SPEECHIO_ASR_ZH00008:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00008/
-SPEECHIO_ASR_ZH00009:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00009/
-SPEECHIO_ASR_ZH00010:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00010/
 SPEECHIO_ASR_ZH00011:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00011/
 SPEECHIO_ASR_ZH00012:
