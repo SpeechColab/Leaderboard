@@ -1,100 +1,70 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Auther: Shaoji Zhang
-#
+# Auther: Shaoji ZHANG 2022.05
+#         Jiayu DU
 
 import os
 import glob
 import json
+import argparse
 
-WH_TEST_LIST = [ F'SPEECHIO_ASR_ZH{i:05d}' for i in range(1, 11) ]
-BH_TEST_LIST = [ F'SPEECHIO_ASR_ZH{i:05d}' for i in range(1, 31) ]
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--begin', type = int, default = 1, help = 'testsets index begin [begin, end)')
+    parser.add_argument('--end', type = int, default = 31, help = 'testsets index end [begin, end)')
+    parser.add_argument('dir', type=str)
+    args = parser.parse_args()
 
-dirpath = os.path.join('results', '2022_05', '*')
-bh_all_dic = {}
-wh_all_dic = {}
-bh_dic = {}
-wh_dic = {}
-for dpath in glob.iglob(dirpath):
-    date, service, test_set, max_utts = dpath.split('__')
-    with open(os.path.join(dpath,'RESULTS.txt'),encoding='utf-8') as fp:
-        for line in fp:
-            if 'token_error_rate' in line:
-                r = json.loads(line)
-                TER = r['token_error_rate']
-                R = r['num_ref_utts']
-                H = r['num_hyp_utts']
-                n = r['num_eval_utts']
-                C = r['C']
-                S = r['S']
-                I = r['I']
-                D = r['D']
-                # buffer.append(F"{service},{test_set},{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts},{date}")
-                if test_set in BH_TEST_LIST:
-                    if bh_dic.get(test_set):
-                        if bh_dic.get(test_set).get(service):
-                            print(dpath)
+    test_sets = [ F'SPEECHIO_ASR_ZH{i:05d}' for i in range(args.begin, args.end) ]
+    dir_pattern = os.path.join(args.dir, '*')
+
+    service_ter_stats = {}
+    testset_ter = {}
+
+    for res_dir in glob.iglob(dir_pattern):
+        date, service, test_set, max_utts = res_dir.split('__')
+        with open(os.path.join(res_dir, 'RESULTS.txt'), encoding='utf-8') as f:
+            for line in f:
+                if 'token_error_rate' in line:
+                    r = json.loads(line)
+                    TER = r['token_error_rate']
+                    R = r['num_ref_utts']
+                    H = r['num_hyp_utts']
+                    n = r['num_eval_utts']
+                    C = r['C']
+                    S = r['S']
+                    I = r['I']
+                    D = r['D']
+                    # buffer.append(F"{service},{test_set},{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts},{date}")
+                    if test_set in test_sets:
+                        if testset_ter.get(test_set):
+                            if testset_ter.get(test_set).get(service):
+                                print(res_dir)
+                            else:
+                                testset_ter[test_set][service] = F'{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts},{date}'
                         else:
-                            bh_dic[test_set][service] = F"{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts},{date}"
-                    else:
-                        bh_dic[test_set] = {service:F"{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts},{date}"}
-                    if bh_all_dic.get(service):
-                        bh_all_dic[service]['wrong'] += S + I + D
-                        bh_all_dic[service]['corr'] += S + C + D
-                    else:
-                        bh_all_dic[service] = {'wrong': S + I + D,'corr': S + C + D}
+                            testset_ter[test_set] = {service : F'{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts},{date}'}
 
-                if test_set in WH_TEST_LIST:
-                    if wh_dic.get(test_set):
-                        if wh_dic.get(test_set).get(service):
-                            print(dpath)
+                        if service_ter_stats.get(service):
+                            service_ter_stats[service]['ter_num'] += S + I + D
+                            service_ter_stats[service]['ter_den'] += S + C + D
                         else:
-                            wh_dic[test_set][service] = F"{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts},{date}"
-                    else:
-                        wh_dic[test_set] = {service:F"{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts},{date}"}
+                            service_ter_stats[service] = {'ter_num': S + I + D, 'ter_den': S + C + D}
 
-                    if wh_all_dic.get(service):
-                        wh_all_dic[service]['wrong'] += S + I + D
-                        wh_all_dic[service]['corr'] += S + C + D
-                    else:
-                        wh_all_dic[service] = {'wrong': S + I + D,'corr': S + C + D}
+    for test_set in sorted(testset_ter.keys()):
+        print(F'--- {test_set} ---')
+        for k, (service, result) in enumerate(sorted(testset_ter.get(test_set).items(), key=lambda x:float(x[1].split(',')[0]), reverse=True), 1):
+            print(k, service, result)
+        print()
 
 
+    service_ter = {}
+    for service in service_ter_stats:
+        service_ter[service] = service_ter_stats.get(service).get('ter_num') / service_ter_stats.get(service).get('ter_den')
 
-for test_set in wh_dic:
-    service_result = sorted(wh_dic.get(test_set).items(),key=lambda x:float(x[1].split(',')[0]),reverse=True)
-    # print(test_set)
-    for result in service_result:
-        print(result[0],result[1])
+    print('*** OVERALL ***')
+    for k, (service, ter) in enumerate(sorted(service_ter.items(), key=lambda x:x[1]), 1):
+        print(k, service, f'{ter * 100:.2f}%')
+    print()
 
-
-for test_set in bh_dic:
-    service_result = sorted(bh_dic.get(test_set).items(),key=lambda x:float(x[1].split(',')[0]),reverse=True)
-    # print(F"{test_set},{service_result[0][0]},{service_result[0][1]}")
-    # print(test_set)
-    for result in service_result:
-        print(result[0], result[1])
-
-
-####所有识别结果一起排名#####
-wh_ter_dic = {}
-bh_ter_dic = {}
-# print(wh_all_dic)
-for service in wh_all_dic:
-    wrong = wh_all_dic.get(service).get('wrong')
-    corr = wh_all_dic.get(service).get('corr')
-    wh_ter_dic[service] = wrong/corr
-
-print('----- released test sets -----')
-for k, (service, ter) in enumerate(sorted(wh_ter_dic.items(),key=lambda x:x[1]), 1):
-    print(k, service, f'{ter * 100:.2f}%')
-
-for service in bh_all_dic:
-    wrong = bh_all_dic.get(service).get('wrong')
-    corr = bh_all_dic.get(service).get('corr')
-    bh_ter_dic[service] = wrong / corr
-
-print('----- not released test sets -----')
-for k, (service, ter) in enumerate(sorted(bh_ter_dic.items(), key=lambda x: x[1]), 1):
-    print(k, service, f'{ter * 100:.2f}%')
