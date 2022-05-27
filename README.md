@@ -37,7 +37,7 @@ With SpeechIO leaderboard, _**anyone can benchmark, reproduce, compare others' s
 
 </p></details>
 
-<details><summary> SpeechIO Test Sets (ZH) </summary><p>
+### SpeechIO Test Sets (ZH)
 
 SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publicly available sources (Youtube, TV programs, Podcast etc), covering various well-known acoustic scenarios(AM) and content domains(LM & vocabulary), labeled by professional annotators.
 
@@ -75,8 +75,6 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &cross; |SPEECHIO_ASR_ZH00029| 港台明星访谈 <br> 周杰伦、曾志伟、张家辉、陈小春、周星驰 | 口音(港台) <br> Accent(HongKong & Taiwan) | 娱乐、生活、演艺 <br> Entertainment, Acting, Musics | 1.5 | ★★★☆ |
 | &cross; |SPEECHIO_ASR_ZH00030| 世界青年说 | 口音(老外) <br> Accent(Foreigner) | 异国文化比较 <br> Cultural Difference | 2 | ★★★☆ |
 
-</p></details>
-
 
 To pull a **unlocked** test set from cloud to your local dataset-zoo `leaderboard/datasets/*`:
 ```
@@ -87,7 +85,7 @@ ops/pull dataset <TEST_SET_ID>
 
 ## 3. Model Zoo
 
-<details><summary> Cloud API Models </summary><p>
+### Cloud API Models
 API models are usually small (basically client programs), so we normally put them in this github repo.
 
 | 已公开 <br> Unlocked | 编号 <br> MODEL_ID | 类型 <br> type | 模型作者/所有人 <br> model author/owner | 简介 <br> description | 链接 <br> Service URL |
@@ -103,9 +101,7 @@ API models are usually small (basically client programs), so we normally put the
 | &check; | [tencent_api_zh](models/tencent_api_zh/) | Cloud API |腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
 | &check; | [yitu_api_zh](models/yitu_api_zh/) | Cloud API |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
 
-</p></details>
-
-<details><summary> Local Engine (Open-sourced Pretrained ASR Models) </summary><p>
+### Local Engine (Open-sourced Pretrained ASR Models)
 
 Local models/engines are normally too large for github, so we store these models in cloud.
 
@@ -116,9 +112,7 @@ Local models/engines are normally too large for github, so we store these models
 | &check; | vosk_model_cn | batteries-included local engine | [alphacephei](https://alphacephei.com/vosk) | Chinese engine of [Vosk](https://alphacephei.com/vosk/models) |
 | &check; | wenet_wenetspeech | pretrained model | Binbin Zhang(张彬彬)@[wenet-e2e](https://github.com/wenet-e2e/) |  WeNet wenetspeech [recipe](https://github.com/wenet-e2e/wenet/tree/main/examples/wenetspeech/s0) |
 
-</p></details>
-
-To pull a **unlocked** model from cloud to your local model-zoo `leaderboard/models/*`:
+To pull an **unlocked** model from cloud to your local model-zoo `leaderboard/models/*`:
 ```
 ops/pull model <MODEL_ID>
 ```
