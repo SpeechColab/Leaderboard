@@ -38,18 +38,18 @@ SPEECHIO_ASR_ZH00009:
   url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00009/
 SPEECHIO_ASR_ZH00010:
   url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00010/
-
-## To be released monthly
 SPEECHIO_ASR_ZH00011:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00011/
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00011/
 SPEECHIO_ASR_ZH00012:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00012/
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00012/
 SPEECHIO_ASR_ZH00013:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00013/
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00013/
 SPEECHIO_ASR_ZH00014:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00014/
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00014/
 SPEECHIO_ASR_ZH00015:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00015/
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00015/
+
+## Locked
 SPEECHIO_ASR_ZH00016:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00016/
 SPEECHIO_ASR_ZH00017:
