@@ -95,35 +95,35 @@ Sharing these knowledge is benefical to the speech community.
 ---
 
 ### 1.4 SBI
-`SBI` is an `executable`, implemented by you, for ASR inference:
-* **SBI** can be written in any programming language: *C/C++, Rust, Go, Java, bash, perl, python etc* (with shebang line such as `#!/usr/bin/env bash`) 
-* **SBI** will be invoked in model-image dir, so SBI code can use relative path to refer to other resources in model-image(such as models, configs, credentials, libraries, other programs/scripts)
-* **SBI** needs to be able to decode an audio-list via following command line:
+You need to implement an `executable` called `SBI` for ASR inference:
+* **SBI** can be in any language: *C/C++, Java, bash, python etc
+* **SBI** code can refer to other resources(models, configs, programs/scripts etc) via relative paths under model-image dir.
+* **SBI** should implement following command line interface to decode an audio-list:
   ```
   ./SBI <input_audio_list> <working_dir>
   ```
 
-* leaderboard pipeline provides <input_audio_list> to SBI as 1st argument. It is a list of 16k16bit wavs(less then 30 secs), with two fields <audio_id> and <audio_absolute_path>, seperated by whitespace:
+* Leaderboard pipeline feeds <input_audio_list> to SBI as 1st argument, e.g.:
   ```
-  SPEECHIO_ASR_ZH00001__U_00001 /home/dataset/SPEECHIO_ASR_ZH00001/U_00001.wav
-  SPEECHIO_ASR_ZH00001__U_00002 /home/dataset/SPEECHIO_ASR_ZH00001/U_00002.wav
+  SPEECHIO_ASR_ZH00001__U001 /home/dataset/SPEECHIO_ASR_ZH00001/U001.wav
+  SPEECHIO_ASR_ZH00001__U002 /home/dataset/SPEECHIO_ASR_ZH00001/U002.wav
+  ...
+  ```
+  two fields are <audio_id> and <audio_absolute_path>, seperated by whitespace.  Audio files are 16k16bit wavs, less than 30 secs each.  <audio_id> is a *unique* string-identifier for an audio file.
+
+* Leaderboard pipeline feeds <working_dir> to SBI as 2nd argument. **SBI** can create/read/write files freely inside <working_dir>, but recognition results must be written to **<working_dir>/raw_rec.txt**, with _ASCII/UTF-8_ encoding, e.g.:
+  ```
+  SPEECHIO_ASR_ZH00001__U001 I just watched the movie "The Pursuit of Happiness"
+  SPEECHIO_ASR_ZH00001__U002 rock and roll like a rolling stone
   ...
   ```
 
-  <audio_id> is a *unique* string-identifier for an audio file.
-
-* leaderboard pipeline provides a <working_dir> to SBI as 2nd argument, **SBI** can write/read arbitrary temporary files inside, but final results must be written to **<working_dir>/raw_rec.txt**, with **ASCII/UTF-8** encoding and following format:
+* If recognition fails for an utterence, write a line with audio_id and empty recogntion result like this:
   ```
-  SPEECHIO_ASR_ZH00001__U_00001 I just watched the movie "The Pursuit of Happiness"
-  SPEECHIO_ASR_ZH00001__U_00002 rock and roll like a rolling stone
-  ...
+  SPEECHIO_ASR_ZH00001__U003  
   ```
 
-* if recognition fails for an utterence, write a line with audio_id and empty recogntion result like this:
-  ```
-  SPEECHIO_ASR_ZH00001__U_00003  
-  ```
-* You can try to run and debug your SBI implementation inside your model-image dir, to decode an audio list on your local machine.  Once you can get expected recognition results, then you are ready to go. You don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), WER/CER calculation etc.
+* You need to debug your SBI implementation inside your model-image dir on your local machine to meet above specifications.  You don't need to worry about text normalization(upper/lowercase, punctuations, numbers, years etc), WER/CER calculation etc.
 
 ---
 
