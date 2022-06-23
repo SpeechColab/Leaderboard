@@ -129,7 +129,32 @@ ops/leaderboard_runner requests/request.yaml
 the content of `request.yaml` is described in above specification.
 
 ---
-## 5. Latest Leaderboard Report
+## 5. Ranking
+
+### Ranking on unlocked test sets only
+| Rank排名 | Model模型 | CER字错误率 | Submission date 提交时间 |
+| --- | --- | --- | --- | 
+| 1 | yitu_api_zh | 2.85 % | 2022.05 |
+| 2 | aliyun_api | 3.03% | 2022.05 |
+| 3 | microsoft_sdk_zh | 3.04% | 2022.05 |
+| 4 | aispeech_api_zh | 3.39% | 2022.05 |
+| 5 | tencent_api_zh | 3.56% | 2022.05 |
+| 6 | iflytek_lfasr_api_zh | 3.69% | 2022.05 |
+| 7 | baidu_pro_api_zh | 6.64% | 2022.05 |
+
+### Ranking on all SpeechIO test sets
+| Rank排名 | Model模型 | CER字错误率 | Submission date 提交时间 |
+| --- | --- | --- | --- |
+| 1 | yitu_api_zh | 3.10 % | 2022.05 |
+| 2 | microsoft_sdk_zh | 3.47% | 2022.05 |
+| 3 | aispeech_api_zh | 3.63% | 2022.05 |
+| 4 | aliyun_api | 3.81% | 2022.05 |
+| 5 | iflytek_lfasr_api_zh | 4.05% | 2022.05 |
+| 6 | tencent_api_zh | 4.06% | 2022.05 |
+| 7 | baidu_pro_api_zh | 7.38% | 2022.05 |
+
+---
+## 6. Latest Leaderboard Report
 ![result](misc/SpeechIO_TIOBE_2022_05.png)
 
 ---
