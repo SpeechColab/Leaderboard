@@ -14,32 +14,31 @@ Regarding to the current state of Automatic Speech Recognition(ASR), the term "S
 
 As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platform, by providing 3 components:
 
-1. TestSet Zoo: A collection of test sets covering wide range of speech recognition scenarios
-2. Model Zoo: A collection of models including commercial APIs and open-sourced pretrained models
-3. An automated benchmarking pipeline:
-   - defines a simplest-possible specification on recognition interface, the format of input test sets, the format of output recognition results.
-   - As long as model submitters conform to this specification, a fully automated pipeline will take care of the rest (e.g. data preparation -> recognition invocation -> text post processing -> WER/CER/SER evaluation)
+1. **TestSet Zoo**: A collection of test sets covering wide range of speech recognition tasks
 
-With SpeechIO leaderboard, _**anyone can benchmark, reproduce, compare others' systems on local machine**_, as long as they are published in model zoo and test-set zoo.
+2. **Model Zoo**: A collection of models including commercial APIs and open-sourced pretrained models
+
+3. **Benchmarking Pipeline**: a simple & well-specified pipeline to take care of data preparation / inference invocation / recognition post processing / error rate evaluation.
+
+With SpeechIO leaderboard, _**anyone should be able to benchmark, reproduce, compare all these ASR systems locally**_
 
 ---
 
 ## 2. TestSet Zoo
 
-<details><summary> Test Sets From Public Academic Datasets </summary><p>
+### Academic Test Sets
 
 | 已公开 <br> Unlocked | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION | 语言 <br> LANGUAGE |
 | --- | --- | --- | --- |
-| &check; | AISHELL1_TEST | test set of [AISHELL-1](https://www.openslr.org/33/) | zh |
-| &check; | AISHELL2_IOS_TEST | test set of [AISHELL-2](http://www.aishelltech.com/aishell_2) (iOS channel) | zh |
-| &check; | AISHELL2_ANDROID_TEST | test set of [AISHELL-2](http://www.aishelltech.com/aishell_2) (Android channel) | zh |
-| &check; | AISHELL2_MIC_TEST | test set of [AISHELL-2](http://www.aishelltech.com/aishell_2) (Microphone channel) | zh |
+| &check; | AISHELL1_TEST | test set of AISHELL-1 | zh |
+| &check; | AISHELL2_IOS_TEST | test set of AISHELL-2 (iOS channel) | zh |
+| &check; | AISHELL2_ANDROID_TEST | test set of AISHELL-2 (Android channel) | zh |
+| &check; | AISHELL2_MIC_TEST | test set of AISHELL-2 (Microphone channel) | zh |
 
-</p></details>
 
-### SpeechIO Test Sets (ZH)
+### SpeechIO Test Sets
 
-SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publicly available sources (Youtube, TV programs, Podcast etc), covering various well-known acoustic scenarios(AM) and content domains(LM & vocabulary), labeled by professional annotators.
+SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publicly available sources (Youtube, TV programs, Podcast etc), covering various well-known acoustic scenarios(AM) and topic domains(LM & vocabulary), labeled by payed professional annotators.
 
 | 已公开 <br> Unlocked | 编号 <br> TEST_SET_ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -76,7 +75,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &cross; |SPEECHIO_ASR_ZH00030| 世界青年说 | 口音(老外) <br> Accent(Foreigner) | 异国文化比较 <br> Cultural Difference | 2 | ★★★☆ |
 
 
-To pull a **unlocked** test set from cloud to your local dataset-zoo `leaderboard/datasets/*`:
+To pull an **unlocked** test set from cloud dataset zoo to your local `leaderboard/datasets/<TEST_SET_ID>`:
 ```
 ops/pull dataset <TEST_SET_ID>
 ```
@@ -109,7 +108,7 @@ Local models/engines are normally too large for github, so we store these models
 | &check; | vosk_model_cn | batteries-included local engine | [alphacephei](https://alphacephei.com/vosk) | Chinese engine of [Vosk](https://alphacephei.com/vosk/models) |
 | &check; | wenet_wenetspeech | pretrained model | Binbin Zhang(张彬彬)@[wenet-e2e](https://github.com/wenet-e2e/) |  WeNet wenetspeech [recipe](https://github.com/wenet-e2e/wenet/tree/main/examples/wenetspeech/s0) |
 
-To pull an **unlocked** model from cloud to your local model-zoo `leaderboard/models/*`:
+To pull an **unlocked** model from cloud model-zoo to your local `leaderboard/models/<MODEL_ID>`:
 ```
 ops/pull model <MODEL_ID>
 ```
