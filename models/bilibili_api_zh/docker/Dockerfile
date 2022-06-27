@@ -1,5 +1,5 @@
 FROM ubuntu:20.04
-LABEL maintainer="jerry.jiayu.du@gmail.com"
+LABEL maintainer="xuanwu@bilibili.com"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         python3 \

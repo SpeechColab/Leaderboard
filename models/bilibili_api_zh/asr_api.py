@@ -10,23 +10,6 @@ import requests
 URL = "https://asr-speechio.bilibili.com/asr"
 
 
-def is_alnum(c):
-    """
-    简单判断字符是否是英文字母数字
-    """
-    return c.isdigit() or 'a' <= c <= 'z' or 'A' <= c <= 'Z'
-
-
-def trim(s):
-    res = ''
-    for i in range(len(s)):
-        if s[i] == ' ':
-            if 0 < i < len(s) and (is_alnum(s[i - 1]) or is_alnum(s[i + 1])):
-                res += s[i]
-        else:
-            res += s[i]
-    return res
-
 with open('TOKEN', 'r') as f:
     token = f.readline().strip()
 
@@ -43,7 +26,7 @@ def recognize(audio, key):
                         "token": token}
                 headers = {"Content-Type": 'application/json'}
                 rep = requests.post(url=URL, data=json.dumps(param), headers=headers)
-                text = trim(json.loads(rep.text)["text"])
+                text = json.loads(rep.text)["text"]
                 return text, True
         except Exception as e:
             sys.stderr.write("Exception %s, will retry.\n"%(e))
