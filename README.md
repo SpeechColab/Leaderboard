@@ -34,7 +34,10 @@ With SpeechIO leaderboard, _**anyone should be able to benchmark, reproduce, com
 | &check; | AISHELL2_IOS_TEST | test set of AISHELL-2 (iOS channel) | zh |
 | &check; | AISHELL2_ANDROID_TEST | test set of AISHELL-2 (Android channel) | zh |
 | &check; | AISHELL2_MIC_TEST | test set of AISHELL-2 (Microphone channel) | zh |
-
+| &check; | LIBRISPEECH_TEST_CLEAN | "test_clean" set of [LibriSpeech](https://www.openslr.org/12) | en |
+| &check; | LIBRISPEECH_TEST_OTHER | "test_other" set of [LibriSpeech](https://www.openslr.org/12) | en |
+| &check; | GIGASPEECH_V1.0.0_DEV | dev set of [GigaSpeech](https://github.com/SpeechColab/GigaSpeech) | en |
+| &check; | GIGASPEECH_V1.0.0_TEST | test set of [GigaSpeech](https://github.com/SpeechColab/GigaSpeech) | en |
 
 ### SpeechIO Test Sets
 
@@ -96,6 +99,9 @@ API models are usually small (basically client programs), so we normally put the
 | &check; | [microsoft_sdk_zh](models/microsoft_sdk_zh/) | Cloud API |微软 <br> Microsoft |Azure | https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
 | &check; | [tencent_api_zh](models/tencent_api_zh/) | Cloud API |腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
 | &check; | [yitu_api_zh](models/yitu_api_zh/) | Cloud API |依图 <br> YituTech |依图语音开放平台| https://speech.yitutech.com |
+| &check; | [aliyun_api_en](models/aliyun_api_en/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 | https://www.alibabacloud.com/product/intelligent-speech-interaction |
+| &check; | [google_api_en](models/google_api_en/) | Cloud API | 谷歌 <br> Google | 谷歌云 | https://cloud.google.com/speech-to-text |
+| &check; | [microsoft_sdk_en](models/microsoft_sdk_en/) | Cloud API |微软 <br> Microsoft | Azure | https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/ |
 
 ### Local Engine (Open-sourced Pretrained ASR Models)
 

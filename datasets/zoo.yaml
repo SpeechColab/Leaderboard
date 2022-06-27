@@ -80,3 +80,16 @@ SPEECHIO_ASR_ZH00029:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00029/
 SPEECHIO_ASR_ZH00030:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00030/
+
+
+# LibriSpeech
+LIBRISPEECH_TEST_CLEAN:
+  url: oss://speechio-leaderboard/datasets/LIBRISPEECH_TEST_CLEAN/
+LIBRISPEECH_TEST_OTHER:
+  url: oss://speechio-leaderboard/datasets/LIBRISPEECH_TEST_OTHER/
+
+# GigaSpeech
+GIGASPEECH_V1.0.0_DEV:
+  url: oss://speechio-leaderboard/datasets/GIGASPEECH_V1.0.0_DEV/
+GIGASPEECH_V1.0.0_DEV:
+  url: oss://speechio-leaderboard/datasets/GIGASPEECH_V1.0.0_TEST/
