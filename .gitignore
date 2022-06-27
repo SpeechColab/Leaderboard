@@ -22,7 +22,6 @@ models/*
 # en models
 !models/aliyun_api_en
 !models/google_api_en
-!models/microsoft_rest_api_en
 !models/microsoft_sdk_en
 
 # dataset zoo
