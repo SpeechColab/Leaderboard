@@ -11,6 +11,7 @@ models/*
 !models/aispeech_api_zh
 !models/aliyun_api_zh
 !models/baidu_pro_api_zh
+!models/bilibili_api_zh
 !models/hiasr_api_zh
 !models/iflytek_lfasr_api_zh
 !models/microsoft_rest_api_zh
