@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--stage', type=int, default=0, help='set stage variable in benchmark.sh')
-    parser.add_argument('--max_num_utts', type=int, default=10000, help='max number of utts to test in a test set')
+    parser.add_argument('--max_num_utts', type=int, default=100000, help='max number of utts to test in a test set')
     parser.add_argument('request_file_path', type=str, help='request.yaml')
     args = parser.parse_args()
 
