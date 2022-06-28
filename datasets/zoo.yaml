@@ -91,5 +91,5 @@ LIBRISPEECH_TEST_OTHER:
 # GigaSpeech
 GIGASPEECH_V1.0.0_DEV:
   url: oss://speechio-leaderboard/datasets/GIGASPEECH_V1.0.0_DEV/
-GIGASPEECH_V1.0.0_DEV:
+GIGASPEECH_V1.0.0_TEST:
   url: oss://speechio-leaderboard/datasets/GIGASPEECH_V1.0.0_TEST/
