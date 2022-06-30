@@ -1,0 +1,7 @@
+date: 2020-01-01
+task: ASR
+language: en
+sample_rate: 16000
+author: mark
+entity: SpeechIO
+email: leaderboard@speechio.ai
