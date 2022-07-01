@@ -102,6 +102,8 @@ API models are usually small (basically client programs), so we normally put the
 | &check; | [aliyun_api_en](models/aliyun_api_en/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 | https://www.alibabacloud.com/product/intelligent-speech-interaction |
 | &check; | [google_api_en](models/google_api_en/) | Cloud API | 谷歌 <br> Google | 谷歌云 | https://cloud.google.com/speech-to-text |
 | &check; | [microsoft_sdk_en](models/microsoft_sdk_en/) | Cloud API |微软 <br> Microsoft | Azure | https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/ |
+| &check; | [baidu_api_en](models/baidu_api_en/) | Cloud API |百度 <br> Baidu | 百度智能云 | https://cloud.baidu.com/product/speech/asr |
+| &check; | [tencent_api_en](models/tencent_api_en/) | Cloud API |腾讯 <br> Tencent |腾讯云| https://cloud.tencent.com/product/asr |
 
 ### Local Engine (Open-sourced Pretrained ASR Models)
 
