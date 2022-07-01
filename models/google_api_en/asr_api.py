@@ -16,6 +16,7 @@ def transcribe_file(client, file_name):
     """
     language_code = "en-US"
     sample_rate_hertz = 16000
+    use_enhanced=True
     # This field is optional for FLAC and WAV audio formats.
     encoding = speech.RecognitionConfig.AudioEncoding.LINEAR16
     model_type="video"
@@ -28,6 +29,7 @@ def transcribe_file(client, file_name):
         language_code = language_code,
         sample_rate_hertz = sample_rate_hertz,
         encoding = encoding,
+        use_enhanced=use_enhanced,
         model = model_type)
 
     response = client.recognize(config=config, audio=audio)
