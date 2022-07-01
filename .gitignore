@@ -14,24 +14,21 @@ models/*
 !models/bilibili_api_zh
 !models/hiasr_api_zh
 !models/iflytek_lfasr_api_zh
-!models/microsoft_rest_api_zh
 !models/microsoft_sdk_zh
-!models/sogou_api_zh
 !models/tencent_api_zh
 !models/yitu_api_zh
 
 # en models
 !models/aliyun_api_en
+!models/baidu_api_en
 !models/google_api_en
+!models/tencent_api_en
 !models/microsoft_sdk_en
 
 # dataset zoo
 datasets/*
 !datasets/MINI
 !datasets/zoo.yaml
-!datasets/kaldi_to_speechio.py
-!datasets/run_kaldi_to_speechio.sh
-!datasets/kaldi_to_json.py
 
 tmp.sh
 results
@@ -68,6 +65,9 @@ models/aliyun_api_en/TOKEN_EXPIRE_TIME
 models/baidu_pro_api_zh/API_KEY
 models/baidu_pro_api_zh/SECRET_KEY
 
+models/baidu_api_en/API_KEY
+models/baidu_api_en/SECRET_KEY
+
 # google api
 models/google_api_en/CREDENTIALS.json
 
@@ -78,21 +78,17 @@ models/hiasr_api_zh/assets
 models/iflytek_lfasr_api_zh/APP_ID
 models/iflytek_lfasr_api_zh/SECRET_KEY
 
-# microsoft azure cognitive service credential
-models/microsoft_rest_api_zh/SUBSCRIPTION_KEY
-models/microsoft_rest_api_en/SUBSCRIPTION_KEY
-
+# microsoft azure cognitive service
 models/microsoft_sdk_zh/SUBSCRIPTION_KEY
-models/microsoft_sdk_en/SUBSCRIPTION_KEY
 
-# sogou api credential
-models/sogou_api_zh/APP_ID
-models/sogou_api_zh/APP_KEY
-models/sogou_api_zh/TOKEN
+models/microsoft_sdk_en/SUBSCRIPTION_KEY
 
 # tencent api credential
 models/tencent_api_zh/SECRET_ID
 models/tencent_api_zh/SECRET_KEY
+
+models/tencent_api_en/SECRET_ID
+models/tencent_api_en/SECRET_KEY
 
 # yitu api credential
 models/yitu_api_zh/DEV_ID
