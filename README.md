@@ -77,7 +77,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &cross; |SPEECHIO_ASR_ZH00030| 世界青年说 | 口音(老外) <br> Foreigner Accents | 异国文化比较 <br> Cultural Difference | 2 | ★★★☆ |
 
 
-To download an **unlocked** test set from cloud dataset zoo to your local dir `leaderboard/datasets/<TEST_SET_ID>`:
+To download an **unlocked** test set from cloud to your local dir `leaderboard/datasets/<TEST_SET_ID>`:
 ```
 ops/pull dataset <TEST_SET_ID>
 ```
@@ -115,7 +115,7 @@ There are 2 types of models in model zoo: `cloud API model` & `local model`:
 | &check; | vosk_model_cn | Local | [alphacephei](https://alphacephei.com/vosk) | Chinese engine of [Vosk](https://alphacephei.com/vosk/models) |
 | &check; | wenet_wenetspeech | Local | Binbin Zhang(张彬彬)@[wenet-e2e](https://github.com/wenet-e2e/) |  WeNet wenetspeech [recipe](https://github.com/wenet-e2e/wenet/tree/main/examples/wenetspeech/s0) |
 
-To download an **unlocked** model from cloud model-zoo to your local dir `leaderboard/models/<MODEL_ID>`:
+To download an **unlocked** model from cloud to your local dir `leaderboard/models/<MODEL_ID>`:
 ```
 ops/pull model <MODEL_ID>
 ```
@@ -123,13 +123,13 @@ ops/pull model <MODEL_ID>
 ---
 
 ## 4. Benchmarking Pipeline
-To submit your model to leaderboard and get it benchmarked over all test sets, follow this [specification](HOW_TO_SUBMIT.md)
+Follow this [specification](HOW_TO_SUBMIT.md) to submit your model and get it benchmarked over all test sets.
 
-With downloaded models & test sets, you can even trigger benchmarking pipeline locally:
+With downloaded models & test sets, you can trigger the benchmarking pipeline locally:
 ```
 ops/leaderboard_runner requests/request.yaml
 ```
-Basically `request.yaml` is used to specify a <MODEL_ID> and a list of <TEST_SET_ID> to be tested (see examples in above specification).
+Here `request.yaml` specifies a <MODEL_ID> and a list of <TEST_SET_ID> to be tested (see examples in above specification).
 
 ---
 ## 5. Ranking
