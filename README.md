@@ -3,22 +3,21 @@
 
 > "If you can’t measure it, you can’t improve it." -- *Peter Drucker*
 
-Regarding to the current state of Automatic Speech Recognition(ASR), the term "State-Of-The-Art"(SOTA) is kind of *vague* in the sense that:
-* For industry, there is no objective and quantative benchmark on how these commercial APIs perform in real-life scenarios, at least in public domain.
-* For academia, it is becoming harder today to compare ASR models due to the fragmentation of research toolkits and ecosystems.
+The term "SOTA"(state-of-the-art) in Automatic Speech Recognition(ASR) is kind of _vague_:
+* For industry, there is no public and objective benchmark towards commercial APIs based on real-life scenarios.
+* For academia, it is becoming harder today to reproduce / compare ASR models due to the fragmentation of research toolkits / ecosystems.
 * How are academic SOTA and industrial SOTA related ?
 
 ---
-
 ![Overview](misc/overview.png)
 
-As above figure shows, SpeechIO leaderboard serves as an ASR benchmarking platform, by providing 3 components:
+SpeechIO leaderboard serves as an ASR benchmarking platform by providing 3 components:
 
-1. **TestSet Zoo**: A collection of test sets covering wide range of speech recognition tasks
+1. **TestSet Zoo**: A collection of test sets covering wide range of speech recognition tasks & scenarios
 
-2. **Model Zoo**: A collection of models including commercial APIs and open-sourced pretrained models
+2. **Model Zoo**: A collection of models including commercial APIs & open-sourced models
 
-3. **Benchmarking Pipeline**: a simple & well-specified pipeline to take care of data preparation / inference invocation / recognition post processing / error rate evaluation.
+3. **Benchmarking Pipeline**: a simple & well-specified pipeline to take care of data preparation / recognition / post processing / error rate evaluation.
 
 With SpeechIO leaderboard, _**anyone should be able to benchmark, reproduce, compare all these ASR systems locally**_
 
@@ -28,7 +27,7 @@ With SpeechIO leaderboard, _**anyone should be able to benchmark, reproduce, com
 
 ### Academic Test Sets
 
-| 已公开 <br> Unlocked | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION | 语言 <br> LANGUAGE |
+| 已公开 <br> UNLOCKED | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION | 语言 <br> LANGUAGE |
 | --- | --- | --- | --- |
 | &check; | AISHELL1_TEST | test set of AISHELL-1 | zh |
 | &check; | AISHELL2_IOS_TEST | test set of AISHELL-2 (iOS channel) | zh |
@@ -43,9 +42,9 @@ With SpeechIO leaderboard, _**anyone should be able to benchmark, reproduce, com
 
 SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publicly available sources (Youtube, TV programs, Podcast etc), covering various well-known acoustic scenarios(AM) and topic domains(LM & vocabulary), labeled by payed professional annotators.
 
-| 已公开 <br> Unlocked | 编号 <br> TEST_SET_ID | 名称 <br> Name |场景 <br> Scenario | 内容领域 <br> Topic Domain | 时长 <br> hours | 难度(1-5) <br> Difficulty  |
+| 已公开 <br> UNLOCKED | 编号 <br> TEST_SET_ID | 名称 <br> NAME | 场景 <br> SCENARIO | 内容领域 <br> TOPIC | 时长 <br> HOURS | 难度(1-5) <br> DIFFICULTY  |
 | --- | --- | --- | --- | --- | --- | --- |
-| &check; |SPEECHIO_ASR_ZH00000| 接入调试集 <br> For debugging | 视频会议、论坛演讲 <br> conference & speech | 经济、货币、金融 <br> economy, currency, finance | 1.0 | ★★☆ |
+| &check; |SPEECHIO_ASR_ZH00000| 调试集 <br> for debugging | 视频会议、论坛演讲 <br> conference & speech | 经济、货币、金融 <br> economy, currency, finance | 1.0 | ★★☆ |
 | &check; |SPEECHIO_ASR_ZH00001| 新闻联播 | 新闻播报 <br> TV News | 时政 <br> news & politics | 9 | ★ |
 | &check; |SPEECHIO_ASR_ZH00002| 鲁豫有约 | 访谈电视节目 <br> TV interview | 名人工作/生活 <br> celebrity & film & music & daily | 3 | ★★☆ |
 | &check; |SPEECHIO_ASR_ZH00003| 天下足球 | 专题电视节目 <br> TV program | 足球 <br> Sports & Football & Worldcup | 2.7 | ★★☆ |
@@ -78,7 +77,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &cross; |SPEECHIO_ASR_ZH00030| 世界青年说 | 口音(老外) <br> Foreigner Accents | 异国文化比较 <br> Cultural Difference | 2 | ★★★☆ |
 
 
-To download an **unlocked** test set from cloud dataset zoo to your local `leaderboard/datasets/<TEST_SET_ID>`:
+To download an **unlocked** test set from cloud dataset zoo to your local dir `leaderboard/datasets/<TEST_SET_ID>`:
 ```
 ops/pull dataset <TEST_SET_ID>
 ```
@@ -116,7 +115,7 @@ There are 2 types of models in model zoo: `cloud API model` & `local model`:
 | &check; | vosk_model_cn | Local | [alphacephei](https://alphacephei.com/vosk) | Chinese engine of [Vosk](https://alphacephei.com/vosk/models) |
 | &check; | wenet_wenetspeech | Local | Binbin Zhang(张彬彬)@[wenet-e2e](https://github.com/wenet-e2e/) |  WeNet wenetspeech [recipe](https://github.com/wenet-e2e/wenet/tree/main/examples/wenetspeech/s0) |
 
-To download an **unlocked** model from cloud model-zoo to your local `leaderboard/models/<MODEL_ID>`:
+To download an **unlocked** model from cloud model-zoo to your local dir `leaderboard/models/<MODEL_ID>`:
 ```
 ops/pull model <MODEL_ID>
 ```
@@ -124,13 +123,13 @@ ops/pull model <MODEL_ID>
 ---
 
 ## 4. Benchmarking Pipeline
-To submit your model to leaderboard and get it benchmarked over all test sets, follow this specification [How to submit](HOW_TO_SUBMIT.md)
+To submit your model to leaderboard and get it benchmarked over all test sets, follow this [specification](HOW_TO_SUBMIT.md)
 
-Also you can pull unlocked models & test sets, and trigger benchmarking pipeline on your local machine via:
+With downloaded models & test sets, you can even trigger benchmarking pipeline locally:
 ```
 ops/leaderboard_runner requests/request.yaml
 ```
-the content of `request.yaml` is described in above specification.
+Basically `request.yaml` is used to specify a <MODEL_ID> and a list of <TEST_SET_ID> to be tested (see examples in above specification).
 
 ---
 ## 5. Ranking
