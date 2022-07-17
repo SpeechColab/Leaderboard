@@ -1,6 +1,8 @@
 # toy
 MINI:
   url: oss://speechio-leaderboard/datasets/MINI/
+MINI_EN:
+  url: oss://speechio-leaderboard/datasets/MINI_EN/
 
 # AISHELL-1
 AISHELL1_TEST:
