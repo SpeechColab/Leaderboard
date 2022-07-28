@@ -68,32 +68,24 @@ if __name__ == '__main__':
     if len(sys.argv) != 3:
         sys.stderr.write("rest_api.py <in_scp> <out_trans>\n")
         exit(-1)
-
     SCP = sys.argv[1]
     TRANS = sys.argv[2]
-
     scp_file = open(SCP, 'r', encoding='utf8')
     trans_file = open(TRANS, 'w+', encoding='utf8')
-
     n = 0
     for l in scp_file:
         l = l.strip()
         if l == '':
             continue
-
         key, audio = l.split('\t')
         sys.stderr.write(str(n) + '\tkey:' + key + '\taudio:' + audio + '\n')
         sys.stderr.flush()
-
         loop = asyncio.get_event_loop()
         loop.run_until_complete(basic_transcribe(audio,trans_file,key))
-
-        
         n += 1
     loop.close()
     scp_file.close()
     trans_file.close()
-    
     trans_r_file = open(TRANS, 'r', encoding='utf8')
     res_dict = {}
     for l in trans_r_file:
@@ -104,11 +96,9 @@ if __name__ == '__main__':
         else:
             res_dict[key] = text
     trans_r_file.close()
-
     trans_w_file = open(TRANS, 'w+', encoding='utf8')
     for key in res_dict.keys():
         trans_w_file.write(key + '\t' + res_dict[key].strip() + '\n')
-
     trans_w_file.close()
 
 
