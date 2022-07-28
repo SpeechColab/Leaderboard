@@ -2,6 +2,8 @@ speechio_kaldi_multicn:
   url: oss://speechio-leaderboard/models/speechio_kaldi_multicn/
 vosk_model_cn:
   url: oss://speechio-leaderboard/models/vosk_model_cn/
+vosk_model_en:
+  url: oss://speechio-leaderboard/models/vosk_model_en/
 wenet_multi_cn:
   url: oss://speechio-leaderboard/models/wenet_multi_cn/
 wenet_wenetspeech:
