@@ -96,6 +96,7 @@ There are 2 types of models in model zoo: `cloud API model` & `local model`:
 | &check; | [aispeech_api_zh](models/aispeech_api_zh/) | Cloud API | 思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
 | &check; | [aliyun_api_en](models/aliyun_api_en/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 | https://www.alibabacloud.com/product/intelligent-speech-interaction |
 | &check; | [aliyun_api_zh](models/aliyun_api_zh/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 | https://ai.aliyun.com/nls/asr |
+| &check; | [amazon_api_en](models/amazon_api_en/) | Cloud API | 亚马逊 <br> Amazon | 亚马逊云服务平台 | https://aws.amazon.com/cn/transcribe/ |
 | &check; | [baidu_api_en](models/baidu_api_en/) | Cloud API | 百度 <br> Baidu | 百度智能云 | https://cloud.baidu.com/product/speech/asr |
 | &check; | [baidu_pro_api_zh](models/baidu_pro_api_zh/) | Cloud API | 百度 <br> Baidu | 百度智能云 <br> (极速版) | https://cloud.baidu.com/product/speech/asr |
 | &check; | [google_api_en](models/google_api_en/) | Cloud API | 谷歌 <br> Google | 谷歌云 | https://cloud.google.com/speech-to-text |
@@ -105,7 +106,6 @@ There are 2 types of models in model zoo: `cloud API model` & `local model`:
 | &check; | [tencent_api_en](models/tencent_api_en/) | Cloud API | 腾讯 <br> Tencent | 腾讯云 | https://cloud.tencent.com/product/asr |
 | &check; | [tencent_api_zh](models/tencent_api_zh/) | Cloud API | 腾讯 <br> Tencent | 腾讯云 | https://cloud.tencent.com/product/asr |
 | &check; | [yitu_api_zh](models/yitu_api_zh/) | Cloud API | 依图 <br> YituTech |依图语音开放平台 | https://speech.yitutech.com |
-| &check; | [amazon_api_en](models/amazon_api_en/) | Cloud API | 亚马逊 <br> Amazon | 亚马逊云服务平台 | https://aws.amazon.com/cn/transcribe/ |
 
 ### Local Models
 
@@ -120,6 +120,7 @@ There are 2 types of models in model zoo: `cloud API model` & `local model`:
 | &check; | deepspeech_api_en | Local | [deepspeech](https://github.com/mozilla/DeepSpeech)| Latest English ASR Model of [deepspeech](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3)
 | &check; | coqui_api_en | Local | [coqui](https://coqui.ai/) | English engine of [coqui](https://coqui.ai/models)|
 | &check; | NeMo_conformer_en | Local | [NeMo](https://github.com/NVIDIA/NeMo) | English engine of [NeMo_conformer](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_ctc_large)|
+
 To download an **unlocked** model from cloud to your local dir `leaderboard/models/<MODEL_ID>`:
 ```
 ops/pull model <MODEL_ID>
