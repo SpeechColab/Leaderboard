@@ -105,6 +105,7 @@ There are 2 types of models in model zoo: `cloud API model` & `local model`:
 | &check; | [tencent_api_en](models/tencent_api_en/) | Cloud API | 腾讯 <br> Tencent | 腾讯云 | https://cloud.tencent.com/product/asr |
 | &check; | [tencent_api_zh](models/tencent_api_zh/) | Cloud API | 腾讯 <br> Tencent | 腾讯云 | https://cloud.tencent.com/product/asr |
 | &check; | [yitu_api_zh](models/yitu_api_zh/) | Cloud API | 依图 <br> YituTech |依图语音开放平台 | https://speech.yitutech.com |
+| &check; | [amazon_api_en](models/amazon_api_en/) | Cloud API | 亚马逊 <br> Amazon | 亚马逊云服务平台 | https://aws.amazon.com/cn/transcribe/ |
 
 ### Local Models
 
@@ -114,7 +115,11 @@ There are 2 types of models in model zoo: `cloud API model` & `local model`:
 | &check; | wenet_multi_cn | Local | Binbin Zhang(张彬彬)@[wenet-e2e](https://github.com/wenet-e2e/) |  WeNet multi_cn [recipe](https://github.com/wenet-e2e/wenet/tree/main/examples/multi_cn/s0) |
 | &check; | vosk_model_cn | Local | [alphacephei](https://alphacephei.com/vosk) | Chinese engine of [Vosk](https://alphacephei.com/vosk/models) |
 | &check; | wenet_wenetspeech | Local | Binbin Zhang(张彬彬)@[wenet-e2e](https://github.com/wenet-e2e/) |  WeNet wenetspeech [recipe](https://github.com/wenet-e2e/wenet/tree/main/examples/wenetspeech/s0) |
-
+| &check; | vosk_model_en | Local | [alphacephei](https://alphacephei.com/vosk) | English engine of [Vosk](https://alphacephei.com/vosk/models) |
+| &check; | vosk_model_en_large | Local | [alphacephei](https://alphacephei.com/vosk) | Large English engine of [Vosk](https://alphacephei.com/vosk/models) |
+| &check; | deepspeech_api_en | Local | [deepspeech](https://github.com/mozilla/DeepSpeech)| Latest English ASR Model of [deepspeech](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3)
+| &check; | coqui_api_en | Local | [coqui](https://coqui.ai/) | English engine of [coqui](https://coqui.ai/models)|
+| &check; | NeMo_conformer_en | Local | [NeMo](https://github.com/NVIDIA/NeMo) | English engine of [NeMo_conformer](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_ctc_large)|
 To download an **unlocked** model from cloud to your local dir `leaderboard/models/<MODEL_ID>`:
 ```
 ops/pull model <MODEL_ID>

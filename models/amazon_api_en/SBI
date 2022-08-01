@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+# coding: utf8
+import os,sys
+
+if __name__ == '__main__':
+    SCP = sys.argv[1]
+    TRANS = sys.argv[2]
+    f = open('ENV_KEY')
+    lines = f.readlines()
+    os.environ['AWS_ACCESS_KEY_ID']=lines[0].strip()
+    os.environ['AWS_SECRET_ACCESS_KEY']=lines[1].strip()
+    os.environ['AWS_DEFAULT_REGION']=lines[2].strip()
+    os.system('./asr_api.py ' + SCP + ' ' + TRANS + '/raw_rec.txt')
