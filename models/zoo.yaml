@@ -14,3 +14,7 @@ seewo_api_zh:
   url: oss://speechio-leaderboard/models/seewo_api_zh/
 deepspeech_api_en:
   url: oss://speechio-leaderboard/models/deepspeech_api_en/
+coqui_api_en:
+  url: oss://speechio-leaderboard/models/coqui_api_en/
+NeMo_conformer_en:
+  url: oss://speechio-leaderboard/models/NeMo_conformer_en/
