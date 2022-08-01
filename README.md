@@ -118,7 +118,8 @@ There are 2 types of models in model zoo: `cloud API model` & `local model`:
 | &check; | vosk_model_en | Local | [alphacephei](https://alphacephei.com/vosk) | English engine of [Vosk](https://alphacephei.com/vosk/models) |
 | &check; | vosk_model_en_large | Local | [alphacephei](https://alphacephei.com/vosk) | Large English engine of [Vosk](https://alphacephei.com/vosk/models) |
 | &check; | deepspeech_api_en | Local | [deepspeech](https://github.com/mozilla/DeepSpeech)| Latest English ASR Model of [deepspeech](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3)
-
+| &check; | coqui_api_en | Local | [coqui](https://coqui.ai/) | English engine of [coqui](https://coqui.ai/models)|
+| &check; | NeMo_conformer_en | Local | [NeMo](https://github.com/NVIDIA/NeMo) | English engine of [NeMo_conformer](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_ctc_large)|
 To download an **unlocked** model from cloud to your local dir `leaderboard/models/<MODEL_ID>`:
 ```
 ops/pull model <MODEL_ID>
