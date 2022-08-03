@@ -18,6 +18,7 @@ from nemo_text_processing.text_normalization.en.graph_utils import (
     NEMO_DIGIT,
     NEMO_LOWER,
     NEMO_SIGMA,
+    NEMO_NOT_QUOTE,
     TO_LOWER,
     GraphFst,
     delete_extra_space,
@@ -50,9 +51,9 @@ def get_ties_graph(deterministic: bool = True):
     graph = graph_teen | ties_graph + pynutil.delete("0") | ties_graph + insert_space + graph_digit
 
     if deterministic:
-        graph = graph | pynini.cross("0", "oh") + insert_space + graph_digit
+        graph = graph | pynini.cross("0", "o") + insert_space + graph_digit
     else:
-        graph = graph | (pynini.cross("0", "oh") | pynini.cross("0", "zero")) + insert_space + graph_digit
+        graph = graph | (pynini.cross("0", "o") | pynini.cross("0", "zero")) + insert_space + graph_digit
 
     return graph.optimize()
 
@@ -366,3 +367,4 @@ class DateFst(GraphFst):
 
         final_graph = self.add_tokens(final_graph)
         self.fst = final_graph.optimize()
+
