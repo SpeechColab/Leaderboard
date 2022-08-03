@@ -3,23 +3,6 @@
 import sys, os, codecs
 import argparse
 import string
-from nemo_text_processing.text_normalization.normalize import Normalizer
-
-
-class interj:
-    def __init__(self):
-        self.inj_list = []
-        f = open('/app/speechio/leaderboard/utils/fillers.tsv')
-        words = f.readlines()
-        for word in words:
-            word = word.strip()
-            self.inj_list.append(' '+ word+ ' ')
-
-    def interjection(self,line):
-        for item in self.inj_list:
-            line = line.replace(item,' ')
-        return line
-
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
@@ -33,8 +16,7 @@ if __name__ == '__main__':
 
     ifile = codecs.open(args.ifile, 'r', 'utf8')
     ofile = codecs.open(args.ofile, 'w+', 'utf8')
-    nn = Normalizer(input_case = 'lower_cased',lang = 'en')
-    ii = interj()
+
     n = 0
     for l in ifile:
         key = ''
@@ -57,28 +39,15 @@ if __name__ == '__main__':
             text = text.upper()
         if args.to_lower:
             text = text.lower()
-        
+
+
         # Punctuations removal
         old_chars = '!"#$%&()*+,-./:;<=>?@[\]^_`{|}~' # string.punctuation except ' (e.g. in I'm, that's)
         new_chars = ' ' * len(old_chars)
         del_chars = ''
         text = text.translate(str.maketrans(old_chars, new_chars, del_chars))
 
-        # remove interjection
-        text = ' ' + text + ' '
-        for i in range(3):
-            text = ii.interjection(text)
-        text = text.strip()
-
-        # text normalization
-        text = nn.normalize(text)
-        text.replace(' oh ',' o ')
-
-        # remove space before and after signs
-        text = text.replace(' \' ','\'')
-        text = text.replace(' - ','-')
-        text = text.upper()
-        
+        # 
         if args.has_key:
             ofile.write(key + '\t' + text + '\n')
         else:
