@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip3 install azure-cognitiveservices-speech
 
 RUN pip3 install requests
+RUN pip3 install pynini 
+RUN pip3 install regex
 
 # Use C.UTF-8 locale to avoid issues with ASCII encoding
 ENV LC_ALL=C.UTF-8
