@@ -10,6 +10,8 @@ RUN pip3 install boto3
 RUN pip3 install amazon_transcribe
 RUN pip3 install websocket_client
 RUN pip3 install aiofile
+RUN pip3 install pynini 
+RUN pip3 install regex
 
 # Use C.UTF-8 locale to avoid issues with ASCII encoding
 ENV LC_ALL=C.UTF-8
