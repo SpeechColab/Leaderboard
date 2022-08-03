@@ -10,11 +10,9 @@ wenet_multi_cn:
   url: oss://speechio-leaderboard/models/wenet_multi_cn/
 wenet_wenetspeech:
   url: oss://speechio-leaderboard/models/wenet_wenetspeech/
-seewo_api_zh:
-  url: oss://speechio-leaderboard/models/seewo_api_zh/
-deepspeech_api_en:
-  url: oss://speechio-leaderboard/models/deepspeech_api_en/
-coqui_api_en:
-  url: oss://speechio-leaderboard/models/coqui_api_en/
+deepspeech_model_en:
+  url: oss://speechio-leaderboard/models/deepspeech_model_en/
+coqui_model_en:
+  url: oss://speechio-leaderboard/models/coqui_model_en/
 NeMo_conformer_en:
   url: oss://speechio-leaderboard/models/NeMo_conformer_en/
