@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 2 ]; then
+  echo "recognize.sh wav.scp <working_dir>"
+  exit 1;
+fi
+
+scp=$1
+dir=$2
+oss_scp=oss_${scp}
+
+./read_oss_file.py $scp $oss_scp
+./asr_sdk.py $oss_scp $dir/raw_rec.txt
