@@ -13,6 +13,19 @@ from aliyunsdkcore.acs_exception.exceptions import ClientException
 from aliyunsdkcore.acs_exception.exceptions import ServerException
 from aliyunsdkcore.client import AcsClient
 from aliyunsdkcore.request import CommonRequest
+
+accessKeyId = ""
+with open('accessKeyId', 'r') as f:
+    accessKeyId = f.readline().strip()
+
+accessKeySecret = ""
+with open('accessKeySecret', 'r') as f:
+    accessKeySecret = f.readline().strip()
+
+APPKEY = ""
+with open('APPKEY', 'r') as f:
+    APPKEY = f.readline().strip()
+
 def fileTrans(akId, akSecret, appKey, fileLink) :
     # 地域ID，固定值。
     REGION_ID = "cn-shanghai"
@@ -107,10 +120,6 @@ def fileTrans(akId, akSecret, appKey, fileLink) :
         return ""
 
 if __name__ == "__main__":
-    accessKeyId = "您的AccessKey Id"
-    accessKeySecret = "您的AccessKey Secret"
-    appKey = "您的appkey"
-
     if len(sys.argv) != 3:
         sys.stderr.write("asr_sdk.py <in_scp> <out_trans>\n")
         exit(-1)
@@ -127,7 +136,7 @@ if __name__ == "__main__":
             sys.stderr.flush()
 
             text = ''
-            text = fileTrans(accessKeyId, accessKeySecret, appKey, audio)
+            text = fileTrans(accessKeyId, accessKeySecret, APPKEY, audio)
 
             trans.write(key + '\t' + text + '\n')
             trans.flush()
