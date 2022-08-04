@@ -1,0 +1,229 @@
+#!/usr/bin/env python3
+# coding=utf8
+
+# Copyright  2021  Jiayu DU
+
+import sys
+import argparse
+import json
+import utils
+import logging
+logging.basicConfig(stream=sys.stderr, level=logging.INFO, format='[%(levelname)s] %(message)s')
+
+DEBUG = None
+def PrettyPrintAlignment(iex, oex, error_dict, stream = sys.stderr):
+    def get_token_str(token):
+        if token == None:
+            return "*"
+        return token
+    
+    def is_double_width_char(ch):
+        if (ch >= '\u4e00') and (ch <= '\u9fa5'): # codepoint ranges for Chinese chars
+            return True
+        else:
+            return False
+    
+    def display_width(token_str):
+        m = 0
+        for c in token_str:
+            if is_double_width_char(c):
+                m += 2
+            else:
+                m += 1
+        return m
+
+    R = '  REF  : '
+    H = '  HYP  : '
+    E = '  EDIT : '
+    iex = iex.split(" ")
+    oex = oex.split(" ")
+    l1 = 0
+    l2 = 0
+    for i in range(len(error_dict)):
+        if error_dict[i] != 'D'and l1 < len(iex):
+            r = iex[l1]
+            l1+=1
+        else:
+            r = '*'
+        if error_dict[i] != 'I' and l2 < len(oex):
+            h = oex[l2]
+            l2+=1
+        else:
+            h = '*'
+        e = error_dict[i] if error_dict[i] != 'C' else ''
+
+        nr, nh, ne = display_width(r), display_width(h), display_width(e)
+        n = max(nr, nh, ne) + 1
+
+        R += r + ' ' * (n-nr)
+        H += h + ' ' * (n-nh)
+        E += e + ' ' * (n-ne)
+
+    print(R, file=stream)
+    print(H, file=stream)
+    print(E, file=stream)
+
+
+def CountEdits(count):
+    c = count[0]
+    s = count[1]
+    i = count[2]
+    d = count[3]
+    return (c, s, i, d)
+
+def ComputeTokenErrorRate(c, s, i, d):
+    return 100.0 * (s + d + i) / (s + d + c)
+
+def ComputeSentenceErrorRate(num_err_utts, num_utts):
+    assert(num_utts != 0)
+    return 100.0 * num_err_utts / num_utts
+
+
+class EvaluationResult:
+    def __init__(self):
+        self.num_ref_utts = 0
+        self.num_hyp_utts = 0
+        self.num_eval_utts = 0 # seen in both ref & hyp
+        self.num_hyp_without_ref = 0
+
+        self.C = 0
+        self.S = 0
+        self.I = 0
+        self.D = 0
+        self.token_error_rate = 0.0
+
+        self.num_utts_with_error = 0
+        self.sentence_error_rate = 0.0
+    
+    def to_json(self):
+        return json.dumps(self.__dict__)
+    
+    def to_kaldi(self):
+        info = (
+            F'%WER {self.token_error_rate:.2f} [ {self.S + self.D + self.I} / {self.C + self.S + self.D}, {self.I} ins, {self.D} del, {self.S} sub ]\n'
+            F'%SER {self.sentence_error_rate:.2f} [ {self.num_utts_with_error} / {self.num_eval_utts} ]\n'
+        )
+        return info
+    
+    def to_summary(self):
+        #return json.dumps(self.__dict__, indent=4)
+        summary = (
+            '==================== Overall Statistics ====================\n'
+            F'num_ref_utts: {self.num_ref_utts}\n'
+            F'num_hyp_utts: {self.num_hyp_utts}\n'
+            F'num_hyp_without_ref: {self.num_hyp_without_ref}\n'
+            F'num_eval_utts: {self.num_eval_utts}\n'
+            F'sentence_error_rate: {self.sentence_error_rate:.2f}%\n'
+            F'token_error_rate: {self.token_error_rate:.2f}%\n'
+            F'token_stats:\n'
+            F'  - tokens:{self.C + self.S + self.D:>7}\n'
+            F'  - edits: {self.S + self.I + self.D:>7}\n'
+            F'  - cor:   {self.C:>7}\n'
+            F'  - sub:   {self.S:>7}\n'
+            F'  - ins:   {self.I:>7}\n'
+            F'  - del:   {self.D:>7}\n'
+            '============================================================\n'
+        )
+        return summary
+
+
+class Utterance:
+    def __init__(self, uid, text):
+        self.uid = uid
+        self.text = text
+
+
+def LoadUtterances(filepath, format):
+    utts = {}
+    if format == 'text': # utt_id word1 word2 ...
+        with open(filepath, 'r', encoding='utf8') as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    cols = line.split(maxsplit=1)
+                    assert(len(cols) == 2 or len(cols) == 1)
+                    uid = cols[0]
+                    text = cols[1] if len(cols) == 2 else ''
+                    if utts.get(uid) != None:
+                        raise RuntimeError(F'Found duplicated utterence id {uid}')
+                    utts[uid] = Utterance(uid, text)
+    else:
+        raise RuntimeError(F'Unsupported text format {format}')
+    return utts
+
+
+def tokenize_text(text, tokenizer):
+    if tokenizer == 'whitespace':
+        return text.split()
+    elif tokenizer == 'char':
+        return [ ch for ch in ''.join(text.split()) ]
+    else:
+        raise RuntimeError(F'ERROR: Unsupported tokenizer {tokenizer}')
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    # optional
+    parser.add_argument('--tokenizer', choices=['whitespace', 'char'], default='whitespace', help='whitespace for WER, char for CER')
+    parser.add_argument('--ref-format', choices=['text'], default='text', help='reference format, first col is utt_id, the rest is text')
+    parser.add_argument('--hyp-format', choices=['text'], default='text', help='hypothesis format, first col is utt_id, the rest is text')
+    # required
+    parser.add_argument('--ref', type=str, required=True, help='input reference file')
+    parser.add_argument('--hyp', type=str, required=True, help='input hypothesis file')
+
+    parser.add_argument('result_file', type=str)
+    args = parser.parse_args()
+    logging.info(args)
+
+    ref_utts = LoadUtterances(args.ref, args.ref_format)
+    hyp_utts = LoadUtterances(args.hyp, args.hyp_format)
+
+    r = EvaluationResult()
+
+    # check valid utterances in hyp that have matched non-empty reference
+    eval_utts = []
+    r.num_hyp_without_ref = 0
+    for uid in sorted(hyp_utts.keys()):
+        if uid in ref_utts.keys(): 
+            if ref_utts[uid].text.strip(): # non-empty reference
+                eval_utts.append(uid)
+            else:
+                logging.warn(F'Found {uid} with empty reference, skipping...')
+        else:
+            logging.warn(F'Found {uid} without reference, skipping...')
+            r.num_hyp_without_ref += 1
+
+    r.num_hyp_utts = len(hyp_utts)
+    r.num_ref_utts = len(ref_utts)
+    r.num_eval_utts = len(eval_utts)
+
+    with open(args.result_file, 'w+', encoding='utf8') as fo:
+        for uid in eval_utts:
+            ref = ref_utts[uid].text
+            hyp = hyp_utts[uid].text
+            distance = utils.LevenshteinDistance(hyp,ref)
+            hyp_v2, count, error_dict, score = distance.distance(hyp, ref)
+            c, s, i, d = CountEdits(count)
+            utt_ter = ComputeTokenErrorRate(c, s, i, d)
+            
+            # utt-level evaluation result
+            print(F'{{"uid":{uid}, "score":{score}, "ter":{utt_ter:.2f}, "cor":{c}, "sub":{s}, "ins":{i}, "del":{d}}}', file=fo)
+            PrettyPrintAlignment(hyp_v2,ref,error_dict, fo)
+
+            r.C += c
+            r.S += s
+            r.I += i
+            r.D += d
+
+            if utt_ter > 0:
+                r.num_utts_with_error += 1
+
+        # corpus level evaluation result
+        r.sentence_error_rate = ComputeSentenceErrorRate(r.num_utts_with_error, r.num_eval_utts)
+        r.token_error_rate = ComputeTokenErrorRate(r.C, r.S, r.I, r.D)
+
+        print(r.to_summary(), file=fo)
+
+    print(r.to_json())
+    print(r.to_kaldi())
+
