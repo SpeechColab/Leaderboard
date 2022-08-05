@@ -57,9 +57,17 @@ if __name__ == '__main__':
             text = text.upper()
         if args.to_lower:
             text = text.lower()
-
+        
+        # remove space before and after signs
+        text = text.replace(' / ', '/')
+        text = text.replace(' - ', '-')
+        text = text.upper()
+        
+        # text normalization
+        text = nn.normalize(text)
+        
         # Punctuations removal
-        old_chars = '!"#%&()*+,:;<=>?@[]^_`{|}~'  # string.punctuation except ' (e.g. in I'm, that's)
+        old_chars = '!"#%&()*+,.:;<=>?@[]^_`{|}~'  # string.punctuation except ' (e.g. in I'm, that's)
         new_chars = ' ' * len(old_chars)
         del_chars = ''
         text = text.translate(str.maketrans(old_chars, new_chars, del_chars))
@@ -69,15 +77,7 @@ if __name__ == '__main__':
         for i in range(3):
             text = ii.interjection(text)
         text = text.strip()
-
-        # text normalization
-        text = nn.normalize(text)
-
-        # remove space before and after signs
-        text = text.replace(' \' ', '\'')
-        text = text.replace(' - ', '-')
-        text = text.upper()
-
+      
         if args.has_key:
             ofile.write(key + '\t' + text + '\n')
         else:
