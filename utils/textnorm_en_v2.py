@@ -61,7 +61,7 @@ if __name__ == '__main__':
         # remove space before and after signs
         text = text.replace(' / ', '/')
         text = text.replace(' - ', '-')
-        text = text.upper()
+       
         
         # text normalization
         text = nn.normalize(text)
@@ -77,6 +77,7 @@ if __name__ == '__main__':
         for i in range(3):
             text = ii.interjection(text)
         text = text.strip()
+        text = text.upper()
       
         if args.has_key:
             ofile.write(key + '\t' + text + '\n')
