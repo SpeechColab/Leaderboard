@@ -11,7 +11,8 @@ import logging
 logging.basicConfig(stream=sys.stderr, level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 DEBUG = None
-def PrettyPrintAlignment(iex, oex, error_dict, stream = sys.stderr):
+
+def PrettyPrintAlignment(iex, oex, hyp_v1, error_dict, stream = sys.stderr):
     def get_token_str(token):
         if token == None:
             return "*"
@@ -31,37 +32,63 @@ def PrettyPrintAlignment(iex, oex, error_dict, stream = sys.stderr):
             else:
                 m += 1
         return m
-
+    P = '  PRE  : '
     R = '  REF  : '
     H = '  HYP  : '
     E = '  EDIT : '
     iex = iex.split(" ")
     oex = oex.split(" ")
+    pex = hyp_v1.split(" ")
     l1 = 0
     l2 = 0
+    l3 = 0
+    wait = False
     for i in range(len(error_dict)):
-        if error_dict[i] != 'D'and l1 < len(iex):
-            r = iex[l1]
+        if error_dict[i] != 'I'and l1 < len(iex):
+            h = iex[l1]
             l1+=1
         else:
-            r = '*'
-        if error_dict[i] != 'I' and l2 < len(oex):
-            h = oex[l2]
+            h = '*'
+        if error_dict[i] != 'I'and l3 < len(pex) and not wait:
+            p = pex[l3]
+            if "<" in p and ">" not in p:
+                while True:
+                    l3=l3+1
+                    p = p + pex[l3]
+                    if '>' in p:
+                        break
+            l3+=1
+        elif l3<len(pex) and pex[l3]==h and wait:
+            p = h
+            l3=l3+1
+            wait = False
+        else:
+            p = '*'
+        if error_dict[i] != 'D' and l2 < len(oex):
+            r = oex[l2]
             l2+=1
         else:
-            h = '*'
+            r = '*'
+       
+
+  
         e = error_dict[i] if error_dict[i] != 'C' else ''
-
-        nr, nh, ne = display_width(r), display_width(h), display_width(e)
-        n = max(nr, nh, ne) + 1
-
+        nr, nh, ne, np = display_width(r), display_width(h), display_width(e),display_width(p)
+        n = max(nr, nh, ne,np) + 1
         R += r + ' ' * (n-nr)
         H += h + ' ' * (n-nh)
         E += e + ' ' * (n-ne)
-
+        if not wait:
+            P += p + ' ' * (n-np)
+        else:
+            P+= ' '*n
+        if "<" in p:
+            wait = True
+    print(P,file=stream)
     print(R, file=stream)
     print(H, file=stream)
     print(E, file=stream)
+
 
 
 def CountEdits(count):
@@ -202,13 +229,13 @@ if __name__ == '__main__':
             ref = ref_utts[uid].text
             hyp = hyp_utts[uid].text
             distance = utils.LevenshteinDistance(hyp,ref)
-            hyp_v2, count, error_dict, score = distance.distance(hyp, ref)
+            hyp_v1, hyp_v2, count, error_dict, score = distance.distance(hyp, ref)
             c, s, i, d = CountEdits(count)
             utt_ter = ComputeTokenErrorRate(c, s, i, d)
             
             # utt-level evaluation result
             print(F'{{"uid":{uid}, "score":{score}, "ter":{utt_ter:.2f}, "cor":{c}, "sub":{s}, "ins":{i}, "del":{d}}}', file=fo)
-            PrettyPrintAlignment(hyp_v2,ref,error_dict, fo)
+            PrettyPrintAlignment(hyp_v2,ref,hyp_v1,error_dict, fo)
 
             r.C += c
             r.S += s

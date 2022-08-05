@@ -295,14 +295,12 @@ class LevenshteinDistance(EditTransducer):
     # The shortest cost from all final states to the start state is
     # equivalent to the cost of the shortest path.
     start = lattice.start()
-    # print()
     f = pynini.shortestpath(lattice, nshortest=1, unique=True)
     f = pynini.randgen(f, npath=1, select="log_prob")
     
     paths = f.paths(output_token_type="symbol")
     oexpath = paths.olabels()
     iexpath = paths.ilabels()
-    # sybt[0]=''
     spath=""
     if iexpath[0] != 0:
       spath = sybt[iexpath[0]]
@@ -332,9 +330,13 @@ class LevenshteinDistance(EditTransducer):
         c +=1
     count = [c,s,I,d]
     mylist = []
-    for ls in list1:
-      if len(ls)!=0 and ls[0]!='':
-        mylist.append(ls)
-    print(mylist)
-    return spath,count,error_dict, float(pynini.shortestdistance(lattice, reverse=True)[start])
+    if s >=0:
+      for ls in list1:
+        for wd in ls:
+          if wd in iexpr and wd not in spath:
+            tagger = pynini.cross(wd,"<"+wd +">")
+            tagger = pynini.cdrewrite(tagger,"","",pynini.closure(utf8.VALID_UTF8_CHAR))        
+            iexpr = (iexpr @ tagger).string()
+        
+    return iexpr,spath,count,error_dict, float(pynini.shortestdistance(lattice, reverse=True)[start])
 
