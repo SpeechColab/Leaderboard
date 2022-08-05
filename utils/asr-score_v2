@@ -44,12 +44,12 @@ def PrettyPrintAlignment(iex, oex, hyp_v1, error_dict, stream = sys.stderr):
     l3 = 0
     wait = False
     for i in range(len(error_dict)):
-        if error_dict[i] != 'I'and l1 < len(iex):
+        if error_dict[i] != 'D'and l1 < len(iex):
             h = iex[l1]
             l1+=1
         else:
             h = '*'
-        if error_dict[i] != 'I'and l3 < len(pex) and not wait:
+        if error_dict[i] != 'D'and l3 < len(pex) and not wait:
             p = pex[l3]
             if "<" in p and ">" not in p:
                 while True:
@@ -64,7 +64,7 @@ def PrettyPrintAlignment(iex, oex, hyp_v1, error_dict, stream = sys.stderr):
             wait = False
         else:
             p = '*'
-        if error_dict[i] != 'D' and l2 < len(oex):
+        if error_dict[i] != 'I' and l2 < len(oex):
             r = oex[l2]
             l2+=1
         else:
