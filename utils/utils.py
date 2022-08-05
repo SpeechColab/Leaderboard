@@ -140,11 +140,14 @@ class EditTransducer:
     Returns:
       A lattice FST.
     """
+    iexpr = " " + iexpr + " "
+    list1 = []
     sybt = dict()
     syn_list = load_labels(get_abs_path("synonym.tsv"))
     for wordlist in syn_list:
       for word in wordlist:
-        if word in iexpr:# syn found
+        str1 = " " + word + " "      
+        if str1 in iexpr:# syn found
           if len(word.split(" "))>1:#syn with more than one word's
             wordstring = word.split(" ")[0]
             for j in range(1,len(word.split(" "))):
@@ -161,13 +164,16 @@ class EditTransducer:
       flag = True
       if "_" in word:# show more than one word cases:
         word_more_one = word.split("_")
-        word_more_one_string = word_more_one[0]
+        word_more_one_string = word_more_one[0]       
         for j in range(1,len(word_more_one)):
           word_more_one_string+=" " + word_more_one[j]
+          slist=[]
           for wordlist in syn_list:
             if word_more_one_string in wordlist:
+              n = 0
               temp = pynini.accep("")
               for synword in wordlist:
+                slist.append(synword)
                 if len(synword.split(" "))>1:
                   ttemp = pynini.accep("")
                   synword_s = synword.split(" ")
@@ -175,17 +181,30 @@ class EditTransducer:
                     idstate = pynini.accep('['+ sword + ']').paths().ilabels()[0]
                     sybt[idstate] = sword
                     ttemp+=pynini.accep('['+ sword + ']')
-                  temp|=ttemp
+                  ttemp = ttemp.optimize()
+                  if n==0:
+                    temp=ttemp
+                  else:
+                    temp|=ttemp
                 else:
                   idstate = pynini.accep('['+ synword + ']').paths().ilabels()[0]
                   sybt[idstate] = synword
-                  temp|=pynini.accep('['+ synword + ']')
+                  if n==0:
+                    temp = pynini.accep('['+ synword + ']')
+                  else:
+                    temp|= pynini.accep('['+ synword + ']')
+                n+=1
+              if len(slist)>=1:
+                list1.append(slist)
               iex+=temp
       else:
         for wordlist in syn_list: 
-          if word in wordlist:#替换词，直接索引dict
+          slist=[]
+          if word in wordlist:
             temp = pynini.accep("")
+            n=0
             for synword in wordlist:
+                slist.append(synword)
                 if len(synword.split(" "))>1:
                   ttemp = pynini.accep("")
                   synword_s = synword.split(" ")
@@ -193,12 +212,22 @@ class EditTransducer:
                     idstate = pynini.accep('['+ sword + ']').paths().ilabels()[0]
                     sybt[idstate] = sword
                     ttemp+=pynini.accep('['+ sword + ']')
-                  temp|=ttemp
+                  ttemp = ttemp.optimize()
+                  if n==0:
+                    temp=ttemp
+                  else:
+                    temp|=ttemp
                 else:
-                  idstate = pynini.accep('['+ sword + ']').paths().ilabels()[0]
-                  sybt[idstate] = sword
-                  temp|=pynini.accep('['+ synword + ']')
-            iex+=temp
+                  idstate = pynini.accep('['+ synword + ']').paths().ilabels()[0]
+                  sybt[idstate] = synword
+                  if n==0:
+                    temp = pynini.accep('['+ synword + ']')
+                  else:
+                    temp|= pynini.accep('['+ synword + ']')
+                n+=1
+            if len(slist)>=1:
+              list1.append(slist)
+            iex+=temp.optimize()
             flag = False
         if '-' in word:
           word_s = word.split('-')
@@ -227,6 +256,8 @@ class EditTransducer:
               idstate = pynini.accep('[' + s_word + ']').paths().ilabels()[0]
               sybt[idstate] = s_word
               temp+=pynini.accep('[' + s_word + ']')
+            idstate = pynini.accep('[' + word + ']').paths().ilabels()[0]
+            sybt[idstate] = word
             temp = temp|pynini.accep('[' + word + ']')
             iex+=temp
             flag = False
@@ -242,10 +273,9 @@ class EditTransducer:
         oex+=pynini.accep('[' + word + ']')
     iex = iex.optimize()
     oex = oex.optimize()
-
     lattice = (iex @ self._e_i) @ (self._e_o @ oex)
     EditTransducer.check_wellformed_lattice(lattice)
-    return sybt, lattice
+    return list1, sybt, lattice
 
 
 class LevenshteinDistance(EditTransducer):
@@ -261,7 +291,7 @@ class LevenshteinDistance(EditTransducer):
     Returns:
       Minimum edit distance according to the edit transducer.
     """
-    sybt, lattice = self.create_lattice(iexpr, oexpr)
+    list1, sybt, lattice = self.create_lattice(iexpr, oexpr)
     # The shortest cost from all final states to the start state is
     # equivalent to the cost of the shortest path.
     start = lattice.start()
@@ -272,9 +302,15 @@ class LevenshteinDistance(EditTransducer):
     paths = f.paths(output_token_type="symbol")
     oexpath = paths.olabels()
     iexpath = paths.ilabels()
-    spath = sybt[oexpath[0]]
-    for i in range(1, len(oexpath)):
-      spath+=" " + sybt[oexpath[i]]
+    # sybt[0]=''
+    spath=""
+    if iexpath[0] != 0:
+      spath = sybt[iexpath[0]]
+    else:
+      spath = ""
+    for i in range(1, len(iexpath)):
+      if iexpath[i]!=0:
+        spath+=" " + sybt[iexpath[i]]
     error_dict = []
     d = 0
     I = 0
@@ -295,5 +331,10 @@ class LevenshteinDistance(EditTransducer):
         error_dict.append("C")
         c +=1
     count = [c,s,I,d]
+    mylist = []
+    for ls in list1:
+      if len(ls)!=0 and ls[0]!='':
+        mylist.append(ls)
+    print(mylist)
     return spath,count,error_dict, float(pynini.shortestdistance(lattice, reverse=True)[start])
 
