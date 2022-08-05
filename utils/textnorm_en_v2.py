@@ -14,6 +14,7 @@ class interj:
         for word in words:
             word = word.strip()
             self.inj_list.append(' ' + word + ' ')
+            self.inj_list.append(' ' + word.upper() + ' ')
 
     def interjection(self, line):
         for item in self.inj_list:
