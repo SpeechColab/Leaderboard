@@ -392,7 +392,7 @@ if __name__ == '__main__':
     symtab.add_symbol('#')
     syn_tagger = pynini.accep("",token_type =symtab)
     syn_flag = False
-    syn_verb = pynini.accep("",token_type =symtab)
+    # syn_verb = pynini.accep("",token_type =symtab)
     for phrases in synonyms:
         key_name = "<SYN" + str(line_counter+1) + ">"
         
@@ -432,16 +432,65 @@ if __name__ == '__main__':
             )
         syn_dict[key_name] = temp_tokens
         vocab_syn = list(set(syn_tokens))
-        alpha = [pynini.accep(token,token_type = symtab) for token in vocab_syn]
-        SIGMA = pynini.union(*alpha).optimize()
-        text = pynini.closure(SIGMA)
-        syn_verb |=  (
-            # pynini.cross(key_graph, temp_graph)
-            pynutil.delete(key_graph)
-            + text
-            + pynutil.delete(key_graph)
-        )
-
+        syn_tagger.optimize()
+        # SIGMA=pynini.closure(utf8.VALID_UTF8_CHAR)
+        # tagger = pynini.cdrewrite(syn_tagger,"","",SIGMA)
+        # alpha = [pynini.accep(token,token_type = symtab) for token in vocab_syn]
+        # SIGMA = pynini.union(*alpha).optimize()
+        # text = pynini.closure(SIGMA)
+        # syn_verb |=  (
+        #     # pynini.cross(key_graph, temp_graph)
+        #     pynutil.delete(key_graph)
+        #     + text
+        #     + pynutil.delete(key_graph)
+        # )
+    symtab2 = symtab.copy()
+    temp_vocab = []
+    for uid in eval_utts:
+        ref = ref_utts[uid].text
+        hyp = hyp_utts[uid].text
+        ref_tokens = ref.strip().split()
+        hyp_tokens = hyp.strip().split()
+        for word in ref_tokens:
+            temp_vocab.append(word)
+            symtab2.add_symbol(word)
+            if "-" in word:
+                words = word.split("-")
+                word0 = words[0]
+                word1 = words[0]
+                for i in range(1,len(words)):
+                  word0+=" " + words[i]
+                  word1+=words[i]
+                temp_vocab.append(word.strip())
+                temp_vocab.append(word0.strip())
+                temp_vocab.append(word1.strip())
+                symtab2.add_symbol(word.strip())
+                symtab2.add_symbol(word0.strip())
+                symtab2.add_symbol(word1.strip())
+        for word in hyp_tokens:
+            temp_vocab.append(word)
+            symtab2.add_symbol(word)
+            if "-" in word:
+                words = word.split("-")
+                word0 = words[0]
+                word1 = words[0]
+                symtab2.add_symbol(words[0])
+                for i in range(1,len(words)):
+                  word0+=" " + words[i]
+                  word1+=words[i]
+                  symtab2.add_symbol(words[i])
+                temp_vocab.append(word.strip())
+                temp_vocab.append(word0.strip())
+                temp_vocab.append(word1.strip())
+                symtab2.add_symbol(word.strip())
+                symtab2.add_symbol(word0.strip())
+                symtab2.add_symbol(word1.strip())
+    
+    temp_vocab = list(set(temp_vocab + syn_tokens + syn_key))
+    alpha = [pynini.accep(token,token_type = symtab2) for token in temp_vocab]
+    SIGMA = pynini.union(*alpha).optimize()
+    SIGMA = pynini.closure(SIGMA)
+    tagger = pynini.cdrewrite(syn_tagger,"","",SIGMA)
     with open(args.result_file, 'w+', encoding='utf8') as fo:
         for uid in eval_utts:
             ref = ref_utts[uid].text
@@ -461,7 +510,6 @@ if __name__ == '__main__':
                 for i in range(1,len(words)):
                   word0+=" " + words[i]
                   word1+=words[i]
-                print(word1)
                 vocab1.append(word)
                 vocab1.append(word0)
                 vocab1.append(word1)
@@ -471,10 +519,10 @@ if __name__ == '__main__':
             alpha = [pynini.accep(token,token_type = symtab1) for token in vocab1]
             hyp_fst = pynini.accep("",token_type =symtab1)
             ref_fst = pynini.accep("",token_type =symtab1)
-            SIGMA = pynini.union(*alpha).optimize()
-            SIGMA = pynini.closure(SIGMA)
-            tagger = pynini.cdrewrite(syn_tagger,"","",SIGMA)
-            verb = pynini.cdrewrite(syn_verb,"","",SIGMA)
+            # SIGMA = pynini.union(*alpha).optimize()
+            # SIGMA = pynini.closure(SIGMA)
+            # tagger = pynini.cdrewrite(syn_tagger,"","",SIGMA)
+            # verb = pynini.cdrewrite(syn_verb,"","",SIGMA)
             for word in ref_tokens:
               ref_fst +=pynini.accep(word, token_type =symtab1)
             
