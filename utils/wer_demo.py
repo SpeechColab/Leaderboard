@@ -22,7 +22,9 @@ class EditTransducer:
 
 
   def __init__(self,
-               alphabet: Iterable[str],
+               symbol_table,
+               vocab: Iterable[str],
+               vocab_aux: Iterable[str],
                insert_cost: float = 1.0,
                delete_cost: float = 1.0,
                substitute_cost: float = 1.0,
@@ -38,13 +40,21 @@ class EditTransducer:
     """
     # Left factor; note that we divide the edit costs by two because they also
     # will be incurred when traversing the right factor.
-    sigma = pynini.union(*alphabet).optimize()
+    sigma = pynini.union(
+      *[ pynini.accep(token, token_type = symbol_table) for token in vocab ], 
+    ).optimize()
+
     insert = pynutil.insert(f"[{self.INSERT}]", weight=insert_cost / 2)
     delete = pynini.cross(
-        sigma, pynini.accep(f"[{self.DELETE}]", weight=delete_cost / 2))
+      sigma,
+      pynini.accep(f"[{self.DELETE}]", weight=delete_cost / 2)
+    )
     substitute = pynini.cross(
-        sigma, pynini.accep(f"[{self.SUBSTITUTE}]", weight=substitute_cost / 2))
+      sigma, pynini.accep(f"[{self.SUBSTITUTE}]", weight=substitute_cost / 2)
+    )
+
     edit = pynini.union(insert, delete, substitute).optimize()
+
     if bound:
       sigma_star = pynini.closure(sigma)
       self._e_i = sigma_star.copy()
@@ -53,10 +63,10 @@ class EditTransducer:
     else:
       self._e_i = edit.union(sigma).closure()
     self._e_i.optimize()
-    self._e_o = EditTransducer._right_factor(self._e_i)
+    self._e_o = EditTransducer._right_factor(self._e_i, sigma, vocab_aux)
 
   @staticmethod
-  def _right_factor(ifst: pynini.Fst) -> pynini.Fst:
+  def _right_factor(ifst: pynini.Fst, sigma, vocab_aux) -> pynini.Fst:
     """Constructs the right factor from the left factor."""
     # Ts constructed by inverting the left factor (i.e., swapping the input and
     # output labels), then swapping the insert and delete labels on what is now
@@ -66,7 +76,24 @@ class EditTransducer:
     insert_label = syms.find(EditTransducer.INSERT)
     delete_label = syms.find(EditTransducer.DELETE)
     pairs = [(insert_label, delete_label), (delete_label, insert_label)]
-    return ofst.relabel_pairs(ipairs=pairs)
+    right_factor = ofst.relabel_pairs(ipairs=pairs)
+
+    # Jiayu
+    # auxiliary paths allow 0-cost matches between raw token and auxiliary token, e.g.: 'I' -> 'I#', 'AM' -> 'AM#'
+    right_factor_aux = pynini.union(*
+      [
+        pynini.cross(
+          pynini.accep(token,       token_type = symtab),
+          pynini.accep(token + '#', token_type = symtab),
+        ) for token in vocab_aux
+      ]
+    ).optimize().closure()
+
+    R = pynini.union(right_factor, right_factor_aux).closure().optimize()
+    #print('R_start:', R.start())
+    #print('R:', R)
+
+    return R
 
   @staticmethod
   def check_wellformed_lattice(lattice: pynini.Fst) -> None:
@@ -88,6 +115,9 @@ class EditTransducer:
     Returns:
       A lattice FST.
     """
+    #print('oexpr_start:', oexpr.start())
+    #print('oexpr:', oexpr)
+
     lattice = (iexpr @ self._e_i) @ (self._e_o @ oexpr)
     EditTransducer.check_wellformed_lattice(lattice)
     return lattice
@@ -140,8 +170,8 @@ def make_symbol_table(vocabulary):
 if __name__ == '__main__':
   print('-' * 15, 'INPUT', '-' * 15)
 
-  ref_text = "I'M JAY"
-  hyp_text = "I AM JAY"
+  ref_text = "I AM JAY CHOU"
+  hyp_text = "I'M JAY"
 
   ref_tokens = ref_text.strip().split()
   print('REF TEXT:', ref_text)
@@ -177,23 +207,25 @@ if __name__ == '__main__':
   print('-' * 15, 'WER with synonyms', '-' * 15)
   syn_sets = {
     '<SYN001>' : ["I'M", 'I AM'],
-    '<SYN002>' : ['T-SHIRT', 'T SHIRT', 'TSHIRT'],
+    #'<SYN002>' : ['T-SHIRT', 'T SHIRT', 'TSHIRT'],
   }
+
+  vocab = list(set(ref_tokens + hyp_tokens))
+  print('VOCABULARY:', vocab)
 
   syn_tokens = []
   for syn_name, syn_set in syn_sets.items():
     for phrase in syn_set:
       syn_tokens += phrase.split()
+  vocab_syn = list(set(syn_tokens))
 
-  vocab = list(set(ref_tokens + hyp_tokens + syn_tokens))
-  print('VOCABULARY:', vocab)
-
-  symtab = make_symbol_table(vocab)
+  symtab = make_symbol_table(vocab + vocab_syn + [ token + '#' for token in vocab_syn ])
   print_symbol_table(symtab)
 
+  # KEY POINT(for Zhenxiang): figure out a way to differentiate raw path and expanded paths like this
   SYN001_slot = pynini.union(
-    pynini.accep("I'M", token_type = symtab),
-    pynini.accep('I AM', token_type = symtab),
+    pynini.accep("I'M", token_type = symtab),    # raw path
+    pynini.accep("I# AM#", token_type = symtab), # tokens on expanded paths are prepresented by auxiliary tokens that end with '#'
   )
 
   ref_fst = pynini.accep(ref_text, token_type = symtab)
@@ -204,28 +236,45 @@ if __name__ == '__main__':
   print('HYP FST(SYN):')
   print(hyp_fst)
 
-  ld_computer = LevenshteinDistance(alphabet = [ pynini.accep(token, token_type = symtab) for token in vocab ])
+  ld_computer = LevenshteinDistance(
+    symbol_table = symtab,
+    vocab = vocab,
+    vocab_aux = vocab_syn,
+  )
   alignment = ld_computer.compute_alignment(iexpr = ref_fst, oexpr = hyp_fst)
+
   print('ALIGNMENT:')
   print(alignment)
+
+  def are_same(symtab, i1, i2):
+    return symtab.find(i1).strip('#') == symtab.find(i2).strip('#')
 
 
   C, S, I, D = 0, 0, 0, 0
   for state in alignment.states():
     for arc in alignment.arcs(state):
       i, o = arc.ilabel, arc.olabel
-      print(i, o)
 
-      if i != 0 and o != 0 and i != o:
+      edit = ''
+      if i != 0 and o != 0 and not are_same(symtab, i, o):
         S += 1
+        edit = 'S'
       elif i != 0 and o == 0:
         D += 1
+        edit = 'D'
       elif i == 0 and o != 0:
         I += 1
-      elif i == o:
+        edit = 'I'
+      elif are_same(symtab, i, o):
         C += 1
+        edit = 'C'
       else:
         raise RuntimeError
 
+      print('i:', i, symtab.find(i), 'o:', o, symtab.find(o), f'[{edit}]')
+
   token_error_rate = compute_token_error_rate(C, S, I, D)
   print('TER:', token_error_rate)
+
+  #distance = ld_computer.distance(iexpr = ref_fst, oexpr = hyp_fst)
+  #print('DISTANCE:', distance)
