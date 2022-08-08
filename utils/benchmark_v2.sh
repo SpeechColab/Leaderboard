@@ -76,7 +76,7 @@ for x in $test_sets; do
             exit -1
         fi
         
-        ${LEADERBOARD}/utils/asr-score \
+        ${LEADERBOARD}/utils/asr-score_v2 \
             --tokenizer ${tokenizer} \
             --ref $dir/ref.txt \
             --hyp $dir/rec_non_empty.txt \
