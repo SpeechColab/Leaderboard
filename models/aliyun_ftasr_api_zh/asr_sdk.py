@@ -14,13 +14,13 @@ from aliyunsdkcore.acs_exception.exceptions import ServerException
 from aliyunsdkcore.client import AcsClient
 from aliyunsdkcore.request import CommonRequest
 
-accessKeyId = ""
-with open('accessKeyId', 'r') as f:
-    accessKeyId = f.readline().strip()
+access_key_id = ""
+with open('ACCESS_KEY_ID', 'r') as f:
+    access_key_id = f.readline().strip()
 
-accessKeySecret = ""
-with open('accessKeySecret', 'r') as f:
-    accessKeySecret = f.readline().strip()
+access_key_secret = ""
+with open('ACCESS_KEY_SECRET', 'r') as f:
+    access_key_secret = f.readline().strip()
 
 APPKEY = ""
 with open('APPKEY', 'r') as f:
@@ -136,7 +136,7 @@ if __name__ == "__main__":
             sys.stderr.flush()
 
             text = ''
-            text = fileTrans(accessKeyId, accessKeySecret, APPKEY, audio)
+            text = fileTrans(access_key_id, access_key_secret, APPKEY, audio)
 
             trans.write(key + '\t' + text + '\n')
             trans.flush()
