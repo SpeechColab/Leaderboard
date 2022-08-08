@@ -458,9 +458,11 @@ if __name__ == '__main__':
                 words = word.split("-")
                 word0 = words[0]
                 word1 = words[0]
+                symtab2.add_symbol(words[0])
                 for i in range(1,len(words)):
                   word0+=" " + words[i]
                   word1+=words[i]
+                  symtab2.add_symbol(words[i])
                 temp_vocab.append(word.strip())
                 temp_vocab.append(word0.strip())
                 temp_vocab.append(word1.strip())
@@ -495,21 +497,24 @@ if __name__ == '__main__':
         for uid in eval_utts:
             ref = ref_utts[uid].text
             hyp = hyp_utts[uid].text
-            ref_tokens = ref.strip().split()
-            hyp_tokens = hyp.strip().split()
+            ref_tokens = ref.strip().split(" ")
+            
+            hyp_tokens = hyp.strip().split(" ")
             symtab1 = symtab.copy()
             vocab1 = list(set(syn_key + vocab_syn + ref_tokens + hyp_tokens))
             for word in vocab1:
               symtab1.add_symbol(word)
             
-            for word in ref_tokens: # a-b cases
+            for word in hyp_tokens: # a-b cases
               if "-" in word:
                 words = word.split("-")
                 word0 = words[0]
                 word1 = words[0]
+                symtab1.add_symbol(words[0])
                 for i in range(1,len(words)):
                   word0+=" " + words[i]
                   word1+=words[i]
+                  symtab1.add_symbol(words[i])
                 vocab1.append(word)
                 vocab1.append(word0)
                 vocab1.append(word1)
