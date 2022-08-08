@@ -7,7 +7,7 @@ fi
 
 scp=$1
 dir=$2
-oss_scp=oss_${scp}
+oss_scp=${scp}_oss
 
 # download ossutil64 tools
 wget https://gosspublic.alicdn.com/ossutil/1.7.13/ossutil64
