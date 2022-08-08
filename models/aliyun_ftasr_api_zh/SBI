@@ -9,5 +9,6 @@ scp=$1
 dir=$2
 oss_scp=oss_${scp}
 
-./read_oss_file.py $scp $oss_scp
+./upload_wav.py $scp $oss_scp
 ./asr_sdk.py $oss_scp $dir/raw_rec.txt
+./del_oss_bucket.py
