@@ -47,7 +47,6 @@ if __name__ == "__main__":
     ossPath = bucket + "wav/"
     ossWavFile = codecs.open(sys.argv[2], 'w+', 'utf8')
     for idx, wav in wavDict.items():
-        print(idx, wav)
         # 上传文件
         upload_command = "./ossutil64 cp {wav} {osspath} -e oss-cn-hangzhou.aliyuncs.com".format(wav=wav, osspath=ossPath)
         upload_res = os.popen(upload_command) 
