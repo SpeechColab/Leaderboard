@@ -113,8 +113,11 @@ def fileTrans(akId, akSecret, appKey, fileLink) :
             print (e)
     if statusText == STATUS_SUCCESS :
         print ("录音文件识别成功！")
-        asr_result = getResponse[KEY_RESULT]
-        return asr_result["Sentences"][0]["Text"]
+        asr_result = ""
+        result = getResponse[KEY_RESULT]
+        for v in range(len(result["Sentences"])):
+            asr_result += result["Sentences"][v]["Text"]
+        return asr_result
     else :
         print ("录音文件识别失败！")
         return ""
