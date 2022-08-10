@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 2 ]; then
+  echo "recognize.sh wav.scp <working_dir>"
+  exit 1;
+fi
+
+scp=$1
+dir=$2
+oss_scp=${scp}_oss
+
+# download ossutil64 tools
+wget -O ossutil64 https://gosspublic.alicdn.com/ossutil/1.7.13/ossutil64
+chmod 755 ossutil64
+
+./upload_wav.py $scp $oss_scp
+./asr_sdk.py $oss_scp $dir/raw_rec.txt
+./del_oss_bucket.py

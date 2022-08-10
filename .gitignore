@@ -17,6 +17,7 @@ models/*
 !models/microsoft_sdk_zh
 !models/tencent_api_zh
 !models/yitu_api_zh
+!models/aliyun_ftasr_api_zh
 
 # en models
 !models/aliyun_api_en
