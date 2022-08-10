@@ -94,8 +94,9 @@ There are 2 types of models in model zoo: `cloud API model` & `local model`:
 | 已公开 <br> UNLOCKED | 编号 <br> MODEL_ID | 类型 <br> TYPE | 厂商 <br> PROVIDER | 简介 <br> DESCRIPTION | 链接 <br> URL |
 | --- | --- | --- | --- | --- | --- |
 | &check; | [aispeech_api_zh](models/aispeech_api_zh/) | Cloud API | 思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
-| &check; | [aliyun_api_en](models/aliyun_api_en/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 | https://www.alibabacloud.com/product/intelligent-speech-interaction |
-| &check; | [aliyun_api_zh](models/aliyun_api_zh/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 | https://ai.aliyun.com/nls/asr |
+| &check; | [aliyun_api_en](models/aliyun_api_en/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 - 一句话识别 | https://www.alibabacloud.com/product/intelligent-speech-interaction |
+| &check; | [aliyun_api_zh](models/aliyun_api_zh/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 - 一句话识别 | https://ai.aliyun.com/nls/asr |
+| &check; | [aliyun_ftasr_api_zh](models/aliyun_ftasr_api_zh/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 - 文件识别 | https://ai.aliyun.com/nls/asr |
 | &check; | [amazon_api_en](models/amazon_api_en/) | Cloud API | 亚马逊 <br> Amazon | 亚马逊云服务平台 | https://aws.amazon.com/cn/transcribe/ |
 | &check; | [baidu_api_en](models/baidu_api_en/) | Cloud API | 百度 <br> Baidu | 百度智能云 | https://cloud.baidu.com/product/speech/asr |
 | &check; | [baidu_pro_api_zh](models/baidu_pro_api_zh/) | Cloud API | 百度 <br> Baidu | 百度智能云 <br> (极速版) | https://cloud.baidu.com/product/speech/asr |
