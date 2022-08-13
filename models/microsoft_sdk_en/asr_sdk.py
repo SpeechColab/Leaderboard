@@ -103,6 +103,11 @@ if __name__ == '__main__':
 
             text = ''
             text = recognize(audio)
+            
+            # delete the space before 's
+            # e.g.  in Apron 's early years  ->  in Apron's early years     
+            text = text.replace(' \'s','\'s')
+            
             sys.stderr.write(text+"\n")
             sys.stderr.flush()
             trans.write(key + '\t' + text + '\n')
