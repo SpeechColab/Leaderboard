@@ -28,7 +28,7 @@ if __name__ == "__main__":
     wavDict = {}
     wavFile = codecs.open(sys.argv[1], 'r',  'utf8') 
 
-    config_command = "./ossutil64 config -e oss-cn-hangzhou.aliyuncs.com -i {access_key_id} -k {access_key_secret}".format(access_key_id=access_key_id, access_key_secret=access_key_secret)
+    config_command = "./ossutil64 config -e oss-cn-hangzhou.aliyuncs.com -i {access_key_id} -k {access_key_secret} -c ./myossconfig".format(access_key_id=access_key_id, access_key_secret=access_key_secret)
     config_res = os.popen(config_command)
     time.sleep(5)
 
@@ -40,7 +40,7 @@ if __name__ == "__main__":
         wavPath = meta[1]
         wavDict[wavId] = wavPath
     # 创建bucket
-    md_command = "./ossutil64 mb {bucket} -e oss-cn-hangzhou.aliyuncs.com".format(bucket=bucket)
+    md_command = "./ossutil64 mb {bucket} -e oss-cn-hangzhou.aliyuncs.com -c ./myossconfig".format(bucket=bucket)
     md_res = os.popen(md_command)
 
     time.sleep(5)
@@ -48,10 +48,10 @@ if __name__ == "__main__":
     ossWavFile = codecs.open(sys.argv[2], 'w+', 'utf8')
     for idx, wav in wavDict.items():
         # 上传文件
-        upload_command = "./ossutil64 cp {wav} {osspath} -e oss-cn-hangzhou.aliyuncs.com".format(wav=wav, osspath=ossPath)
+        upload_command = "./ossutil64 cp {wav} {osspath} -e oss-cn-hangzhou.aliyuncs.com -c ./myossconfig".format(wav=wav, osspath=ossPath)
         upload_res = os.popen(upload_command) 
         # 生成签名URL
-        sign_command = './ossutil64 sign {osspath}{idx}.wav --timeout {times} -e oss-cn-hangzhou.aliyuncs.com'.format(osspath=ossPath, idx=idx, times=32400)
+        sign_command = './ossutil64 sign {osspath}{idx}.wav --timeout {times} -e oss-cn-hangzhou.aliyuncs.com -c ./myossconfig'.format(osspath=ossPath, idx=idx, times=32400)
         res = os.popen(sign_command)
         for audio in res:
             ossWavFile.write(idx + "\t" + audio)
