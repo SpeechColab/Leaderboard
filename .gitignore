@@ -62,6 +62,10 @@ models/aliyun_api_en/ACCESS_KEY_SECRET
 models/aliyun_api_en/TOKEN
 models/aliyun_api_en/TOKEN_EXPIRE_TIME
 
+models/aliyun_ftasr_api_zh/APPKEY
+models/aliyun_ftasr_api_zh/ACCESS_KEY_ID
+models/aliyun_ftasr_api_zh/ACCESS_KEY_SECRET
+
 # baidu credential
 models/baidu_pro_api_zh/API_KEY
 models/baidu_pro_api_zh/SECRET_KEY
