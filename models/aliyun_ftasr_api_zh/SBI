@@ -7,30 +7,39 @@ fi
 
 scp=$1
 dir=$2
-oss_scp=${scp}_oss
+oss_scp=${dir}/wav_oss.scp
 part_nums=10
 
-# download ossutil64 tools
-wget -O ossutil64 https://gosspublic.alicdn.com/ossutil/1.7.13/ossutil64
-chmod 755 ossutil64
+# 命令行工具ossutil 下载和安装 https://help.aliyun.com/document_detail/120075.html
+# 可通过命令(wget https://gosspublic.alicdn.com/ossutil/1.7.13/ossutil64) 获取相同版本ossutil64(版本1.7.13) 进行md5sum一致性比较
+# compare ossutil64 md5sum
+md5sum ossutil64 > ${dir}/ossutil64.md5.compare
+diff -r ${dir}/ossutil64.md5.compare ./ossutil64.md5.txt
+if [ $? -ne 0 ];then
+  echo "md5sum of ossutil64 is different! Exit!"
+  exit 1
+else
+  echo "md5sum of ossutil64 is same."
+fi
+
 
 # upload wav to oss
-./upload_wav.py $scp $oss_scp
+./upload_wav.py ${scp} ${oss_scp} ${dir}
 
 # split test set 
 awk -vf=${part_nums} -vl="`wc -l $oss_scp`" 'BEGIN{p=int(l/f);q=(l%f);for(n=1;n<=f;n++)a[n]=n*p+((n<=q)?++x:x)}{if(NR>a[i])i++;print > "'$oss_scp'."i}' $oss_scp
 for((i=1;i<=${part_nums};i++));
   do
-    nohup ./asr_sdk.py ${oss_scp}.${i} $dir/raw_rec.txt.${i} > $dir/sdk_log.${i} 2>&1 &
+    nohup ./asr_sdk.py ${oss_scp}.${i} $dir/raw_rec.txt.${i} > ${dir}/sdk_log.${i} 2>&1 &
   done
 wait
 
 # merge parts and delete useless files
-cat $dir/raw_rec.txt.* > $dir/raw_rec.txt
-cat $dir/sdk_log.* > $dir/sdk_log
-rm -rf $dir/sdk_log.*
-rm -rf $dir/raw_rec.txt.*
+cat ${dir}/raw_rec.txt.* > ${dir}/raw_rec.txt
+cat ${dir}/sdk_log.* > ${dir}/log.SBI.result
+rm -rf ${dir}/sdk_log.*
+rm -rf ${dir}/raw_rec.txt.*
 rm -rf ${oss_scp}.*
 
 # delete oss bucket
-./del_oss_bucket.py
+./del_oss_bucket.py ${dir}
