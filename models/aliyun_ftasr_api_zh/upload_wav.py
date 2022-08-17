@@ -21,20 +21,21 @@ with open('ACCESS_KEY_SECRET', 'r') as f:
     access_key_secret = f.readline().strip()
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        sys.stderr.write("upload_wav.py <wav_scp> <oss_out_scp> <dir>\n")
+    if len(sys.argv) != 5:
+        sys.stderr.write("upload_wav.py <wav_scp> <oss_out_scp> <dir> <test_time>\n")
         exit(-1)
 
     wavDict = {}
     wavFile = codecs.open(sys.argv[1], 'r',  'utf8') 
     oss_config_path = sys.argv[3]
+    test_time = sys.argv[4]
 
     config_command = "./ossutil64 config -e oss-cn-hangzhou.aliyuncs.com -i {access_key_id} -k {access_key_secret} -c {oss_config_path}/myossconfig".format(access_key_id=access_key_id, access_key_secret=access_key_secret, oss_config_path=oss_config_path)
     config_res = os.popen(config_command)
     time.sleep(5)
 
     # OSS bucket
-    bucket = "oss://speechiotest/"
+    bucket = "oss://speechiotest-{test_time}/".format(test_time=test_time)
     for meta in wavFile:
         meta = meta.split()
         wavId = meta[0]

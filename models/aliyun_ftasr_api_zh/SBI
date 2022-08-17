@@ -9,6 +9,8 @@ scp=$1
 dir=$2
 oss_scp=${dir}/wav_oss.scp
 part_nums=10
+test_time=$(date +"%Y-%m-%d-%H-%M-%S")
+echo "Test starts at "${test_time}
 
 # 命令行工具ossutil 下载和安装 https://help.aliyun.com/document_detail/120075.html
 # 可通过命令(wget https://gosspublic.alicdn.com/ossutil/1.7.13/ossutil64) 获取相同版本ossutil64(版本1.7.13) 进行md5sum一致性比较
@@ -24,7 +26,7 @@ fi
 
 
 # upload wav to oss
-./upload_wav.py ${scp} ${oss_scp} ${dir}
+./upload_wav.py ${scp} ${oss_scp} ${dir} ${test_time}
 
 # split test set 
 awk -vf=${part_nums} -vl="`wc -l $oss_scp`" 'BEGIN{p=int(l/f);q=(l%f);for(n=1;n<=f;n++)a[n]=n*p+((n<=q)?++x:x)}{if(NR>a[i])i++;print > "'$oss_scp'."i}' $oss_scp
@@ -42,4 +44,4 @@ rm -rf ${dir}/raw_rec.txt.*
 rm -rf ${oss_scp}.*
 
 # delete oss bucket
-./del_oss_bucket.py ${dir}
+./del_oss_bucket.py ${dir} ${test_time}
