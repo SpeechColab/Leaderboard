@@ -38,7 +38,6 @@ requests/trash
 log.*
 *.log
 tmp*
-*.csv
 
 # oss
 .ossutil_checkpoint
