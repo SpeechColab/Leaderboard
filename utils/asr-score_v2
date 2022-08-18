@@ -13,14 +13,6 @@ logging.basicConfig(stream=sys.stderr, level=logging.INFO, format='[%(levelname)
 import pynini
 from pynini.lib import pynutil
 
-def PrintSymbolTable(symbol_table: pynini.SymbolTable):
-    print('SYMBOL_TABLE:')
-    for k in range(symbol_table.num_symbols()):
-        sym = symbol_table.find(k)
-        assert(symbol_table.find(sym) == k) # symbol table's find can be used for bi-directional lookup (id <-> sym)
-        print(k, sym)
-    print()
-
 # reference: https://github.com/kylebgorman/pynini/blob/master/pynini/lib/edit_transducer.py
 # to import original lib:
 #     from pynini.lib.edit_transducer import EditTransducer
@@ -75,16 +67,14 @@ class EditTransducer:
         pairs = [(insert_label, delete_label), (delete_label, insert_label)]
         right_factor = ofst.relabel_pairs(ipairs=pairs)
 
-        # auxiliary paths allow 0-cost matches between original token and auxiliary token, e.g.: 'I' -> 'I#', 'AM' -> 'AM#'
-        #PrintSymbolTable(symbol_table)
-        right_factor_aux = pynini.union(
-            *[
-                pynini.cross(
-                    pynini.accep(token,       token_type = symbol_table),
-                    pynini.accep(token + '#', token_type = symbol_table),
-                ) for token in vocab_aux
-            ]
-        ).optimize().closure()
+        # auxiliary paths allow 0-cost matches between token and its auxiliary form
+        # e.g.: 'I' -> 'I#', 'AM' -> 'AM#'
+        right_factor_aux = pynini.union(*[
+            pynini.cross(
+                pynini.accep(token,       token_type = symbol_table),
+                pynini.accep(token + '#', token_type = symbol_table),
+            ) for token in vocab_aux
+        ]).optimize().closure()
 
         R = pynini.union(right_factor, right_factor_aux).closure().optimize()
         #print('R_start:', R.start())
@@ -114,6 +104,15 @@ class LevenshteinTransducer(EditTransducer):
         lattice = self.create_lattice(iexpr, oexpr)
         alignment = pynini.shortestpath(lattice, nshortest=1, unique=True).optimize()
         return alignment
+
+
+def PrintSymbolTable(symbol_table: pynini.SymbolTable):
+    print('SYMBOL_TABLE:')
+    for k in range(symbol_table.num_symbols()):
+        sym = symbol_table.find(k)
+        assert(symbol_table.find(sym) == k) # symbol table's find can be used for bi-directional lookup (id <-> sym)
+        print(k, sym)
+    print()
 
 
 class EvaluationResult:
@@ -304,17 +303,18 @@ if __name__ == '__main__':
     logging.info(f'#hyp:{res.num_hyp_utts}, #ref:{res.num_ref_utts}, #eval:{res.num_eval_utts}')
 
 
-    logging.info('Loading GLM from glm_en.csv ...')
+    logging.info('Loading GLM ...')
     '''
     glm.tsv:
-        I'VE\tI HAVE
-        WE WILL\tWE'LL
+        I'VE,I HAVE
+        GOING TO,GONNA
         ...
-        T-SHIRT\tT SHIRT\tTSHIRT
-    --> glm:
+        T-SHIRT,T SHIRT,TSHIRT
+    -------------> 
+    glm:
         {
             '<RULE00000>': ["I'VE", 'I HAVE'],
-            '<RULE00001>': ['WE WILL', "WE'LL"],
+            '<RULE00001>': ['GOING TO', 'GONNA'],
             ...
             '<RULE99999>': ['T-SHIRT', 'T SHIRT', 'TSHIRT'],
         }
@@ -322,8 +322,8 @@ if __name__ == '__main__':
     glm = {}
     #for k, rule in enumerate(LoadGLM('glm_en_debug.tsv')):
     for k, rule in enumerate(LoadGLM('glm_en.csv')):
-        key = f'<RULE_{k:05d}>'
-        glm[key] = [ phrase.strip() for phrase in rule ]
+        rule_name = f'<RULE_{k:05d}>'
+        glm[rule_name] = [ phrase.strip() for phrase in rule ]
     #print(glm)
     logging.info(f'#rule: {len(glm)}')
 
@@ -342,8 +342,7 @@ if __name__ == '__main__':
             for t in Tokenize(phrase):
                 tokens.append(t)
                 if '-' in t:
-                    for x in hyphen_variations(t):
-                        tokens.append(x)
+                    tokens.extend(hyphen_variations(t))
     vocab_glm = list(set(tokens))
     #print(vocab_glm)
     logging.info(f'#vocab_glm: {len(vocab_glm)}')
@@ -357,8 +356,7 @@ if __name__ == '__main__':
         for t in ref_tokens + hyp_tokens:
             tokens.append(t)
             if '-' in t:
-                for x in hyphen_variations(t):
-                    tokens.append(x)
+                tokens.extend(hyphen_variations(t))
     vocab = list(set(tokens))
     #print(vocab)
     logging.info(f'#vocab: {len(vocab)}')
@@ -396,9 +394,9 @@ if __name__ == '__main__':
             )
 
     rule_tags = [ x for x in glm.keys() ]
-    alphabet = pynini.union(
-        *[ pynini.accep(token, token_type = symtab) for token in vocab + vocab_glm + rule_tags ]
-    ).optimize()
+    alphabet = pynini.union(*[
+        pynini.accep(token, token_type = symtab) for token in vocab + vocab_glm + rule_tags
+    ]).optimize()
 
     tagger = pynini.cdrewrite(
         pynini.union(*rule_taggers),
