@@ -75,8 +75,8 @@ for x in $test_sets; do
             echo "$0: Error, unsupported language code ${language}"
             exit -1
         fi
-        
-        ${LEADERBOARD}/utils/asr-score \
+
+        ${LEADERBOARD}/utils/asr-score_${language} \
             --tokenizer ${tokenizer} \
             --ref $dir/ref.txt \
             --hyp $dir/rec_non_empty.txt \
