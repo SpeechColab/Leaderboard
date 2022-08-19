@@ -69,7 +69,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &cross; |SPEECHIO_ASR_ZH00029| 港台明星访谈 <br> 周杰伦,曾志伟 <br> 张家辉,陈小春 <br> 周星驰 | 口音(港台) <br> HongKong/Taiwan Accents | 娱乐、生活、演艺 <br> Entertainment, Acting, Musics | 1.5 | ★★★☆ |
 | &cross; |SPEECHIO_ASR_ZH00030| 世界青年说 | 口音(老外) <br> Foreigner Accents | 异国文化比较 <br> Cultural Difference | 2 | ★★★☆ |
 
-
+### How to get a test set
 To download an **unlocked** test set from cloud to your local dir `leaderboard/datasets/<TEST_SET_ID>`:
 ```
 ops/pull dataset <TEST_SET_ID>
@@ -78,50 +78,52 @@ ops/pull dataset <TEST_SET_ID>
 ---
 
 ## 3. Model Zoo
-There are 2 types of models in model zoo: `cloud API model` & `local model`:
+There are 2 types of models in model zoo: `cloud API model` & `pretrained model`:
 
-### Cloud API Models(ZH)
+### ZH models 
+#### Cloud API Models (ZH)
 | 已公开 <br> UNLOCKED | 编号 <br> MODEL_ID | 类型 <br> TYPE | 厂商 <br> PROVIDER | 简介 <br> DESCRIPTION | 链接 <br> URL |
 | --- | --- | --- | --- | --- | --- |
-| &check; | [aispeech_api_zh](models/aispeech_api_zh/) | Cloud API | 思必驰 <br> AISpeech | 思必驰开放平台 | https://cloud.aispeech.com |
-| &check; | [aliyun_api_zh](models/aliyun_api_zh/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 - 一句话识别 | https://ai.aliyun.com/nls/asr |
-| &check; | [aliyun_ftasr_api_zh](models/aliyun_ftasr_api_zh/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 - 文件识别(非流式) | https://ai.aliyun.com/nls/asr |
-| &check; | [baidu_pro_api_zh](models/baidu_pro_api_zh/) | Cloud API | 百度 <br> Baidu | 百度智能云 <br> (极速版) | https://cloud.baidu.com/product/speech/asr |
-| &check; | [iflytek_lfasr_api_zh](models/iflytek_lfasr_api_zh/) | Cloud API | 讯飞 <br> IFlyTek | 讯飞开放平台 <br> (转写,非流式) | https://www.xfyun.cn/services/lfasr |
-| &check; | [microsoft_sdk_zh](models/microsoft_sdk_zh/) | Cloud API | 微软 <br> Microsoft | Azure | https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/ |
-| &check; | [tencent_api_zh](models/tencent_api_zh/) | Cloud API | 腾讯 <br> Tencent | 腾讯云 | https://cloud.tencent.com/product/asr |
-| &check; | [yitu_api_zh](models/yitu_api_zh/) | Cloud API | 依图 <br> YituTech |依图语音开放平台 | https://speech.yitutech.com |
+| &check; | [aispeech_api_zh](models/aispeech_api_zh/) | Cloud API | 思必驰 <br> AISpeech | 思必驰开放平台 | [official link](https://cloud.aispeech.com) |
+| &check; | [aliyun_api_zh](models/aliyun_api_zh/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 - 一句话识别 | [official link](https://ai.aliyun.com/nls/asr) |
+| &check; | [aliyun_ftasr_api_zh](models/aliyun_ftasr_api_zh/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 - 文件识别(非流式) | [official link](https://ai.aliyun.com/nls/asr) |
+| &check; | [baidu_pro_api_zh](models/baidu_pro_api_zh/) | Cloud API | 百度 <br> Baidu | 百度智能云 <br> (极速版) | [official link](https://cloud.baidu.com/product/speech/asr) |
+| &check; | [iflytek_lfasr_api_zh](models/iflytek_lfasr_api_zh/) | Cloud API | 讯飞 <br> IFlyTek | 讯飞开放平台 <br> (转写,非流式) | [official link](https://www.xfyun.cn/services/lfasr) |
+| &check; | [microsoft_sdk_zh](models/microsoft_sdk_zh/) | Cloud API | 微软 <br> Microsoft | Azure | [official link](https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/) |
+| &check; | [tencent_api_zh](models/tencent_api_zh/) | Cloud API | 腾讯 <br> Tencent | 腾讯云 | [official link](https://cloud.tencent.com/product/asr) |
+| &check; | [yitu_api_zh](models/yitu_api_zh/) | Cloud API | 依图 <br> YituTech |依图语音开放平台 | [official link](https://speech.yitutech.com) |
 
-### Local Models(ZH)
+#### Pretrained Models (ZH)
 | 已公开 <br> UNLOCKED | 编号 <br> MODEL_ID | 类型 <br> TYPE | 作者 <br> AUTHOR | 简介 <br> DESCRIPTION |
 | --- | --- | --- | --- | --- |
-| &check; | speechio_kaldi_multicn | Local | Xingyu NA(那兴宇) | Kaldi multi_cn [recipe](https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5) |
-| &check; | wenet_multi_cn | Local | Binbin Zhang(张彬彬)@[wenet-e2e](https://github.com/wenet-e2e/) |  WeNet multi_cn [recipe](https://github.com/wenet-e2e/wenet/tree/main/examples/multi_cn/s0) |
-| &check; | vosk_model_cn | Local | [alphacephei](https://alphacephei.com/vosk) | Chinese engine of [Vosk](https://alphacephei.com/vosk/models) |
-| &check; | wenet_wenetspeech | Local | Binbin Zhang(张彬彬)@[wenet-e2e](https://github.com/wenet-e2e/) |  WeNet wenetspeech [recipe](https://github.com/wenet-e2e/wenet/tree/main/examples/wenetspeech/s0) |
+| &check; | speechio_kaldi_multicn | Pretrained | Xingyu NA(那兴宇) | Kaldi multi_cn [recipe](https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5) |
+| &check; | wenet_multi_cn | Pretrained | Binbin Zhang(张彬彬)@[wenet-e2e](https://github.com/wenet-e2e/) |  WeNet multi_cn [recipe](https://github.com/wenet-e2e/wenet/tree/main/examples/multi_cn/s0) |
+| &check; | vosk_model_cn | Pretrained | [alphacephei](https://alphacephei.com/vosk) | Chinese engine of [Vosk](https://alphacephei.com/vosk/models) |
+| &check; | wenet_wenetspeech | Pretrained | Binbin Zhang(张彬彬)@[wenet-e2e](https://github.com/wenet-e2e/) |  WeNet wenetspeech [recipe](https://github.com/wenet-e2e/wenet/tree/main/examples/wenetspeech/s0) |
 
-### Cloud API Models(EN)
+### EN models
+#### Cloud API Models (EN)
 | 已公开 <br> UNLOCKED | 编号 <br> MODEL_ID | 类型 <br> TYPE | 厂商 <br> PROVIDER | 简介 <br> DESCRIPTION | 链接 <br> URL |
 | --- | --- | --- | --- | --- | --- |
-| &check; | [aliyun_api_en](models/aliyun_api_en/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 - 一句话识别 | https://www.alibabacloud.com/product/intelligent-speech-interaction |
-| &check; | [amazon_api_en](models/amazon_api_en/) | Cloud API | 亚马逊 <br> Amazon | 亚马逊云服务平台 | https://aws.amazon.com/cn/transcribe/ |
-| &check; | [baidu_api_en](models/baidu_api_en/) | Cloud API | 百度 <br> Baidu | 百度智能云 | https://cloud.baidu.com/product/speech/asr |
-| &check; | [google_api_en](models/google_api_en/) | Cloud API | 谷歌 <br> Google | 谷歌云 | https://cloud.google.com/speech-to-text |
-| &check; | [microsoft_sdk_en](models/microsoft_sdk_en/) | Cloud API | 微软 <br> Microsoft | Azure | https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/ |
-| &check; | [tencent_api_en](models/tencent_api_en/) | Cloud API | 腾讯 <br> Tencent | 腾讯云 | https://cloud.tencent.com/product/asr |
+| &check; | [aliyun_api_en](models/aliyun_api_en/) | Cloud API | 阿里巴巴 <br> Alibaba | 阿里云 - 一句话识别 | [official link](https://www.alibabacloud.com/product/intelligent-speech-interaction) |
+| &check; | [amazon_api_en](models/amazon_api_en/) | Cloud API | 亚马逊 <br> Amazon | 亚马逊云服务平台 | [official link](https://aws.amazon.com/cn/transcribe/) |
+| &check; | [baidu_api_en](models/baidu_api_en/) | Cloud API | 百度 <br> Baidu | 百度智能云 | [official link](https://cloud.baidu.com/product/speech/asr) |
+| &check; | [google_api_en](models/google_api_en/) | Cloud API | 谷歌 <br> Google | 谷歌云 | [official link](https://cloud.google.com/speech-to-text) |
+| &check; | [microsoft_sdk_en](models/microsoft_sdk_en/) | Cloud API | 微软 <br> Microsoft | Azure | [official link](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/) |
+| &check; | [tencent_api_en](models/tencent_api_en/) | Cloud API | 腾讯 <br> Tencent | 腾讯云 | [official link](https://cloud.tencent.com/product/asr) |
 
-### Local Models(EN)
+#### Pretrained Models (EN)
 | 已公开 <br> UNLOCKED | 编号 <br> MODEL_ID | 类型 <br> TYPE | 作者 <br> AUTHOR | 简介 <br> DESCRIPTION |
 | --- | --- | --- | --- | --- |
-| &check; | vosk_model_en | Local | [alphacephei](https://alphacephei.com/vosk) | English engine of [Vosk](https://alphacephei.com/vosk/models) |
-| &check; | vosk_model_en_large | Local | [alphacephei](https://alphacephei.com/vosk) | Large English engine of [Vosk](https://alphacephei.com/vosk/models) |
-| &check; | deepspeech_model_en | Local | [deepspeech](https://github.com/mozilla/DeepSpeech)| Latest English ASR Model of [deepspeech](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3)
-| &check; | coqui_model_en | Local | [coqui](https://coqui.ai/) | English engine of [coqui](https://coqui.ai/models)|
-| &check; | NeMo_conformer_en | Local | [NeMo](https://github.com/NVIDIA/NeMo) | English engine of [NeMo_conformer](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_ctc_large)|
+| &check; | vosk_model_en | Pretrained | [alphacephei](https://alphacephei.com/vosk) | English engine of [Vosk](https://alphacephei.com/vosk/models) |
+| &check; | vosk_model_en_large | Pretrained | [alphacephei](https://alphacephei.com/vosk) | Large English engine of [Vosk](https://alphacephei.com/vosk/models) |
+| &check; | deepspeech_model_en | Pretrained | [deepspeech](https://github.com/mozilla/DeepSpeech)| Latest English ASR Model of [deepspeech](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3)
+| &check; | coqui_model_en | Pretrained | [coqui](https://coqui.ai/) | English engine of [coqui](https://coqui.ai/models)|
+| &check; | NeMo_conformer_en | Pretrained | [NeMo](https://github.com/NVIDIA/NeMo) | English engine of [NeMo_conformer](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_ctc_large)|
 
 ### How to get a model
 * cloud API models are stored in this github repo `Leaderboard/models/*`
-* local models are stored in cloud, to download an **unlocked** model to your local dir (i.e. `Leaderboard/models/<MODEL_ID>`):
+* pretrained models are stored in cloud, to download an **unlocked** model to your local dir (i.e. `Leaderboard/models/<MODEL_ID>`):
 ```
 ops/pull model <MODEL_ID>
 ```
