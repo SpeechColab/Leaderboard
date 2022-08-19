@@ -24,7 +24,7 @@ class EditTransducer:
     def __init__(self,
         symbol_table,
         vocab: Iterable[str],
-        vocab_aux: Iterable[str],
+        edit_ext: pynini.FstLike,
         insert_cost: float = 1.0,
         delete_cost: float = 1.0,
         substitute_cost: float = 1.0,
@@ -56,10 +56,10 @@ class EditTransducer:
             self._e_i = edit.union(sigma).closure()
 
         self._e_i.optimize()
-        self._e_o = EditTransducer._right_factor(self._e_i, symbol_table, vocab_aux)
+        self._e_o = EditTransducer._right_factor(self._e_i, edit_ext)
 
     @staticmethod
-    def _right_factor(ifst: pynini.Fst, symbol_table: pynini.SymbolTable, vocab_aux: Iterable[str]) -> pynini.Fst:
+    def _right_factor(ifst: pynini.Fst, edit_ext: pynini.FstLike) -> pynini.Fst:
         ofst = pynini.invert(ifst)
         syms = pynini.generated_symbols()
         insert_label = syms.find(EditTransducer.INSERT)
@@ -67,32 +67,21 @@ class EditTransducer:
         pairs = [(insert_label, delete_label), (delete_label, insert_label)]
         right_factor = ofst.relabel_pairs(ipairs=pairs)
 
-        # auxiliary paths allow 0-cost matches between token and its auxiliary form
-        # e.g.: 'I' -> 'I#', 'AM' -> 'AM#'
-        right_factor_aux = pynini.union(*[
-            pynini.cross(
-                pynini.accep(token,       token_type = symbol_table),
-                pynini.accep(token + '#', token_type = symbol_table),
-            ) for token in vocab_aux
-        ]).optimize().closure()
-
-        R = pynini.union(right_factor, right_factor_aux).closure().optimize()
-        #print('R_start:', R.start())
-        #print('R:', R)
-        return R
-
-    @staticmethod
-    def check_wellformed_lattice(lattice: pynini.Fst) -> None:
-        if lattice.start() == pynini.NO_STATE_ID:
-            raise RuntimeError("Edit distance composition lattice is empty.")
+        right_factor_aux = pynini.union(right_factor, edit_ext).closure().optimize()
+        #print('R_start:', right_factor_aux.start())
+        #print('R:', right_factor_aux)
+        return right_factor_aux
 
     def create_lattice(self, iexpr: pynini.FstLike, oexpr: pynini.FstLike) -> pynini.Fst:
         lattice = (iexpr @ self._e_i) @ (self._e_o @ oexpr)
         EditTransducer.check_wellformed_lattice(lattice)
         return lattice
 
+    @staticmethod
+    def check_wellformed_lattice(lattice: pynini.Fst) -> None:
+        if lattice.start() == pynini.NO_STATE_ID:
+            raise RuntimeError("Edit distance composition lattice is empty.")
 
-class LevenshteinTransducer(EditTransducer):
     def compute_distance(self, iexpr: pynini.FstLike, oexpr: pynini.FstLike) -> float:
         lattice = self.create_lattice(iexpr, oexpr)
         # The shortest cost from all final states to the start state is
@@ -102,17 +91,8 @@ class LevenshteinTransducer(EditTransducer):
   
     def compute_alignment(self, iexpr: pynini.FstLike, oexpr: pynini.FstLike) -> pynini.FstLike:
         lattice = self.create_lattice(iexpr, oexpr)
-        alignment = pynini.shortestpath(lattice, nshortest=1, unique=True).optimize()
-        return alignment
-
-
-def PrintSymbolTable(symbol_table: pynini.SymbolTable):
-    print('SYMBOL_TABLE:')
-    for k in range(symbol_table.num_symbols()):
-        sym = symbol_table.find(k)
-        assert(symbol_table.find(sym) == k) # symbol table's find can be used for bi-directional lookup (id <-> sym)
-        print(k, sym)
-    print()
+        alignment = pynini.shortestpath(lattice, nshortest=1, unique=True)
+        return alignment.optimize()
 
 
 class EvaluationResult:
@@ -197,23 +177,120 @@ def Tokenize(text, tokenizer = 'whitespace'):
         raise RuntimeError(F'ERROR: Unsupported tokenizer {tokenizer}')
 
 
+def tokens_without_hyphen(token : str):
+    # 'T-SHIRT' should also introduce new words into vocabulary, e.g.:
+    #   1. 'T' & 'SHIRT'
+    #   2. 'TSHIRT'
+    assert('-' in token)
+    v = token.split('-')
+    v.append(token.replace('-', ''))
+    return v
+
+
 def LoadGLM(rel_path):
-    return list(
-        csv.reader(
-            open(
-                os.path.dirname(os.path.abspath(__file__)) + '/' + rel_path,
-                encoding="utf-8"
-            ),
-            delimiter=','
-        )
+    '''
+    glm.csv:
+        I'VE,I HAVE
+        GOING TO,GONNA
+        ...
+        T-SHIRT,T SHIRT,TSHIRT
+
+    glm:
+        {
+            '<RULE00000>': ["I'VE", 'I HAVE'],
+            '<RULE00001>': ['GOING TO', 'GONNA'],
+            ...
+            '<RULE99999>': ['T-SHIRT', 'T SHIRT', 'TSHIRT'],
+        }
+    '''
+    logging.info(f'Loading GLM from {rel_path} ...')
+
+    abs_path = os.path.dirname(os.path.abspath(__file__)) + '/' + rel_path
+    reader = list(
+        csv.reader(open(abs_path, encoding="utf-8"), delimiter=',')
     )
+
+    glm = {}
+    #glm_phrases = {}
+    for k, rule in enumerate(reader):
+        rule_name = f'<RULE_{k:05d}>'
+        rule = [ phrase.strip() for phrase in rule ]
+        glm[rule_name] = rule
+        #glm_phrases[rule] = rule_name
+    logging.info(f'  #rule: {len(glm)}')
+
+    tokens = []
+    for rule in glm.values():
+        for phrase in rule:
+            for t in Tokenize(phrase):
+                tokens.append(t)
+                if '-' in t:
+                    tokens.extend(tokens_without_hyphen(t))
+    vocab = list(set(tokens))
+    logging.info(f'  #vocab: {len(vocab)}')
+
+    return glm, vocab
+
+
+def SymbolEQ(symtab, i1, i2):
+    return symtab.find(i1).strip('#') == symtab.find(i2).strip('#')
+
+
+def PrintSymbolTable(symbol_table: pynini.SymbolTable):
+    print('SYMBOL_TABLE:')
+    for k in range(symbol_table.num_symbols()):
+        sym = symbol_table.find(k)
+        assert(symbol_table.find(sym) == k) # symbol table's find can be used for bi-directional lookup (id <-> sym)
+        print(k, sym)
+    print()
+
+
+def BuildSymbolTable(*vocabs) -> pynini.SymbolTable :
+    logging.info('Building symbol table ...')
+    symbol_table = pynini.SymbolTable()
+    symbol_table .add_symbol('<epsilon>')
+
+    for vocab in vocabs:
+        for token in vocab:
+            symbol_table.add_symbol(token)
+    logging.info(f'  #symbols: {symbol_table.num_symbols()}')
+
+    return symbol_table
+
+
+def BuildGLMTagger(glm, symbol_table):
+    logging.info('Building tagger for GLM rewriting rules ...')
+    rule_taggers = []
+    for rule_tag, rule in glm.items():
+        for phrase in rule:
+            rule_taggers.append(
+                (
+                    pynutil.insert(pynini.accep(rule_tag, token_type = symbol_table)) +
+                    pynini.accep(phrase, token_type = symbol_table) +
+                    pynutil.insert(pynini.accep(rule_tag, token_type = symbol_table))
+                )
+            )
+
+    alphabet = pynini.union(
+        *[ pynini.accep(sym, token_type = symbol_table) for idx, sym in symbol_table if idx != 0 ]
+    ).optimize()
+
+    tagger = pynini.cdrewrite(
+        pynini.union(*rule_taggers),
+        '',
+        '',
+        alphabet.closure()
+    ).optimize() # note: this could be slow with large vocabulary
+    logging.info('GLM tagger built.')
+
+    return tagger
 
 
 def PrintPrettyAlignment(raw, hyp, ref, edits, stream = sys.stderr):
     def fullwidth_char(c):
         return True if (c >= '\u4e00') and (c <= '\u9fa5') else False
     
-    def display_width(token: str):
+    def token_width(token: str):
         n = 0
         for c in token:
             n += (2 if fullwidth_char(c) else 1)
@@ -242,7 +319,7 @@ def PrintPrettyAlignment(raw, hyp, ref, edits, stream = sys.stderr):
 
         e = '' if edits[i] == 'C' else edits[i]
 
-        nr, nh, ne = display_width(r), display_width(h), display_width(e)
+        nr, nh, ne = token_width(r), token_width(h), token_width(e)
         n = max(nr, nh, ne) + 1
 
         R += r + ' ' * (n-nr)
@@ -279,7 +356,7 @@ if __name__ == '__main__':
     logging.info(args)
 
 
-    logging.info('Loading REF & HYP text ...')
+    logging.info('Loading REF & HYP ...')
     ref_utts = LoadUtterances(args.ref, args.ref_format)
     hyp_utts = LoadUtterances(args.hyp, args.hyp_format)
 
@@ -300,55 +377,8 @@ if __name__ == '__main__':
     res.num_hyp_utts  = len(hyp_utts)
     res.num_ref_utts  = len(ref_utts)
     res.num_eval_utts = len(eval_utts)
-    logging.info(f'#hyp:{res.num_hyp_utts}, #ref:{res.num_ref_utts}, #eval:{res.num_eval_utts}')
+    logging.info(f'  #hyp:{res.num_hyp_utts}, #ref:{res.num_ref_utts}, #eval:{res.num_eval_utts}')
 
-
-    logging.info('Loading GLM ...')
-    '''
-    glm.tsv:
-        I'VE,I HAVE
-        GOING TO,GONNA
-        ...
-        T-SHIRT,T SHIRT,TSHIRT
-    -------------> 
-    glm:
-        {
-            '<RULE00000>': ["I'VE", 'I HAVE'],
-            '<RULE00001>': ['GOING TO', 'GONNA'],
-            ...
-            '<RULE99999>': ['T-SHIRT', 'T SHIRT', 'TSHIRT'],
-        }
-    '''
-    glm = {}
-    #for k, rule in enumerate(LoadGLM('glm_en_debug.tsv')):
-    for k, rule in enumerate(LoadGLM('glm_en.csv')):
-        rule_name = f'<RULE_{k:05d}>'
-        glm[rule_name] = [ phrase.strip() for phrase in rule ]
-    #print(glm)
-    logging.info(f'#rule: {len(glm)}')
-
-    def hyphen_variations(token : str):
-        # 'T-SHIRT' should also introduce new words into vocabulary, e.g.:
-        #   1. 'T' & 'SHIRT'
-        #   2. 'TSHIRT'
-        assert('-' in token)
-        v = token.split('-')
-        v.append(token.replace('-', ''))
-        return v
-
-    tokens = []
-    for rule in glm.values():
-        for phrase in rule:
-            for t in Tokenize(phrase):
-                tokens.append(t)
-                if '-' in t:
-                    tokens.extend(hyphen_variations(t))
-    vocab_glm = list(set(tokens))
-    #print(vocab_glm)
-    logging.info(f'#vocab_glm: {len(vocab_glm)}')
-
-
-    logging.info('Building vocabulary from HYP & REF')
     tokens = []
     for uid in eval_utts:
         ref_tokens = Tokenize(ref_utts[uid].text)
@@ -356,61 +386,44 @@ if __name__ == '__main__':
         for t in ref_tokens + hyp_tokens:
             tokens.append(t)
             if '-' in t:
-                tokens.extend(hyphen_variations(t))
+                tokens.extend(tokens_without_hyphen(t))
     vocab = list(set(tokens))
     #print(vocab)
-    logging.info(f'#vocab: {len(vocab)}')
+    logging.info(f'  #vocab: {len(vocab)}')
 
 
-    logging.info('Building symbol table ...')
-    symtab = pynini.SymbolTable()
-    symtab.add_symbol('<epsilon>')
+    glm, vocab_glm = LoadGLM('glm_en.csv')
+    #print(glm)
+    #print(vocab_glm)
 
-    for token in vocab:
-        symtab.add_symbol(token)
 
-    for token in vocab_glm:
-        symtab.add_symbol(token)
-        symtab.add_symbol(token + '#') # mark GLM-expanded alternative paths with suffix '#'
-
-    for rule_tag in glm.keys():
-        symtab.add_symbol(rule_tag)
-
-    #symtab.write_text('symbol_table.txt')
+    symtab = BuildSymbolTable(
+        vocab,
+        vocab_glm,
+        [ x + '#' for x in vocab_glm ], # we need this auxiliary version to mark GLM-expanded paths
+        [ x for x in glm.keys() ], # GLM rule tags
+    )
     #PrintSymbolTable(symtab)
-    logging.info(f'#symbols: {symtab.num_symbols()}')
+    #symtab.write_text('symbol_table.txt')
 
 
-    logging.info('Building and optimizing GLM tagger ...')
-    rule_taggers = []
-    for rule_tag, rule in glm.items():
-        for phrase in rule:
-            rule_taggers.append(
-                (
-                    pynutil.insert(pynini.accep(rule_tag, token_type = symtab)) +
-                    pynini.accep(phrase, token_type = symtab) +
-                    pynutil.insert(pynini.accep(rule_tag, token_type = symtab))
-                )
-            )
+    tagger = BuildGLMTagger(glm, symtab)
 
-    rule_tags = [ x for x in glm.keys() ]
-    alphabet = pynini.union(*[
-        pynini.accep(token, token_type = symtab) for token in vocab + vocab_glm + rule_tags
-    ]).optimize()
-
-    tagger = pynini.cdrewrite(
-        pynini.union(*rule_taggers),
-        '',
-        '',
-        alphabet.closure()
-    ).optimize()
-    logging.info('GLM tagger built.')
-
+    # auxiliary edit transducer allows 0-cost matches between token and its auxiliary form
+    # e.g.: 'I' -> 'I#', 'AM' -> 'AM#'
+    auxiliary_edit_transducer = pynini.union(*[
+        pynini.cross(
+            pynini.accep(token,       token_type = symtab),
+            pynini.accep(token + '#', token_type = symtab),
+        ) for token in vocab_glm
+    ]).optimize().closure()
 
     # processing HYP & REF 
+    logging.info('Evaluating error rate ...')
     with open(args.result_file, 'w+', encoding='utf8') as fo:
         for uid in eval_utts:
-            print(uid, flush=True, file=sys.stderr)
+            #print(uid, flush=True, file=sys.stderr)
+
             ref = ref_utts[uid].text
             hyp = hyp_utts[uid].text
 
@@ -423,12 +436,25 @@ if __name__ == '__main__':
             hyp_fst = pynini.accep(' '.join(hyp_tokens), token_type = symtab)
             #print(hyp_fst.string(token_type = symtab))
 
-            # note GLM rewrite rules are only applied towards hypothesis,
-            # reference form is hornored because they are human-labeled ground truth.
+            # Say, we have
+            #   GLM contains a rule: "I'M" <-> "I AM"
+            #   REF: I AM HERE
+            #   HYP: I'M HERE
+            #
+            # We want to expand HYP with alternative paths(marked with auxiliary #), following GLM rewriting rules:
+            #   HYP#: {I'M | I# AM#} HERE
+            # REF is honored to keep its original form.
+            #
+            # This could be considered as a flexible on-the-fly TN.
+
+            # 1. GLM rule tagging:
+            #   I'M HERE  ->  <RULE_001> I'M <RULE_001> HERE
             tagged_lattice = (hyp_fst @ tagger).optimize()
             tagged_text = pynini.shortestpath(tagged_lattice, nshortest=1, unique=True).string(token_type = symtab)
             #print(tagged_text)
 
+            # 2. GLM rule expanding: 
+            # <RULE_001> I'M <RULE_001> HERE  ->  {I'M | I# AM#} HERE
             # <TODO>: too messy, need further cleanup ......
             tagged_tokens = tagged_text.split()
             tagged_fst = pynini.accep('', token_type = symtab)
@@ -510,15 +536,12 @@ if __name__ == '__main__':
             # print(verb_text)       
             # </TODO>
 
-            lt = LevenshteinTransducer(
+            et = EditTransducer(
                 symbol_table = symtab,            
                 vocab = list(set(ref_tokens + hyp_tokens)), # contains vocabulary covering current utterance only
-                vocab_aux = vocab_glm
+                edit_ext = auxiliary_edit_transducer
             )
-            alignment = lt.compute_alignment(ref_fst, tagged_fst)
-
-            def are_same(symtab, i1, i2):
-                return symtab.find(i1).strip('#') == symtab.find(i2).strip('#')
+            alignment = et.compute_alignment(ref_fst, tagged_fst)
 
             C, S, I, D = 0, 0, 0, 0
             edits = []
@@ -526,8 +549,7 @@ if __name__ == '__main__':
             for state in alignment.states():
                 for arc in alignment.arcs(state):
                     i, o = arc.ilabel, arc.olabel
-                    e = ''
-                    if i != 0 and o != 0 and not are_same(symtab, i, o):
+                    if i != 0 and o != 0 and not SymbolEQ(symtab, i, o):
                         S += 1
                         e = 'S'
                         distance += 1.0
@@ -539,15 +561,14 @@ if __name__ == '__main__':
                         I += 1
                         e = 'I'
                         distance += 1.0
-                    elif are_same(symtab, i, o):
+                    elif SymbolEQ(symtab, i, o):
                         C += 1
                         e = 'C'
                     else:
                         raise RuntimeError
                     edits.append(e)
                     # print('i:', i, symtab.find(i), 'o:', o, symtab.find(o), f'[{e}]')
-
-            #assert(distance == lt.compute_distance(ref_fst, tagged_fst)) # this should be used only in debugging checks, it doubles computations
+            #assert(distance == et.compute_distance(ref_fst, tagged_fst)) # this should be used only in debugging checks, it doubles computations
             utt_ter = ComputeTokenErrorRate(C, S, I, D)
 
             # utt-level evaluation result
