@@ -21,26 +21,24 @@ with open('ACCESS_KEY_SECRET', 'r') as f:
     access_key_secret = f.readline().strip()
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        sys.stderr.write("upload_wav.py <wav_scp> <oss_out_scp>\n")
+    if len(sys.argv) != 5:
+        sys.stderr.write("upload_wav.py <wav_scp> <oss_out_scp> <dir> <test_time>\n")
         exit(-1)
 
     wavDict = {}
     wavFile = codecs.open(sys.argv[1], 'r',  'utf8') 
-
-    config_command = "./ossutil64 config -e oss-cn-hangzhou.aliyuncs.com -i {access_key_id} -k {access_key_secret}".format(access_key_id=access_key_id, access_key_secret=access_key_secret)
-    config_res = os.popen(config_command)
-    time.sleep(5)
+    oss_config_path = sys.argv[3]
+    test_time = sys.argv[4]
 
     # OSS bucket
-    bucket = "oss://speechiotest/"
+    bucket = "oss://speechiotest-{test_time}/".format(test_time=test_time)
     for meta in wavFile:
         meta = meta.split()
         wavId = meta[0]
         wavPath = meta[1]
         wavDict[wavId] = wavPath
     # 创建bucket
-    md_command = "./ossutil64 mb {bucket} -e oss-cn-hangzhou.aliyuncs.com".format(bucket=bucket)
+    md_command = "./ossutil64 mb {bucket} -e oss-cn-hangzhou.aliyuncs.com -i {access_key_id} -k {access_key_secret}".format(bucket=bucket, access_key_id=access_key_id, access_key_secret=access_key_secret)
     md_res = os.popen(md_command)
 
     time.sleep(5)
@@ -48,10 +46,10 @@ if __name__ == "__main__":
     ossWavFile = codecs.open(sys.argv[2], 'w+', 'utf8')
     for idx, wav in wavDict.items():
         # 上传文件
-        upload_command = "./ossutil64 cp {wav} {osspath} -e oss-cn-hangzhou.aliyuncs.com".format(wav=wav, osspath=ossPath)
+        upload_command = "./ossutil64 cp {wav} {osspath} -e oss-cn-hangzhou.aliyuncs.com -i {access_key_id} -k {access_key_secret}".format(wav=wav, osspath=ossPath, access_key_id=access_key_id, access_key_secret=access_key_secret)
         upload_res = os.popen(upload_command) 
         # 生成签名URL
-        sign_command = './ossutil64 sign {osspath}{idx}.wav --timeout {times} -e oss-cn-hangzhou.aliyuncs.com'.format(osspath=ossPath, idx=idx, times=32400)
+        sign_command = "./ossutil64 sign {osspath}{idx}.wav --timeout {times} -e oss-cn-hangzhou.aliyuncs.com -i {access_key_id} -k {access_key_secret}".format(osspath=ossPath, idx=idx, times=32400, access_key_id=access_key_id, access_key_secret=access_key_secret)
         res = os.popen(sign_command)
         for audio in res:
             ossWavFile.write(idx + "\t" + audio)
