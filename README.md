@@ -11,13 +11,13 @@ SpeechIO leaderboard serves as an ASR benchmarking platform by providing 3 compo
 
 3. **Benchmarking Pipeline**: a simple & well-specified pipeline to take care of data preparation / recognition / post processing / error rate evaluation.
 
-With SpeechIO leaderboard, _**anyone should be able to benchmark, reproduce, examine all kinds of ASR systems locally**_
+_**People should be able to easily benchmark, reproduce, examine ASR systems from each other**_
 
 ![Overview](misc/overview.png)
 
 ---
 
-## 2. TestSet Zoo
+## 2. TestSet Zoo: `datasets/*`
 
 <details><summary> Academic Test Sets (EN & ZH)  </summary><p>
 
@@ -78,20 +78,19 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 
 
 ### How to get a test set
-* Your local test set zoo: `Leaderboard/datasets/*`
-* To download an **unlocked** test set from cloud:
+To download an **unlocked** test set to your local test set zoo:
 ```
 ops/pull dataset <TEST_SET_ID>
 ```
 
 ---
 
-## 3. Model Zoo
-There are two types of models supported in leaderboard:
-* `Cloud Models` represent ASR systems that are backed with remote ASR services (e.g. Google Cloud, Azure etc)
-* `Local Models` represent local ASR systems (e.g. pretrained models + open-source toolkits)
+## 3. Model Zoo: `models/*`
+There are two types of models:
+* `Cloud Models` represent ASR systems backed with commercial cloud-services (e.g. Google Cloud, Azure)
+* `Local Models` represent local ASR systems (e.g. open-source toolkits + pretrained models)
 
-<details><summary> Cloud (EN) </summary><p>
+<details><summary> EN Cloud Models </summary><p>
 
 | 编号 <br> MODEL_ID | 类型 <br> TYPE | 厂商 <br> PROVIDER | 简介 <br> DESCRIPTION | 链接 <br> URL |
 | --- | --- | --- | --- | --- |
@@ -105,7 +104,7 @@ There are two types of models supported in leaderboard:
 </p></details>
 
 
-<details><summary> Local (EN) </summary><p>
+<details><summary> EN Local Models </summary><p>
 
 | 编号 <br> MODEL_ID | 类型 <br> TYPE | 作者 <br> AUTHOR | 简介 <br> DESCRIPTION |
 | --- | --- | --- | --- |
@@ -117,7 +116,7 @@ There are two types of models supported in leaderboard:
 
 </p></details>
 
-<details><summary> Cloud (ZH) </summary><p>
+<details><summary> ZH Cloud Models </summary><p>
 
 | 编号 <br> MODEL_ID | 类型 <br> TYPE | 厂商 <br> PROVIDER | 简介 <br> DESCRIPTION | 链接 <br> URL |
 | --- | --- | --- | --- | --- |
@@ -132,7 +131,7 @@ There are two types of models supported in leaderboard:
 
 </p></details>
 
-<details><summary> Local (ZH) </summary><p>
+<details><summary> ZH Local Models </summary><p>
 
 | 编号 <br> MODEL_ID | 类型 <br> TYPE | 作者 <br> AUTHOR | 简介 <br> DESCRIPTION |
 | --- | --- | --- | --- |
@@ -145,8 +144,7 @@ There are two types of models supported in leaderboard:
 
 
 ### How to get a model
-* Your local model zoo: `Leaderboard/models/*`
-* `Cloud Models` are normally just light-weight client programs, so they go along with this github repo
+* `Cloud Models` are normally light-weight client programs, small enough to store within this github repo
 * `Local Models` normally contain large assets so they are stored in cloud, to download one into your local zoo:
 ```
 ops/pull model <MODEL_ID>
@@ -155,44 +153,53 @@ ops/pull model <MODEL_ID>
 ---
 
 ## 4. Benchmarking Pipeline
-Follow this [specification](HOW_TO_SUBMIT.md) to submit your model and get it benchmarked over all test sets.
+### 4.1 How to submit
+To submit a new model, follow this [pipeline specification](HOW_TO_SUBMIT.md).  Existing models are good references as well.
 
-With downloaded models & test sets, you can trigger the benchmarking pipeline locally:
+### 4.2 How to run
+With downloaded models & test sets,
+you can trigger the benchmarking pipeline on your local machine via:
 ```
 ops/leaderboard_runner requests/request.yaml
 ```
-Here `request.yaml` specifies a <MODEL_ID> and a list of <TEST_SET_ID> to be tested (see examples in above specification).
+
+where `request.yaml` specifies a <MODEL_ID> and a list of <TEST_SET_ID>
+(refer to examples in above specification)
 
 ---
-## 5. Ranking
 
-### Ranking on unlocked test sets only
-| Rank排名 | Model模型 | CER字错误率 | Submission date 提交时间 |
+## 5. Latest Leaderboard Results
+
+### Ranking on **unlocked** SpeechIO test sets (ZH00001 ~ ZH00015)
+| Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- | 
-| 1 | yitu_api_zh | 2.85 % | 2022.05 |
-| 2 | aliyun_api | 3.03% | 2022.05 |
-| 3 | microsoft_sdk_zh | 3.04% | 2022.05 |
-| 4 | bilibili_api_zh | 3.09% | 2022.06 |
-| 5 | aispeech_api_zh | 3.39% | 2022.05 |
-| 6 | tencent_api_zh | 3.56% | 2022.05 |
-| 7 | iflytek_lfasr_api_zh | 3.69% | 2022.05 |
-| 8 | baidu_pro_api_zh | 6.64% | 2022.05 |
+| 1 | hiasr_api_zh(*) | 2.16 % | 2022.08 |
+| 2 | yitu_api_zh | 2.62 % | 2022.08 |
+| 3 | tencent_api_zh | 2.95% | 2022.08 |
+| 4 | bilibili_api_zh(*) | 2.95% | 2022.08 |
+| 5 | aliyun_api_zh | 3.02% | 2022.08 |
+| 6 | microsoft_sdk_zh | 3.03% | 2022.08 |
+| 7 | aispeech_api_zh | 3.39% | 2022.08 |
+| 8 | iflytek_lfasr_api_zh | 3.66% | 2022.08 |
+| 9 | baidu_pro_api_zh | 6.64% | 2022.08 |
 
-### Ranking on all SpeechIO test sets
-| Rank排名 | Model模型 | CER字错误率 | Submission date 提交时间 |
+### Ranking on **all** SpeechIO test sets
+| Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | yitu_api_zh | 3.10 % | 2022.05 |
-| 2 | bilibili_api_zh | 3.46 % | 2022.06 |
-| 3 | microsoft_sdk_zh | 3.47% | 2022.05 |
-| 4 | aispeech_api_zh | 3.63% | 2022.05 |
-| 5 | aliyun_api | 3.81% | 2022.05 |
-| 6 | iflytek_lfasr_api_zh | 4.05% | 2022.05 |
-| 7 | tencent_api_zh | 4.06% | 2022.05 |
-| 8 | baidu_pro_api_zh | 7.38% | 2022.05 |
+| 1 | hiasr_api_zh(*) | 2.61 % | 2022.08 |
+| 2 | yitu_api_zh | 2.80 % | 2022.08 |
+| 3 | bilibili_api_zh(*) | 3.30 % | 2022.08 |
+| 4 | tencent_api_zh | 3.31% | 2022.08 |
+| 5 | microsoft_sdk_zh | 3.47% | 2022.08 |
+| 6 | aispeech_api_zh | 3.63% | 2022.08 |
+| 7 | aliyun_api | 3.78% | 2022.08 |
+| 8 | iflytek_lfasr_api_zh | 4.01% | 2022.08 |
+| 9 | baidu_pro_api_zh | 7.38% | 2022.08 |
 
----
-## 6. Latest Leaderboard Report
-![result](misc/SpeechIO_TIOBE_2022_05.png)
+_note: models with `(*)` marker can be found in model zoo, but not universally available to public yet._
+
+### Details
+![result](misc/SpeechIO_TIOBE_2022_08.png)
 
 ---
 
