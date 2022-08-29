@@ -22,16 +22,16 @@ with open('ACCESS_KEY_SECRET', 'r') as f:
 
 if __name__ == "__main__":
     if len(sys.argv) != 5:
-        sys.stderr.write("upload_wav.py <wav_scp> <oss_out_scp> <dir> <test_time>\n")
+        sys.stderr.write("upload_wav.py <wav_scp> <oss_out_scp> <dir> <bucket_name>\n")
         exit(-1)
 
     wavDict = {}
     wavFile = codecs.open(sys.argv[1], 'r',  'utf8') 
     oss_config_path = sys.argv[3]
-    test_time = sys.argv[4]
+    bucketName = sys.argv[4]
 
     # OSS bucket
-    bucket = "oss://speechiotest-{test_time}/".format(test_time=test_time)
+    bucket = "oss://{bucketName}".format(bucketName=bucketName)
     for meta in wavFile:
         meta = meta.split()
         wavId = meta[0]
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     md_res = os.popen(md_command)
 
     time.sleep(5)
-    ossPath = bucket + "wav/"
+    ossPath = bucket + "/wav/"
     ossWavFile = codecs.open(sys.argv[2], 'w+', 'utf8')
     for idx, wav in wavDict.items():
         # 上传文件
