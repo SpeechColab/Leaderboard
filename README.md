@@ -124,8 +124,8 @@ There are two types of models:
 | [aliyun_api_zh](models/aliyun_api_zh/) | Cloud | 阿里巴巴 <br> Alibaba | 阿里云 - 一句话识别 | [link](https://ai.aliyun.com/nls/asr) |
 | [aliyun_ftasr_api_zh](models/aliyun_ftasr_api_zh/) | Cloud | 阿里巴巴 <br> Alibaba | 阿里云 - 文件识别(非流式) | [link](https://ai.aliyun.com/nls/asr) |
 | [baidu_pro_api_zh](models/baidu_pro_api_zh/) | Cloud | 百度 <br> Baidu | 百度智能云 <br> (极速版) | [link](https://cloud.baidu.com/product/speech/asr) |
-| [bilibili_api_zh](models/bilibili_api_zh/) | Cloud | 哔哩哔哩 <br> bilibili | 哔哩哔哩AI开放平台 | |
-| [hiasr_api_zh](models/hiasr_api_zh/) | Cloud | 喜马拉雅 <br> ximalaya | 喜马拉雅AI开放平台 <br> (转写,非流式) | |
+| [bilibili_api_zh](models/bilibili_api_zh/) | Cloud | 哔哩哔哩 <br> bilibili | 哔哩哔哩AI开放平台 | not available yet |
+| [hiasr_api_zh](models/hiasr_api_zh/) | Cloud | 喜马拉雅 <br> ximalaya | 喜马拉雅AI开放平台 <br> (转写,非流式) | not available yet |
 | [iflytek_lfasr_api_zh](models/iflytek_lfasr_api_zh/) | Cloud | 讯飞 <br> IFlyTek | 讯飞开放平台 <br> (转写,非流式) | [link](https://www.xfyun.cn/services/lfasr) |
 | [microsoft_sdk_zh](models/microsoft_sdk_zh/) | Cloud | 微软 <br> Microsoft | Azure | [link](https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/) |
 | [tencent_api_zh](models/tencent_api_zh/) | Cloud | 腾讯 <br> Tencent | 腾讯云 | [link](https://cloud.tencent.com/product/asr) |
@@ -147,7 +147,7 @@ There are two types of models:
 
 ### How to get a model
 * `Cloud Models` are normally light-weight client programs, small enough to store within this github repo
-* `Local Models` normally contain large assets so they are stored in cloud, to download one into your local zoo:
+* `Local Models` normally contain large assets so they are stored in cloud, you can download a model via:
 ```
 ops/pull model <MODEL_ID>
 ```
@@ -194,7 +194,7 @@ where `request.yaml` specifies a <MODEL_ID> and a list of <TEST_SET_ID>
 | 4 | tencent_api_zh | 3.31% | 2022.08 |
 | 5 | microsoft_sdk_zh | 3.47% | 2022.08 |
 | 6 | aispeech_api_zh | 3.63% | 2022.08 |
-| 7 | aliyun_api | 3.78% | 2022.08 |
+| 7 | aliyun_api_zh | 3.78% | 2022.08 |
 | 8 | iflytek_lfasr_api_zh | 4.01% | 2022.08 |
 | 9 | baidu_pro_api_zh | 7.38% | 2022.08 |
 
