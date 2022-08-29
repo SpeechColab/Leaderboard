@@ -29,6 +29,7 @@ models/*
 # dataset zoo
 datasets/*
 !datasets/MINI
+!datasets/MINI_EN
 !datasets/zoo.yaml
 
 tmp.sh
