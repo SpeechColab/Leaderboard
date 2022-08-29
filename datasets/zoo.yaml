@@ -1,5 +1,5 @@
 # toy
-MINI:
+MINI_ZH:
   url: oss://speechio-leaderboard/datasets/MINI/
 MINI_EN:
   url: oss://speechio-leaderboard/datasets/MINI_EN/
