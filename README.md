@@ -155,10 +155,10 @@ ops/pull model <MODEL_ID>
 ---
 
 ## 4. Benchmarking Pipeline
-### 4.1 How to submit
+### How to submit
 To submit a new model, follow this [pipeline specification](HOW_TO_SUBMIT.md).  Existing models are good references as well.
 
-### 4.2 How to run
+### How to run
 With downloaded models & test sets,
 you can trigger the benchmarking pipeline on your local machine via:
 ```

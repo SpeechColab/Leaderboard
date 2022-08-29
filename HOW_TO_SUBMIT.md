@@ -157,7 +157,7 @@ then SBI code can locate them via relative paths `./assets/asr.{mdl,cfg}`
 
 ---
 ### 1.7 Validate prepared model-image with leaderboard pipeline on your local machine
-1. make sure you have `MINI` in your local testset-zoo `leaderboard/datasets/MINI`
+1. make sure you have `MINI_ZH` in your local testset-zoo `leaderboard/datasets/MINI_ZH`
 2. move prepared model-image to your local model-zoo
     ```
     mv <prepared_model_image> leaderboard/models/<your_model_id>
@@ -181,9 +181,9 @@ then SBI code can locate them via relative paths `./assets/asr.{mdl,cfg}`
       - xxx@xxx.com
     model: <your_model_id>
     test_set:
-      - MINI
+      - MINI_ZH
     ```
-4. run a MINI benchmark:
+4. run a minimal validation benchmark:
     ```
     # run this in leaderboard repo
     ops/leaderboard_runner requests/mini.yaml
