@@ -1,0 +1,9 @@
+--yes-playlist
+--ignore-errors --continue --no-overwrites
+--retries 10
+--hls-prefer-ffmpeg
+--extract-audio --audio-format wav
+--keep-video
+--verbose
+--restrict-filenames
+--write-info-json
