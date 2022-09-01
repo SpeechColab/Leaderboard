@@ -197,10 +197,10 @@ def LoadGLM(rel_path):
 
     glm:
         {
-            '<RULE00000>': ["I'VE", 'I HAVE'],
-            '<RULE00001>': ['GOING TO', 'GONNA'],
+            '<RULE_00000>': ["I'VE", 'I HAVE'],
+            '<RULE_00001>': ['GOING TO', 'GONNA'],
             ...
-            '<RULE99999>': ['T-SHIRT', 'T SHIRT', 'TSHIRT'],
+            '<RULE_99999>': ['T-SHIRT', 'T SHIRT', 'TSHIRT'],
         }
     '''
     logging.info(f'Loading GLM from {rel_path} ...')
@@ -211,25 +211,12 @@ def LoadGLM(rel_path):
     )
 
     glm = {}
-    #glm_phrases = {}
     for k, rule in enumerate(reader):
-        rule_name = f'<RULE_{k:05d}>'
-        rule = [ phrase.strip() for phrase in rule ]
-        glm[rule_name] = rule
-        #glm_phrases[rule] = rule_name
+        rule_name = f'<RULE_{k:06d}>'
+        glm[rule_name] = [ phrase.strip() for phrase in rule ]
     logging.info(f'  #rule: {len(glm)}')
 
-    tokens = []
-    for rule in glm.values():
-        for phrase in rule:
-            for t in Tokenize(phrase):
-                tokens.append(t)
-                if '-' in t:
-                    tokens.extend(tokens_without_hyphen(t))
-    vocab = list(set(tokens))
-    logging.info(f'  #vocab: {len(vocab)}')
-
-    return glm, vocab
+    return glm
 
 
 def SymbolEQ(symtab, i1, i2):
@@ -379,6 +366,12 @@ if __name__ == '__main__':
     res.num_eval_utts = len(eval_utts)
     logging.info(f'  #hyp:{res.num_hyp_utts}, #ref:{res.num_ref_utts}, #eval:{res.num_eval_utts}')
 
+
+    glm = LoadGLM('glm_en.csv')
+    #print(glm)
+
+
+    # get vocab
     tokens = []
     for uid in eval_utts:
         ref_tokens = Tokenize(ref_utts[uid].text)
@@ -387,36 +380,48 @@ if __name__ == '__main__':
             tokens.append(t)
             if '-' in t:
                 tokens.extend(tokens_without_hyphen(t))
-    vocab = list(set(tokens))
-    #print(vocab)
-    logging.info(f'  #vocab: {len(vocab)}')
+    vocab_from_eval = list(set(tokens))
+    #print(vocab_from_eval)
+    logging.info(f'  #vocab_from_eval: {len(vocab_from_eval)}')
 
+    tokens = []
+    for rule in glm.values():
+        for phrase in rule:
+            for t in Tokenize(phrase):
+                tokens.append(t)
+                if '-' in t:
+                    tokens.extend(tokens_without_hyphen(t))
+    vocab_from_glm = list(set(tokens))
+    #print(vocab_from_glm)
+    logging.info(f'  #vocab_from_glm: {len(vocab_from_glm)}')
 
-    glm, vocab_glm = LoadGLM('glm_en.csv')
-    #print(glm)
-    #print(vocab_glm)
+    vocab = list(set(vocab_from_eval + vocab_from_glm))
 
 
     symtab = BuildSymbolTable(
         vocab,
-        vocab_glm,
-        [ x + '#' for x in vocab_glm ], # we need this auxiliary version to mark GLM-expanded paths
+        [ x+'#' for x in vocab ], # auxiliary markers for alternative paths
         [ x for x in glm.keys() ], # GLM rule tags
     )
     #PrintSymbolTable(symtab)
     #symtab.write_text('symbol_table.txt')
 
-
     tagger = BuildGLMTagger(glm, symtab)
 
     # auxiliary edit transducer allows 0-cost matches between token and its auxiliary form
     # e.g.: 'I' -> 'I#', 'AM' -> 'AM#'
-    auxiliary_edit_transducer = pynini.union(*[
+    edit_transducer_aux = pynini.union(*[
         pynini.cross(
             pynini.accep(token,       token_type = symtab),
             pynini.accep(token + '#', token_type = symtab),
-        ) for token in vocab_glm
+        ) for token in vocab
     ]).optimize().closure()
+
+    edit_transducer = EditTransducer(
+        symbol_table = symtab,            
+        vocab = vocab,
+        edit_ext = edit_transducer_aux,
+    )
 
     # processing HYP & REF 
     logging.info('Evaluating error rate ...')
@@ -437,111 +442,77 @@ if __name__ == '__main__':
             #print(hyp_fst.string(token_type = symtab))
 
             # Say, we have
-            #   GLM contains a rule: "I'M" <-> "I AM"
-            #   REF: I AM HERE
-            #   HYP: I'M HERE
+            #   GLM contains a rule: 
+            #     RULE_001: "I'M" <-> "I AM"
+            #   REF: HEY I AM HERE
+            #   HYP: HEY I'M HERE
             #
             # We want to expand HYP with alternative paths(marked with auxiliary #), following GLM rewriting rules:
-            #   HYP#: {I'M | I# AM#} HERE
+            #   HYP#: HEY {I'M | I# AM#} HERE
             # REF is honored to keep its original form.
             #
             # This could be considered as a flexible on-the-fly TN.
 
             # 1. GLM rule tagging:
-            #   I'M HERE  ->  <RULE_001> I'M <RULE_001> HERE
-            tagged_lattice = (hyp_fst @ tagger).optimize()
-            tagged_text = pynini.shortestpath(tagged_lattice, nshortest=1, unique=True).string(token_type = symtab)
-            #print(tagged_text)
+            #   HEY I'M HERE
+            # ->
+            #   HEY <RULE_001> I'M <RULE_001> HERE
+            lattice = (hyp_fst @ tagger).optimize()
+            hyp_tagged = pynini.shortestpath(lattice, nshortest=1, unique=True).string(token_type = symtab)
+            #print(hyp_tagged)
 
             # 2. GLM rule expanding: 
-            # <RULE_001> I'M <RULE_001> HERE  ->  {I'M | I# AM#} HERE
-            # <TODO>: too messy, need further cleanup ......
-            tagged_tokens = tagged_text.split()
-            tagged_fst = pynini.accep('', token_type = symtab)
+            #   HEY <RULE_001> I'M <RULE_001> HERE
+            # ->
+            #   HEY {I'M | I# AM#} HERE
+            tokens = hyp_tagged.split()
+            hyp_fst_aux = pynini.accep('', token_type = symtab)
             i = 0
-            while i < len(tagged_tokens):
-                word = tagged_tokens[i]
-                if "<RULE_" not in word:
-                    if "-" not in word:
-                        tagged_fst +=pynini.accep(word, token_type =symtab)
-                    else:
-                        words = word.split("-")
-                        word1 = words[0]
-                        connect_graph0 = pynini.accep(words[0],token_type =symtab)
-                        connect_graph = pynini.accep(word,token_type =symtab)
-                        
-                        flag0 = False
-                        for k in range(1,len(words)):
-                            connect_graph0 +=pynini.accep(words[k],token_type =symtab)
-                            word1+=words[k]
-                        symtab.add_symbol(word1)
-                        connect_graph1 = pynini.accep(word1,token_type =symtab)
-                        tagged_fst +=pynini.union(connect_graph,connect_graph0,connect_graph1).optimize()
-                    i = i+1
-                else:
-                    key_name = word
-                    list1 = glm[key_name]
-                    part_word = ""
-                    i = i+1
-                    while "<RULE_" not in tagged_tokens[i]:
-                        part_word += tagged_tokens[i] + " "
-                        i = i+1                   
-                    if "<RULE_" in word:
-                        i = i + 1
-                    temp_graph = pynini.accep("",token_type =symtab)
-                    temp_flag = False
-                    for synword in list1:
-                        part_word = part_word.strip()
-                        if synword == part_word:
-                            ttemp_graph = pynini.accep("",token_type =symtab)
-                            if len(synword.split())>1:
-                                synwords = synword.split()
-                                for j in range(len(synwords)):
-                                    ttemp_graph+=pynini.accep(synwords[j],token_type = symtab)
-                                if not temp_flag:
-                                    temp_graph = ttemp_graph.optimize()
-                                    temp_flag = True
-                                else:
-                                    temp_graph|=ttemp_graph.optimize()
-                            else:
-                                ttemp_graph = pynini.accep(synword,token_type = symtab)
-                                if not temp_flag:
-                                    temp_graph = ttemp_graph.optimize()
-                                    temp_flag = True
-                                else:
-                                    temp_graph|=ttemp_graph.optimize()
-                        else:
-                            ttemp_graph = pynini.accep("",token_type =symtab)
-                            if len(synword.split())>1:
-                                synwords = synword.split()
-                                # print(synwords)
-                                for j in range(len(synwords)):
-                                    ttemp_graph+=pynini.accep(synwords[j] + "#",token_type = symtab)                                                               
-                                if not temp_flag:
-                                    temp_graph = ttemp_graph.optimize()
-                                    temp_flag = True
-                                else:
-                                    temp_graph|=ttemp_graph.optimize()
-                            else:
-                                ttemp_graph = pynini.accep(synword + "#",token_type = symtab)
-                                if not temp_flag:
-                                    temp_graph = ttemp_graph.optimize()
-                                    temp_flag = True
-                                else:
-                                    temp_graph|=ttemp_graph.optimize()
-                    tagged_fst +=temp_graph.optimize()
-            tagged_fst = tagged_fst.optimize()
-            # verb_lattice = (tagged_fst @ verb).optimize()
-            # verb_text = pynini.shortestpath(verb_lattice, nshortest=1, unique=True).string(token_type = symtab)  
-            # print(verb_text)       
-            # </TODO>
+            while i < len(tokens):
+                if '<RULE_' not in tokens[i]:
+                    token = tokens[i]
+                    alternatives = [ token ]
+                    if "-" in token:  # expand hyphen-related alternatives
+                        alternatives.append(' '.join([ x+'#' for x in token.split('-') ])) # 'T-SHIRT' -> 'T# SHIRT#'
+                        alternatives.append(token.replace('-', '') + '#') # 'T-SHIRT' -> 'TSHIRT#'
 
-            et = EditTransducer(
-                symbol_table = symtab,            
-                vocab = list(set(ref_tokens + hyp_tokens)), # contains vocabulary covering current utterance only
-                edit_ext = auxiliary_edit_transducer
-            )
-            alignment = et.compute_alignment(ref_fst, tagged_fst)
+                    token_fst = pynini.union(
+                        *[ pynini.accep(x, token_type=symtab) for x in alternatives ]
+                    ).optimize()
+
+                    hyp_fst_aux += token_fst
+                    i += 1
+
+                else:
+                    rule_name = tokens[i]
+                    rule = glm[rule_name]
+
+                    # pre-condition: i -> rule's left-tag
+                    for j in range(i+1, len(tokens)):
+                        if '<RULE_' in tokens[j]:
+                            break
+                        else:
+                            j += 1
+                    # post-condition:
+                    #   i -> rule's left tag
+                    #   j -> rule's right tag
+
+                    raw_form = ' '.join(tokens[i+1: j])
+                    alternatives = [ raw_form ]
+                    for phrase in rule:
+                        if phrase != raw_form:
+                            alternatives.append(' '.join([ x+'#' for x in phrase.split() ]))
+
+                    rule_fst = pynini.union(
+                        *[ pynini.accep(x, token_type=symtab) for x in alternatives ]
+                    ).optimize()
+
+                    hyp_fst_aux += rule_fst
+                    i = j + 1
+            hyp_fst_aux.optimize()
+
+
+            alignment = edit_transducer.compute_alignment(ref_fst, hyp_fst_aux)
 
             C, S, I, D = 0, 0, 0, 0
             edits = []
@@ -568,7 +539,7 @@ if __name__ == '__main__':
                         raise RuntimeError
                     edits.append(e)
                     # print('i:', i, symtab.find(i), 'o:', o, symtab.find(o), f'[{e}]')
-            #assert(distance == et.compute_distance(ref_fst, tagged_fst)) # this should be used only in debugging checks, it doubles computations
+            #assert(distance == edit_transducer.compute_distance(ref_fst, hyp_fst_aux)) # this should be used only in debugging checks, it doubles computations
             utt_ter = ComputeTokenErrorRate(C, S, I, D)
 
             # utt-level evaluation result
