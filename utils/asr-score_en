@@ -187,7 +187,7 @@ def tokens_without_hyphen(token : str):
     return v
 
 
-def LoadGLM(rel_path):
+def LoadGlmRules(rel_path):
     '''
     glm.csv:
         I'VE,I HAVE
@@ -246,7 +246,7 @@ def BuildSymbolTable(*vocabs) -> pynini.SymbolTable :
 
 
 def BuildGLMTagger(glm, symbol_table):
-    logging.info('Building tagger for GLM rewriting rules ...')
+    logging.info('Building GLM tagger ...')
     rule_taggers = []
     for rule_tag, rule in glm.items():
         for phrase in rule:
@@ -259,17 +259,10 @@ def BuildGLMTagger(glm, symbol_table):
             )
 
     alphabet = pynini.union(
-        *[ pynini.accep(sym, token_type = symbol_table) for idx, sym in symbol_table if idx != 0 ]
+        *[ pynini.accep(sym, token_type = symbol_table) for k, sym in symbol_table if k != 0 ] # non-epsilon
     ).optimize()
 
-    tagger = pynini.cdrewrite(
-        pynini.union(*rule_taggers),
-        '',
-        '',
-        alphabet.closure()
-    ).optimize() # note: this could be slow with large vocabulary
-    logging.info('GLM tagger built.')
-
+    tagger = pynini.cdrewrite(pynini.union(*rule_taggers), '', '', alphabet.closure()).optimize() # could be slow with large vocabulary
     return tagger
 
 
@@ -332,6 +325,7 @@ def ComputeSentenceErrorRate(num_err_utts, num_utts):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # optional
+    parser.add_argument('--log_interval', type=int, default=500)
     parser.add_argument('--tokenizer', choices=['whitespace', 'char'], default='whitespace', help='whitespace for WER, char for CER')
     parser.add_argument('--ref-format', choices=['text'], default='text', help='reference format, first col is utt_id, the rest is text')
     parser.add_argument('--hyp-format', choices=['text'], default='text', help='hypothesis format, first col is utt_id, the rest is text')
@@ -367,11 +361,10 @@ if __name__ == '__main__':
     logging.info(f'  #hyp:{res.num_hyp_utts}, #ref:{res.num_ref_utts}, #eval:{res.num_eval_utts}')
 
 
-    glm = LoadGLM('glm_en.csv')
-    #print(glm)
+    glm = LoadGlmRules('glm_en.csv')
 
 
-    # get vocab
+    logging.info('Building vocabulary ...')
     tokens = []
     for uid in eval_utts:
         ref_tokens = Tokenize(ref_utts[uid].text)
@@ -381,7 +374,6 @@ if __name__ == '__main__':
             if '-' in t:
                 tokens.extend(tokens_without_hyphen(t))
     vocab_from_eval = list(set(tokens))
-    #print(vocab_from_eval)
     logging.info(f'  #vocab_from_eval: {len(vocab_from_eval)}')
 
     tokens = []
@@ -392,10 +384,10 @@ if __name__ == '__main__':
                 if '-' in t:
                     tokens.extend(tokens_without_hyphen(t))
     vocab_from_glm = list(set(tokens))
-    #print(vocab_from_glm)
     logging.info(f'  #vocab_from_glm: {len(vocab_from_glm)}')
 
     vocab = list(set(vocab_from_eval + vocab_from_glm))
+    logging.info(f'  #vocab: {len(vocab)}')
 
 
     symtab = BuildSymbolTable(
@@ -425,6 +417,7 @@ if __name__ == '__main__':
 
     # processing HYP & REF 
     logging.info('Evaluating error rate ...')
+    ndone = 0
     with open(args.result_file, 'w+', encoding='utf8') as fo:
         for uid in eval_utts:
             #print(uid, flush=True, file=sys.stderr)
@@ -432,14 +425,11 @@ if __name__ == '__main__':
             ref = ref_utts[uid].text
             hyp = hyp_utts[uid].text
 
-            ref_tokens = Tokenize(ref)
-            hyp_tokens = Tokenize(hyp)
-
-            ref_fst = pynini.accep(' '.join(ref_tokens), token_type = symtab)
+            ref_fst = pynini.accep(' '.join(Tokenize(ref)), token_type = symtab)
             #print(ref_fst.string(token_type = symtab))
 
-            hyp_fst = pynini.accep(' '.join(hyp_tokens), token_type = symtab)
-            #print(hyp_fst.string(token_type = symtab))
+            raw_hyp_fst = pynini.accep(' '.join(Tokenize(hyp)), token_type = symtab)
+            #print(raw_hyp_fst.string(token_type = symtab))
 
             # Say, we have
             #   GLM contains a rule: 
@@ -447,73 +437,64 @@ if __name__ == '__main__':
             #   REF: HEY I AM HERE
             #   HYP: HEY I'M HERE
             #
-            # We want to expand HYP with alternative paths(marked with auxiliary #), following GLM rewriting rules:
+            # We want to expand HYP with GLM rules(marked with auxiliary #)
             #   HYP#: HEY {I'M | I# AM#} HERE
             # REF is honored to keep its original form.
             #
-            # This could be considered as a flexible on-the-fly TN.
+            # This could be considered as a flexible on-the-fly TN towards HYP.
+
 
             # 1. GLM rule tagging:
             #   HEY I'M HERE
             # ->
             #   HEY <RULE_001> I'M <RULE_001> HERE
-            lattice = (hyp_fst @ tagger).optimize()
+            lattice = (raw_hyp_fst @ tagger).optimize()
             hyp_tagged = pynini.shortestpath(lattice, nshortest=1, unique=True).string(token_type = symtab)
             #print(hyp_tagged)
 
-            # 2. GLM rule expanding: 
+            # 2. GLM rule expansion: 
             #   HEY <RULE_001> I'M <RULE_001> HERE
             # ->
-            #   HEY {I'M | I# AM#} HERE
+            #   sausage-like fst: HEY {I'M | I# AM#} HERE
             tokens = hyp_tagged.split()
-            hyp_fst_aux = pynini.accep('', token_type = symtab)
+            sausage = pynini.accep('', token_type = symtab)
             i = 0
-            while i < len(tokens):
-                if '<RULE_' not in tokens[i]:
-                    token = tokens[i]
-                    alternatives = [ token ]
-                    if "-" in token:  # expand hyphen-related alternatives
-                        alternatives.append(' '.join([ x+'#' for x in token.split('-') ])) # 'T-SHIRT' -> 'T# SHIRT#'
-                        alternatives.append(token.replace('-', '') + '#') # 'T-SHIRT' -> 'TSHIRT#'
-
-                    token_fst = pynini.union(
-                        *[ pynini.accep(x, token_type=symtab) for x in alternatives ]
-                    ).optimize()
-
-                    hyp_fst_aux += token_fst
-                    i += 1
-
-                else:
+            while i < len(tokens): # invariant: tokens[0, i) has been built into fst
+                forms = []
+                if '<RULE_' in tokens[i]:  # rule segment
                     rule_name = tokens[i]
                     rule = glm[rule_name]
 
-                    # pre-condition: i -> rule's left-tag
+                    # pre-condition: i -> ltag
                     for j in range(i+1, len(tokens)):
                         if '<RULE_' in tokens[j]:
                             break
                         else:
                             j += 1
-                    # post-condition:
-                    #   i -> rule's left tag
-                    #   j -> rule's right tag
-
+                    # post-condition: i -> ltag, j -> rtag
                     raw_form = ' '.join(tokens[i+1: j])
-                    alternatives = [ raw_form ]
+
+                    forms.append(raw_form)
                     for phrase in rule:
                         if phrase != raw_form:
-                            alternatives.append(' '.join([ x+'#' for x in phrase.split() ]))
-
-                    rule_fst = pynini.union(
-                        *[ pynini.accep(x, token_type=symtab) for x in alternatives ]
-                    ).optimize()
-
-                    hyp_fst_aux += rule_fst
+                            forms.append(' '.join([ x+'#' for x in phrase.split() ]))
                     i = j + 1
-            hyp_fst_aux.optimize()
+                else:  # normal token segment
+                    token = tokens[i]
+                    forms.append(token)
+                    if "-" in token:  # token with hyphen yields extra forms
+                        forms.append(' '.join([ x+'#' for x in token.split('-') ])) # 'T-SHIRT' -> 'T# SHIRT#'
+                        forms.append(token.replace('-', '') + '#') # 'T-SHIRT' -> 'TSHIRT#'
+                    i += 1
 
+                sausage_segment = pynini.union(
+                    *[ pynini.accep(x, token_type=symtab) for x in forms ]
+                ).optimize()
+                sausage += sausage_segment
+            hyp_fst = sausage.optimize()
 
-            alignment = edit_transducer.compute_alignment(ref_fst, hyp_fst_aux)
-
+            # Utterance-Level evaluation
+            alignment = edit_transducer.compute_alignment(ref_fst, hyp_fst)
             C, S, I, D = 0, 0, 0, 0
             edits = []
             distance = 0.0
@@ -539,10 +520,8 @@ if __name__ == '__main__':
                         raise RuntimeError
                     edits.append(e)
                     # print('i:', i, symtab.find(i), 'o:', o, symtab.find(o), f'[{e}]')
-            #assert(distance == edit_transducer.compute_distance(ref_fst, hyp_fst_aux)) # this should be used only in debugging checks, it doubles computations
+            #assert(distance == edit_transducer.compute_distance(ref_fst, sausage)) # this should be used only in debugging checks, it doubles computations
             utt_ter = ComputeTokenErrorRate(C, S, I, D)
-
-            # utt-level evaluation result
             print(F'{{"uid":{uid}, "score":{-distance}, "ter":{utt_ter:.2f}, "cor":{C}, "sub":{S}, "ins":{I}, "del":{D}}}', file=fo)
 
             hyp_aux = alignment.string(token_type = symtab)
@@ -556,10 +535,14 @@ if __name__ == '__main__':
             res.I += I
             res.D += D
 
-        # corpus level evaluation result
+            ndone += 1
+            if ndone % args.log_interval == 0:
+                logging.info(f'{ndone} utts evaluated.')
+        logging.info(f'{ndone} utts evaluated in total.')
+
+        # Corpus-Level evaluation
         res.token_error_rate = ComputeTokenErrorRate(res.C, res.S, res.I, res.D)
         res.sentence_error_rate = ComputeSentenceErrorRate(res.num_utts_with_error, res.num_eval_utts)
-
         print(res.to_summary(), file=fo)
 
     print(res.to_json())
