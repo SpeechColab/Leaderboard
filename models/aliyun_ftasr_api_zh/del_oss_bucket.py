@@ -24,3 +24,6 @@ if __name__ == "__main__":
     bucket = "oss://{bucketName}".format(bucketName=bucketName)
     del_command = "./ossutil64 rm {bucket} -b -a -r -f -e oss-cn-hangzhou.aliyuncs.com -i {access_key_id} -k {access_key_secret}".format(bucket=bucket, access_key_id=access_key_id, access_key_secret=access_key_secret)
     del_res = os.popen(del_command)
+    for u in del_res:
+        print(u)
+    time.sleep(20)
