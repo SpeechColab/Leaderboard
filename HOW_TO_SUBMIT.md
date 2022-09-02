@@ -53,7 +53,22 @@ a_sample_model_image
 
 </p></details>
 
-**important note**: In both cases you need to add **`python3`** into Dockerfile, it is required by leaderboard pipeline.
+**important note**: 
+1. You need to add **`python3`** into Dockerfile, it is required by leaderboard pipeline
+```
+# Ubuntu
+RUN apt-get install python3
+...
+```
+
+2. For __English__ model, please also include **`regex`** and **`pynini`**:
+```
+# Ubuntu
+RUN apt-get install python3 python3-pip
+...
+RUN pip3 install pynini regex
+...
+```
 
 ---
 
