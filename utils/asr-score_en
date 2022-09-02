@@ -95,11 +95,11 @@ class EditTransducer:
         return alignment.optimize()
 
 
-class EvaluationResult:
+class ErrorStats:
     def __init__(self):
         self.num_ref_utts = 0
         self.num_hyp_utts = 0
-        self.num_eval_utts = 0 # seen in both ref & hyp
+        self.num_utts = 0 # in both ref & hyp
         self.num_hyp_without_ref = 0
 
         self.C = 0
@@ -118,7 +118,7 @@ class EvaluationResult:
     def to_kaldi(self):
         info = (
             F'%WER {self.token_error_rate:.2f} [ {self.S + self.D + self.I} / {self.C + self.S + self.D}, {self.I} ins, {self.D} del, {self.S} sub ]\n'
-            F'%SER {self.sentence_error_rate:.2f} [ {self.num_utts_with_error} / {self.num_eval_utts} ]\n'
+            F'%SER {self.sentence_error_rate:.2f} [ {self.num_utts_with_error} / {self.num_utts} ]\n'
         )
         return info
     
@@ -128,7 +128,7 @@ class EvaluationResult:
             F'num_ref_utts: {self.num_ref_utts}\n'
             F'num_hyp_utts: {self.num_hyp_utts}\n'
             F'num_hyp_without_ref: {self.num_hyp_without_ref}\n'
-            F'num_eval_utts: {self.num_eval_utts}\n'
+            F'num_utts: {self.num_utts}\n'
             F'sentence_error_rate: {self.sentence_error_rate:.2f}%\n'
             F'token_error_rate: {self.token_error_rate:.2f}%\n'
             F'token_stats:\n'
@@ -149,30 +149,27 @@ class Utterance:
         self.text = text
 
 
-def LoadUtterances(filepath, format):
+def LoadKaldiArc(filepath):
     utts = {}
-    if format == 'text': # utt_id word1 word2 ...
-        with open(filepath, 'r', encoding='utf8') as f:
-            for line in f:
-                line = line.strip()
-                if line:
-                    cols = line.split(maxsplit=1)
-                    assert(len(cols) == 2 or len(cols) == 1)
-                    uid = cols[0]
-                    text = cols[1] if len(cols) == 2 else ''
-                    if utts.get(uid) != None:
-                        raise RuntimeError(F'Found duplicated utterence id {uid}')
-                    utts[uid] = Utterance(uid, text)
-    else:
-        raise RuntimeError(F'Unsupported text format {format}')
+    with open(filepath, 'r', encoding='utf8') as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                cols = line.split(maxsplit=1)
+                assert(len(cols) == 2 or len(cols) == 1)
+                uid = cols[0]
+                text = cols[1] if len(cols) == 2 else ''
+                if utts.get(uid) != None:
+                    raise RuntimeError(F'Found duplicated utterence id {uid}')
+                utts[uid] = Utterance(uid, text)
     return utts
 
 
 def Tokenize(text, tokenizer = 'whitespace'):
     if tokenizer == 'whitespace':
-        return text.split()
+        return text.strip().split()
     elif tokenizer == 'char':
-        return [ c for c in ''.join(text.split()) ]
+        return [ c for c in text.strip().replace(' ', '') ]
     else:
         raise RuntimeError(F'ERROR: Unsupported tokenizer {tokenizer}')
 
@@ -187,7 +184,7 @@ def tokens_without_hyphen(token : str):
     return v
 
 
-def LoadGlmRules(rel_path):
+def LoadGLM(rel_path):
     '''
     glm.csv:
         I'VE,I HAVE
@@ -324,57 +321,53 @@ def ComputeSentenceErrorRate(num_err_utts, num_utts):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    # optional
-    parser.add_argument('--log_interval', type=int, default=500)
     parser.add_argument('--tokenizer', choices=['whitespace', 'char'], default='whitespace', help='whitespace for WER, char for CER')
-    parser.add_argument('--ref-format', choices=['text'], default='text', help='reference format, first col is utt_id, the rest is text')
-    parser.add_argument('--hyp-format', choices=['text'], default='text', help='hypothesis format, first col is utt_id, the rest is text')
-    # required
-    parser.add_argument('--ref', type=str, required=True, help='input reference file')
-    parser.add_argument('--hyp', type=str, required=True, help='input hypothesis file')
+    parser.add_argument('--log_interval', type=int, default=200)
+    parser.add_argument('--glm', type=str, default='glm_en.csv', help='glm')
+    parser.add_argument('--ref', type=str, required=True, help='reference kaldi arc file')
+    parser.add_argument('--hyp', type=str, required=True, help='hypothesis kaldi arc file')
     parser.add_argument('result_file', type=str)
     args = parser.parse_args()
     logging.info(args)
 
 
     logging.info('Loading REF & HYP ...')
-    ref_utts = LoadUtterances(args.ref, args.ref_format)
-    hyp_utts = LoadUtterances(args.hyp, args.hyp_format)
+    ref_utts = LoadKaldiArc(args.ref)
+    hyp_utts = LoadKaldiArc(args.hyp)
 
-    res = EvaluationResult()
+    stats = ErrorStats()
 
     # check valid utterances in hyp that have matched non-empty reference
-    eval_utts = []
+    uids = []
     for uid in sorted(hyp_utts.keys()):
-        if uid in ref_utts.keys(): 
+        if uid in ref_utts.keys():
             if ref_utts[uid].text.strip(): # non-empty reference
-                eval_utts.append(uid)
+                uids.append(uid)
             else:
                 logging.warning(F'Found {uid} with empty reference, skipping...')
         else:
             logging.warning(F'Found {uid} without reference, skipping...')
-            res.num_hyp_without_ref += 1
+            stats.num_hyp_without_ref += 1
 
-    res.num_hyp_utts  = len(hyp_utts)
-    res.num_ref_utts  = len(ref_utts)
-    res.num_eval_utts = len(eval_utts)
-    logging.info(f'  #hyp:{res.num_hyp_utts}, #ref:{res.num_ref_utts}, #eval:{res.num_eval_utts}')
+    stats.num_hyp_utts  = len(hyp_utts)
+    stats.num_ref_utts  = len(ref_utts)
+    stats.num_utts = len(uids)
+    logging.info(f'  #hyp:{stats.num_hyp_utts}, #ref:{stats.num_ref_utts}, #utts_to_evaluate:{stats.num_utts}')
 
-
-    glm = LoadGlmRules('glm_en.csv')
-
-
-    logging.info('Building vocabulary ...')
     tokens = []
-    for uid in eval_utts:
+    for uid in uids:
         ref_tokens = Tokenize(ref_utts[uid].text)
         hyp_tokens = Tokenize(hyp_utts[uid].text)
         for t in ref_tokens + hyp_tokens:
             tokens.append(t)
             if '-' in t:
                 tokens.extend(tokens_without_hyphen(t))
-    vocab_from_eval = list(set(tokens))
-    logging.info(f'  #vocab_from_eval: {len(vocab_from_eval)}')
+    vocab_from_utts = list(set(tokens))
+    logging.info(f'  HYP&REF vocab size: {len(vocab_from_utts)}')
+
+
+    assert(args.glm)
+    glm = LoadGLM(args.glm)
 
     tokens = []
     for rule in glm.values():
@@ -384,10 +377,11 @@ if __name__ == '__main__':
                 if '-' in t:
                     tokens.extend(tokens_without_hyphen(t))
     vocab_from_glm = list(set(tokens))
-    logging.info(f'  #vocab_from_glm: {len(vocab_from_glm)}')
+    logging.info(f'  GLM vocab size: {len(vocab_from_glm)}')
 
-    vocab = list(set(vocab_from_eval + vocab_from_glm))
-    logging.info(f'  #vocab: {len(vocab)}')
+
+    vocab = list(set(vocab_from_utts + vocab_from_glm))
+    logging.info(f'Global vocab size: {len(vocab)}')
 
 
     symtab = BuildSymbolTable(
@@ -398,7 +392,7 @@ if __name__ == '__main__':
     #PrintSymbolTable(symtab)
     #symtab.write_text('symbol_table.txt')
 
-    tagger = BuildGLMTagger(glm, symtab)
+    glm_tagger = BuildGLMTagger(glm, symtab)
 
     # auxiliary edit transducer allows 0-cost matches between token and its auxiliary form
     # e.g.: 'I' -> 'I#', 'AM' -> 'AM#'
@@ -415,135 +409,137 @@ if __name__ == '__main__':
         edit_ext = edit_transducer_aux,
     )
 
-    # processing HYP & REF 
+
     logging.info('Evaluating error rate ...')
+    fo = open(args.result_file, 'w+', encoding='utf8')
     ndone = 0
-    with open(args.result_file, 'w+', encoding='utf8') as fo:
-        for uid in eval_utts:
-            #print(uid, flush=True, file=sys.stderr)
+    for uid in uids:
+        ref = ref_utts[uid].text
+        hyp = hyp_utts[uid].text
 
-            ref = ref_utts[uid].text
-            hyp = hyp_utts[uid].text
+        ref_fst = pynini.accep(' '.join(Tokenize(ref)), token_type = symtab)
+        #print(ref_fst.string(token_type = symtab))
 
-            ref_fst = pynini.accep(' '.join(Tokenize(ref)), token_type = symtab)
-            #print(ref_fst.string(token_type = symtab))
+        raw_hyp_fst = pynini.accep(' '.join(Tokenize(hyp)), token_type = symtab)
+        #print(raw_hyp_fst.string(token_type = symtab))
 
-            raw_hyp_fst = pynini.accep(' '.join(Tokenize(hyp)), token_type = symtab)
-            #print(raw_hyp_fst.string(token_type = symtab))
-
-            # Say, we have
-            #   GLM contains a rule: 
-            #     RULE_001: "I'M" <-> "I AM"
-            #   REF: HEY I AM HERE
-            #   HYP: HEY I'M HERE
-            #
-            # We want to expand HYP with GLM rules(marked with auxiliary #)
-            #   HYP#: HEY {I'M | I# AM#} HERE
-            # REF is honored to keep its original form.
-            #
-            # This could be considered as a flexible on-the-fly TN towards HYP.
+        # Say, we have
+        #   GLM contains a rule: 
+        #     RULE_001: "I'M" <-> "I AM"
+        #   REF: HEY I AM HERE
+        #   HYP: HEY I'M HERE
+        #
+        # We want to expand HYP with GLM rules(marked with auxiliary #)
+        #   HYP#: HEY {I'M | I# AM#} HERE
+        # REF is honored to keep its original form.
+        #
+        # This could be considered as a flexible on-the-fly TN towards HYP.
 
 
-            # 1. GLM rule tagging:
-            #   HEY I'M HERE
-            # ->
-            #   HEY <RULE_001> I'M <RULE_001> HERE
-            lattice = (raw_hyp_fst @ tagger).optimize()
-            hyp_tagged = pynini.shortestpath(lattice, nshortest=1, unique=True).string(token_type = symtab)
-            #print(hyp_tagged)
+        # 1. GLM rule tagging:
+        #   HEY I'M HERE
+        # ->
+        #   HEY <RULE_001> I'M <RULE_001> HERE
+        lattice = (raw_hyp_fst @ glm_tagger).optimize()
+        tagged_ir = pynini.shortestpath(lattice, nshortest=1, unique=True).string(token_type = symtab)
+        #print(hyp_tagged)
 
-            # 2. GLM rule expansion: 
-            #   HEY <RULE_001> I'M <RULE_001> HERE
-            # ->
-            #   sausage-like fst: HEY {I'M | I# AM#} HERE
-            tokens = hyp_tagged.split()
-            sausage = pynini.accep('', token_type = symtab)
-            i = 0
-            while i < len(tokens): # invariant: tokens[0, i) has been built into fst
-                forms = []
-                if '<RULE_' in tokens[i]:  # rule segment
-                    rule_name = tokens[i]
-                    rule = glm[rule_name]
+        # 2. GLM rule expansion: 
+        #   HEY <RULE_001> I'M <RULE_001> HERE
+        # ->
+        #   sausage-like fst: HEY {I'M | I# AM#} HERE
+        tokens = tagged_ir.split()
+        sausage = pynini.accep('', token_type = symtab)
+        i = 0
+        while i < len(tokens): # invariant: tokens[0, i) has been built into fst
+            forms = []
+            if '<RULE_' in tokens[i]:  # rule segment
+                rule_name = tokens[i]
+                rule = glm[rule_name]
 
-                    # pre-condition: i -> ltag
-                    for j in range(i+1, len(tokens)):
-                        if '<RULE_' in tokens[j]:
-                            break
-                        else:
-                            j += 1
-                    # post-condition: i -> ltag, j -> rtag
-                    raw_form = ' '.join(tokens[i+1: j])
-
-                    forms.append(raw_form)
-                    for phrase in rule:
-                        if phrase != raw_form:
-                            forms.append(' '.join([ x+'#' for x in phrase.split() ]))
-                    i = j + 1
-                else:  # normal token segment
-                    token = tokens[i]
-                    forms.append(token)
-                    if "-" in token:  # token with hyphen yields extra forms
-                        forms.append(' '.join([ x+'#' for x in token.split('-') ])) # 'T-SHIRT' -> 'T# SHIRT#'
-                        forms.append(token.replace('-', '') + '#') # 'T-SHIRT' -> 'TSHIRT#'
-                    i += 1
-
-                sausage_segment = pynini.union(
-                    *[ pynini.accep(x, token_type=symtab) for x in forms ]
-                ).optimize()
-                sausage += sausage_segment
-            hyp_fst = sausage.optimize()
-
-            # Utterance-Level evaluation
-            alignment = edit_transducer.compute_alignment(ref_fst, hyp_fst)
-            C, S, I, D = 0, 0, 0, 0
-            edits = []
-            distance = 0.0
-            for state in alignment.states():
-                for arc in alignment.arcs(state):
-                    i, o = arc.ilabel, arc.olabel
-                    if i != 0 and o != 0 and not SymbolEQ(symtab, i, o):
-                        S += 1
-                        e = 'S'
-                        distance += 1.0
-                    elif i != 0 and o == 0:
-                        D += 1
-                        e = 'D'
-                        distance += 1.0
-                    elif i == 0 and o != 0:
-                        I += 1
-                        e = 'I'
-                        distance += 1.0
-                    elif SymbolEQ(symtab, i, o):
-                        C += 1
-                        e = 'C'
+                # pre-condition: i -> ltag
+                for j in range(i+1, len(tokens)):
+                    if '<RULE_' in tokens[j]:
+                        break
                     else:
-                        raise RuntimeError
-                    edits.append(e)
-                    # print('i:', i, symtab.find(i), 'o:', o, symtab.find(o), f'[{e}]')
-            #assert(distance == edit_transducer.compute_distance(ref_fst, sausage)) # this should be used only in debugging checks, it doubles computations
-            utt_ter = ComputeTokenErrorRate(C, S, I, D)
-            print(F'{{"uid":{uid}, "score":{-distance}, "ter":{utt_ter:.2f}, "cor":{C}, "sub":{S}, "ins":{I}, "del":{D}}}', file=fo)
+                        j += 1
+                # post-condition: i -> ltag, j -> rtag
+                raw_form = ' '.join(tokens[i+1: j])
 
-            hyp_aux = alignment.string(token_type = symtab)
-            PrintPrettyAlignment(hyp, hyp_aux, ref, edits, fo)
+                forms.append(raw_form)
+                for phrase in rule:
+                    if phrase != raw_form:
+                        forms.append(' '.join([ x+'#' for x in phrase.split() ]))
+                i = j + 1
+            else:  # normal token segment
+                token = tokens[i]
+                forms.append(token)
+                if "-" in token:  # token with hyphen yields extra forms
+                    forms.append(' '.join([ x+'#' for x in token.split('-') ])) # 'T-SHIRT' -> 'T# SHIRT#'
+                    forms.append(token.replace('-', '') + '#') # 'T-SHIRT' -> 'TSHIRT#'
+                i += 1
 
-            if utt_ter > 0:
-                res.num_utts_with_error += 1
+            sausage_segment = pynini.union(
+                *[ pynini.accep(x, token_type=symtab) for x in forms ]
+            ).optimize()
+            sausage += sausage_segment
+        hyp_fst = sausage.optimize()
 
-            res.C += C
-            res.S += S
-            res.I += I
-            res.D += D
 
-            ndone += 1
-            if ndone % args.log_interval == 0:
-                logging.info(f'{ndone} utts evaluated.')
-        logging.info(f'{ndone} utts evaluated in total.')
+        # Utterance-Level evaluation
+        alignment = edit_transducer.compute_alignment(ref_fst, hyp_fst)
+        C, S, I, D = 0, 0, 0, 0  # Cor, Sub, Ins, Del
+        edits = []
+        distance = 0.0
+        for state in alignment.states():
+            for arc in alignment.arcs(state):
+                i, o = arc.ilabel, arc.olabel
+                if i != 0 and o != 0 and not SymbolEQ(symtab, i, o):
+                    S += 1
+                    e = 'S'
+                    distance += 1.0
+                elif i != 0 and o == 0:
+                    D += 1
+                    e = 'D'
+                    distance += 1.0
+                elif i == 0 and o != 0:
+                    I += 1
+                    e = 'I'
+                    distance += 1.0
+                elif SymbolEQ(symtab, i, o):
+                    C += 1
+                    e = 'C'
+                else:
+                    raise RuntimeError
+                edits.append(e)
+                # print('i:', i, symtab.find(i), 'o:', o, symtab.find(o), f'[{e}]')
+        #assert(distance == edit_transducer.compute_distance(ref_fst, sausage))
 
-        # Corpus-Level evaluation
-        res.token_error_rate = ComputeTokenErrorRate(res.C, res.S, res.I, res.D)
-        res.sentence_error_rate = ComputeSentenceErrorRate(res.num_utts_with_error, res.num_eval_utts)
-        print(res.to_summary(), file=fo)
+        utt_ter = ComputeTokenErrorRate(C, S, I, D)
+        print(F'{{"uid":{uid}, "score":{-distance}, "ter":{utt_ter:.2f}, "cor":{C}, "sub":{S}, "ins":{I}, "del":{D}}}', file=fo)
 
-    print(res.to_json())
-    print(res.to_kaldi())
+        hyp_aux = alignment.string(token_type = symtab)
+        PrintPrettyAlignment(hyp, hyp_aux, ref, edits, fo)
+
+        if utt_ter > 0:
+            stats.num_utts_with_error += 1
+
+        stats.C += C
+        stats.S += S
+        stats.I += I
+        stats.D += D
+
+        ndone += 1
+        if ndone % args.log_interval == 0:
+            logging.info(f'{ndone} utts evaluated.')
+    logging.info(f'{ndone} utts evaluated in total.')
+
+    # Corpus-Level evaluation
+    stats.token_error_rate = ComputeTokenErrorRate(stats.C, stats.S, stats.I, stats.D)
+    stats.sentence_error_rate = ComputeSentenceErrorRate(stats.num_utts_with_error, stats.num_utts)
+
+    print(stats.to_json())
+    print(stats.to_kaldi())
+
+    print(stats.to_summary(), file=fo)
+    fo.close()
