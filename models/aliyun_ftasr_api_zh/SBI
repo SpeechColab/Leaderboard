@@ -8,7 +8,9 @@ fi
 scp=$1
 dir=$2
 oss_scp=${dir}/wav_oss.scp
+oss_loss_scp=${dir}/wav_oss_loss.scp
 part_nums=10
+loss_base_nums=10
 test_time=$(date +"%Y-%m-%d-%H-%M-%S")
 echo "Test starts at "${test_time}
 
@@ -16,8 +18,8 @@ echo "Test starts at "${test_time}
 # 可通过命令(wget https://gosspublic.alicdn.com/ossutil/1.7.13/ossutil64) 获取相同版本ossutil64(版本1.7.13) 进行md5sum一致性比较
 # compare ossutil64 md5sum
 md5sum ossutil64 > ${dir}/ossutil64.md5.compare
-diff -r ${dir}/ossutil64.md5.compare ./ossutil64.md5.txt
-if [ $? -ne 0 ];then
+diff -r ${dir}/ossutil64.md5.compare ./ossutil64.md5.txt > ${dir}/ossutil64.md5.compare.diff
+if [ -s ${dir}/ossutil64.md5.compare.diff ];then
   echo "md5sum of ossutil64 is different! Exit!"
   exit 1
 else
@@ -26,7 +28,17 @@ fi
 
 
 # upload wav to oss
-./upload_wav.py ${scp} ${oss_scp} ${dir} ${test_time}
+./upload_wav.py ${scp} ${dir} speechiotest-${test_time}
+
+# check oss wav
+./check_wav.py speechiotest-${test_time} ${scp} ${oss_loss_scp} ${oss_scp}
+loss_wav_num=$(cat $oss_loss_scp | wc -l)
+if [ ${loss_wav_num} -gt ${loss_base_nums} ];then
+  echo "Not found some audio in oss bucket! Please check" ${oss_loss_scp}
+  exit 1
+else
+  echo "Upload audio successfully. Continue..."
+fi
 
 # split test set 
 awk -vf=${part_nums} -vl="`wc -l $oss_scp`" 'BEGIN{p=int(l/f);q=(l%f);for(n=1;n<=f;n++)a[n]=n*p+((n<=q)?++x:x)}{if(NR>a[i])i++;print > "'$oss_scp'."i}' $oss_scp
@@ -44,4 +56,4 @@ rm -rf ${dir}/raw_rec.txt.*
 rm -rf ${oss_scp}.*
 
 # delete oss bucket
-./del_oss_bucket.py ${dir} ${test_time}
+./del_oss_bucket.py ${dir} speechiotest-${test_time}
