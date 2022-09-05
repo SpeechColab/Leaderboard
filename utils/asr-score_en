@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf8
-# Copyright  2022  Zhenxiang MA (Tsinghua)
-# Copyright  2022  Jiayu DU (SpeechColab)
+# Copyright  2022  Zhenxiang MA, Jiayu DU (SpeechColab)
 
 import sys, os
 import argparse
@@ -277,31 +276,40 @@ def PrintPrettyAlignment(raw, hyp, ref, edits, stream = sys.stderr):
     R = '  REF  : '
     E = '  EDIT : '
 
-    hyp = Tokenize(hyp.strip())
-    ref = Tokenize(ref.strip())
-    l1 = 0
-    l2 = 0
-    for i in range(len(edits)):
-        if edits[i] != 'D'and l1 < len(hyp):
-            h = hyp[l1]
-            l1+=1
-        else:
+    ref = Tokenize(ref)
+    hyp = Tokenize(hyp)
+    rpos, hpos = 0, 0
+    for e in edits:
+        if e == 'C' or e == 'S':
+            r = ref[rpos]
+            rpos += 1
+
+            h = hyp[hpos]
+            hpos += 1
+        elif e == 'I':
+            r = '*'
+
+            h = hyp[hpos]
+            hpos += 1
+        elif e == 'D':
+            r = ref[rpos]
+            rpos += 1
+
             h = '*'
-
-        if edits[i] != 'I' and l2 < len(ref):
-            r = ref[l2]
-            l2+=1
         else:
-            r = '*'  
+            raise RuntimeError(f'Incorrect edit type: {e}')
 
-        e = '' if edits[i] == 'C' else edits[i]
+        if e == 'C':
+            e = '' # don't bother printing 'CORRECT' edit
 
         nr, nh, ne = token_width(r), token_width(h), token_width(e)
         n = max(nr, nh, ne) + 1
 
-        R += r + ' ' * (n-nr)
         H += h + ' ' * (n-nh)
+        R += r + ' ' * (n-nr)
         E += e + ' ' * (n-ne)
+    assert(rpos == len(ref))
+    assert(hpos == len(hyp))
 
     print('  HYP  : ' + raw, file = stream)
     print(H, file = stream)
@@ -321,21 +329,20 @@ def ComputeSentenceErrorRate(num_err_utts, num_utts):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--tokenizer', choices=['whitespace', 'char'], default='whitespace', help='whitespace for WER, char for CER')
-    parser.add_argument('--log_interval', type=int, default=200)
-    parser.add_argument('--glm', type=str, default='glm_en.csv', help='glm')
-    parser.add_argument('--ref', type=str, required=True, help='reference kaldi arc file')
-    parser.add_argument('--hyp', type=str, required=True, help='hypothesis kaldi arc file')
-    parser.add_argument('result_file', type=str)
+    parser.add_argument('--logk', type = int, default = 500, help = 'logging interval')
+    parser.add_argument('--tokenizer', choices = ['whitespace', 'char'], default = 'whitespace', help = 'whitespace for WER, char for CER')
+    parser.add_argument('--glm', type = str, default = 'glm_en.csv', help = 'glm')
+    parser.add_argument('--ref', type = str, required = True, help = 'reference kaldi arc file')
+    parser.add_argument('--hyp', type = str, required = True, help = 'hypothesis kaldi arc file')
+    parser.add_argument('result_file', type = str)
     args = parser.parse_args()
     logging.info(args)
 
+    stats = ErrorStats()
 
     logging.info('Loading REF & HYP ...')
     ref_utts = LoadKaldiArc(args.ref)
     hyp_utts = LoadKaldiArc(args.hyp)
-
-    stats = ErrorStats()
 
     # check valid utterances in hyp that have matched non-empty reference
     uids = []
