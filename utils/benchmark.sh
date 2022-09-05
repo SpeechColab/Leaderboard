@@ -76,7 +76,7 @@ for x in $test_sets; do
             exit -1
         fi
 
-        ${LEADERBOARD}/utils/asr-score_${language} \
+        ${LEADERBOARD}/utils/error_rate_${language} \
             --tokenizer ${tokenizer} \
             --ref $dir/ref.txt \
             --hyp $dir/rec_non_empty.txt \
