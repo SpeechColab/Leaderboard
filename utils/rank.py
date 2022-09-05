@@ -31,7 +31,7 @@ if __name__ == '__main__':
                     TER = r['token_error_rate']
                     R = r['num_ref_utts']
                     H = r['num_hyp_utts']
-                    n = r['num_eval_utts']
+                    n = r['num_utts']
                     C = r['C']
                     S = r['S']
                     I = r['I']
