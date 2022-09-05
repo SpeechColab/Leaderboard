@@ -98,7 +98,7 @@ class ErrorStats:
     def __init__(self):
         self.num_ref_utts = 0
         self.num_hyp_utts = 0
-        self.num_utts = 0 # in both ref & hyp
+        self.num_eval_utts = 0 # in both ref & hyp
         self.num_hyp_without_ref = 0
 
         self.C = 0
@@ -117,7 +117,7 @@ class ErrorStats:
     def to_kaldi(self):
         info = (
             F'%WER {self.token_error_rate:.2f} [ {self.S + self.D + self.I} / {self.C + self.S + self.D}, {self.I} ins, {self.D} del, {self.S} sub ]\n'
-            F'%SER {self.sentence_error_rate:.2f} [ {self.num_utts_with_error} / {self.num_utts} ]\n'
+            F'%SER {self.sentence_error_rate:.2f} [ {self.num_utts_with_error} / {self.num_eval_utts} ]\n'
         )
         return info
     
@@ -127,7 +127,7 @@ class ErrorStats:
             F'num_ref_utts: {self.num_ref_utts}\n'
             F'num_hyp_utts: {self.num_hyp_utts}\n'
             F'num_hyp_without_ref: {self.num_hyp_without_ref}\n'
-            F'num_utts: {self.num_utts}\n'
+            F'num_eval_utts: {self.num_eval_utts}\n'
             F'sentence_error_rate: {self.sentence_error_rate:.2f}%\n'
             F'token_error_rate: {self.token_error_rate:.2f}%\n'
             F'token_stats:\n'
@@ -358,8 +358,8 @@ if __name__ == '__main__':
 
     stats.num_hyp_utts  = len(hyp_utts)
     stats.num_ref_utts  = len(ref_utts)
-    stats.num_utts = len(uids)
-    logging.info(f'  #hyp:{stats.num_hyp_utts}, #ref:{stats.num_ref_utts}, #utts_to_evaluate:{stats.num_utts}')
+    stats.num_eval_utts = len(uids)
+    logging.info(f'  #hyp:{stats.num_hyp_utts}, #ref:{stats.num_ref_utts}, #utts_to_evaluate:{stats.num_eval_utts}')
 
     tokens = []
     for uid in uids:
@@ -543,7 +543,7 @@ if __name__ == '__main__':
 
     # Corpus-Level evaluation
     stats.token_error_rate = ComputeTokenErrorRate(stats.C, stats.S, stats.I, stats.D)
-    stats.sentence_error_rate = ComputeSentenceErrorRate(stats.num_utts_with_error, stats.num_utts)
+    stats.sentence_error_rate = ComputeSentenceErrorRate(stats.num_utts_with_error, stats.num_eval_utts)
 
     print(stats.to_json())
     print(stats.to_kaldi())

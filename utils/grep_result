@@ -22,7 +22,7 @@ for dir in directories:
                     TER = r['token_error_rate']
                     R = r['num_ref_utts']
                     H = r['num_hyp_utts']
-                    n = r['num_utts']
+                    n = r['num_eval_utts']
                     buffer.append(F"{service},{test_set},{100-TER:.2f},{TER:.2f},{n}:{H}:{R}:{max_utts},{date}")
     except:
         continue
