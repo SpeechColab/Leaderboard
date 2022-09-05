@@ -537,7 +537,7 @@ if __name__ == '__main__':
         stats.D += D
 
         ndone += 1
-        if ndone % args.log_interval == 0:
+        if ndone % args.logk == 0:
             logging.info(f'{ndone} utts evaluated.')
     logging.info(f'{ndone} utts evaluated in total.')
 
