@@ -231,7 +231,7 @@ def PrintSymbolTable(symbol_table: pynini.SymbolTable):
 def BuildSymbolTable(vocab) -> pynini.SymbolTable :
     logging.info('Building symbol table ...')
     symbol_table = pynini.SymbolTable()
-    symbol_table .add_symbol('<epsilon>')
+    symbol_table.add_symbol('<epsilon>')
 
     for w in vocab:
         symbol_table.add_symbol(w)
