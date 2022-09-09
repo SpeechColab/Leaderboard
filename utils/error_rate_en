@@ -23,7 +23,6 @@ class EditTransducer:
     def __init__(self,
         symbol_table,
         vocab: Iterable[str],
-        edit_ext: pynini.FstLike,
         insert_cost: float = 1.0,
         delete_cost: float = 1.0,
         substitute_cost: float = 1.0,
@@ -55,21 +54,27 @@ class EditTransducer:
             self._e_i = edit.union(sigma).closure()
 
         self._e_i.optimize()
-        self._e_o = EditTransducer._right_factor(self._e_i, edit_ext)
+
+        right_factor_std = EditTransducer._right_factor(self._e_i)
+        # right_factor_ext allows 0-cost matching between token's raw form & auxiliary form
+        # e.g.: 'I' -> 'I#', 'AM' -> 'AM#'
+        right_factor_ext = pynini.union(*[
+            pynini.cross(
+                pynini.accep(x,     token_type = symbol_table),
+                pynini.accep(x+'#', token_type = symbol_table),
+            ) for x in vocab
+        ]).optimize().closure()
+        self._e_o = pynini.union(right_factor_std, right_factor_ext).closure().optimize()
 
     @staticmethod
-    def _right_factor(ifst: pynini.Fst, edit_ext: pynini.FstLike) -> pynini.Fst:
+    def _right_factor(ifst: pynini.Fst) -> pynini.Fst:
         ofst = pynini.invert(ifst)
         syms = pynini.generated_symbols()
         insert_label = syms.find(EditTransducer.INSERT)
         delete_label = syms.find(EditTransducer.DELETE)
         pairs = [(insert_label, delete_label), (delete_label, insert_label)]
         right_factor = ofst.relabel_pairs(ipairs=pairs)
-
-        right_factor_aux = pynini.union(right_factor, edit_ext).closure().optimize()
-        #print('R_start:', right_factor_aux.start())
-        #print('R:', right_factor_aux)
-        return right_factor_aux
+        return right_factor
 
     def create_lattice(self, iexpr: pynini.FstLike, oexpr: pynini.FstLike) -> pynini.Fst:
         lattice = (iexpr @ self._e_i) @ (self._e_o @ oexpr)
@@ -387,32 +392,15 @@ if __name__ == '__main__':
     vocab_from_glm = list(set(tokens))
     logging.info(f'  GLM vocab size: {len(vocab_from_glm)}')
 
-
     vocab = list(set(vocab_from_utts + vocab_from_glm))
     logging.info(f'Global vocab size: {len(vocab)}')
-
 
     symtab = BuildSymbolTable(
         # Normal evaluation vocab + auxiliary form for alternative paths + GLM tags
         vocab + [ x+'#' for x in vocab ] + [ x for x in glm.keys() ]
     )
     glm_tagger = BuildGLMTagger(glm, symtab)
-
-    # auxiliary edit transducer allows 0-cost matches between token and its auxiliary form
-    # e.g.: 'I' -> 'I#', 'AM' -> 'AM#'
-    edit_transducer_aux = pynini.union(*[
-        pynini.cross(
-            pynini.accep(token,       token_type = symtab),
-            pynini.accep(token + '#', token_type = symtab),
-        ) for token in vocab
-    ]).optimize().closure()
-
-    edit_transducer = EditTransducer(
-        symbol_table = symtab,            
-        vocab = vocab,
-        edit_ext = edit_transducer_aux,
-    )
-
+    edit_transducer = EditTransducer(symbol_table = symtab, vocab = vocab)
 
     logging.info('Evaluating error rate ...')
     fo = open(args.result_file, 'w+', encoding='utf8')
