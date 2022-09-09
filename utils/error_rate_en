@@ -215,8 +215,8 @@ def LoadGLM(rel_path):
     return glm
 
 
-def SymbolEQ(symtab, i1, i2):
-    return symtab.find(i1).strip('#') == symtab.find(i2).strip('#')
+def SymbolEQ(symbol_table, i1, i2):
+    return symbol_table.find(i1).strip('#') == symbol_table.find(i2).strip('#')
 
 
 def PrintSymbolTable(symbol_table: pynini.SymbolTable):
@@ -228,20 +228,21 @@ def PrintSymbolTable(symbol_table: pynini.SymbolTable):
     print()
 
 
-def BuildSymbolTable(*vocabs) -> pynini.SymbolTable :
+def BuildSymbolTable(vocab) -> pynini.SymbolTable :
     logging.info('Building symbol table ...')
     symbol_table = pynini.SymbolTable()
     symbol_table .add_symbol('<epsilon>')
 
-    for vocab in vocabs:
-        for token in vocab:
-            symbol_table.add_symbol(token)
+    for w in vocab:
+        symbol_table.add_symbol(w)
     logging.info(f'  #symbols: {symbol_table.num_symbols()}')
 
+    #PrintSymbolTable(symbol_table)
+    #symbol_table.write_text('symbol_table.txt')
     return symbol_table
 
 
-def BuildGLMTagger(glm, symbol_table):
+def BuildGLMTagger(glm, symbol_table) -> pynini.Fst:
     logging.info('Building GLM tagger ...')
     rule_taggers = []
     for rule_tag, rule in glm.items():
@@ -392,13 +393,9 @@ if __name__ == '__main__':
 
 
     symtab = BuildSymbolTable(
-        vocab,
-        [ x+'#' for x in vocab ], # auxiliary markers for alternative paths
-        [ x for x in glm.keys() ], # GLM rule tags
+        # Normal evaluation vocab + auxiliary form for alternative paths + GLM tags
+        vocab + [ x+'#' for x in vocab ] + [ x for x in glm.keys() ]
     )
-    #PrintSymbolTable(symtab)
-    #symtab.write_text('symbol_table.txt')
-
     glm_tagger = BuildGLMTagger(glm, symtab)
 
     # auxiliary edit transducer allows 0-cost matches between token and its auxiliary form
