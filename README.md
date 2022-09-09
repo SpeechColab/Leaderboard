@@ -172,31 +172,41 @@ where `request.yaml` specifies a <MODEL_ID> and a list of <TEST_SET_ID>
 
 ## 5. Latest Leaderboard Results
 
-### Ranking on **unlocked** SpeechIO test sets (ZH00001 ~ ZH00015)
+### Public Models
+#### **unlocked** SpeechIO test sets (ZH00001 ~ ZH00015)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | hiasr_api_zh(*) | 2.16 % | 2022.08 |
-| 2 | yitu_api_zh | 2.62 % | 2022.08 |
-| 3 | tencent_api_zh | 2.95% | 2022.08 |
-| 4 | bilibili_api_zh(*) | 2.95% | 2022.08 |
-| 5 | aliyun_api_zh | 3.02% | 2022.08 |
-| 6 | microsoft_sdk_zh | 3.03% | 2022.08 |
-| 7 | aispeech_api_zh | 3.39% | 2022.08 |
-| 8 | iflytek_lfasr_api_zh | 3.66% | 2022.08 |
-| 9 | baidu_pro_api_zh | 6.64% | 2022.08 |
+| 1 | yitu_api_zh | 2.62 % | 2022.08 |
+| 2 | tencent_api_zh | 2.95% | 2022.08 |
+| 3 | aliyun_api_zh | 3.02% | 2022.08 |
+| 4 | microsoft_sdk_zh | 3.03% | 2022.08 |
+| 5 | aispeech_api_zh | 3.39% | 2022.08 |
+| 6 | iflytek_lfasr_api_zh | 3.66% | 2022.08 |
+| 7 | baidu_pro_api_zh | 6.64% | 2022.08 |
 
-### Ranking on **all** SpeechIO test sets
+#### **all** SpeechIO test sets
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | hiasr_api_zh(*) | 2.61 % | 2022.08 |
-| 2 | yitu_api_zh | 2.80 % | 2022.08 |
-| 3 | bilibili_api_zh(*) | 3.30 % | 2022.08 |
-| 4 | tencent_api_zh | 3.31% | 2022.08 |
-| 5 | microsoft_sdk_zh | 3.47% | 2022.08 |
-| 6 | aispeech_api_zh | 3.63% | 2022.08 |
-| 7 | aliyun_api_zh | 3.78% | 2022.08 |
-| 8 | iflytek_lfasr_api_zh | 4.01% | 2022.08 |
-| 9 | baidu_pro_api_zh | 7.38% | 2022.08 |
+| 1 | yitu_api_zh | 2.80 % | 2022.08 |
+| 2 | tencent_api_zh | 3.31% | 2022.08 |
+| 3 | microsoft_sdk_zh | 3.47% | 2022.08 |
+| 4 | aispeech_api_zh | 3.63% | 2022.08 |
+| 5 | aliyun_api_zh | 3.78% | 2022.08 |
+| 6 | iflytek_lfasr_api_zh | 4.01% | 2022.08 |
+| 7 | baidu_pro_api_zh | 7.38% | 2022.08 |
+
+### Private Models
+#### **unlocked** SpeechIO test sets (ZH00001 ~ ZH00015)
+| Model 模型 | CER 字错误率 | Date 时间 |
+| --- | --- | --- |
+| hiasr_api_zh(*) | 2.16 % | 2022.08 |
+| bilibili_api_zh(*) | 2.95% | 2022.08 |
+
+#### **all** SpeechIO test sets
+| Model 模型 | CER 字错误率 | Date 时间 |
+| --- | --- | --- |
+| hiasr_api_zh(*) | 2.61 % | 2022.08 |
+| bilibili_api_zh(*) | 3.30 % | 2022.08 |
 
 _note: models with `(*)` marker can be found in model zoo, but not universally available to public yet._
 
