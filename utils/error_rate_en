@@ -423,18 +423,17 @@ if __name__ == '__main__':
         i = 0
         while i < len(tokens): # invariant: tokens[0, i) has been built into fst
             forms = []
-            if '<RULE_' in tokens[i]:  # rule segment
+            if tokens[i].startswith('<RULE_') and tokens[i].endswith('>'):  # rule segment
                 rule_name = tokens[i]
                 rule = glm[rule_name]
-
                 # pre-condition: i -> ltag
+                raw_form = ''
                 for j in range(i+1, len(tokens)):
-                    if '<RULE_' in tokens[j]:
+                    if tokens[j] == rule_name:
+                        raw_form = ' '.join(tokens[i+1: j])
                         break
-                    else:
-                        j += 1
+                assert(raw_form)
                 # post-condition: i -> ltag, j -> rtag
-                raw_form = ' '.join(tokens[i+1: j])
 
                 forms.append(raw_form)
                 for phrase in rule:
