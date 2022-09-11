@@ -169,16 +169,7 @@ def LoadKaldiArc(filepath):
     return utts
 
 
-def Tokenize(text, tokenizer = 'whitespace'):
-    if tokenizer == 'whitespace':
-        return text.strip().split()
-    elif tokenizer == 'char':
-        return [ c for c in text.strip().replace(' ', '') ]
-    else:
-        raise RuntimeError(F'ERROR: Unsupported tokenizer {tokenizer}')
-
-
-def tokens_without_hyphen(token : str):
+def BreakHyphen(token : str):
     # 'T-SHIRT' should also introduce new words into vocabulary, e.g.:
     #   1. 'T' & 'SHIRT'
     #   2. 'TSHIRT'
@@ -268,56 +259,30 @@ def BuildGLMTagger(glm, symbol_table) -> pynini.Fst:
     return tagger
 
 
-def PrintPrettyAlignment(raw, hyp, ref, edits, stream = sys.stderr):
-    def fullwidth_char(c):
-        return True if (c >= '\u4e00') and (c <= '\u9fa5') else False
-    
-    def token_width(token: str):
-        n = 0
-        for c in token:
-            n += (2 if fullwidth_char(c) else 1)
-        return n
+def TokenWidth(token: str):
+    def CharWidth(c):
+        return 2 if (c >= '\u4e00') and (c <= '\u9fa5') else 1
+    return sum([ CharWidth(c) for c in token ])
+
+
+def PrintPrettyAlignment(raw_hyp, edit_ali, ref_ali, hyp_ali, stream = sys.stderr):
+    assert(len(edit_ali) == len(ref_ali) and len(ref_ali) == len(hyp_ali))
 
     H = '  HYP# : '
     R = '  REF  : '
     E = '  EDIT : '
+    for i, e in enumerate(edit_ali):
+        h, r = hyp_ali[i], ref_ali[i]
+        e = '' if e == 'C' else e # don't bother printing correct edit-tag
 
-    ref = Tokenize(ref)
-    hyp = Tokenize(hyp)
-    rpos, hpos = 0, 0
-    for e in edits:
-        if e == 'C' or e == 'S':
-            r = ref[rpos]
-            rpos += 1
-
-            h = hyp[hpos]
-            hpos += 1
-        elif e == 'I':
-            r = '*'
-
-            h = hyp[hpos]
-            hpos += 1
-        elif e == 'D':
-            r = ref[rpos]
-            rpos += 1
-
-            h = '*'
-        else:
-            raise RuntimeError(f'Incorrect edit type: {e}')
-
-        if e == 'C':
-            e = '' # don't bother printing 'CORRECT' edit
-
-        nr, nh, ne = token_width(r), token_width(h), token_width(e)
+        nr, nh, ne = TokenWidth(r), TokenWidth(h), TokenWidth(e)
         n = max(nr, nh, ne) + 1
 
         H += h + ' ' * (n-nh)
         R += r + ' ' * (n-nr)
         E += e + ' ' * (n-ne)
-    assert(rpos == len(ref))
-    assert(hpos == len(hyp))
 
-    print('  HYP  : ' + raw, file = stream)
+    print(F'  HYP  : {raw_hyp}', file = stream)
     print(H, file = stream)
     print(R, file = stream)
     print(E, file = stream)
@@ -346,6 +311,20 @@ if __name__ == '__main__':
 
     stats = ErrorStats()
 
+    logging.info('Generating tokenizer ...')
+    if args.tokenizer == 'whitespace':
+        def word_tokenizer(text):
+            return text.strip().split()
+        tokenizer = word_tokenizer
+    elif args.tokenizer == 'char':
+        def char_tokenizer(text):
+            return [ c for c in text.strip().replace(' ', '') ]
+        tokenizer = char_tokenizer
+    else:
+        tokenizer = None
+    assert(tokenizer)
+
+
     logging.info('Loading REF & HYP ...')
     ref_utts = LoadKaldiArc(args.ref)
     hyp_utts = LoadKaldiArc(args.hyp)
@@ -369,12 +348,12 @@ if __name__ == '__main__':
 
     tokens = []
     for uid in uids:
-        ref_tokens = Tokenize(ref_utts[uid].text)
-        hyp_tokens = Tokenize(hyp_utts[uid].text)
+        ref_tokens = tokenizer(ref_utts[uid].text)
+        hyp_tokens = tokenizer(hyp_utts[uid].text)
         for t in ref_tokens + hyp_tokens:
             tokens.append(t)
             if '-' in t:
-                tokens.extend(tokens_without_hyphen(t))
+                tokens.extend(BreakHyphen(t))
     vocab_from_utts = list(set(tokens))
     logging.info(f'  HYP&REF vocab size: {len(vocab_from_utts)}')
 
@@ -385,10 +364,10 @@ if __name__ == '__main__':
     tokens = []
     for rule in glm.values():
         for phrase in rule:
-            for t in Tokenize(phrase):
+            for t in tokenizer(phrase):
                 tokens.append(t)
                 if '-' in t:
-                    tokens.extend(tokens_without_hyphen(t))
+                    tokens.extend(BreakHyphen(t))
     vocab_from_glm = list(set(tokens))
     logging.info(f'  GLM vocab size: {len(vocab_from_glm)}')
 
@@ -407,17 +386,16 @@ if __name__ == '__main__':
     ndone = 0
     for uid in uids:
         ref = ref_utts[uid].text
-        hyp = hyp_utts[uid].text
+        raw_hyp = hyp_utts[uid].text
 
-        ref_fst = pynini.accep(' '.join(Tokenize(ref)), token_type = symtab)
+        ref_fst = pynini.accep(' '.join(tokenizer(ref)), token_type = symtab)
         #print(ref_fst.string(token_type = symtab))
 
-        raw_hyp_fst = pynini.accep(' '.join(Tokenize(hyp)), token_type = symtab)
+        raw_hyp_fst = pynini.accep(' '.join(tokenizer(raw_hyp)), token_type = symtab)
         #print(raw_hyp_fst.string(token_type = symtab))
 
-        # Say, we have
-        #   GLM contains a rule: 
-        #     RULE_001: "I'M" <-> "I AM"
+        # Say, we have: 
+        #   RULE_001: "I'M" <-> "I AM"
         #   REF: HEY I AM HERE
         #   HYP: HEY I'M HERE
         #
@@ -477,41 +455,50 @@ if __name__ == '__main__':
             sausage += sausage_segment
         hyp_fst = sausage.optimize()
 
-
-        # Utterance-Level evaluation
+        # Utterance-Level error rate evaluation
         alignment = edit_transducer.compute_alignment(ref_fst, hyp_fst)
-        C, S, I, D = 0, 0, 0, 0  # Cor, Sub, Ins, Del
-        edits = []
+
         distance = 0.0
+        C, S, I, D = 0, 0, 0, 0  # Cor, Sub, Ins, Del
+        edit_ali, ref_ali, hyp_ali = [], [], []
         for state in alignment.states():
             for arc in alignment.arcs(state):
                 i, o = arc.ilabel, arc.olabel
-                if i != 0 and o != 0 and not SymbolEQ(symtab, i, o):
-                    S += 1
+                if i != 0 and o != 0 and SymbolEQ(symtab, i, o):
+                    e = 'C'
+                    r, h = symtab.find(i), symtab.find(o)
+
+                    C += 1
+                    distance += 0.0
+                elif i != 0 and o != 0 and not SymbolEQ(symtab, i, o):
                     e = 'S'
-                    distance += 1.0
-                elif i != 0 and o == 0:
-                    D += 1
-                    e = 'D'
+                    r, h = symtab.find(i), symtab.find(o)
+
+                    S += 1
                     distance += 1.0
                 elif i == 0 and o != 0:
-                    I += 1
                     e = 'I'
+                    r, h = '*', symtab.find(o)
+
+                    I += 1
                     distance += 1.0
-                elif SymbolEQ(symtab, i, o):
-                    C += 1
-                    e = 'C'
+                elif i != 0 and o == 0:
+                    e = 'D'
+                    r, h = symtab.find(i), '*'
+
+                    D += 1
+                    distance += 1.0
                 else:
                     raise RuntimeError
-                edits.append(e)
-                # print('i:', i, symtab.find(i), 'o:', o, symtab.find(o), f'[{e}]')
+
+                edit_ali.append(e)
+                ref_ali.append(r)
+                hyp_ali.append(h)
         #assert(distance == edit_transducer.compute_distance(ref_fst, sausage))
 
         utt_ter = ComputeTokenErrorRate(C, S, I, D)
         print(F'{{"uid":{uid}, "score":{-distance}, "ter":{utt_ter:.2f}, "cor":{C}, "sub":{S}, "ins":{I}, "del":{D}}}', file=fo)
-
-        hyp_aux = alignment.string(token_type = symtab)
-        PrintPrettyAlignment(hyp, hyp_aux, ref, edits, fo)
+        PrintPrettyAlignment(raw_hyp, edit_ali, ref_ali, hyp_ali, fo)
 
         if utt_ter > 0:
             stats.num_utts_with_error += 1
@@ -532,6 +519,6 @@ if __name__ == '__main__':
 
     print(stats.to_json())
     print(stats.to_kaldi())
-
     print(stats.to_summary(), file=fo)
+
     fo.close()
