@@ -159,14 +159,16 @@ ops/pull model <MODEL_ID>
 To submit a new model, follow this [pipeline specification](HOW_TO_SUBMIT.md).  Existing models are good references as well.
 
 ### How to run
-With downloaded models & test sets,
-you can trigger the benchmarking pipeline on your local machine via:
+With downloaded models & test sets, you can trigger a benchmark on your local machine via:
 ```
-ops/leaderboard_runner requests/request.yaml
+ops/benchmark -m <MODEL_ID> -d <TEST_SET_ID>
 ```
-
-where `request.yaml` specifies a <MODEL_ID> and a list of <TEST_SET_ID>
-(refer to examples in above specification)
+or
+```
+ops/benchmark -r path_to_your_benchmark_request.yaml
+```
+request.yaml can specify one model and more than one test sets at the same time,
+refer to [pipeline specification](HOW_TO_SUBMIT.md) for detailed example.
 
 ---
 

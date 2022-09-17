@@ -6,38 +6,63 @@ import yaml # pip install pyyaml
 import logging
 logging.basicConfig(stream=sys.stderr, level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 
+MODEL_ZOO = os.path.abspath('models');   assert os.path.isdir(MODEL_ZOO)
+DATASET_ZOO = os.path.abspath('datasets'); assert os.path.isdir(DATASET_ZOO)
+
 if __name__ == '__main__':
     logging.info('Host Runner Started')
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--stage', type=int, default=0, help='set stage variable in benchmark.sh')
     parser.add_argument('--max_num_utts', type=int, default=100000, help='max number of utts to test in a test set')
-    parser.add_argument('request_file_path', type=str, help='request.yaml')
+
+    # Usage 1: parse 1-model and 1-dataset from CLI
+    parser.add_argument('-m', '--model', type=str, default='', help='requested Model ID')
+    parser.add_argument('-d', '--dataset',  type=str, default='', help='requested Dataset ID')
+
+    # Usage 2: parse 1-model and possibly many datasets from request.yaml
+    parser.add_argument('-r', '--request_file', type=str, default='', help='request.yaml')
+
     args = parser.parse_args()
+    logging.info(args)
 
-    model_zoo   = os.path.abspath('models');   assert os.path.isdir(model_zoo)
-    dataset_zoo = os.path.abspath('datasets'); assert os.path.isdir(dataset_zoo)
 
-    logging.info('Processing benchmark request ...')
-    with open(args.request_file_path, 'r', encoding = 'utf-8') as request_file:
-        request = yaml.safe_load(request_file)
-        model_id = request['model']
-        test_sets = []
-        for x in request['test_set']:
-            test_sets.append(x)
+    if args.model and args.dataset and not args.request_file:
+        logging.info('Parsing benchmark request from CLI ... ')
+        model_id = args.model
+        dataset_ids = args.dataset
+
+    elif args.request_file and not args.model and not args.dataset:
+        logging.info('Parsing benchmark request from yaml ... ')
+        with open(args.request_file, 'r', encoding = 'utf-8') as f:
+            request = yaml.safe_load(f)
+            model_id = request['model']
+            dataset_ids = ' '.join(request['test_set'])
+
+    else:
+        logging.info(
+            F'\nUsage 1:\n'
+            F'  {__file__} --request path_to_request.yaml\n'
+            F'  {__file__} -r path_to_request.yaml\n'
+            F'\nUsage 2:\n'
+            F'  {__file__} --model <MODEL_ID> --dataset <TEST_SET_ID>\n'
+            F'  {__file__} -m <MODEL_ID> -d <TEST_SET_ID>\n'
+        )
+        exit(0)
+
     assert(model_id)
-    assert(test_sets)
+    assert(dataset_ids)
 
-    model_dir = os.path.join(model_zoo, model_id)
 
-    # download model
+    # check local model-zoo for requested model-image
+    model_dir = os.path.join(MODEL_ZOO, model_id)
     if not os.path.isdir(model_dir):
         pull_model_cmd = F'ops/pull model {model_id}'
         logging.info(F'Please pull model-image to your local machine via: {pull_model_cmd}')
         sys.exit(-1)
     assert os.path.isdir(model_dir)
 
-    # check model
+    # check model-image internal
     model_info_path = os.path.join(model_dir, 'model.yaml')
     assert os.path.isfile(model_info_path)
     sbi_bin_path = os.path.join(model_dir, 'SBI')
@@ -47,14 +72,15 @@ if __name__ == '__main__':
     docker_file = os.path.join(docker_context, 'Dockerfile')
     assert os.path.isfile(docker_file)
 
-    with open(model_info_path, 'r', encoding = 'utf-8') as model_info_file:
-        model_info = yaml.safe_load(model_info_file)
+    with open(model_info_path, 'r', encoding = 'utf-8') as f:
+        model_info = yaml.safe_load(f)
         task = model_info['task']
         language = model_info['language']
     assert task == 'ASR'
     assert language
 
-    # build docker image
+
+    # build benchmarking docker environment
     docker_image = F'speechio/leaderboard:{model_id}'
     docker_build_cmd = (
         F'docker build -f {docker_file} -t {docker_image} '
@@ -64,8 +90,8 @@ if __name__ == '__main__':
     logging.info(F'Building docker image: {docker_build_cmd}')
     os.system(docker_build_cmd)
 
-    # run benchmarking docker
-    testset_ids = ' '.join(test_sets)
+
+    # initiate benchmark
     leaderboard = os.getcwd()
     LEADERBOARD = '/app/speechio/leaderboard'
     docker_run_cmd = (
@@ -74,7 +100,7 @@ if __name__ == '__main__':
         F'-e LEADERBOARD={LEADERBOARD} '
         F'-v {leaderboard}:{LEADERBOARD} '
         F'{docker_image} '
-        F'{LEADERBOARD}/utils/benchmark.sh --stage {args.stage} --max-num-utts {args.max_num_utts} {model_id} "{testset_ids}"'
+        F'{LEADERBOARD}/utils/benchmark.sh --stage {args.stage} --max-num-utts {args.max_num_utts} {model_id} "{dataset_ids}"'
     )
     logging.info(F'Pulling up benchmarking container: {docker_run_cmd}')
     os.system(docker_run_cmd)
