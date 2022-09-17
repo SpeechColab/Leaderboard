@@ -154,25 +154,20 @@ ops/pull model <MODEL_ID>
 
 ---
 
-## 4. Benchmarking Pipeline
-### How to submit
-To submit a new model, follow this [pipeline specification](HOW_TO_SUBMIT.md).  Existing models are good references as well.
-
-### How to run
+## 4. Benchmark
 With downloaded models & test sets, you can trigger a benchmark on your local machine via:
 ```
 ops/benchmark -m <MODEL_ID> -d <TEST_SET_ID>
 ```
-or
-```
-ops/benchmark -r path_to_your_benchmark_request.yaml
-```
-request.yaml can specify one model and more than one test sets at the same time,
-refer to [pipeline specification](HOW_TO_SUBMIT.md) for detailed example.
 
 ---
 
-## 5. Latest Leaderboard Results
+## 5. Model Submission & Pipeline Specification
+If you want to submit a new model into leaderboard, or to know more details about pipeline internal, go through this [specification](HOW_TO_SUBMIT.md).  Existing models are good references as well.
+
+---
+
+## 6. Latest Results
 
 ### Public Models
 #### **unlocked** SpeechIO test sets (ZH00001 ~ ZH00015)
