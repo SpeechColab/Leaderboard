@@ -42,10 +42,8 @@ if __name__ == '__main__':
     else:
         logging.info(
             F'\nUsage 1:\n'
-            F'  {__file__} --request path_to_request.yaml\n'
             F'  {__file__} -r path_to_request.yaml\n'
             F'\nUsage 2:\n'
-            F'  {__file__} --model <MODEL_ID> --dataset <TEST_SET_ID>\n'
             F'  {__file__} -m <MODEL_ID> -d <TEST_SET_ID>\n'
         )
         exit(0)
