@@ -201,7 +201,7 @@ then SBI code can locate them via relative paths `./assets/asr.{mdl,cfg}`
 4. run a minimal validation benchmark:
     ```
     # run this in leaderboard repo
-    ops/leaderboard_runner requests/mini.yaml
+    ops/benchmark -r requests/mini.yaml
     ```
 5. check `leaderboard/results/...<your_model_id>.../{RESULTS,DETAILS}.txt`
 
