@@ -152,22 +152,21 @@ There are two types of models:
 ops/pull model <MODEL_ID>
 ```
 
+### How to submit a model
+If you want to submit a new model, go through this [specification](HOW_TO_SUBMIT.md).  Existing models are good references as well.
+
 ---
 
-## 4. Benchmark
-With downloaded models & test sets, you can trigger a benchmark on your local machine via:
+## 4. Benchmarking Pipeline
+With downloaded models & test sets, you can trigger a benchmarking pipeline on your local machine via:
 ```
 ops/benchmark -m <MODEL_ID> -d <TEST_SET_ID>
 ```
 
 ---
 
-## 5. Model Submission & Pipeline Specification
-If you want to submit a new model into leaderboard, or to know more details about pipeline internal, go through this [specification](HOW_TO_SUBMIT.md).  Existing models are good references as well.
 
----
-
-## 6. Latest Results
+## 5. Latest Results
 
 ### Public Models
 #### **unlocked** SpeechIO test sets (ZH00001 ~ ZH00015)
