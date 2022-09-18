@@ -95,3 +95,11 @@ GIGASPEECH_V1.0.0_DEV:
   url: oss://speechio-leaderboard/datasets/GIGASPEECH_V1.0.0_DEV/
 GIGASPEECH_V1.0.0_TEST:
   url: oss://speechio-leaderboard/datasets/GIGASPEECH_V1.0.0_TEST/
+
+# VoxPopuli
+VOXPOPULI_V1.0_EN_DEV:
+  url: oss://speechio-leaderboard/datasets/VOXPOPULI_V1.0_EN_DEV/
+VOXPOPULI_V1.0_EN_TEST:
+  url: oss://speechio-leaderboard/datasets/VOXPOPULI_V1.0_EN_TEST/
+VOXPOPULI_V1.0_EN_ACCENTED_TEST:
+  url: oss://speechio-leaderboard/datasets/VOXPOPULI_V1.0_EN_ACCENTED_TEST/
