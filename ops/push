@@ -5,12 +5,18 @@ import yaml  # pip install pyyaml
 import logging
 logging.basicConfig(stream=sys.stderr, level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 
+MODEL_ZOO   = os.path.abspath('models');   assert os.path.isdir(MODEL_ZOO)
+DATASET_ZOO = os.path.abspath('datasets'); assert os.path.isdir(DATASET_ZOO)
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('resource_type', choices=['model', 'dataset'])
-    parser.add_argument('resource_id', type=str, help='submission model/dataset id')
+
+    parser.add_argument('-m', '--model',   type = str)
+    parser.add_argument('-d', '--dataset', type = str)
+
     args = parser.parse_args()
     logging.info(args)
+
 
     if not os.path.isfile('utils/oss'):
         logging.error("Please install oss via utils/install_aliyun_oss_client.sh")
@@ -25,37 +31,37 @@ if __name__ == '__main__':
         logging.error(instructions_to_get_credential)
         sys.exit(-1)
 
-    model_zoo = 'models'
-    dataset_zoo = 'datasets'
 
-    if args.resource_type == 'model':
-        model_id = args.resource_id
-        dir = os.path.join(model_zoo, model_id)
+    if args.model and not args.dataset:
+        model_id = args.model
+        dir = os.path.join(MODEL_ZOO, model_id)
 
-        # precheck
         for x in ['model.yaml', 'SBI', 'docker/Dockerfile']:
             assert(os.path.isfile(os.path.join(dir, x)))
         
         src = dir
-        with open(os.path.join(model_zoo, 'zoo.yaml'), 'r', encoding='utf8') as f:
+        with open(os.path.join(MODEL_ZOO, 'zoo.yaml'), 'r', encoding='utf8') as f:
             remote_model_zoo = yaml.safe_load(f)
         dst = remote_model_zoo[model_id]['url']
 
-    elif args.resource_type == 'dataset':
-        dataset_id = args.resource_id
-        dir = os.path.join(dataset_zoo, dataset_id)
+    elif args.dataset and not args.model:
+        dataset_id = args.dataset
+        dir = os.path.join(DATASET_ZOO, dataset_id)
 
-        # precheck
         assert(os.path.isdir(os.path.join(dir, 'audio')))
         assert(os.path.isfile(os.path.join(dir, 'metadata.tsv')))
 
         src = dir
-        with open(os.path.join(dataset_zoo, 'zoo.yaml'), 'r', encoding='utf8') as f:
+        with open(os.path.join(DATASET_ZOO, 'zoo.yaml'), 'r', encoding='utf8') as f:
             remote_dataset_zoo = yaml.safe_load(f)
         dst = remote_dataset_zoo[dataset_id]['url']
 
     else:
-        raise NotImplementedError
+        logging.info(
+            F'\n  {__file__} -m <MODEL_ID>\n'
+            F'\n  {__file__} -d <TEST_SET_ID>\n'
+        )
+        exit(0)
 
     cmd = F'utils/oss -c credentials/aliyun_oss.cfg cp -ur {src} {dst}'
     logging.info(cmd)

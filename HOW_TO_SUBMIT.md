@@ -235,7 +235,7 @@ speechio_kaldi_multicn:
 
 2.4 Upload your model-image to cloud model-zoo:
 ```
-ops/push model <model_id>
+ops/push -m <model_id>
 ```
 
 Now SpeechIO/others can download/reproduce your ASR system. You can always re-run above `ops/push` command to update your model-image.

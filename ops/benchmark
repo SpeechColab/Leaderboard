@@ -6,7 +6,7 @@ import yaml # pip install pyyaml
 import logging
 logging.basicConfig(stream=sys.stderr, level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 
-MODEL_ZOO = os.path.abspath('models');   assert os.path.isdir(MODEL_ZOO)
+MODEL_ZOO   = os.path.abspath('models');   assert os.path.isdir(MODEL_ZOO)
 DATASET_ZOO = os.path.abspath('datasets'); assert os.path.isdir(DATASET_ZOO)
 
 if __name__ == '__main__':

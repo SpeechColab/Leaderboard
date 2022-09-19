@@ -21,7 +21,7 @@ _**People should be able to easily benchmark, reproduce, examine ASR systems fro
 
 <details><summary> Academic Test Sets (EN & ZH)  </summary><p>
 
-| 已公开 <br> UNLOCKED | 编号 <br> TEST_SET_ID | 说明 <br> DESCRIPTION | 语言 <br> LANGUAGE |
+| 已公开 <br> UNLOCKED | 编号 <br> DATASET_ID | 说明 <br> DESCRIPTION | 语言 <br> LANGUAGE |
 | --- | --- | --- | --- |
 | &check; | AISHELL1_TEST | test set of AISHELL-1 | zh |
 | &check; | AISHELL2_IOS_TEST | test set of AISHELL-2 (iOS channel) | zh |
@@ -43,7 +43,7 @@ _**People should be able to easily benchmark, reproduce, examine ASR systems fro
 SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publicly available sources (Youtube, TV programs, Podcast etc), covering various well-known scenarios and topics, transcribed by payed professional annotators.
 ```
 
-| 已公开 <br> UNLOCKED | 编号 <br> TEST_SET_ID | 名称 <br> NAME | 场景 <br> SCENARIO | 内容领域 <br> TOPIC | 时长 <br> HOURS | 难度(1-5) <br> DIFFICULTY  |
+| 已公开 <br> UNLOCKED | 编号 <br> DATASET_ID | 名称 <br> NAME | 场景 <br> SCENARIO | 内容领域 <br> TOPIC | 时长 <br> HOURS | 难度(1-5) <br> DIFFICULTY  |
 | --- | --- | --- | --- | --- | --- | --- |
 | &check; |SPEECHIO_ASR_ZH00000| 调试集 <br> for debugging | 视频会议、论坛演讲 <br> conference & speech | 经济、货币、金融 <br> economy, currency, finance | 1.0 | ★★☆ |
 | &check; |SPEECHIO_ASR_ZH00001| 新闻联播 | 新闻播报 <br> TV News | 时政 <br> news & politics | 9 | ★ |
@@ -83,7 +83,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 ### How to get a test set
 To download an **unlocked** test set to your local test set zoo:
 ```
-ops/pull dataset <TEST_SET_ID>
+ops/pull -d <DATASET_ID>
 ```
 
 ---
@@ -152,7 +152,7 @@ There are two types of models:
 * `Cloud Models` are normally light-weight client programs, small enough to store within this github repo
 * `Local Models` normally contain large assets so they are stored in cloud, you can download a model via:
 ```
-ops/pull model <MODEL_ID>
+ops/pull -m <MODEL_ID>
 ```
 
 ### How to submit a model
@@ -163,7 +163,7 @@ If you want to submit a new model, go through this [specification](HOW_TO_SUBMIT
 ## 4. Benchmarking Pipeline
 With downloaded models & test sets, you can trigger a benchmarking pipeline on your local machine via:
 ```
-ops/benchmark -m <MODEL_ID> -d <TEST_SET_ID>
+ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
 ```
 
 ---
