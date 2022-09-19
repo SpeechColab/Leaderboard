@@ -156,15 +156,15 @@ We strongly recommand that you provide a markdown summary about your model, cove
 ---
 
 ## Step 2: Validate your model-image locally
-2.1 make sure you already have a tiny test set `datasets/MINI_ZH`
+2.1 Make sure you already have a tiny test set `datasets/MINI_ZH`
 
-2.2 move prepared model-image to your local model-zoo
+2.2 Move prepared model-image to your local model-zoo
 
   ```
   mv <prepared_model_image>  <leaderboard_repo>/models/<your_model_id>
   ```
 
-model submitter should pick their own unique & meaningful **`model_id`**, e.g.:
+You should pick a unique & meaningful **`model_id`** for your model, e.g.:
 
   ```
   speechio_kaldi_pretrain
@@ -173,20 +173,20 @@ model submitter should pick their own unique & meaningful **`model_id`**, e.g.:
   deepspeech_v1
   ```
 
-2.3 run a minimal validation benchmark:
+2.3 Run a minimal validation benchmark:
 
   ```
   ops/benchmark  -m <your_model_id>  -d MINI_ZH
   ```
 
-2.4 check `results/...<your_model_id>.../{RESULTS,DETAILS}.txt` for benchmark results.
+2.4 Check `results/...<your_model_id>.../{RESULTS,DETAILS}.txt` for benchmark results.
 
 ---
 
 ## Step 3: Submit your model-image
-A. For cloud API model: Just create a PR, add the model-image to `models/`
+A. For cloud API models: Just create a PR, add the model-image to `models/`
 
-B. For local model:
+B. For local models:
 
 * Install aliyun object-storage-service binary (one-time-only installation)
   ```
@@ -219,29 +219,24 @@ Congrats, now everyone should be able to reproduce your ASR system via leaderboa
 ---
 
 ## Send a benchmark request via a pull request
-Once you have your model submitted, you can open a PR to this github repo, adding a request file: `requests/<your_benchmark_request_name>.yaml`
-
-a sample request can be found [here](requests/sample_request.yaml):
+You can open a pull-request, adding `requests/<your_benchmark_request_name>.yaml` to this repo. [see sample requests here](requests/)
 
 ```
-date: '2021-04-05'
+date: '2021-04-05'  # request date
 requester: Jiayu
 entity: SpeechIO
-email: 
+email:  # a list of emails to receive the benchmark results
   - xxx@gmail.com
-model: aliyun_api
-test_set:
+  - yyy@gmail.com
+  ...
+model: aliyun_api  # the MODEL_ID to be benchmarked
+test_set:  # a list of DATASET_IDs to be benchmarked
   - SPEECHIO_ASR_ZH00000
   - SPEECHIO_ASR_ZH00001
+  ...
 ```
 
-where:
-* `date`: benchmark request date
-* `model`: model id, specifying which model you want to benchmark
-* `test_set`: a list of dataset ids to be tested
-* `email`: a list of email addresses to receive benchmark results
-
-You can lookup `model` and `test_set` in section 2&3 of [README](README.md)
+You can check [README](README.md) for all available `MODEL_ID`s & `DATASET_ID`s
 
 Once we merge your submission pull request, the leaderboard pipeline will:
 * init a docker runner to benchmark requested model with requested test sets
