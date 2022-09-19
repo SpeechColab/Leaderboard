@@ -10,8 +10,9 @@ As above figure demonstrates, a benchmark cycle contains following steps:
 
 ---
 
-## Step 1. Preparing your model-image
+## Step 1. Preparing a model-image
 A **model-image** is just an **ordinary directory** with a self-contained ASR system inside. e.g.:
+
 ```
 jiayu@ubuntu: tree ./a_sample_model_image
 
@@ -19,11 +20,12 @@ a_sample_model_image
 ├── docker
 │   └── Dockerfile
 ├── assets
-│   └── <runtime resources, e.g. models, configs, API credentials etc>
+│   └── <runtime resources: models, configs, API credentials etc>
 ├── model.yaml
 ├── README.md
 └── SBI
 ```
+
 **You should follow above file names and structures strictly.**  Now let's explain these item by item.
 
 ---
@@ -54,14 +56,15 @@ a_sample_model_image
 </p></details>
 
 **important note**: 
-1. You need to add **`python3`** into Dockerfile, it is required by leaderboard pipeline
+
+You need to add **`python3`** into Dockerfile, it is required by leaderboard pipeline
 ```
 # Ubuntu
 RUN apt-get install python3
 ...
 ```
 
-2. For __English__ model, please also include **`regex`** and **`pynini`**:
+For __English__ model, please also include **`regex`** and **`pynini`**:
 ```
 # Ubuntu
 RUN apt-get install python3 python3-pip
@@ -74,42 +77,40 @@ RUN pip3 install pynini regex
 
 ### 1.2 model.yaml
 ```
-date: 2021-04-05
-task: ASR
-language: zh
-sample_rate: 16000
-author: Jiayu
-entity: SpeechIO
-email: leaderboard@speechio.ai
+date: 2021-04-05    # date of model-image creation
+task: ASR           # have to be `ASR` for now
+language: zh        # lowercase language code, e.g `en`, `zh`
+sample_rate: 16000  # 8000 for telephone, 16000 for other
+author: Jiayu       # your name
+entity: SpeechIO    # your entity
+email: leaderboard@speechio.ai  # your email
 ```
 
-* `date`: date of model-image creation
-* `task`: must be `ASR` for now
-* `language`: lowercase language code [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes), e.g `en`, `zh`
-* `sample_rate`: sample rate, 8000(telephone) / 16000(other)
-* `author`: author name
-* `entity`: author's entity
-* `email`: author's email
+* You can find standard language codes in [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 
 ---
 
-### 1.3 README.md (optional)
-We strongly recommand that you provide a markdown summary about your model, covering:
+### 1.3 Runtime Resources
+Runtime resources(*model files*, *vocabulary/lexicon*, *configs* etc) should be placed inside `assets` dir, e.g.:
 
-* number of parameters
-* training data
-* feature type
-* neural net structure & topology
-* objective function
-* optimizer
-* ...
+```
+jiayu@ubuntu: tree ./a_sample_model_image
+
+a_sample_model_image
+├── assets
+    ├── asr.mdl
+    ├── asr.cfg
+    ...
+...
+└── SBI
+```
 
 ---
 
 ### 1.4 SBI
 * **SBI** is an **executable** implemented by submitter for ASR inference.
 * **SBI** can be in any language: *C/C++, Java, bash, python etc.
-* **SBI** code can refer to other resources(models, configs, programs/scripts etc) via relative paths under model-image dir.
+* **SBI** code can refer to runtime resources via relative paths under model-image dir, e.g. `./assets/asr.{mdl,cfg}`
 * **SBI** should implement following Command Line Interface(CLI):
   ```
   ./SBI <input_audio_list> <working_dir>
@@ -141,113 +142,87 @@ We strongly recommand that you provide a markdown summary about your model, cove
 
 ---
 
-### 1.5 Runtime Resources
-Runtime resources refers to *model files*, *configs*, *cloud-api credentials* etc. For example:
+### 1.5 README.md (optional)
+We strongly recommand that you provide a markdown summary about your model, covering:
 
-```
-jiayu@ubuntu: tree ./a_sample_model_image
-
-a_sample_model_image
-├── assets
-    ├── asr.mdl
-    ├── asr.cfg
-    ...
-...
-└── SBI
-```
-
-then SBI code can locate them via relative paths `./assets/asr.{mdl,cfg}`
+* number of parameters
+* training data
+* feature type
+* neural net structure & topology
+* objective function
+* optimizer
+* ...
 
 ---
 
-### 1.6 Sample model-image
+## Step 2: Validate your model-image locally
+2.1 make sure you already have a tiny test set `datasets/MINI_ZH`
 
-* a sample model-image of Cloud-API ASR system:
+2.2 move prepared model-image to your local model-zoo
 
-  https://github.com/speechio/leaderboard/tree/master/models/aispeech_api_zh
+  ```
+  mv <prepared_model_image>  <leaderboard_repo>/models/<your_model_id>
+  ```
 
-* a sample model-image of local ASR system in Kaldi framework:
+model submitter should pick their own unique & meaningful **`model_id`**, e.g.:
 
-  https://github.com/speechio/leaderboard/tree/master/models/sample_kaldi_model
+  ```
+  speechio_kaldi_pretrain
+  alphacep_vosk_en
+  interspeech_xxx_paper_reproduced
+  deepspeech_v1
+  ```
 
----
-### 1.7 Validate prepared model-image with leaderboard pipeline on your local machine
-1. make sure you have `MINI_ZH` in your local testset-zoo `leaderboard/datasets/MINI_ZH`
-2. move prepared model-image to your local model-zoo
-    ```
-    mv <prepared_model_image> leaderboard/models/<your_model_id>
-    ```
+2.3 run a minimal validation benchmark:
 
-    **`model_id`** is a unique identifier, used to refer to this model in future benchmarks.
+  ```
+  ops/benchmark  -m <your_model_id>  -d MINI_ZH
+  ```
 
-    We let submitters to decide their model id. It should be meaningful and unique, for example:
-    ```
-    speechio_kaldi_pretrain
-    alphacep_vosk_en
-    interspeech_xxx_paper_reproduced
-    deepspeech_v1
-    ```
-3. create a benchmark request under `leaderboard/requests/mini.yaml`, replace <your_model_id> field with your model_id:
-    ```
-    date: '2021-01-01'
-    requester: xxx
-    entity: xxx
-    email: 
-      - xxx@xxx.com
-    model: <your_model_id>
-    test_set:
-      - MINI_ZH
-    ```
-4. run a minimal validation benchmark:
-    ```
-    # run this in leaderboard repo
-    ops/benchmark -r requests/mini.yaml
-    ```
-5. check `leaderboard/results/...<your_model_id>.../{RESULTS,DETAILS}.txt`
+2.4 check `results/...<your_model_id>.../{RESULTS,DETAILS}.txt` for benchmark results.
 
 ---
 
-## Step 2: Submitting your model-image
-Just create a PR to this github repo if your model-image is based on cloud-API. 
+## Step 3: Submit your model-image
+A. For cloud API model: Just create a PR, add the model-image to `models/`
 
-Otherwise, for heavy-weight local ASR engine:
+B. For local model:
 
-2.1 Install aliyun object-storage-service client (one-time-only installation)
-```
-# run this in leaderboard repo
-utils/install_aliyun_oss_client.sh
-```
+* Install aliyun object-storage-service binary (one-time-only installation)
+  ```
+  # run this in leaderboard repo
+  utils/install_aliyun_oss_client.sh
+  ```
 
-2.2 Move prepared model-image dir into local model-zoo
-```
-mv <prepared_model_image> leaderboard/models/<model_id>  # This should have been done during local validation.
-```
+* Make sure your model-image is ready inside your local model zoo:
+  ```
+  mv <prepared_model_image> leaderboard/models/<your_model_id>
+  ```
 
-2.3 Register your model-image to `leaderboard/models/zoo.yaml`:
-```
-speechio_kaldi_multicn:
-  url: oss://speechio-leaderboard/models/speechio_kaldi_multicn/
-...
-...
-<model_id>:
-  url: oss://speechio-leaderboard/models/<model_id>/
-```
+* Register your model-image to `models/zoo.yaml`:
+  ```
+  speechio_kaldi_multicn:
+    url: oss://speechio-leaderboard/models/speechio_kaldi_multicn/
+  ...
+  ...
+  <your_model_id>:
+    url: oss://speechio-leaderboard/models/<your_model_id>/
+  ```
 
-2.4 Upload your model-image to cloud model-zoo:
-```
-ops/push -m <model_id>
-```
+* Upload your model-image to cloud model-zoo:
+  ```
+  ops/push -m <your_model_id>
+  ```
 
-Now SpeechIO/others can download/reproduce your ASR system. You can always re-run above `ops/push` command to update your model-image.
+Congrats, now everyone should be able to reproduce your ASR system via leaderboard. You can always re-run above `ops/push` command to update your model-image.
 
 ---
 
-## Step 3: Send a benchmark request via a pull request
-Once you have your model submitted, you can open a PR to this github repo, adding a request file to `requests` directory:
-
-**`github.com/speechio/leaderboard/requests/<your_benchmark_request>.yaml`**
+## Send a benchmark request via a pull request
+Once you have your model submitted, you can open a PR to this github repo, adding a request file: `requests/<your_benchmark_request_name>.yaml`
 
 a sample request can be found [here](requests/sample_request.yaml):
+
 ```
 date: '2021-04-05'
 requester: Jiayu
@@ -259,13 +234,14 @@ test_set:
   - SPEECHIO_ASR_ZH00000
   - SPEECHIO_ASR_ZH00001
 ```
+
 where:
 * `date`: benchmark request date
 * `model`: model id, specifying which model you want to benchmark
-* `test_set`: test set id list, which test sets you want to benchmark with
+* `test_set`: a list of dataset ids to be tested
 * `email`: a list of email addresses to receive benchmark results
 
-you can lookup `model` and `test_set` in section 2&3 of [README](README.md)
+You can lookup `model` and `test_set` in section 2&3 of [README](README.md)
 
 Once we merge your submission pull request, the leaderboard pipeline will:
 * init a docker runner to benchmark requested model with requested test sets
