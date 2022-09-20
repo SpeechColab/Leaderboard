@@ -44,7 +44,7 @@ if __name__ == '__main__':
             F'\nUsage 1:\n'
             F'  {__file__} -r path_to_request.yaml\n'
             F'\nUsage 2:\n'
-            F'  {__file__} -m <MODEL_ID> -d <TEST_SET_ID>\n'
+            F'  {__file__} -m <MODEL_ID> -d <DATASET_ID>\n'
         )
         exit(0)
 

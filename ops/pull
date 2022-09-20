@@ -49,7 +49,7 @@ if __name__ == '__main__':
     else:
         logging.info(
             F'\n  {__file__} -m <MODEL_ID>\n'
-            F'\n  {__file__} -d <TEST_SET_ID>\n'
+            F'\n  {__file__} -d <DATASET_ID>\n'
         )
         exit(0)
 
