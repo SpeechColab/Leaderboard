@@ -109,36 +109,37 @@ a_sample_model_image
 
 ### 1.4 SBI
 * **SBI** is an **executable** implemented by submitter for ASR inference.
-* **SBI** can be in any language: *C/C++, Java, bash, python etc.
-* **SBI** code can refer to runtime resources via relative paths under model-image dir, e.g. `./assets/asr.{mdl,cfg}`
+* **SBI** can be in any language: C/C++, Java, bash, python etc.
+* **SBI** will always be invoked under model-image, so it can refer to runtime resources via relative paths, e.g. `./assets/asr.{mdl,cfg}`
 * **SBI** should implement following Command Line Interface(CLI):
   ```
-  ./SBI <input_audio_list> <working_dir>
+  ./SBI <input_audio_list> <result_dir>
   ```
 
-* Leaderboard pipeline feeds <input_audio_list> to SBI as 1st argument: Each line contains two fields <audio_id> and <audio_absolute_path>, seperated by white space:
+  **<input_audio_list>** provides a list of <audio_id> & <audio_absolute_path> to be decoded, seperated by white space:
   ```
   SPEECHIO_ASR_ZH00001__U001 /home/dataset/SPEECHIO_ASR_ZH00001/U001.wav
   SPEECHIO_ASR_ZH00001__U002 /home/dataset/SPEECHIO_ASR_ZH00001/U002.wav
   ...
   ```
-  Audio files are 16k16bit wavs, less than 30 secs each.
+  all audio files are `16k16bit mono wave`, less than 30 secs each.
 
-* Leaderboard pipeline feeds <working_dir> to SBI as 2nd argument: **SBI** can create/read/write arbitrary files inside <working_dir>, but recognition results must be written to **<working_dir>/raw_rec.txt** with _ASCII/UTF-8_ encoding, e.g.:
+  **<result_dir>** provides a directory for **SBI** to create/read/write temporary files during decoding, and final results must be written to `<result_dir>/raw_rec.txt`:
   ```
   SPEECHIO_ASR_ZH00001__U001 I just watched the movie "The Pursuit of Happiness"
   SPEECHIO_ASR_ZH00001__U002 rock and roll like a rolling stone
   ...
   ```
+  `<result_dir>/raw_rec.txt` should be _ASCII/UTF-8_ encoded.
 
 * If recognition fails for an utterence, you can write a line with <audio_id> and empty result like this:
   ```
   SPEECHIO_ASR_ZH00001__U003  
   ```
 
-* You can debug your SBI implementation inside your model-image dir on your local machine, by feeding <input_audio_list> and <working_dir> yourself.  
+* You don't need to worry about text normalization(cases, punctuations, numbers, interjections ...), WER/CER calculation etc. Just make sure your SBI implementation follows above specifications.
 
-* You don't need to worry about text normalization(cases, punctuations, numbers, years etc), WER/CER calculation etc. Just make sure your SBI implementation follows above specifications.
+* You can debug your SBI implementation inside your model-image dir on your local machine, by feeding <input_audio_list> and <result_dir> yourself.  
 
 ---
 
@@ -196,7 +197,7 @@ B. For local models:
 
 * Make sure your model-image is ready inside your local model zoo:
   ```
-  mv <prepared_model_image> leaderboard/models/<your_model_id>
+  mv <prepared_model_image> <leaderboard_repo>/models/<your_model_id>
   ```
 
 * Register your model-image to `models/zoo.yaml`:
