@@ -80,8 +80,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 </p></details>
 
 
-### How to get a test set
-To download an **unlocked** test set to your local test set zoo:
+### How to get an unlocked test set
 ```
 ops/pull -d <DATASET_ID>
 ```
@@ -89,11 +88,10 @@ ops/pull -d <DATASET_ID>
 ---
 
 ## 3. Model Zoo: `models/*`
-There are two types of models:
-* `Cloud Models` represent ASR systems backed with commercial cloud-services (e.g. Google Cloud, Azure)
-* `Local Models` represent local ASR systems (e.g. open-source toolkits + pretrained models)
 
-<details><summary> EN Cloud Models </summary><p>
+<details><summary> EN Models </summary><p>
+
+Cloud Models
 
 | 编号 <br> MODEL_ID | 类型 <br> TYPE | 厂商 <br> PROVIDER | 简介 <br> DESCRIPTION | 链接 <br> URL |
 | --- | --- | --- | --- | --- |
@@ -104,10 +102,7 @@ There are two types of models:
 | [microsoft_sdk_en](models/microsoft_sdk_en/) | Cloud | 微软 <br> Microsoft | Azure | [link](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/) |
 | [tencent_api_en](models/tencent_api_en/) | Cloud | 腾讯 <br> Tencent | 腾讯云 | [link](https://cloud.tencent.com/product/asr) |
 
-</p></details>
-
-
-<details><summary> EN Local Models </summary><p>
+Local Models
 
 | 编号 <br> MODEL_ID | 类型 <br> TYPE | 作者 <br> AUTHOR | 简介 <br> DESCRIPTION |
 | --- | --- | --- | --- |
@@ -119,7 +114,9 @@ There are two types of models:
 
 </p></details>
 
-<details><summary> ZH Cloud Models </summary><p>
+<details><summary> ZH Models </summary><p>
+
+Cloud Models
 
 | 编号 <br> MODEL_ID | 类型 <br> TYPE | 厂商 <br> PROVIDER | 简介 <br> DESCRIPTION | 链接 <br> URL |
 | --- | --- | --- | --- | --- |
@@ -134,9 +131,7 @@ There are two types of models:
 | [tencent_api_zh](models/tencent_api_zh/) | Cloud | 腾讯 <br> Tencent | 腾讯云 | [link](https://cloud.tencent.com/product/asr) |
 | [yitu_api_zh](models/yitu_api_zh/) | Cloud | 依图 <br> YituTech |依图语音开放平台 | [link](https://speech.yitutech.com) |
 
-</p></details>
-
-<details><summary> ZH Local Models </summary><p>
+Local Models
 
 | 编号 <br> MODEL_ID | 类型 <br> TYPE | 作者 <br> AUTHOR | 简介 <br> DESCRIPTION |
 | --- | --- | --- | --- |
@@ -149,25 +144,24 @@ There are two types of models:
 
 
 ### How to get a model
-* `Cloud Models` are normally light-weight client programs, small enough to store within this github repo
-* `Local Models` normally contain large assets so they are stored in cloud, you can download a model via:
-```
-ops/pull -m <MODEL_ID>
-```
+* `Cloud Models` are Cloud API clients(e.g. Google Cloud, Azure), stored this github repo already.
+* `Local Models` are local ASR engines(e.g. pretrained models based on open-sourced toolkits) that can be downloaded via:
+	```
+	ops/pull -m <MODEL_ID>
+	```
 
 ### How to submit a model
-If you want to submit a new model, go through this [specification](HOW_TO_SUBMIT.md).  Existing models are good references as well.
+Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good references as well.
 
 ---
 
 ## 4. Benchmarking Pipeline
-With downloaded models & test sets, you can trigger a benchmarking pipeline on your local machine via:
+With downloaded models & test sets, benchmarking pipeline can be triggered on your machine via:
 ```
 ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
 ```
 
 ---
-
 
 ## 5. Latest Results
 
