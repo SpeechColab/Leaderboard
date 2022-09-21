@@ -144,7 +144,7 @@ Local Models
 
 
 ### How to get a model
-* `Cloud Models` are Cloud API clients(e.g. Google Cloud, Azure), stored this github repo already.
+* `Cloud Models` are Cloud API clients(e.g. Google Cloud, Azure), stored in this github repo already.
 * `Local Models` are local ASR engines(e.g. pretrained models based on open-sourced toolkits) that can be downloaded via:
 	```
 	ops/pull -m <MODEL_ID>
@@ -156,7 +156,7 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 ---
 
 ## 4. Benchmarking Pipeline
-With downloaded models & test sets, benchmarking pipeline can be triggered on your machine via:
+With downloaded models & test sets on your machine, benchmarking pipeline can be triggered via:
 ```
 ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
 ```
