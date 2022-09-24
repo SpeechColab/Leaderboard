@@ -16,3 +16,13 @@ coqui_model_en:
   url: oss://speechio-leaderboard/models/coqui_model_en/
 NeMo_conformer_en:
   url: oss://speechio-leaderboard/models/NeMo_conformer_en/
+data2vec_audio_large_ft_libri_960h:
+  url: oss://speechio-leaderboard/models/data2vec_audio_large_ft_libri_960h/
+hubert_xlarge_ft_libri_960h:
+  url: oss://speechio-leaderboard/models/hubert_xlarge_ft_libri_960h/
+wav2vec2_large_robust_ft_libri_960h:
+  url: oss://speechio-leaderboard/models/wav2vec2_large_robust_ft_libri_960h/
+wavlm_base_plus_ft_libri_clean_100h:
+  url: oss://speechio-leaderboard/models/wavlm_base_plus_ft_libri_clean_100h/
+whisper_large:
+  url: oss://speechio-leaderboard/models/whisper_large/
