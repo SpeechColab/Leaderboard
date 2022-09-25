@@ -68,6 +68,10 @@ if __name__ == '__main__':
         text = text.replace(' / ', '/')
         text = text.replace(' - ', '-')
 
+        replace_list = ["\"'", "'?", "'!","'.", "?'", "!'", ".'","''"]
+        for quote_item in replace_list:
+            text = text.replace(quote_item, "")
+        text = text.replace(", ", " ")
 
         # text normalization
         text = nemo_tn.normalize(text)
@@ -77,7 +81,8 @@ if __name__ == '__main__':
         new_chars = ' ' * len(old_chars)
         del_chars = ''
         text = text.translate(str.maketrans(old_chars, new_chars, del_chars))
-
+        text = text.replace(" ' ", " ")
+        
         # remove interjection
         text = ' ' + text + ' '
         for i in range(3):
