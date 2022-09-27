@@ -111,6 +111,7 @@ class ErrorStats:
         self.I = 0
         self.D = 0
         self.token_error_rate = 0.0
+        self.modified_token_error_rate = 0.0
 
         self.num_utts_with_error = 0
         self.sentence_error_rate = 0.0
@@ -135,6 +136,7 @@ class ErrorStats:
             F'num_eval_utts: {self.num_eval_utts}\n'
             F'sentence_error_rate: {self.sentence_error_rate:.2f}%\n'
             F'token_error_rate: {self.token_error_rate:.2f}%\n'
+            F'modified_token_error_rate: {self.modified_token_error_rate:.2f}%\n'
             F'token_stats:\n'
             F'  - tokens:{self.C + self.S + self.D:>7}\n'
             F'  - edits: {self.S + self.I + self.D:>7}\n'
@@ -290,7 +292,10 @@ def PrintPrettyAlignment(raw_hyp, edit_ali, ref_ali, hyp_ali, stream = sys.stder
 
 def ComputeTokenErrorRate(c, s, i, d):
     assert((s + d + c) != 0)
-    return 100.0 * (s + d + i) / (s + d + c)
+    num_edits = (s + d + i)
+    ref_len = (c + s + d)
+    hyp_len = (c + s + i)
+    return 100.0 * num_edits / ref_len, 100.0 * num_edits / max(ref_len, hyp_len)
 
 
 def ComputeSentenceErrorRate(num_err_utts, num_utts):
@@ -495,8 +500,8 @@ if __name__ == '__main__':
                 hyp_ali.append(h)
         #assert(distance == edit_transducer.compute_distance(ref_fst, sausage))
 
-        utt_ter = ComputeTokenErrorRate(C, S, I, D)
-        print(F'{{"uid":{uid}, "score":{-distance}, "ter":{utt_ter:.2f}, "cor":{C}, "sub":{S}, "ins":{I}, "del":{D}}}', file=fo)
+        utt_ter, utt_mter = ComputeTokenErrorRate(C, S, I, D)
+        print(F'{{"uid":{uid}, "score":{-distance}, "TER":{utt_ter:.2f}, "mTER":{utt_mter:.2f}, "cor":{C}, "sub":{S}, "ins":{I}, "del":{D}}}', file=fo)
         PrintPrettyAlignment(raw_hyp, edit_ali, ref_ali, hyp_ali, fo)
 
         if utt_ter > 0:
@@ -513,7 +518,7 @@ if __name__ == '__main__':
     logging.info(f'{ndone} utts evaluated in total.')
 
     # Corpus-Level evaluation
-    stats.token_error_rate = ComputeTokenErrorRate(stats.C, stats.S, stats.I, stats.D)
+    stats.token_error_rate, stats.modified_token_error_rate = ComputeTokenErrorRate(stats.C, stats.S, stats.I, stats.D)
     stats.sentence_error_rate = ComputeSentenceErrorRate(stats.num_utts_with_error, stats.num_eval_utts)
 
     print(stats.to_json())
