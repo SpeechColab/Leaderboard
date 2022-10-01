@@ -212,11 +212,10 @@ def LoadGLM(rel_path, uids, ref_utts):
         for phrase in rule:
             glm_word.append(phrase.strip()) 
 
-    extra_ref_list = []
     for uid in uids:
         ref_tokens = ref_utts[uid].text.split()
         for token in ref_tokens:
-            if "-" in token and token!="-":
+            if "-" in token and token.replace("-","")!="":
                 ref_rule = [' '.join([ x for x in token.split('-') ]),token.replace('-', ''),token]
                 if set(ref_rule).isdisjoint(set(glm_word)):
                     glm_word.extend(ref_rule)
@@ -224,6 +223,7 @@ def LoadGLM(rel_path, uids, ref_utts):
                     rule_name = f'<RULE_{k:06d}>'
                     glm[rule_name] = [' '.join([ x for x in token.split('-') ]),token.replace('-', ''),token]
 
+       
     logging.info(f'  #rule: {len(glm)}')
 
     return glm
