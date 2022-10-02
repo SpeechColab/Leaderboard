@@ -83,6 +83,17 @@ SPEECHIO_ASR_ZH00029:
 SPEECHIO_ASR_ZH00030:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00030/
 
+# AliMeeting
+ALIMEETING_EVAL_NEAR_FIELD:
+  url: oss://speechio-leaderboard/datasets_private/ALIMEETING_EVAL_NEAR_FIELD/
+ALIMEETING_TEST_NEAR_FIELD:
+  url: oss://speechio-leaderboard/datasets_private/ALIMEETING_TEST_NEAR_FIELD/
+
+ALIMEETING_EVAL_FAR_FIELD:
+  url: oss://speechio-leaderboard/datasets_private/ALIMEETING_EVAL_FAR_FIELD/
+ALIMEETING_TEST_FAR_FIELD:
+  url: oss://speechio-leaderboard/datasets_private/ALIMEETING_TEST_FAR_FIELD/
+
 
 # LibriSpeech
 LIBRISPEECH_TEST_CLEAN:
@@ -90,7 +101,7 @@ LIBRISPEECH_TEST_CLEAN:
 LIBRISPEECH_TEST_OTHER:
   url: oss://speechio-leaderboard/datasets/LIBRISPEECH_TEST_OTHER/
 
-# TED-Lium Release 3 legacy
+# TEDLIUM Release 3 legacy
 TEDLIUM_RELEASE3_LEGACY_DEV:
   url: oss://speechio-leaderboard/datasets/TEDLIUM_RELEASE3_LEGACY_DEV/
 TEDLIUM_RELEASE3_LEGACY_TEST:

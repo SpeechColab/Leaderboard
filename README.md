@@ -27,6 +27,10 @@ _**People should be able to easily benchmark, reproduce, examine ASR systems fro
 | &check; | AISHELL2_IOS_TEST | test set of AISHELL-2 (iOS channel) | zh |
 | &check; | AISHELL2_ANDROID_TEST | test set of AISHELL-2 (Android channel) | zh |
 | &check; | AISHELL2_MIC_TEST | test set of AISHELL-2 (Microphone channel) | zh |
+| &check; | ALIMEETING_EVAL_NEAR_FIELD | [AliMeeting](https://www.openslr.org/119/) | zh |
+| &check; | ALIMEETING_TEST_NEAR_FIELD | [AliMeeting](https://www.openslr.org/119/) | zh |
+| &check; | ALIMEETING_EVAL_FAR_FIELD | [AliMeeting](https://www.openslr.org/119/) | zh |
+| &check; | ALIMEETING_TEST_FAR_FIELD | [AliMeeting](https://www.openslr.org/119/) | zh |
 | &check; | LIBRISPEECH_TEST_CLEAN | "test_clean" set of [LibriSpeech](https://www.openslr.org/12) | en |
 | &check; | LIBRISPEECH_TEST_OTHER | "test_other" set of [LibriSpeech](https://www.openslr.org/12) | en |
 | &check; | TEDLIUM_RELEASE3_LEGACY_DEV | tedlium release 3, legacy dir dev set [TEDLium3](https://www.openslr.org/51/) | en |

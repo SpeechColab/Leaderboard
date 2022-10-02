@@ -48,8 +48,10 @@ if __name__ == '__main__':
         dataset_id = args.dataset
         dir = os.path.join(DATASET_ZOO, dataset_id)
 
-        assert(os.path.isdir(os.path.join(dir, 'audio')))
         assert(os.path.isfile(os.path.join(dir, 'metadata.tsv')))
+        assert(
+            os.path.isdir(os.path.join(dir, 'audio')) or os.path.isdir(os.path.join(dir, 'wav'))
+        )
 
         src = dir
         with open(os.path.join(DATASET_ZOO, 'zoo.yaml'), 'r', encoding='utf8') as f:
