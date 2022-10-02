@@ -90,6 +90,12 @@ LIBRISPEECH_TEST_CLEAN:
 LIBRISPEECH_TEST_OTHER:
   url: oss://speechio-leaderboard/datasets/LIBRISPEECH_TEST_OTHER/
 
+# TED-Lium Release 3 legacy
+TEDLIUM_RELEASE3_LEGACY_DEV:
+  url: oss://speechio-leaderboard/datasets/TEDLIUM_RELEASE3_LEGACY_DEV/
+TEDLIUM_RELEASE3_LEGACY_TEST:
+  url: oss://speechio-leaderboard/datasets/TEDLIUM_RELEASE3_LEGACY_TEST/
+
 # GigaSpeech
 GIGASPEECH_V1.0.0_DEV:
   url: oss://speechio-leaderboard/datasets/GIGASPEECH_V1.0.0_DEV/
