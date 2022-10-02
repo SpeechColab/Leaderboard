@@ -181,7 +181,7 @@ def BreakHyphen(token : str):
     return v
 
 
-def LoadGLM(rel_path):
+def LoadGLM(rel_path, uids, ref_utts):
     '''
     glm.csv:
         I'VE,I HAVE
@@ -205,9 +205,25 @@ def LoadGLM(rel_path):
     )
 
     glm = {}
+    glm_word = []
     for k, rule in enumerate(reader):
         rule_name = f'<RULE_{k:06d}>'
         glm[rule_name] = [ phrase.strip() for phrase in rule ]
+        for phrase in rule:
+            glm_word.append(phrase.strip()) 
+
+    for uid in uids:
+        ref_tokens = ref_utts[uid].text.split()
+        for token in ref_tokens:
+            if "-" in token and token.replace("-","")!="":
+                ref_rule = [' '.join([ x for x in token.split('-') ]),token.replace('-', ''),token]
+                if set(ref_rule).isdisjoint(set(glm_word)):
+                    glm_word.extend(ref_rule)
+                    k += 1
+                    rule_name = f'<RULE_{k:06d}>'
+                    glm[rule_name] = [' '.join([ x for x in token.split('-') ]),token.replace('-', ''),token]
+
+       
     logging.info(f'  #rule: {len(glm)}')
 
     return glm
@@ -364,7 +380,7 @@ if __name__ == '__main__':
 
 
     assert(args.glm)
-    glm = LoadGLM(args.glm)
+    glm = LoadGLM(args.glm, uids, ref_utts)
 
     tokens = []
     for rule in glm.values():
