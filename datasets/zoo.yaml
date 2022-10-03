@@ -120,3 +120,9 @@ VOXPOPULI_V1.0_EN_TEST:
   url: oss://speechio-leaderboard/datasets/VOXPOPULI_V1.0_EN_TEST/
 VOXPOPULI_V1.0_EN_ACCENTED_TEST:
   url: oss://speechio-leaderboard/datasets/VOXPOPULI_V1.0_EN_ACCENTED_TEST/
+
+# Common Voice 11.0
+COMMON_VOICE_V11.0_DEV:
+  url: oss://speechio-leaderboard/datasets/COMMON_VOICE_V11.0_DEV/
+COMMON_VOICE_V11.0_TEST:
+  url: oss://speechio-leaderboard/datasets/COMMON_VOICE_V11.0_TEST/
