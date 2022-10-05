@@ -40,6 +40,8 @@ _**People should be able to easily benchmark, reproduce, examine ASR systems fro
 | &check; | VOXPOPULI_V1.0_EN_DEV | dev set of [VoxPopuli](https://github.com/facebookresearch/voxpopuli) | en |
 | &check; | VOXPOPULI_V1.0_EN_TEST | test set of [VoxPopuli](https://github.com/facebookresearch/voxpopuli) | en |
 | &check; | VOXPOPULI_V1.0_EN_ACCENTED_TEST | accented test set of [VoxPopuli](https://github.com/facebookresearch/voxpopuli) | en |
+| &check; | COMMON_VOICE_V11.0_DEV | dev set of [Common Voice](https://commonvoice.mozilla.org/en/datasets) | en |
+| &check; | COMMON_VOICE_V11.0_TEST | test set of [Common Voice](https://commonvoice.mozilla.org/en/datasets) | en |
 
 </p></details>
 
@@ -117,6 +119,7 @@ Local Models
 | deepspeech_model_en | Local | [deepspeech](https://github.com/mozilla/DeepSpeech)| DeepSpeech pretrained Model [link](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3)
 | coqui_model_en | Local | [coqui](https://coqui.ai/) | ASR solution from [link](https://coqui.ai/models)|
 | NeMo_conformer_en | Local | [NeMo](https://github.com/NVIDIA/NeMo) | Conformer pretrained model from NVidia's NeMo project [link](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_ctc_large)|
+| k2_gigaspeech | Local | [k2-fsa](https://github.com/k2-fsa) | Pretrained model with GigaSpeech [link](https://huggingface.co/wgb14/icefall-asr-gigaspeech-pruned-transducer-stateless2) |
 | data2vec_audio_large_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | data2vec finetuned model [link](https://huggingface.co/facebook/data2vec-audio-large-960h) |
 | hubert_xlarge_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | hubert finetuned model [link](https://huggingface.co/facebook/hubert-xlarge-ls960-ft) |
 | wav2vec2_large_robust_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | wav2vec2 finetuned model [link](https://huggingface.co/facebook/wav2vec2-large-robust-ft-libri-960h) |
