@@ -7,12 +7,12 @@ from nemo_text_processing.text_normalization.normalize import Normalizer
 
 
 def read_interjections(filepath):
-    s = []
+    interjections = []
     with open(filepath) as f:
-        for l in f:
-            words = [ x.strip() for x in l.split(',') ]
-            s = s + [ x for x in words ] + [ w.upper() for w in words ] + [ w.lower() for w in words ]
-    return list(set(s))
+        for line in f:
+            words = [ x.strip() for x in line.split(',') ]
+            interjections += [ w for w in words ] + [ w.upper() for w in words ] + [ w.lower() for w in words ]
+    return list(set(interjections))  # deduplicated
 
 
 if __name__ == '__main__':
@@ -32,8 +32,8 @@ if __name__ == '__main__':
     itj = read_interjections(
         os.path.join(os.path.dirname(os.path.abspath(__file__)), 'interjections_en.csv')
     )
-
     itj_map = { x : True for x in itj }
+
     n = 0
     for l in ifile:
         key = ''
