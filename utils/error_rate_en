@@ -257,7 +257,9 @@ def BuildGLMTagger(glm, symbol_table) -> pynini.Fst:
         *[ pynini.accep(sym, token_type = symbol_table) for k, sym in symbol_table if k != 0 ] # non-epsilon
     ).optimize()
 
-    tagger = pynini.cdrewrite(pynini.union(*rule_taggers), '', '', alphabet.closure()).optimize() # could be slow with large vocabulary
+    tagger = pynini.cdrewrite(
+        pynini.union(*rule_taggers).optimize(), '', '', alphabet.closure()
+    ).optimize() # could be slow with large vocabulary
     return tagger
 
 

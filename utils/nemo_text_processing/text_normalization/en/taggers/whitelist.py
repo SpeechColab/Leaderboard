@@ -65,6 +65,7 @@ class WhiteListFst(GraphFst):
             return graph
 
         graph = _get_whitelist_graph(input_case, get_abs_path("data/whitelist/tts.tsv"))
+        graph |= _get_whitelist_graph(input_case, get_abs_path("data/whitelist/UK_to_US.tsv")) # Jiayu 2022.10
         graph |= pynini.compose(
             pynini.difference(NEMO_SIGMA, pynini.accep("/")).optimize(),
             _get_whitelist_graph(input_case, get_abs_path("data/whitelist/symbol.tsv")),

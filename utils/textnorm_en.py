@@ -1,30 +1,17 @@
 #!/usr/bin/env python3
 # coding=utf-8
-import sys, os, codecs
-import argparse
-import string
+# Copyright  2022  Ruiqi WANG, Jinpeng LI, Jiayu DU
+
+import sys, os, argparse
 from nemo_text_processing.text_normalization.normalize import Normalizer
 
 
-class interj:
-    def __init__(self):
-        self.inj_list = []
-        f = open(
-            os.path.join(
-                os.path.dirname(os.path.abspath(__file__)),
-                'interjections_en.csv'
-            )
-        )
-        words = f.readlines()
-        for word in words:
-            word = word.strip()
-            self.inj_list.append(' ' + word + ' ')
-            self.inj_list.append(' ' + word.upper() + ' ')
-
-    def interjection(self, line):
-        for item in self.inj_list:
-            line = line.replace(item, ' ')
-        return line
+def read_interjections(filepath):
+    with open(filepath) as f:
+        for l in f:
+            words = [ x.strip() for x in l.split(',') ]
+            l = [ x for x in words ] + [ w.upper() for w in words ] + [ w.lower() for w in words ]
+    return list(set(l))
 
 
 if __name__ == '__main__':
@@ -37,10 +24,15 @@ if __name__ == '__main__':
     p.add_argument('--log_interval', type=int, default=10000, help='log interval in number of processed lines')
     args = p.parse_args()
 
-    ifile = codecs.open(args.ifile, 'r', 'utf8')
-    ofile = codecs.open(args.ofile, 'w+', 'utf8')
+    ifile = open(args.ifile, 'r',  encoding = 'utf8')
+    ofile = open(args.ofile, 'w+', encoding = 'utf8')
     nemo_tn = Normalizer(input_case='cased', lang='en')
-    ii = interj()
+
+    itj = read_interjections(
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), 'interjections_en.csv')
+    )
+    itj_map = { x : True for x in itj }
+
     n = 0
     for l in ifile:
         key = ''
@@ -59,6 +51,7 @@ if __name__ == '__main__':
         if args.to_upper and args.to_lower:
             sys.stderr.write('text norm: to_upper OR to_lower?')
             exit(1)
+
         if args.to_upper:
             text = text.upper()
         if args.to_lower:
@@ -73,22 +66,26 @@ if __name__ == '__main__':
             text = text.replace(quote_item, "")
         text = text.replace(", ", " ")
 
-        # text normalization
+        # nemo text normalization
         text = nemo_tn.normalize(text)
 
-        # Punctuations removal
+        # Punctuations
         old_chars = '!"#%&()*/+,.:;<=>?@[]^_`{|}~'  # string.punctuation except ' (e.g. in I'm, that's)
         new_chars = ' ' * len(old_chars)
         del_chars = ''
         text = text.translate(str.maketrans(old_chars, new_chars, del_chars))
-        text = text.replace(" ' ", " ")
+        text = text.replace(" ' ", " ").replace('-', ' ')
         
-        # remove interjection
-        text = ' ' + text + ' '
-        for i in range(3):
-            text = ii.interjection(text)
-        text = text.strip()
-        text = text.upper()
+        # Interjections removal
+        text = ' '.join(
+            [ x for x in text.strip().split() if not itj_map.get(x) ]
+        )
+
+        # Nemo may produce inconsistent cases with our setting, convert it again
+        if args.to_upper:
+            text = text.upper()
+        if args.to_lower:
+            text = text.lower()
 
         if args.has_key:
             ofile.write(key + '\t' + text + '\n')
