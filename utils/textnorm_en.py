@@ -68,10 +68,10 @@ if __name__ == '__main__':
         text = '<BOS>' + text + '<EOS>'
         for x, y in zip(certain_single_quote_items, single_quote_removed_items):
             text = text.replace(x, y)
-        text = text.lstrip('<BOS>').rstrip('<EOS>')
+        text = text.replace('<BOS>','').replace('<EOS>','')
 
         puncts_to_remove = string.punctuation.replace("'", '')
-        text = text.translate(str.maketrans('', '', puncts_to_remove))
+        text = text.translate(str.maketrans(puncts_to_remove, ' '*len(puncts_to_remove), ''))
 
         # Interjections
         text = ' '.join([ x for x in text.strip().split() if x not in itj_map ])
