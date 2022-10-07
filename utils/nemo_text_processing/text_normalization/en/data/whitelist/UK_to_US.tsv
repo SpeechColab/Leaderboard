@@ -68,6 +68,7 @@ antagonise	antagonize
 antagonised	antagonized
 antagonises	antagonizes
 antagonising	antagonizing
+apologise	apologize
 apologised	apologized
 apologises	apologizes
 apologising	apologizing
@@ -85,6 +86,7 @@ archaeologist	archeologist
 archaeologists	archeologists
 archaeology	archeology
 ardour	ardor
+armour	armor
 armoured	armored
 armourer	armorer
 armourers	armorers
@@ -196,6 +198,7 @@ catalyse	catalyze
 catalysed	catalyzed
 catalyses	catalyzes
 catalysing	catalyzing
+categorise	categorize
 categorised	categorized
 categorises	categorizes
 categorising	categorizing
@@ -271,6 +274,7 @@ colourizes	colorizes
 colourizing	colorizing
 colourless	colorless
 colours	colors
+colour	color
 commercialise	commercialize
 commercialised	commercialized
 commercialises	commercializes
@@ -340,6 +344,7 @@ decriminalises	decriminalizes
 decriminalising	decriminalizing
 defenceless	defenseless
 defences	defenses
+defence	defense
 dehumanisation	dehumanization
 dehumanise	dehumanize
 dehumanised	dehumanized
@@ -536,6 +541,7 @@ fantasise	fantasize
 fantasised	fantasized
 fantasises	fantasizes
 fantasising	fantasizing
+favour	favor
 favourable	favorable
 favourably	favorably
 favoured	favored
@@ -557,6 +563,7 @@ fertilises	fertilizes
 fertilising	fertilizing
 fervour	fervor
 fibreglass	fiberglass
+fibre	fiber
 fibres	fibers
 fictionalisation	fictionalization
 fictionalisations	fictionalizations
@@ -703,10 +710,12 @@ homogenise	homogenize
 homogenised	homogenized
 homogenises	homogenizes
 homogenising	homogenizing
+honourable	honorable
 honourably	honorably
 honoured	honored
 honouring	honoring
 honours	honors
+honour	honor
 hospitalisation	hospitalization
 hospitalise	hospitalize
 hospitalised	hospitalized
@@ -720,6 +729,7 @@ humoured	humored
 humouring	humoring
 humourless	humorless
 humours	humors
+humour	humor
 hybridise	hybridize
 hybridised	hybridized
 hybridises	hybridizes
@@ -834,6 +844,7 @@ labourer	laborer
 labourers	laborers
 labouring	laboring
 labours	labors
+labour	labor
 lacklustre	lackluster
 legalisation	legalization
 legalise	legalize
@@ -855,6 +866,7 @@ liberalise	liberalize
 liberalised	liberalized
 liberalises	liberalizes
 liberalising	liberalizing
+licence	license
 licenced	licensed
 licences	licenses
 licencing	licensing
@@ -870,6 +882,7 @@ liquidiser	liquidizer
 liquidisers	liquidizers
 liquidises	liquidizes
 liquidising	liquidizing
+litre	liter
 litres	liters
 localise	localize
 localised	localized
@@ -1044,6 +1057,7 @@ odours	odors
 oesophagus	esophagus
 oesophaguses	esophaguses
 offences	offenses
+offence	offense
 omelette	omelet
 omelettes	omelets
 optimise	optimize
@@ -1055,6 +1069,7 @@ organised	organized
 organiser	organizer
 organisers	organizers
 organises	organizes
+organise	organize
 organising	organizing
 orthopaedic	orthopedic
 orthopaedics	orthopedics
@@ -1092,6 +1107,7 @@ panelled	paneled
 panelling	paneling
 panellist	panelist
 panellists	panelists
+paralyse	paralyze
 paralysed	paralyzed
 paralyses	paralyzes
 paralysing	paralyzing
@@ -1173,8 +1189,10 @@ popularises	popularizes
 popularising	popularizing
 pouffe	pouf
 pouffes	poufs
+practise	practice
 practises	practices
 practising	practicing
+practised	practiced
 praesidium	presidium
 praesidiums	presidiums
 pressurisation	pressurization
@@ -1262,6 +1280,7 @@ realising	realizing
 recognisable	recognizable
 recognisably	recognizably
 recognisance	recognizance
+recognise	recognize
 recognised	recognized
 recognises	recognizes
 recognising	recognizing
@@ -1339,6 +1358,7 @@ scandalised	scandalized
 scandalises	scandalizes
 scandalising	scandalizing
 sceptic	skeptic
+scepticism	skepticism
 sceptical	skeptical
 sceptically	skeptically
 sceptics	skeptics
@@ -1471,6 +1491,7 @@ sulphide	sulfide
 sulphides	sulfides
 sulphur	sulfur
 sulphurous	sulfurous
+summarise	summarize
 summarised	summarized
 summarises	summarizes
 summarising	summarizing
@@ -1528,6 +1549,7 @@ terrorising	terrorizing
 theatregoer	theatergoer
 theatregoers	theatergoers
 theatres	theaters
+theatre	theater
 theorise	theorize
 theorised	theorized
 theorises	theorizes
