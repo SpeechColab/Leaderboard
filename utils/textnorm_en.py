@@ -3,6 +3,7 @@
 # Copyright  2022  Ruiqi WANG, Jinpeng LI, Jiayu DU
 
 import sys, os, argparse
+import string
 from nemo_text_processing.text_normalization.normalize import Normalizer
 
 
@@ -27,12 +28,16 @@ if __name__ == '__main__':
 
     ifile = open(args.ifile, 'r',  encoding = 'utf8')
     ofile = open(args.ofile, 'w+', encoding = 'utf8')
-    nemo_tn = Normalizer(input_case='cased', lang='en')
+
+    nemo_tn_en = Normalizer(input_case='lower_cased', lang='en')
 
     itj = read_interjections(
         os.path.join(os.path.dirname(os.path.abspath(__file__)), 'interjections_en.csv')
     )
     itj_map = { x : True for x in itj }
+
+    certain_single_quote_items = ["\"'", "'?", "'!","'.", "?'", "!'", ".'","''", "<BOS>'", "'<EOS>"]
+    single_quote_removed_items = [ x.replace("'", '') for x in certain_single_quote_items ]
 
     n = 0
     for l in ifile:
@@ -48,41 +53,33 @@ if __name__ == '__main__':
         else:
             text = l.strip()
 
-        # cases
+        # nemo text normalization
+        text = text.lower()
+        text = nemo_tn_en.normalize(text)
+
+        # Punctuations
+        # NOTE(2022.10 Jiayu):
+        # Single quote removal is not perfect.
+        # ' need to be reserved for:
+        #   abbreviations: 
+        #     I'm, don't, she'd, 'cause, Sweet Child o' Mine, Guns N' Roses, ...
+        #   possessions:
+        #     John's, the king's, parents', ...
+        text = '<BOS>' + text + '<EOS>'
+        for x, y in zip(certain_single_quote_items, single_quote_removed_items):
+            text = text.replace(x, y)
+        text = text.lstrip('<BOS>').rstrip('<EOS>')
+
+        puncts_to_remove = string.punctuation.replace("'", '')
+        text = text.translate(str.maketrans('', '', puncts_to_remove))
+
+        # Interjections
+        text = ' '.join([ x for x in text.strip().split() if x not in itj_map ])
+
+        # Cases
         if args.to_upper and args.to_lower:
             sys.stderr.write('text norm: to_upper OR to_lower?')
             exit(1)
-
-        if args.to_upper:
-            text = text.upper()
-        if args.to_lower:
-            text = text.lower()
-
-        # remove space before and after signs
-        text = text.replace(' / ', '/')
-        text = text.replace(' - ', '-')
-
-        replace_list = ["\"'", "'?", "'!","'.", "?'", "!'", ".'","''"]
-        for quote_item in replace_list:
-            text = text.replace(quote_item, "")
-        text = text.replace(", ", " ")
-
-        # nemo text normalization
-        text = nemo_tn.normalize(text)
-
-        # Punctuations
-        old_chars = '!"#%&()*/+,.:;<=>?@[]^_`{|}~'  # string.punctuation except ' (e.g. in I'm, that's)
-        new_chars = ' ' * len(old_chars)
-        del_chars = ''
-        text = text.translate(str.maketrans(old_chars, new_chars, del_chars))
-        text = text.replace(" ' ", " ").replace('-', ' ')
-        
-        # Interjections removal
-        text = ' '.join(
-            [ x for x in text.strip().split() if not itj_map.get(x) ]
-        )
-
-        # Nemo may produce inconsistent cases with our setting, convert it again
         if args.to_upper:
             text = text.upper()
         if args.to_lower:
