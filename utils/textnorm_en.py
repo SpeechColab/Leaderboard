@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # coding=utf-8
 # Copyright  2022  Ruiqi WANG, Jinpeng LI, Jiayu DU
+#
+# only tested and validated on pynini v2.1.5 via : 'conda install -c conda-forge pynini'
+# pynini v2.1.0 doesn't work
+#
 
 import sys, os, argparse
 import string
@@ -44,7 +48,7 @@ if __name__ == '__main__':
         for line in fi:
             if args.has_key:
                 cols = line.strip().split(maxsplit=1)
-                key, text = cols[0], cols[1] if len(cols) == 2 else ''
+                key, text = cols[0].strip(), cols[1].strip() if len(cols) == 2 else ''
             else:
                 text = line.strip()
 
