@@ -54,6 +54,7 @@ anaesthetize	anesthetize
 anaesthetized	anesthetized
 anaesthetizes	anesthetizes
 anaesthetizing	anesthetizing
+analogue	analog
 analogues	analogs
 analyse	analyze
 analysed	analyzed
@@ -101,6 +102,7 @@ authorising	authorizing
 axe	ax
 backpedalled	backpedaled
 backpedalling	backpedaling
+bannister	banister
 bannisters	banisters
 baptise	baptize
 baptised	baptized
@@ -143,6 +145,7 @@ bowdlerise	bowdlerize
 bowdlerised	bowdlerized
 bowdlerises	bowdlerizes
 bowdlerising	bowdlerizing
+breathalyse	breathalyze
 breathalysed	breathalyzed
 breathalyser	breathalyzer
 breathalysers	breathalyzers
@@ -168,6 +171,7 @@ canalising	canalizing
 cancellation	cancelation
 cancellations	cancelations
 cancelling	canceling
+cancelled	canceled
 candour	candor
 cannibalise	cannibalize
 cannibalised	cannibalized
@@ -191,6 +195,7 @@ carbonises	carbonizes
 carbonising	carbonizing
 carolled	caroled
 carolling	caroling
+catalogue	catalog
 catalogued	cataloged
 catalogues	catalogs
 cataloguing	cataloging
@@ -216,6 +221,8 @@ centralise	centralize
 centralised	centralized
 centralises	centralizes
 centralising	centralizing
+centre	center
+centres	centers
 centred	centered
 centrefold	centerfold
 centrefolds	centerfolds
@@ -305,6 +312,7 @@ cosiness	coziness
 cosy	cozy
 councillor	councilor
 councillors	councilors
+counselled	counseled
 counselling	counseling
 counsellor	counselor
 counsellors	counselors
@@ -404,6 +412,7 @@ destabilises	destabilizes
 destabilising	destabilizing
 dialled	dialed
 dialling	dialing
+dialogue	dialog
 dialogues	dialogs
 diarrhoea	diarrhea
 digitise	digitize
@@ -411,9 +420,10 @@ digitised	digitized
 digitises	digitizes
 digitising	digitizing
 disc	disk
+discolour	discolor
+discolours	discolors
 discoloured	discolored
 discolouring	discoloring
-discolours	discolors
 discs	disks
 disembowelled	disemboweled
 disembowelling	disemboweling
@@ -586,6 +596,7 @@ flavoured	flavored
 flavouring	flavoring
 flavourings	flavorings
 flavourless	flavorless
+flavour	flavor
 flavours	flavors
 flavoursome	flavorsome
 flyer/flier	flier/flyer
@@ -856,6 +867,7 @@ legitimised	legitimized
 legitimises	legitimizes
 legitimising	legitimizing
 levelled	leveled
+levelling	leveling
 leveller	leveler
 levellers	levelers
 libelled	libeled
@@ -898,6 +910,7 @@ magnetises	magnetizes
 magnetising	magnetizing
 manoeuvrability	maneuverability
 manoeuvrable	maneuverable
+manoeuvre	maneuver
 manoeuvred	maneuvered
 manoeuvres	maneuvers
 manoeuvring	maneuvering
@@ -946,8 +959,16 @@ metabolise	metabolize
 metabolised	metabolized
 metabolises	metabolizes
 metabolising	metabolizing
+metre	meter
+metres	meters
 micrometre	micrometer
 micrometres	micrometers
+millimetre	millimeter
+millimetres	millimeters
+centimetre	centimeter
+centimetres	centimeters
+kilometre	kilometer
+kilometres	kilometers
 militarise	militarize
 militarised	militarized
 militarises	militarizes
@@ -1036,6 +1057,7 @@ naturalised	naturalized
 naturalises	naturalizes
 naturalising	naturalizing
 neighbour	neighbor
+neighbourhood	neighborhood
 neighbourhoods	neighborhoods
 neighbouring	neighboring
 neighbourliness	neighborliness
@@ -1442,6 +1464,7 @@ spectre	specter
 spectres	specters
 spiralled	spiraled
 spiralling	spiraling
+splendour	splendor
 splendours	splendors
 squirrelled	squirreled
 squirrelling	squirreling
@@ -1578,7 +1601,10 @@ traumatise	traumatize
 traumatised	traumatized
 traumatises	traumatizes
 traumatising	traumatizing
+traveller	traveler
 travellers	travelers
+travelled	traveled
+travelling	traveling
 travelogue	travelog
 travelogues	travelogs
 trialled	trialed
