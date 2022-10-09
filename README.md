@@ -124,7 +124,7 @@ Local Models
 | hubert_xlarge_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | hubert finetuned model [link](https://huggingface.co/facebook/hubert-xlarge-ls960-ft) |
 | wav2vec2_large_robust_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | wav2vec2 finetuned model [link](https://huggingface.co/facebook/wav2vec2-large-robust-ft-libri-960h) |
 | wavlm_base_plus_ft_libri_clean_100h | Local | [Microsoft](https://huggingface.co/microsoft) <br> [patrickvonplaten](https://huggingface.co/patrickvonplaten) | wavlm finetuned model [link](https://huggingface.co/patrickvonplaten/wavlm-libri-clean-100h-base-plus) |
-| whisper_large | Local | [OpenAI](https://github.com/openai/whisper)| Whisper pretrained Model (large model, greedy decoding) [link](https://openaipublic.azureedge.net/main/whisper/models/e4b87e7e0bf463eb8e6956e646f1e277e901512310def2c24bf0e11bd3c28e9a/large.pt) |
+| whisper_large | Local | [OpenAI](https://github.com/openai/whisper)| Whisper pretrained Model (large model) [link](https://openaipublic.azureedge.net/main/whisper/models/e4b87e7e0bf463eb8e6956e646f1e277e901512310def2c24bf0e11bd3c28e9a/large.pt) |
 
 
 </p></details>
