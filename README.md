@@ -99,33 +99,26 @@ ops/pull -d <DATASET_ID>
 
 <details><summary> EN Models </summary><p>
 
-Cloud Models
-
-| 编号 <br> MODEL_ID | 类型 <br> TYPE | 厂商 <br> PROVIDER | 简介 <br> DESCRIPTION | 链接 <br> URL |
+| 编号 <br> MODEL_ID | 类型 <br> TYPE | 厂商/作者 <br> PROVIDER/AUTHOR | 简介 <br> DESCRIPTION | 链接 <br> URL |
 | --- | --- | --- | --- | --- |
-| [aliyun_api_en](models/aliyun_api_en/) | Cloud | 阿里巴巴 <br> Alibaba | 阿里云 - 一句话识别 | [link](https://www.alibabacloud.com/product/intelligent-speech-interaction) |
-| [amazon_api_en](models/amazon_api_en/) | Cloud | 亚马逊 <br> Amazon | 亚马逊云服务平台 | [link](https://aws.amazon.com/cn/transcribe/) |
-| [baidu_api_en](models/baidu_api_en/) | Cloud | 百度 <br> Baidu | 百度智能云 | [link](https://cloud.baidu.com/product/speech/asr) |
-| [google_api_en](models/google_api_en/) | Cloud | 谷歌 <br> Google | 谷歌云 | [link](https://cloud.google.com/speech-to-text) |
-| [microsoft_sdk_en](models/microsoft_sdk_en/) | Cloud | 微软 <br> Microsoft | Azure | [link](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/) |
-| [tencent_api_en](models/tencent_api_en/) | Cloud | 腾讯 <br> Tencent | 腾讯云 | [link](https://cloud.tencent.com/product/asr) |
-
-Local Models
-
-| 编号 <br> MODEL_ID | 类型 <br> TYPE | 作者 <br> AUTHOR | 简介 <br> DESCRIPTION |
-| --- | --- | --- | --- |
-| vosk_model_en | Local | [alphacephei](https://alphacephei.com/vosk) | ASR solution from [link](https://alphacephei.com/vosk/models) |
-| vosk_model_en_large | Local | [alphacephei](https://alphacephei.com/vosk) | ASR solution(large model) from [link](https://alphacephei.com/vosk/models) |
-| deepspeech_model_en | Local | [deepspeech](https://github.com/mozilla/DeepSpeech)| DeepSpeech pretrained Model [link](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3)
-| coqui_model_en | Local | [coqui](https://coqui.ai/) | ASR solution from [link](https://coqui.ai/models)|
-| NeMo_conformer_en | Local | [NeMo](https://github.com/NVIDIA/NeMo) | Conformer pretrained model from NVidia's NeMo project [link](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_ctc_large)|
-| NeMo_conformer-transducer_en | Local | [NeMo](https://github.com/NVIDIA/NeMo) | Conformer pretrained model using Transducer loss/decoding from NVidia's NeMo project [link](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_transducer_xlarge)|
-| k2_gigaspeech | Local | [k2-fsa](https://github.com/k2-fsa) | Pretrained model with GigaSpeech [link](https://huggingface.co/wgb14/icefall-asr-gigaspeech-pruned-transducer-stateless2) |
-| data2vec_audio_large_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | data2vec finetuned model [link](https://huggingface.co/facebook/data2vec-audio-large-960h) |
-| hubert_xlarge_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | hubert finetuned model [link](https://huggingface.co/facebook/hubert-xlarge-ls960-ft) |
-| wav2vec2_large_robust_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | wav2vec2 finetuned model [link](https://huggingface.co/facebook/wav2vec2-large-robust-ft-libri-960h) |
-| wavlm_base_plus_ft_libri_clean_100h | Local | [Microsoft](https://huggingface.co/microsoft) <br> [patrickvonplaten](https://huggingface.co/patrickvonplaten) | wavlm finetuned model [link](https://huggingface.co/patrickvonplaten/wavlm-libri-clean-100h-base-plus) |
-| whisper_large | Local | [OpenAI](https://github.com/openai/whisper)| Whisper pretrained Model (large model) [link](https://openaipublic.azureedge.net/main/whisper/models/e4b87e7e0bf463eb8e6956e646f1e277e901512310def2c24bf0e11bd3c28e9a/large.pt) |
+| [aliyun_api_en](models/aliyun_api_en/) | Cloud | Alibaba | | [link](https://www.alibabacloud.com/product/intelligent-speech-interaction) |
+| [amazon_api_en](models/amazon_api_en/) | Cloud | Amazon AWS | | [link](https://aws.amazon.com/cn/transcribe/) |
+| [baidu_api_en](models/baidu_api_en/) | Cloud | Baidu | | [link](https://cloud.baidu.com/product/speech/asr) |
+| [google_api_en](models/google_api_en/) | Cloud | Google | | [link](https://cloud.google.com/speech-to-text) |
+| [microsoft_sdk_en](models/microsoft_sdk_en/) | Cloud | Microsoft Azure | | [link](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/) |
+| [tencent_api_en](models/tencent_api_en/) | Cloud | Tencent | | [link](https://cloud.tencent.com/product/asr) |
+| coqui_model_en | Local <br> (supervised) | [coqui](https://coqui.ai/) | | [link](https://coqui.ai/models)|
+| deepspeech_model_en | Local <br> (supervised) | [deepspeech](https://github.com/mozilla/DeepSpeech) | | [link](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3)
+| k2_gigaspeech | Local <br> (supervised) | [k2-fsa](https://github.com/k2-fsa) | | [link](https://huggingface.co/wgb14/icefall-asr-gigaspeech-pruned-transducer-stateless2) |
+| nemo_conformer_ctc_large_en | Local <br> (supervised) | [NVidia NeMo](https://github.com/NVIDIA/NeMo) | | [link](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_ctc_large)|
+| nemo_conformer_transducer_xlarge_en | Local <br> (supervised) | [NVidia NeMo](https://github.com/NVIDIA/NeMo) | | [link](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_transducer_xlarge)|
+| vosk_model_en | Local <br> (supervised) | [alphacephei](https://alphacephei.com/vosk) | | [link](https://alphacephei.com/vosk/models) |
+| vosk_model_en_large | Local <br> (supervised) | [alphacephei](https://alphacephei.com/vosk) | | [link](https://alphacephei.com/vosk/models) |
+| whisper_large | Local <br> (supervised) | [OpenAI](https://github.com/openai/whisper) | | [link](https://openaipublic.azureedge.net/main/whisper/models/e4b87e7e0bf463eb8e6956e646f1e277e901512310def2c24bf0e11bd3c28e9a/large.pt) |
+| data2vec_audio_large_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | | [link](https://huggingface.co/facebook/data2vec-audio-large-960h) |
+| hubert_xlarge_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | | [link](https://huggingface.co/facebook/hubert-xlarge-ls960-ft) |
+| wav2vec2_large_robust_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | | [link](https://huggingface.co/facebook/wav2vec2-large-robust-ft-libri-960h) |
+| wavlm_base_plus_ft_libri_clean_100h | Local | [Microsoft](https://huggingface.co/microsoft) <br> [patrickvonplaten](https://huggingface.co/patrickvonplaten) | | [link](https://huggingface.co/patrickvonplaten/wavlm-libri-clean-100h-base-plus) |
 
 
 </p></details>
