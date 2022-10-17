@@ -16,6 +16,8 @@ coqui_model_en:
   url: oss://speechio-leaderboard/models/coqui_model_en/
 NeMo_conformer_en:
   url: oss://speechio-leaderboard/models/NeMo_conformer_en/
+NeMo_conformer-transducer_en:
+  url: oss://speechio-leaderboard/models/NeMo_conformer-transducer_en/
 k2_gigaspeech:
   url: oss://speechio-leaderboard/models/k2_gigaspeech/
 data2vec_audio_large_ft_libri_960h:
