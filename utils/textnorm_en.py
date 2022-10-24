@@ -40,7 +40,7 @@ if __name__ == '__main__':
     certain_single_quote_items = ["\"'", "'?", "'!","'.", "?'", "!'", ".'","''", "<BOS>'", "'<EOS>"]
     single_quote_removed_items = [ x.replace("'", '') for x in certain_single_quote_items ]
 
-    puncts_to_remove = string.punctuation.replace("'", '')
+    puncts_to_remove = string.punctuation.replace("'", '')+"—–“”"
     puncts_trans = str.maketrans(puncts_to_remove, ' ' * len(puncts_to_remove), '')
 
     n = 0
@@ -52,6 +52,7 @@ if __name__ == '__main__':
             else:
                 text = line.strip()
 
+            text = text.replace("‘","'").replace("’","'")
 
             # nemo text normalization
             # modifications to NeMo:
@@ -74,7 +75,7 @@ if __name__ == '__main__':
                 text = text.replace(x, y)
             text = text.replace('<BOS>','').replace('<EOS>','')
 
-            text = text.translate(puncts_trans)
+            text = text.translate(puncts_trans).replace(" ' "," ")
 
 
             # Interjections
