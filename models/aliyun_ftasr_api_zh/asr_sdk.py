@@ -39,6 +39,7 @@ def fileTrans(akId, akSecret, appKey, fileLink) :
     KEY_FILE_LINK = "file_link"
     KEY_VERSION = "version"
     KEY_ENABLE_WORDS = "enable_words"
+    KEY_MAX_END_SILENCE = "max_end_silence"
     # 是否开启智能分轨
     KEY_AUTO_SPLIT = "auto_split"
     # 响应参数
@@ -61,7 +62,9 @@ def fileTrans(akId, akSecret, appKey, fileLink) :
     postRequest.set_method('POST')
     # 新接入请使用4.0版本，已接入（默认2.0）如需维持现状，请注释掉该参数设置。
     # 设置是否输出词信息，默认为false，开启时需要设置version为4.0。
-    task = {KEY_APP_KEY : appKey, KEY_FILE_LINK : fileLink, KEY_VERSION : "4.0", KEY_ENABLE_WORDS : False}
+    # task = {KEY_APP_KEY : appKey, KEY_FILE_LINK : fileLink, KEY_VERSION : "4.0", KEY_ENABLE_WORDS : False}
+    # 设置max_end_silence为6000ms。
+    task = {KEY_APP_KEY : appKey, KEY_FILE_LINK : fileLink, KEY_VERSION : "4.0", KEY_ENABLE_WORDS : False, KEY_MAX_END_SILENCE: 6000}
     # 开启智能分轨，如果开启智能分轨，task中设置KEY_AUTO_SPLIT为True。
     # task = {KEY_APP_KEY : appKey, KEY_FILE_LINK : fileLink, KEY_VERSION : "4.0", KEY_ENABLE_WORDS : False, KEY_AUTO_SPLIT : True}
     task = json.dumps(task)
