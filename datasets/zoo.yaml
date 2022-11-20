@@ -82,6 +82,20 @@ SPEECHIO_ASR_ZH00029:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00029/
 SPEECHIO_ASR_ZH00030:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00030/
+SPEECHIO_ASR_ZH00031:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00031/
+SPEECHIO_ASR_ZH00032:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00032/
+SPEECHIO_ASR_ZH00033:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00033/
+SPEECHIO_ASR_ZH00034:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00034/
+SPEECHIO_ASR_ZH00035:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00035/
+SPEECHIO_ASR_ZH00036:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00036/
+SPEECHIO_ASR_ZH00037:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00037/
 
 # AliMeeting
 ALIMEETING_EVAL_NEAR_FIELD:
