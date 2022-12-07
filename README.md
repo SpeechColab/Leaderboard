@@ -84,6 +84,13 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &cross; |SPEECHIO_ASR_ZH00028| 时政现场同传 | 同声传译 <br> Simultaneous Translation | 时政、社会公共治理 <br> News & Events on Public Governance | 2.1 | ★★★☆ |
 | &cross; |SPEECHIO_ASR_ZH00029| 港台明星访谈 <br> 周杰伦,曾志伟 <br> 张家辉,陈小春 <br> 周星驰 | 口音(港台) <br> HongKong/Taiwan Accents | 娱乐、生活、演艺 <br> Entertainment, Acting, Musics | 1.5 | ★★★☆ |
 | &cross; |SPEECHIO_ASR_ZH00030| 世界青年说 | 口音(老外) <br> Foreigner Accents | 异国文化比较 <br> Cultural Difference | 2 | ★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00031| 东方甄选 | 直播 <br> broadcast | 带货，英语教学 <br> Online advertising & English Education | 2.4 | ★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00032| 郎朗钢琴课 | 长视频 <br> long-form video | 音乐乐理，钢琴 <br> Music & piano | 1.7 | ★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00033| 老石谈芯 | 短视频 <br> VLog | 芯片 <br> chips | 2.8 | ★★★ |
+| &cross; |SPEECHIO_ASR_ZH00034| 电丸科技AK | 短视频 <br> VLog | 网络 IT <br> Internet tech, IT | 1.4 | ★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00035| 新氧医美 | 短视频 <br> VLog | 医疗美容 <br> Medical Cosmetology | 1.4 | ★★ |
+| &cross; |SPEECHIO_ASR_ZH00036| 交通广播 | 交通广播 <br> traffic radio | 路况，娱乐 <br> Traffics | 1.2 | ★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00037| 老俞闲聊 | 在线会议 <br> Online meeting | 闲聊 <br> chat | 2.4 | ★★★ |
 
 </p></details>
 
@@ -176,42 +183,42 @@ ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
 #### **unlocked** SpeechIO test sets (ZH00001 ~ ZH00015)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | yitu_api_zh | 2.62 % | 2022.08 |
-| 2 | tencent_api_zh | 2.95% | 2022.08 |
-| 3 | aliyun_api_zh | 3.02% | 2022.08 |
-| 4 | microsoft_sdk_zh | 3.03% | 2022.08 |
-| 5 | aispeech_api_zh | 3.39% | 2022.08 |
-| 6 | iflytek_lfasr_api_zh | 3.66% | 2022.08 |
-| 7 | baidu_pro_api_zh | 6.64% | 2022.08 |
+| 1 | aliyun_ftasr_api_zh | 1.91% | 2022.11 |
+| 2 | microsoft_sdk_zh | 2.42% | 2022.11 |
+| 3 | yitu_api_zh | 2.62 % | 2022.11 |
+| 4 | tencent_api_zh | 2.94% | 2022.11 |
+| 5 | iflytek_lfasr_api_zh | 3.36% | 2022.11 |
+| 6 | aispeech_api_zh | 3.46% | 2022.11 |
+| 7 | baidu_pro_api_zh | 6.64% | 2022.11 |
 
 #### **all** SpeechIO test sets
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | yitu_api_zh | 2.80 % | 2022.08 |
-| 2 | tencent_api_zh | 3.31% | 2022.08 |
-| 3 | microsoft_sdk_zh | 3.47% | 2022.08 |
-| 4 | aispeech_api_zh | 3.63% | 2022.08 |
-| 5 | aliyun_api_zh | 3.78% | 2022.08 |
-| 6 | iflytek_lfasr_api_zh | 4.01% | 2022.08 |
-| 7 | baidu_pro_api_zh | 7.38% | 2022.08 |
+| 1 | aliyun_ftasr_api_zh | 2.85% | 2022.11 |
+| 2 | yitu_api_zh | 3.16% | 2022.11 |
+| 3 | microsoft_sdk_zh | 3.28% | 2022.11 |
+| 4 | tencent_api_zh | 3.85% | 2022.11 |
+| 5 | iflytek_lfasr_api_zh | 4.05% | 2022.11 |
+| 6 | aispeech_api_zh | 5.19% | 2022.11 |
+| 7 | baidu_pro_api_zh | 8.14% | 2022.11 |
 
 ### Private Models
 #### **unlocked** SpeechIO test sets (ZH00001 ~ ZH00015)
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- |
 | hiasr_api_zh(*) | 2.16 % | 2022.08 |
-| bilibili_api_zh(*) | 2.95% | 2022.08 |
+| bilibili_api_zh(*) | 2.43% | 2022.11 |
 
 #### **all** SpeechIO test sets
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- |
 | hiasr_api_zh(*) | 2.61 % | 2022.08 |
-| bilibili_api_zh(*) | 3.30 % | 2022.08 |
+| bilibili_api_zh(*) | 2.82 % | 2022.11 |
 
 _note: models with `(*)` marker can be found in model zoo, but not universally available to public yet._
 
 ### Details
-![result](misc/SpeechIO_TIOBE_2022_08.png)
+![result](misc/SpeechIO_TIOBE_2022_11.png)
 
 ---
 
