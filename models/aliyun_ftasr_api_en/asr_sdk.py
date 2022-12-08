@@ -39,6 +39,7 @@ def fileTrans(akId, akSecret, appKey, fileLink) :
     KEY_FILE_LINK = "file_link"
     KEY_VERSION = "version"
     KEY_ENABLE_WORDS = "enable_words"
+    KEY_PUNCTUATION_PRED="enable_punctuation_prediction"
     KEY_MAX_END_SILENCE = "max_end_silence"
     # 是否开启智能分轨
     KEY_AUTO_SPLIT = "auto_split"
@@ -64,7 +65,7 @@ def fileTrans(akId, akSecret, appKey, fileLink) :
     # 设置是否输出词信息，默认为false，开启时需要设置version为4.0。
     # task = {KEY_APP_KEY : appKey, KEY_FILE_LINK : fileLink, KEY_VERSION : "4.0", KEY_ENABLE_WORDS : False}
     # 设置max_end_silence为6000ms。
-    task = {KEY_APP_KEY : appKey, KEY_FILE_LINK : fileLink, KEY_VERSION : "4.0", KEY_ENABLE_WORDS : False, KEY_MAX_END_SILENCE: 6000}
+    task = {KEY_APP_KEY : appKey, KEY_FILE_LINK : fileLink, KEY_VERSION : "4.0", KEY_ENABLE_WORDS : False, KEY_MAX_END_SILENCE: 6000, KEY_PUNCTUATION_PRED : False}
     # 开启智能分轨，如果开启智能分轨，task中设置KEY_AUTO_SPLIT为True。
     # task = {KEY_APP_KEY : appKey, KEY_FILE_LINK : fileLink, KEY_VERSION : "4.0", KEY_ENABLE_WORDS : False, KEY_AUTO_SPLIT : True}
     task = json.dumps(task)
