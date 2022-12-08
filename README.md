@@ -208,9 +208,9 @@ ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
 | --- | --- | --- |
 | bilibili_api_zh(*) | 2.43% | 2022.11 |
 
-<details><summary> Detail results (ZH00001 ~ ZH00015) </summary><p>
+<details><summary> Detail results (字错误率 CER %) </summary><p>
 
-| Test Set ID | 测试场景&内容领域 | 字错误率 CER (%)| Date 时间 |
+| Test Set ID | 测试场景&内容领域 | bilibili_api_zh | Date 时间 |
 | --- | --- | --- | --- |  
 | SPEECHIO_ASR_ZH00001 | 新闻联播 | 0.61 | 2022.11 |
 | SPEECHIO_ASR_ZH00002 | 访谈 鲁豫有约 | 2.90 | 2022.11 |
@@ -235,9 +235,9 @@ ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
 | --- | --- | --- |
 | bilibili_api_zh(*) | 2.82 % | 2022.11 |
 
-<details><summary> Detail all results </summary><p>
+<details><summary> Detail all results (字错误率 CER %) </summary><p>
 
-| Test Set ID | 测试场景&内容领域 | 字错误率 CER (%)| Date 时间 |
+| Test Set ID | 测试场景&内容领域 | bilibili_api_zh | Date 时间 |
 | --- | --- | --- | --- |  
 | SPEECHIO_ASR_ZH00001 | 新闻联播 | 0.61 | 2022.11 |
 | SPEECHIO_ASR_ZH00002 | 访谈 鲁豫有约 | 2.90 | 2022.11 |
