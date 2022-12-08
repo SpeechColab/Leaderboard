@@ -208,7 +208,7 @@ ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
 | --- | --- | --- |
 | bilibili_api_zh(*) | 2.43% | 2022.11 |
 
-<details><summary> Details </summary><p>
+<details><summary> Detail results (ZH00001 ~ ZH00015) </summary><p>
 
 | Test Set ID | 测试场景&内容领域 | 字错误率 CER (%)| Date 时间 |
 | --- | --- | --- | --- |  
@@ -235,7 +235,7 @@ ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
 | --- | --- | --- |
 | bilibili_api_zh(*) | 2.82 % | 2022.11 |
 
-<details><summary> Details </summary><p>
+<details><summary> Detail all results </summary><p>
 
 | Test Set ID | 测试场景&内容领域 | 字错误率 CER (%)| Date 时间 |
 | --- | --- | --- | --- |  
