@@ -158,8 +158,8 @@ Local Models
 
 
 ### How to get a model
-* `Cloud Models` are Cloud API clients(e.g. Google Cloud, Azure), stored in this github repo already.
-* `Local Models` are local ASR engines(e.g. pretrained models based on open-sourced toolkits) that can be downloaded via:
+* `Cloud` models are stored in this github repo already.
+* `Local` models (pretrained models based on open-sourced toolkits) can be downloaded via:
 	```
 	ops/pull -m <MODEL_ID>
 	```
