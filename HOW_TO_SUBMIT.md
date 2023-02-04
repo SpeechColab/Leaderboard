@@ -1,14 +1,4 @@
 # How to submit your model to SpeechIO leaderboard
-## Benchmarking Pipeline Overview
-![image](misc/pipeline.png)
-
-As above figure demonstrates, a benchmark cycle contains following steps:
-1. submitter prepares their model following `model-image` specification
-2. submitter submits model-image to model-zoo via `ops/push`
-3. submitter creates a benchmarking request by adding a benchmark config(yaml) via github pull request
-4. SpeechIO invokes leaderboard pipeline on a benchmarking machine and emails final results back to submitter.
-
----
 
 ## Step 1. Preparing a model-image
 A **model-image** is just an **ordinary directory** with a self-contained ASR system inside. e.g.:
