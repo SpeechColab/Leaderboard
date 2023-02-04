@@ -1,4 +1,7 @@
 # SpeechColab ASR leaderboard
+
+![result](misc/SpeechIO_TIOBE_2022_11.png)
+
 ## 1. Overview
 
 > "If you can’t measure it, you can’t improve it." -- *Peter Drucker*
@@ -280,9 +283,6 @@ ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
 </p></details>
 
 _note: models with `(*)` marker can be found in model zoo, but not universally available to public yet._
-
-### Details
-![result](misc/SpeechIO_TIOBE_2022_11.png)
 
 ---
 
