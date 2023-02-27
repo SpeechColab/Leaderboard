@@ -97,11 +97,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 
 </p></details>
 
-
-### To download an unlocked test set
-```
-ops/pull -d <DATASET_ID>
-```
+![Download Dataset](misc/download_dataset.png)
 
 ---
 
@@ -159,13 +155,7 @@ Local Models
 
 </p></details>
 
-
-### To download a model
-* `Cloud` models are stored in this github repo already.
-* `Local` models (pretrained models based on open-sourced toolkits) can be downloaded via:
-	```
-	ops/pull -m <MODEL_ID>
-	```
+![Download Model](misc/download_model.png)
 
 ### To submit a model
 Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good references as well.
@@ -173,10 +163,7 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 ---
 
 ## 4. Benchmarking Pipeline
-With models & test sets downloaded, you can trigger a benchmarking pipeline via:
-```
-ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
-```
+![Benchmark](misc/benchmark.png)
 
 ---
 
