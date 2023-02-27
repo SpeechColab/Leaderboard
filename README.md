@@ -1,6 +1,7 @@
 # SpeechColab ASR leaderboard
 
 ![result](misc/SpeechIO_TIOBE_2022_11.png)
+![result](misc/SpeechColab_TIOBE_EN_2022_10.png)
 
 ## 1. Overview
 
