@@ -2,7 +2,7 @@
 # Copyright  2021  Jiayu DU
 
 echo "---------- Benchmarking Started ----------"
-export LEADERBOARD=/home/dophist/work/git/leaderboard
+export LEADERBOARD=`pwd`
 stage=0
 max_num_utts=10000
 
@@ -12,14 +12,19 @@ models="$models aliyun_api_zh"
 models="$models baidu_pro_api_zh"
 models="$models hiasr_api_zh"
 models="$models iflytek_lfasr_api_zh"
-#models="$models microsoft_rest_api_zh"
 models="$models microsoft_sdk_zh"
-#models="$models sogou_api_zh"
 models="$models tencent_api_zh"
 models="$models yitu_api_zh"
 
 test_sets=
 test_sets="$test_sets MINI"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00037"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00036"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00035"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00034"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00033"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00032"
+# test_sets="$test_sets SPEECHIO_ASR_ZH00031"
 # test_sets="$test_sets SPEECHIO_ASR_ZH00030"
 # test_sets="$test_sets SPEECHIO_ASR_ZH00029"
 # test_sets="$test_sets SPEECHIO_ASR_ZH00028"

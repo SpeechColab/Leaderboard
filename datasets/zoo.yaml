@@ -16,6 +16,16 @@ AISHELL2_IOS_TEST:
 AISHELL2_ANDROID_TEST:
   url: oss://speechio-leaderboard/datasets/AISHELL2_ANDROID_TEST/
 
+# AliMeeting
+ALIMEETING_EVAL_NEAR_FIELD:
+  url: oss://speechio-leaderboard/datasets/ALIMEETING_EVAL_NEAR_FIELD/
+ALIMEETING_TEST_NEAR_FIELD:
+  url: oss://speechio-leaderboard/datasets/ALIMEETING_TEST_NEAR_FIELD/
+ALIMEETING_EVAL_FAR_FIELD:
+  url: oss://speechio-leaderboard/datasets/ALIMEETING_EVAL_FAR_FIELD/
+ALIMEETING_TEST_FAR_FIELD:
+  url: oss://speechio-leaderboard/datasets/ALIMEETING_TEST_FAR_FIELD/
+
 # Leaderboard
 ## Unlocked
 SPEECHIO_ASR_ZH00000:
@@ -82,17 +92,20 @@ SPEECHIO_ASR_ZH00029:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00029/
 SPEECHIO_ASR_ZH00030:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00030/
-
-# AliMeeting
-ALIMEETING_EVAL_NEAR_FIELD:
-  url: oss://speechio-leaderboard/datasets_private/ALIMEETING_EVAL_NEAR_FIELD/
-ALIMEETING_TEST_NEAR_FIELD:
-  url: oss://speechio-leaderboard/datasets_private/ALIMEETING_TEST_NEAR_FIELD/
-
-ALIMEETING_EVAL_FAR_FIELD:
-  url: oss://speechio-leaderboard/datasets_private/ALIMEETING_EVAL_FAR_FIELD/
-ALIMEETING_TEST_FAR_FIELD:
-  url: oss://speechio-leaderboard/datasets_private/ALIMEETING_TEST_FAR_FIELD/
+SPEECHIO_ASR_ZH00031:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00031/
+SPEECHIO_ASR_ZH00032:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00032/
+SPEECHIO_ASR_ZH00033:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00033/
+SPEECHIO_ASR_ZH00034:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00034/
+SPEECHIO_ASR_ZH00035:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00035/
+SPEECHIO_ASR_ZH00036:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00036/
+SPEECHIO_ASR_ZH00037:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00037/
 
 
 # LibriSpeech

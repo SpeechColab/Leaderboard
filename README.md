@@ -1,4 +1,8 @@
 # SpeechColab ASR leaderboard
+
+![result](misc/SpeechIO_TIOBE_2022_11.png)
+![result](misc/SpeechColab_TIOBE_EN_2022_10.png)
+
 ## 1. Overview
 
 > "If you can’t measure it, you can’t improve it." -- *Peter Drucker*
@@ -84,14 +88,17 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &cross; |SPEECHIO_ASR_ZH00028| 时政现场同传 | 同声传译 <br> Simultaneous Translation | 时政、社会公共治理 <br> News & Events on Public Governance | 2.1 | ★★★☆ |
 | &cross; |SPEECHIO_ASR_ZH00029| 港台明星访谈 <br> 周杰伦,曾志伟 <br> 张家辉,陈小春 <br> 周星驰 | 口音(港台) <br> HongKong/Taiwan Accents | 娱乐、生活、演艺 <br> Entertainment, Acting, Musics | 1.5 | ★★★☆ |
 | &cross; |SPEECHIO_ASR_ZH00030| 世界青年说 | 口音(老外) <br> Foreigner Accents | 异国文化比较 <br> Cultural Difference | 2 | ★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00031| 东方甄选 | 直播 <br> broadcast | 带货，英语教学 <br> Online advertising & English Education | 2.4 | ★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00032| 郎朗钢琴课 | 长视频 <br> long-form video | 音乐乐理，钢琴 <br> Music & piano | 1.7 | ★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00033| 老石谈芯 | 短视频 <br> VLog | 芯片 <br> chips | 2.8 | ★★★ |
+| &cross; |SPEECHIO_ASR_ZH00034| 电丸科技AK | 短视频 <br> VLog | 网络 IT <br> Internet tech, IT | 1.4 | ★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00035| 新氧医美 | 短视频 <br> VLog | 医疗美容 <br> Medical Cosmetology | 1.4 | ★★ |
+| &cross; |SPEECHIO_ASR_ZH00036| 交通广播 | 交通广播 <br> traffic radio | 路况，娱乐 <br> Traffics | 1.2 | ★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00037| 老俞闲聊 | 在线会议 <br> Online meeting | 闲聊 <br> chat | 2.4 | ★★★ |
 
 </p></details>
 
-
-### How to get an unlocked test set
-```
-ops/pull -d <DATASET_ID>
-```
+![Download Dataset](misc/download_dataset.png)
 
 ---
 
@@ -99,32 +106,26 @@ ops/pull -d <DATASET_ID>
 
 <details><summary> EN Models </summary><p>
 
-Cloud Models
-
-| 编号 <br> MODEL_ID | 类型 <br> TYPE | 厂商 <br> PROVIDER | 简介 <br> DESCRIPTION | 链接 <br> URL |
+| 编号 <br> MODEL_ID | 类型 <br> TYPE | 厂商/作者 <br> PROVIDER/AUTHOR | 简介 <br> DESCRIPTION | 链接 <br> URL |
 | --- | --- | --- | --- | --- |
-| [aliyun_api_en](models/aliyun_api_en/) | Cloud | 阿里巴巴 <br> Alibaba | 阿里云 - 一句话识别 | [link](https://www.alibabacloud.com/product/intelligent-speech-interaction) |
-| [amazon_api_en](models/amazon_api_en/) | Cloud | 亚马逊 <br> Amazon | 亚马逊云服务平台 | [link](https://aws.amazon.com/cn/transcribe/) |
-| [baidu_api_en](models/baidu_api_en/) | Cloud | 百度 <br> Baidu | 百度智能云 | [link](https://cloud.baidu.com/product/speech/asr) |
-| [google_api_en](models/google_api_en/) | Cloud | 谷歌 <br> Google | 谷歌云 | [link](https://cloud.google.com/speech-to-text) |
-| [microsoft_sdk_en](models/microsoft_sdk_en/) | Cloud | 微软 <br> Microsoft | Azure | [link](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/) |
-| [tencent_api_en](models/tencent_api_en/) | Cloud | 腾讯 <br> Tencent | 腾讯云 | [link](https://cloud.tencent.com/product/asr) |
-
-Local Models
-
-| 编号 <br> MODEL_ID | 类型 <br> TYPE | 作者 <br> AUTHOR | 简介 <br> DESCRIPTION |
-| --- | --- | --- | --- |
-| vosk_model_en | Local | [alphacephei](https://alphacephei.com/vosk) | ASR solution from [link](https://alphacephei.com/vosk/models) |
-| vosk_model_en_large | Local | [alphacephei](https://alphacephei.com/vosk) | ASR solution(large model) from [link](https://alphacephei.com/vosk/models) |
-| deepspeech_model_en | Local | [deepspeech](https://github.com/mozilla/DeepSpeech)| DeepSpeech pretrained Model [link](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3)
-| coqui_model_en | Local | [coqui](https://coqui.ai/) | ASR solution from [link](https://coqui.ai/models)|
-| NeMo_conformer_en | Local | [NeMo](https://github.com/NVIDIA/NeMo) | Conformer pretrained model from NVidia's NeMo project [link](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_ctc_large)|
-| k2_gigaspeech | Local | [k2-fsa](https://github.com/k2-fsa) | Pretrained model with GigaSpeech [link](https://huggingface.co/wgb14/icefall-asr-gigaspeech-pruned-transducer-stateless2) |
-| data2vec_audio_large_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | data2vec finetuned model [link](https://huggingface.co/facebook/data2vec-audio-large-960h) |
-| hubert_xlarge_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | hubert finetuned model [link](https://huggingface.co/facebook/hubert-xlarge-ls960-ft) |
-| wav2vec2_large_robust_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | wav2vec2 finetuned model [link](https://huggingface.co/facebook/wav2vec2-large-robust-ft-libri-960h) |
-| wavlm_base_plus_ft_libri_clean_100h | Local | [Microsoft](https://huggingface.co/microsoft) <br> [patrickvonplaten](https://huggingface.co/patrickvonplaten) | wavlm finetuned model [link](https://huggingface.co/patrickvonplaten/wavlm-libri-clean-100h-base-plus) |
-| whisper_large | Local | [OpenAI](https://github.com/openai/whisper)| Whisper pretrained Model (large model, greedy decoding) [link](https://openaipublic.azureedge.net/main/whisper/models/e4b87e7e0bf463eb8e6956e646f1e277e901512310def2c24bf0e11bd3c28e9a/large.pt) |
+| [aliyun_api_en](models/aliyun_api_en/) | Cloud | Alibaba | | [link](https://www.alibabacloud.com/product/intelligent-speech-interaction) |
+| [amazon_api_en](models/amazon_api_en/) | Cloud | Amazon AWS | | [link](https://aws.amazon.com/cn/transcribe/) |
+| [baidu_api_en](models/baidu_api_en/) | Cloud | Baidu | | [link](https://cloud.baidu.com/product/speech/asr) |
+| [google_api_en](models/google_api_en/) | Cloud | Google | | [link](https://cloud.google.com/speech-to-text) |
+| [microsoft_sdk_en](models/microsoft_sdk_en/) | Cloud | Microsoft Azure | | [link](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/) |
+| [tencent_api_en](models/tencent_api_en/) | Cloud | Tencent | | [link](https://cloud.tencent.com/product/asr) |
+| coqui_model_en | Local <br> | [coqui](https://coqui.ai/) | | [link](https://coqui.ai/models)|
+| deepspeech_model_en | Local <br> | [deepspeech](https://github.com/mozilla/DeepSpeech) | | [link](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3)
+| k2_gigaspeech | Local <br> | [k2-fsa](https://github.com/k2-fsa) | | [link](https://huggingface.co/wgb14/icefall-asr-gigaspeech-pruned-transducer-stateless2) |
+| nemo_conformer_ctc_large_en | Local <br> | [NVidia NeMo](https://github.com/NVIDIA/NeMo) | | [link](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_ctc_large)|
+| nemo_conformer_transducer_xlarge_en | Local <br> | [NVidia NeMo](https://github.com/NVIDIA/NeMo) | | [link](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/nemo/models/stt_en_conformer_transducer_xlarge)|
+| vosk_model_en | Local <br> | [alphacephei](https://alphacephei.com/vosk) | | [link](https://alphacephei.com/vosk/models) |
+| vosk_model_en_large | Local <br> | [alphacephei](https://alphacephei.com/vosk) | | [link](https://alphacephei.com/vosk/models) |
+| whisper_large | Local <br> | [OpenAI](https://github.com/openai/whisper) | | [link](https://openaipublic.azureedge.net/main/whisper/models/e4b87e7e0bf463eb8e6956e646f1e277e901512310def2c24bf0e11bd3c28e9a/large.pt) |
+| data2vec_audio_large_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | | [link](https://huggingface.co/facebook/data2vec-audio-large-960h) |
+| hubert_xlarge_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | | [link](https://huggingface.co/facebook/hubert-xlarge-ls960-ft) |
+| wav2vec2_large_robust_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | | [link](https://huggingface.co/facebook/wav2vec2-large-robust-ft-libri-960h) |
+| wavlm_base_plus_ft_libri_clean_100h | Local | [Microsoft](https://huggingface.co/microsoft) <br> [patrickvonplaten](https://huggingface.co/patrickvonplaten) | | [link](https://huggingface.co/patrickvonplaten/wavlm-libri-clean-100h-base-plus) |
 
 
 </p></details>
@@ -155,24 +156,15 @@ Local Models
 
 </p></details>
 
+![Download Model](misc/download_model.png)
 
-### How to get a model
-* `Cloud Models` are Cloud API clients(e.g. Google Cloud, Azure), stored in this github repo already.
-* `Local Models` are local ASR engines(e.g. pretrained models based on open-sourced toolkits) that can be downloaded via:
-	```
-	ops/pull -m <MODEL_ID>
-	```
-
-### How to submit a model
+### To submit a model
 Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good references as well.
 
 ---
 
 ## 4. Benchmarking Pipeline
-With downloaded models & test sets on your machine, benchmarking pipeline can be triggered via:
-```
-ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
-```
+![Benchmark](misc/benchmark.png)
 
 ---
 
@@ -182,42 +174,103 @@ ops/benchmark -m <MODEL_ID> -d <DATASET_ID>
 #### **unlocked** SpeechIO test sets (ZH00001 ~ ZH00015)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | yitu_api_zh | 2.62 % | 2022.08 |
-| 2 | tencent_api_zh | 2.95% | 2022.08 |
-| 3 | aliyun_api_zh | 3.02% | 2022.08 |
-| 4 | microsoft_sdk_zh | 3.03% | 2022.08 |
-| 5 | aispeech_api_zh | 3.39% | 2022.08 |
-| 6 | iflytek_lfasr_api_zh | 3.66% | 2022.08 |
-| 7 | baidu_pro_api_zh | 6.64% | 2022.08 |
+| 1 | aliyun_ftasr_api_zh | 1.91% | 2022.11 |
+| 2 | microsoft_sdk_zh | 2.42% | 2022.11 |
+| 3 | yitu_api_zh | 2.62 % | 2022.11 |
+| 4 | tencent_api_zh | 2.94% | 2022.11 |
+| 5 | iflytek_lfasr_api_zh | 3.36% | 2022.11 |
+| 6 | aispeech_api_zh | 3.46% | 2022.11 |
+| 7 | baidu_pro_api_zh | 6.64% | 2022.11 |
 
 #### **all** SpeechIO test sets
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | yitu_api_zh | 2.80 % | 2022.08 |
-| 2 | tencent_api_zh | 3.31% | 2022.08 |
-| 3 | microsoft_sdk_zh | 3.47% | 2022.08 |
-| 4 | aispeech_api_zh | 3.63% | 2022.08 |
-| 5 | aliyun_api_zh | 3.78% | 2022.08 |
-| 6 | iflytek_lfasr_api_zh | 4.01% | 2022.08 |
-| 7 | baidu_pro_api_zh | 7.38% | 2022.08 |
+| 1 | aliyun_ftasr_api_zh | 2.85% | 2022.11 |
+| 2 | yitu_api_zh | 3.16% | 2022.11 |
+| 3 | microsoft_sdk_zh | 3.28% | 2022.11 |
+| 4 | tencent_api_zh | 3.85% | 2022.11 |
+| 5 | iflytek_lfasr_api_zh | 4.05% | 2022.11 |
+| 6 | aispeech_api_zh | 5.19% | 2022.11 |
+| 7 | baidu_pro_api_zh | 8.14% | 2022.11 |
 
 ### Private Models
 #### **unlocked** SpeechIO test sets (ZH00001 ~ ZH00015)
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- |
-| hiasr_api_zh(*) | 2.16 % | 2022.08 |
-| bilibili_api_zh(*) | 2.95% | 2022.08 |
+| bilibili_api_zh(*) | 2.43% | 2022.11 |
+
+<details><summary> Detail results (字错误率 CER %) </summary><p>
+
+| Test Set ID | 测试场景&内容领域 | bilibili_api_zh | Date 时间 |
+| --- | --- | --- | --- |  
+| SPEECHIO_ASR_ZH00001 | 新闻联播 | 0.61 | 2022.11 |
+| SPEECHIO_ASR_ZH00002 | 访谈 鲁豫有约 | 2.90 | 2022.11 |
+| SPEECHIO_ASR_ZH00003 | 电视节目 天下足球 | 0.98 | 2022.11 |
+| SPEECHIO_ASR_ZH00004 | 场馆演讲 罗振宇跨年 | 1.59 | 2022.11 |
+| SPEECHIO_ASR_ZH00005 | 在线教育 李永乐 科普 | 1.49 | 2022.11 |
+| SPEECHIO_ASR_ZH00006 | 直播 王者荣耀 张大仙&骚白 | 5.88 | 2022.11 |
+| SPEECHIO_ASR_ZH00007 | 直播 带货 李佳琪&薇娅 | 6.26 | 2022.11 |
+| SPEECHIO_ASR_ZH00008 | 线下培训 老罗语录 | 3.78 | 2022.11 |
+| SPEECHIO_ASR_ZH00009 | 播客 故事FM | 3.26 | 2022.11 |
+| SPEECHIO_ASR_ZH00010 | 播客 创业内幕 | 3.59 | 2022.11 |
+| SPEECHIO_ASR_ZH00011 | 在线教育 罗翔 刑法法考 | 1.92 | 2022.11 |
+| SPEECHIO_ASR_ZH00012 | 在线教育 张雪峰 考研 | 2.12 | 2022.11 |
+| SPEECHIO_ASR_ZH00013 | 短视频 影剪 谷阿莫&牛叔说电影 | 3.07 | 2022.11 |
+| SPEECHIO_ASR_ZH00014 | 短视频 美式&烹饪 | 3.74 | 2022.11 |
+| SPEECHIO_ASR_ZH00015 | 评书 单田芳 白眉大侠 | 4.79 | 2022.11 |
+
+</p></details>
 
 #### **all** SpeechIO test sets
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- |
-| hiasr_api_zh(*) | 2.61 % | 2022.08 |
-| bilibili_api_zh(*) | 3.30 % | 2022.08 |
+| bilibili_api_zh(*) | 2.82 % | 2022.11 |
+
+<details><summary> Detail all results (字错误率 CER %) </summary><p>
+
+| Test Set ID | 测试场景&内容领域 | bilibili_api_zh | Date 时间 |
+| --- | --- | --- | --- |  
+| SPEECHIO_ASR_ZH00001 | 新闻联播 | 0.61 | 2022.11 |
+| SPEECHIO_ASR_ZH00002 | 访谈 鲁豫有约 | 2.90 | 2022.11 |
+| SPEECHIO_ASR_ZH00003 | 电视节目 天下足球 | 0.98 | 2022.11 |
+| SPEECHIO_ASR_ZH00004 | 场馆演讲 罗振宇跨年 | 1.59 | 2022.11 |
+| SPEECHIO_ASR_ZH00005 | 在线教育 李永乐 科普 | 1.49 | 2022.11 |
+| SPEECHIO_ASR_ZH00006 | 直播 王者荣耀 张大仙&骚白 | 5.88 | 2022.11 |
+| SPEECHIO_ASR_ZH00007 | 直播 带货 李佳琪&薇娅 | 6.26 | 2022.11 |
+| SPEECHIO_ASR_ZH00008 | 线下培训 老罗语录 | 3.78 | 2022.11 |
+| SPEECHIO_ASR_ZH00009 | 播客 故事FM | 3.26 | 2022.11 |
+| SPEECHIO_ASR_ZH00010 | 播客 创业内幕 | 3.59 | 2022.11 |
+| SPEECHIO_ASR_ZH00011 | 在线教育 罗翔 刑法法考 | 1.92 | 2022.11 |
+| SPEECHIO_ASR_ZH00012 | 在线教育 张雪峰 考研 | 2.12 | 2022.11 |
+| SPEECHIO_ASR_ZH00013 | 短视频 影剪 谷阿莫&牛叔说电影 | 3.07 | 2022.11 |
+| SPEECHIO_ASR_ZH00014 | 短视频 美式&烹饪 | 3.74 | 2022.11 |
+| SPEECHIO_ASR_ZH00015 | 评书 单田芳 白眉大侠 | 4.79 | 2022.11 |
+| SPEECHIO_ASR_ZH00016 | 相声 德云社专场 | 3.04 | 2022.11 |
+| SPEECHIO_ASR_ZH00017 | 脱口秀 吐槽大会 | 2.96 | 2022.11 |
+| SPEECHIO_ASR_ZH00018 | 少儿卡通 小猪佩奇&熊出没 | 2.03 | 2022.11 |
+| SPEECHIO_ASR_ZH00019 | 体育赛事解说 NBA比赛 | 2.25 | 2022.11 |
+| SPEECHIO_ASR_ZH00020 | 纪录片 篮球人物 | 1.54 | 2022.11 |
+| SPEECHIO_ASR_ZH00021 | 短视频 汽车之家 汽车评测 | 1.76 | 2022.11 |
+| SPEECHIO_ASR_ZH00022 | 短视频 小艾大叔 豪宅带看 | 3.39 | 2022.11 |
+| SPEECHIO_ASR_ZH00023 | 短视频 开箱视频 Zeal&无聊开箱 | 2.24 | 2022.11 |
+| SPEECHIO_ASR_ZH00024 | 短视频 付老师 农业种植 | 5.05 | 2022.11 |
+| SPEECHIO_ASR_ZH00025 | 线下课堂 石国鹏 古希腊哲学 | 3.31 | 2022.11 |
+| SPEECHIO_ASR_ZH00026 | 广播电台节目 张震鬼故事 | 3.74 | 2022.11 |
+| SPEECHIO_ASR_ZH00027 | 华语大学生辩论赛 兴趣，技能，成长 | 2.14 | 2022.11 |
+| SPEECHIO_ASR_ZH00028 | 同声传译：时政&社会公共治理 | 2.07 | 2022.11 |
+| SPEECHIO_ASR_ZH00029 | 港台口音：港台明星访谈 | 4.10 | 2022.11 |
+| SPEECHIO_ASR_ZH00030 | 老外口音：《世界青年说》 | 4.00 | 2022.11 |
+| SPEECHIO_ASR_ZH00031 | 直播带货 东方甄选 | 3.97 | 2022.11 |
+| SPEECHIO_ASR_ZH00032 | 音乐 郎朗钢琴课 | 4.14 | 2022.11 |
+| SPEECHIO_ASR_ZH00033 | 芯片 老石谈芯 | 2.83 | 2022.11 |
+| SPEECHIO_ASR_ZH00034 | 网络IT 电丸科技AK | 5.80 | 2022.11 |
+| SPEECHIO_ASR_ZH00035 | 新氧医美 | 1.24 | 2022.11 |
+| SPEECHIO_ASR_ZH00036 | 交通广播 信不信由你 | 6.17 | 2022.11 |
+| SPEECHIO_ASR_ZH00037 | 在线会议聊天 老俞闲话 | 3.08 | 2022.11 |
+
+</p></details>
 
 _note: models with `(*)` marker can be found in model zoo, but not universally available to public yet._
-
-### Details
-![result](misc/SpeechIO_TIOBE_2022_08.png)
 
 ---
 

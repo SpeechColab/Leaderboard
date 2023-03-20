@@ -1,14 +1,4 @@
 # How to submit your model to SpeechIO leaderboard
-## Benchmarking Pipeline Overview
-![image](misc/pipeline.png)
-
-As above figure demonstrates, a benchmark cycle contains following steps:
-1. submitter prepares their model following `model-image` specification
-2. submitter submits model-image to model-zoo via `ops/push`
-3. submitter creates a benchmarking request by adding a benchmark config(yaml) via github pull request
-4. SpeechIO invokes leaderboard pipeline on a benchmarking machine and emails final results back to submitter.
-
----
 
 ## Step 1. Preparing a model-image
 A **model-image** is just an **ordinary directory** with a self-contained ASR system inside. e.g.:
@@ -218,30 +208,6 @@ B. For local models:
 Congrats, now everyone should be able to reproduce your ASR system via leaderboard. You can always re-run above `ops/push` command to update your model-image.
 
 ---
-
-## Send a benchmark request via a pull request
-You can open a pull-request, adding `requests/<your_benchmark_request_name>.yaml` to this repo. [see sample requests here](requests/)
-
-```
-date: '2021-04-05'  # request date
-requester: Jiayu
-entity: SpeechIO
-email:  # a list of emails to receive the benchmark results
-  - xxx@gmail.com
-  - yyy@gmail.com
-  ...
-model: aliyun_api  # the MODEL_ID to be benchmarked
-test_set:  # a list of DATASET_IDs to be benchmarked
-  - SPEECHIO_ASR_ZH00000
-  - SPEECHIO_ASR_ZH00001
-  ...
-```
-
-You can check [README](README.md) for all available `MODEL_ID`s & `DATASET_ID`s
-
-Once we merge your submission pull request, the leaderboard pipeline will:
-* init a docker runner to benchmark requested model with requested test sets
-* email results to requester
 
 ## Contacts
 Email: leaderboard@speechio.ai
