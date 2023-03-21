@@ -60,14 +60,14 @@ SPEECHIO_ASR_ZH00014:
   url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00014/
 SPEECHIO_ASR_ZH00015:
   url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00015/
+SPEECHIO_ASR_ZH00016:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00016/
+SPEECHIO_ASR_ZH00017:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00017/
+SPEECHIO_ASR_ZH00018:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00018/
 
 ## Locked
-SPEECHIO_ASR_ZH00016:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00016/
-SPEECHIO_ASR_ZH00017:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00017/
-SPEECHIO_ASR_ZH00018:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00018/
 SPEECHIO_ASR_ZH00019:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00019/
 SPEECHIO_ASR_ZH00020:
