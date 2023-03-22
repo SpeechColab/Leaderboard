@@ -122,6 +122,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | vosk_model_en | Local <br> | [alphacephei](https://alphacephei.com/vosk) | | [link](https://alphacephei.com/vosk/models) |
 | vosk_model_en_large | Local <br> | [alphacephei](https://alphacephei.com/vosk) | | [link](https://alphacephei.com/vosk/models) |
 | whisper_large | Local <br> | [OpenAI](https://github.com/openai/whisper) | | [link](https://openaipublic.azureedge.net/main/whisper/models/e4b87e7e0bf463eb8e6956e646f1e277e901512310def2c24bf0e11bd3c28e9a/large.pt) |
+| whisper_large_v2 | Local <br> | [OpenAI](https://github.com/openai/whisper) | | [link](https://openaipublic.azureedge.net/main/whisper/models/81f7c96c852ee8fc832187b0132e569d6c3065a3252ed18e56effd0b6a73e524/large-v2.pt) |
 | data2vec_audio_large_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | | [link](https://huggingface.co/facebook/data2vec-audio-large-960h) |
 | hubert_xlarge_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | | [link](https://huggingface.co/facebook/hubert-xlarge-ls960-ft) |
 | wav2vec2_large_robust_ft_libri_960h | Local | [Facebook AI](https://huggingface.co/facebook) | | [link](https://huggingface.co/facebook/wav2vec2-large-robust-ft-libri-960h) |
