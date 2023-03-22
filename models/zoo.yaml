@@ -30,3 +30,5 @@ wavlm_base_plus_ft_libri_clean_100h:
   url: oss://speechio-leaderboard/models/wavlm_base_plus_ft_libri_clean_100h/
 whisper_large:
   url: oss://speechio-leaderboard/models/whisper_large/
+whisper_large_v2:
+  url: oss://speechio-leaderboard/models/whisper_large_v2/
