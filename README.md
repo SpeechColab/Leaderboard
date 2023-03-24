@@ -112,6 +112,7 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | [amazon_api_en](models/amazon_api_en/) | Cloud | Amazon AWS | | [link](https://aws.amazon.com/cn/transcribe/) |
 | [baidu_api_en](models/baidu_api_en/) | Cloud | Baidu | | [link](https://cloud.baidu.com/product/speech/asr) |
 | [google_api_en](models/google_api_en/) | Cloud | Google | | [link](https://cloud.google.com/speech-to-text) |
+| [google_USM_en](models/google_USM_en/) | Cloud | Google | | [request access](https://sites.research.google/usm/) |
 | [microsoft_sdk_en](models/microsoft_sdk_en/) | Cloud | Microsoft Azure | | [link](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/) |
 | [tencent_api_en](models/tencent_api_en/) | Cloud | Tencent | | [link](https://cloud.tencent.com/product/asr) |
 | coqui_model_en | Local <br> | [coqui](https://coqui.ai/) | | [link](https://coqui.ai/models)|
