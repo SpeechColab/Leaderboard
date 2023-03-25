@@ -21,8 +21,11 @@ models/*
 
 # en models
 !models/aliyun_api_en
+!models/aliyun_ftasr_api_en
+!models/amazon_api_en
 !models/baidu_api_en
 !models/google_api_en
+!models/google_USM_en
 !models/tencent_api_en
 !models/microsoft_sdk_en
 
@@ -74,7 +77,7 @@ models/baidu_api_en/API_KEY
 models/baidu_api_en/SECRET_KEY
 
 # google api
-models/google_api_en/CREDENTIALS.json
+models/google_*/CREDENTIALS.json
 
 # hiasr
 models/hiasr_api_zh/assets
