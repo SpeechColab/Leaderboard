@@ -57,14 +57,16 @@ for x in $test_sets; do
         echo "$0 --> computing WER/CER and alignment ..."
         if [ $language == 'zh' ]; then
             echo "$0 --> Normalizing REF text ..."
-            ${LEADERBOARD}/utils/textnorm_zh.py \
-                --has_key --to_upper \
+            ${LEADERBOARD}/utils/textnorm_zh.py --format=ark \
+                --to_upper --to_banjiao --remove_fillers --remove_erhua \
                 $dir/trans.txt $dir/ref.txt
 
             echo "$0 --> Normalizing HYP text ..."
-            ${LEADERBOARD}/utils/textnorm_en.py \
-                --has_key --to_upper \
-                $dir/raw_rec.txt $dir/rec.txt
+            # add "--cc_mode=t2s" option if charset is traditional
+            # (e.g. whisper & google USM model)
+            ${LEADERBOARD}/utils/textnorm_zh.py --format=ark \
+                --to_upper --to_banjiao --remove_fillers --remove_erhua \
+                $dir/raw_rec.txt $dir/rec.txt 
             grep -v $'\t$' $dir/rec.txt > $dir/rec_non_empty.txt
 
             tokenizer=char
