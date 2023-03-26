@@ -13,7 +13,7 @@ max_num_utts=2
 . $LEADERBOARD/utils/parse_options.sh
 
 if [ $# -ne 2 ]; then
-    echo "Usage: $0 <model> <space_seperated_test_sets>"
+    echo "Usage: LEADERBOARD=<leaderboard-repo-path> $0 <model> <space_seperated_test_sets>"
     echo "options:"
     echo "  --stage <int>"
     echo "  --max-num-utts <int>"
@@ -53,34 +53,51 @@ for x in $test_sets; do
 
     if [ $stage -le 3 ]; then
         language=$(grep language model.yaml | awk -F: '{print $NF}' | tr -d " ")
-        echo "$0 --> Normalizing REF text ..."
-        ${LEADERBOARD}/utils/textnorm_${language}.py \
-            --has_key --to_upper \
-            $dir/trans.txt \
-            $dir/ref.txt
-
-        echo "$0 --> Normalizing HYP text ..."
-        ${LEADERBOARD}/utils/textnorm_${language}.py \
-            --has_key --to_upper \
-            $dir/raw_rec.txt \
-            $dir/rec.txt
-        grep -v $'\t$' $dir/rec.txt > $dir/rec_non_empty.txt
 
         echo "$0 --> computing WER/CER and alignment ..."
         if [ $language == 'zh' ]; then
+            echo "$0 --> Normalizing REF text ..."
+            ${LEADERBOARD}/utils/textnorm_zh.py \
+                --has_key --to_upper \
+                $dir/trans.txt $dir/ref.txt
+
+            echo "$0 --> Normalizing HYP text ..."
+            ${LEADERBOARD}/utils/textnorm_en.py \
+                --has_key --to_upper \
+                $dir/raw_rec.txt $dir/rec.txt
+            grep -v $'\t$' $dir/rec.txt > $dir/rec_non_empty.txt
+
             tokenizer=char
+            ${LEADERBOARD}/utils/error_rate_zh \
+                --tokenizer ${tokenizer} \
+                --ref $dir/ref.txt \
+                --hyp $dir/rec_non_empty.txt \
+                $dir/DETAILS.txt | tee $dir/RESULTS.txt
+
         elif [ $language == 'en' ]; then
+            echo "$0 --> Normalizing REF text ..."
+            ${LEADERBOARD}/utils/textnorm_en.py \
+                --has_key --to_upper \
+                $dir/trans.txt $dir/ref.txt
+
+            echo "$0 --> Normalizing HYP text ..."
+            ${LEADERBOARD}/utils/textnorm_en.py \
+                --has_key --to_upper \
+                $dir/raw_rec.txt $dir/rec.txt
+            grep -v $'\t$' $dir/rec.txt > $dir/rec_non_empty.txt
+
             tokenizer=whitespace
+            ${LEADERBOARD}/utils/error_rate_en \
+                --tokenizer ${tokenizer} \
+                --ref $dir/ref.txt \
+                --hyp $dir/rec_non_empty.txt \
+                $dir/DETAILS.txt | tee $dir/RESULTS.txt
+
         else
             echo "$0: Error, unsupported language code ${language}"
             exit -1
         fi
 
-        ${LEADERBOARD}/utils/error_rate_${language} \
-            --tokenizer ${tokenizer} \
-            --ref $dir/ref.txt \
-            --hyp $dir/rec_non_empty.txt \
-            $dir/DETAILS.txt | tee $dir/RESULTS.txt
     fi
 
     sleep 1
