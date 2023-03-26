@@ -7,8 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade google-cloud-speech
-RUN pip3 install pynini 
-RUN pip3 install regex
+RUN pip install pynini regex
 
 # Use C.UTF-8 locale to avoid issues with ASCII encoding
 ENV LC_ALL=C.UTF-8

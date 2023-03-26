@@ -8,5 +8,15 @@ fi
 scp=$1
 dir=$2
 
+## GCP Project to use when calling the Cloud Speech-to-Text API.
+#GCP_PROJECT_ID='xxx' # @param
+#
+## Auth commands, set GCP project to use.
+#gcloud config set project "$GCP_PROJECT_ID"
+#gcloud auth application-default login
+#
+## Activate the Cloud Speech-to-Text v2 API
+#gcloud services enable speech.googleapis.com --project="$GCP_PROJECT_ID"
+
 export GOOGLE_APPLICATION_CREDENTIALS=`readlink -f CREDENTIALS.json`
 ./asr_api.py $scp $dir/raw_rec.txt
