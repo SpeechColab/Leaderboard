@@ -12,6 +12,7 @@ models/*
 !models/aliyun_api_zh
 !models/baidu_pro_api_zh
 !models/bilibili_api_zh
+!models/google_usm_zh
 !models/hiasr_api_zh
 !models/iflytek_lfasr_api_zh
 !models/microsoft_sdk_zh
@@ -25,7 +26,7 @@ models/*
 !models/amazon_api_en
 !models/baidu_api_en
 !models/google_api_en
-!models/google_USM_en
+!models/google_usm_en
 !models/tencent_api_en
 !models/microsoft_sdk_en
 
