@@ -26,7 +26,7 @@ models/*
 !models/amazon_api_en
 !models/baidu_api_en
 !models/google_api_en
-!models/google_usm_en
+!models/google_USM_en
 !models/tencent_api_en
 !models/microsoft_sdk_en
 
