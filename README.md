@@ -184,7 +184,7 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 | 6 | aispeech_api_zh | 3.42% | 2023.03 |
 | 7 | baidu_pro_api_zh | 6.68% | 2023.03 |
 
-#### **Locked** SpeechIO test sets (ZH00018 ~ ZH00037)
+#### **Locked** SpeechIO test sets (ZH00019 ~ ZH00037)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
 | 1 | aliyun_ftasr_api_zh | 3.35% | 2023.03 |
