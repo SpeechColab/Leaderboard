@@ -155,6 +155,7 @@ Local Models
 | --- | --- | --- | --- |
 | speechio_kaldi_multicn | Local | Xingyu NA(那兴宇) | Kaldi multi_cn [recipe](https://github.com/kaldi-asr/kaldi/tree/master/egs/multi_cn/s5) |
 | vosk_model_cn | Local | [alphacephei](https://alphacephei.com/vosk) | Chinese engine of [Vosk](https://alphacephei.com/vosk/models) |
+| paraformer_large_offline_zh | Local | [modelscope](https://www.modelscope.cn/models/damo/speech_paraformer-large-vad-punc_asr_nat-zh-cn-16k-common-vocab8404-pytorch/summary) | Paraformer, default Chinese 16k model, offline, support long-form audio recognition |
 
 </p></details>
 

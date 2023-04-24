@@ -2,6 +2,8 @@ speechio_kaldi_multicn:
   url: oss://speechio-leaderboard/models/speechio_kaldi_multicn/
 vosk_model_cn:
   url: oss://speechio-leaderboard/models/vosk_model_cn/
+paraformer_large_offline_zh:
+  url: oss://speechio-leaderboard/models/paraformer_large_offline_zh/
 vosk_model_en:
   url: oss://speechio-leaderboard/models/vosk_model_en/
 vosk_model_en_large:
