@@ -55,7 +55,7 @@ if __name__ == '__main__':
     # check local model-zoo for requested model-image
     model_dir = os.path.join(MODEL_ZOO, model_id)
     if not os.path.isdir(model_dir):
-        pull_model_cmd = F'ops/pull model {model_id}'
+        pull_model_cmd = F'ops/pull -m {model_id}'
         logging.info(F'Please pull model-image to your local machine via: {pull_model_cmd}')
         sys.exit(-1)
     assert os.path.isdir(model_dir)
