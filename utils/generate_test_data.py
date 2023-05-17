@@ -17,7 +17,8 @@ if __name__ == '__main__':
     with open(metadata_path, 'r', encoding='utf-8') as metadata_fp:
         reader = csv.DictReader(metadata_fp, delimiter='\t')
         for utt in reader:
-            utts.append(utt)
+            if float(utt['DURATION']) <= 59.9:
+                utts.append(utt)
     
     with open(os.path.join(args.dir, 'wav.scp'), 'w+', encoding='utf-8') as fp:
         for utt in utts[:args.max_num_utts]:
