@@ -1,6 +1,6 @@
 # SpeechColab ASR leaderboard
 
-![result](misc/SpeechIO_TIOBE_2023_03.png)
+![result](misc/SpeechIO_TIOBE_2023_06.png)
 ![result](misc/SpeechColab_ASR_EN_2022_10.png)
 
 ## 1. Overview
@@ -177,35 +177,32 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 #### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00018)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | aliyun_ftasr_api_zh | 1.77% | 2023.03 |
-| 2 | microsoft_sdk_zh | 2.36% | 2023.03 |
-| 3 | yitu_api_zh | 2.64 % | 2023.03 |
-| 4 | tencent_api_zh | 2.95% | 2023.03 |
-| 5 | iflytek_lfasr_api_zh | 3.29% | 2023.03 |
-| 6 | aispeech_api_zh | 3.42% | 2023.03 |
-| 7 | baidu_pro_api_zh | 6.68% | 2023.03 |
+| 1 | aliyun_ftasr_api_zh | 1.69% | 2023.06 |
+| 2 | microsoft_sdk_zh | 2.36% | 2023.06 |
+| 3 | tencent_api_zh | 2.91% | 2023.06 |
+| 4 | iflytek_lfasr_api_zh | 3.28% | 2023.06 |
+| 5 | aispeech_api_zh | 3.42% | 2023.06 |
+| 6 | baidu_pro_api_zh | 6.68% | 2023.06 |
 
 #### **Locked** SpeechIO test sets (ZH00019 ~ ZH00037)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | aliyun_ftasr_api_zh | 3.35% | 2023.03 |
-| 2 | yitu_api_zh | 3.85% | 2023.03 |
-| 3 | microsoft_sdk_zh | 4.24% | 2023.03 |
-| 4 | tencent_api_zh | 4.65% | 2023.03 |
-| 5 | iflytek_lfasr_api_zh | 4.78% | 2023.03 |
-| 6 | aispeech_api_zh | 5.06% | 2023.03 |
-| 7 | baidu_pro_api_zh | 10.06% | 2023.03 |
+| 1 | aliyun_ftasr_api_zh | 3.25% | 2023.06 |
+| 2 | microsoft_sdk_zh | 4.24% | 2023.06 |
+| 3 | tencent_api_zh | 4.58% | 2023.06 |
+| 4 | iflytek_lfasr_api_zh | 4.80% | 2023.06 |
+| 5 | aispeech_api_zh | 5.07% | 2023.06 |
+| 6 | baidu_pro_api_zh | 10.07% | 2023.06 |
 
 #### **All** SpeechIO test sets (ZH00001 ~ ZH00037)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | aliyun_ftasr_api_zh | 2.45% | 2023.03 |
-| 2 | yitu_api_zh | 3.16% | 2023.03 |
-| 3 | microsoft_sdk_zh | 3.18% | 2023.03 |
-| 4 | tencent_api_zh | 3.69% | 2023.03 |
-| 5 | iflytek_lfasr_api_zh | 3.94% | 2023.03 |
-| 6 | aispeech_api_zh | 4.13% | 2023.03 |
-| 7 | baidu_pro_api_zh | 8.14% | 2023.03 |
+| 1 | aliyun_ftasr_api_zh | 2.37% | 2023.06 |
+| 2 | microsoft_sdk_zh | 3.17% | 2023.06 |
+| 3 | tencent_api_zh | 3.63% | 2023.06 |
+| 4 | iflytek_lfasr_api_zh | 3.94% | 2023.06 |
+| 5 | aispeech_api_zh | 4.13% | 2023.06 |
+| 6 | baidu_pro_api_zh | 8.14% | 2023.06 |
 
 ### Private Models
 #### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00018)
