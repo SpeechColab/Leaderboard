@@ -208,22 +208,25 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 #### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00018)
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- |---------|
+| hiasr_api_zh(*) | 1.41% | 2023.06 |
 | bilibili_api_zh(*) | 2.39% | 2023.06 |
 
 #### **Locked** SpeechIO test sets (ZH00019 ~ ZH00037)
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- |----------|---------|
+| hiasr_api_zh(*) | 3.21% | 2023.06 |
 | bilibili_api_zh(*) | 3.21%    | 2023.06 |
 
 #### **All** SpeechIO test sets (ZH00001 ~ ZH00037)
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- |---------|
+| hiasr_api_zh(*) | 2.19% | 2023.06 |
 | bilibili_api_zh(*) | 2.75% | 2023.06 |
 
 <details><summary> Detail all results (字错误率 CER %) </summary><p>
 
 | Test Set ID | 测试场景&内容领域 | bilibili_api_zh | Date 时间 |
-| --- | --- | --- | --- |  
+| --- | --- | --- | --- |
 | SPEECHIO_ASR_ZH00001 | 新闻联播 | 0.57 | 2023.06 |
 | SPEECHIO_ASR_ZH00002 | 访谈 鲁豫有约 | 2.81 | 2023.06 |
 | SPEECHIO_ASR_ZH00003 | 电视节目 天下足球 | 0.91 | 2023.06 |
