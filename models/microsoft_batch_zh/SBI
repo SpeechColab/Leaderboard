@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 2 ]; then
+  echo "recognize.sh wav.scp <working_dir>"
+  exit 1;
+fi
+
+scp=$1
+dir=$2
+wav_blob_scp=${dir}/wav_blob.scp
+wav_loss_scp=${dir}/wav_loss.scp
+part_nums=8
+loss_base_nums=10
+test_time=$(date +"%Y-%m-%d-%H-%M-%S")
+echo "Test start at "${test_time}
+
+# upload wav to blob
+./upload_wav.py ${scp} speechiotest-${test_time}
+
+# check blob wav
+./check_wav.py speechiotest-${test_time} ${scp} ${wav_loss_scp} ${wav_blob_scp}
+wav_loss_num=$(cat $wav_loss_scp | wc -l)
+if [ ${wav_loss_num} -gt ${loss_base_nums} ];then
+  echo "Not found some audio in blob! Please check" ${wav_loss_scp}
+  exit 1
+else
+  echo "Upload audio successfully. Continue..."
+fi
+
+scp_num=$(cat $scp | wc -l)
+if [ ${scp_num} -lt ${part_nums} ];then
+  part_nums=1
+fi
+
+# split test set
+awk -vf=${part_nums} -vl="`wc -l $wav_blob_scp`" 'BEGIN{p=int(l/f);q=(l%f);for(n=1;n<=f;n++)a[n]=n*p+((n<=q)?++x:x)}{if(NR>a[i])i++;print > "'$wav_blob_scp'."i}' $wav_blob_scp
+for((i=1;i<=${part_nums};i++));
+do
+  nohup ./asr_batch.py ${wav_blob_scp}.${i} $dir/raw_rec.txt.${i} > ${dir}/sdk_log.${i} 2>&1 &
+done
+
+wait
+
+# merge parts and delete useless files
+cat ${dir}/raw_rec.txt.* > ${dir}/raw_rec.txt
+cat ${dir}/sdk_log.* > ${dir}/log.SBI.result
+rm -rf ${dir}/sdk_log.*
+rm -rf ${dir}/raw_rec.txt.*
+rm -rf ${wav_blob_scp}.*
+
+# delete container
+./delete_container.py speechiotest-${test_time}
