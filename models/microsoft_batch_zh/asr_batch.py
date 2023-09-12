@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-# Request and swagger_client module must be installed.
+# Request and batch_client module must be installed.
 # Run pip install requests if necessary.
 # doc: https://learn.microsoft.com/en-us/azure/ai-services/speech-service/batch-transcription
 
 import codecs
 import json
 import requests
-import swagger_client
 import sys
 import time
+import batch_client
 
 MAX_RETRY = 10
 RETRY_INTERVAL = 1.0
@@ -38,22 +38,23 @@ def recognize(audio):
 
 def do_recognition(audio):
     text = ''
+    result_list = []
 
     # configure API key authorization: subscription_key
-    configuration = swagger_client.Configuration()
+    configuration = batch_client.Configuration()
     configuration.api_key["Ocp-Apim-Subscription-Key"] = SUBSCRIPTION_KEY
     configuration.host = "https://{REGION}.api.cognitive.azure.cn/speechtotext/v3.1".format(REGION=REGION)
 
     # create the client object and authenticate
-    client = swagger_client.ApiClient(configuration)
+    client = batch_client.ApiClient(configuration)
 
     # create an instance of the transcription api class
-    api = swagger_client.CustomSpeechTranscriptionsApi(api_client=client)
+    api = batch_client.CustomSpeechTranscriptionsApi(api_client=client)
 
     # Specify transcription properties by passing a dict to the properties parameter. See
     # https://learn.microsoft.com/azure/cognitive-services/speech-service/batch-transcription-create?pivots=rest-api#request-configuration-options
     # for supported parameters.
-    properties = swagger_client.TranscriptionProperties()
+    properties = batch_client.TranscriptionProperties()
     properties.profanity_filter_mode = "None"
 
     # Use base models for transcription. Comment this block if you are using a custom model.
@@ -89,14 +90,16 @@ def do_recognition(audio):
                 results_object = json.loads(results.content.decode('utf-8'))
                 recognizedPhrases = results_object['recognizedPhrases']
                 if len(recognizedPhrases) > 0:
-                    nBest = recognizedPhrases[0]['nBest']
-                    text = nBest[0]['lexical']
+                    for phrase in recognizedPhrases:
+                        nBest = phrase['nBest']
+                        result_list.append(nBest[0]['lexical'])
                 else:
                     print("Transcriptions result is null.")
         elif transcription.status == "Failed":
             sys.stderr.write("Transcription failed: {message}".format(message=transcription.properties.error.message))
             sys.stderr.flush()
 
+    text = " ".join(result_list)
     print("Transcriptions text: {text}".format(text=text))
 
     # Delete transcription
@@ -111,7 +114,7 @@ def do_transcription_definition(uri, properties):
     Transcribe a single audio file located at `uri` using the settings specified in `properties`
     using the base model for the specified locale.
     """
-    transcription_definition = swagger_client.Transcription(
+    transcription_definition = batch_client.Transcription(
         display_name=NAME,
         description=DESCRIPTION,
         locale=LOCALE,
