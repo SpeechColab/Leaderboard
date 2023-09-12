@@ -13,7 +13,7 @@ import six
 from batch_client.api_client import ApiClient
 
 
-class CustomSpeechTranscriptionsApi(object):
+class BatchTranscriptionsApi(object):
 
     def __init__(self, api_client=None):
         if api_client is None:

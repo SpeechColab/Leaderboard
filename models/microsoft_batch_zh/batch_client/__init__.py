@@ -8,7 +8,7 @@
 from __future__ import absolute_import
 
 # import apis into sdk package
-from batch_client.api.custom_speech_transcriptions_api import CustomSpeechTranscriptionsApi
+from batch_client.api.batch_transcriptions_api import BatchTranscriptionsApi
 
 # import ApiClient
 from batch_client.api_client import ApiClient

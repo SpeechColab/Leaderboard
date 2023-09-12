@@ -49,7 +49,7 @@ def do_recognition(audio):
     client = batch_client.ApiClient(configuration)
 
     # create an instance of the transcription api class
-    api = batch_client.CustomSpeechTranscriptionsApi(api_client=client)
+    api = batch_client.BatchTranscriptionsApi(api_client=client)
 
     # Specify transcription properties by passing a dict to the properties parameter. See
     # https://learn.microsoft.com/azure/cognitive-services/speech-service/batch-transcription-create?pivots=rest-api#request-configuration-options
