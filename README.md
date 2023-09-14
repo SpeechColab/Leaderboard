@@ -146,6 +146,7 @@ Cloud Models
 | [hiasr_api_zh](models/hiasr_api_zh/) | Cloud | 喜马拉雅 <br> ximalaya | 喜马拉雅AI开放平台 <br> (转写,非流式) | not available yet |
 | [iflytek_lfasr_api_zh](models/iflytek_lfasr_api_zh/) | Cloud | 讯飞 <br> IFlyTek | 讯飞开放平台 <br> (转写,非流式) | [link](https://www.xfyun.cn/services/lfasr) |
 | [microsoft_sdk_zh](models/microsoft_sdk_zh/) | Cloud | 微软 <br> Microsoft | Azure | [link](https://azure.microsoft.com/zh-cn/services/cognitive-services/speech-services/) |
+| [microsoft_batch_zh](models/microsoft_batch_zh/) | Cloud | 微软 <br> Microsoft | Azure <br> 离线转写 | [link](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/batch-transcription/) |
 | [tencent_api_zh](models/tencent_api_zh/) | Cloud | 腾讯 <br> Tencent | 腾讯云 | [link](https://cloud.tencent.com/product/asr) |
 | [yitu_api_zh](models/yitu_api_zh/) | Cloud | 依图 <br> YituTech |依图语音开放平台 | [link](https://speech.yitutech.com) |
 
