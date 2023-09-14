@@ -16,6 +16,7 @@ models/*
 !models/hiasr_api_zh
 !models/iflytek_lfasr_api_zh
 !models/microsoft_sdk_zh
+!models/microsoft_batch_zh
 !models/tencent_api_zh
 !models/yitu_api_zh
 !models/aliyun_ftasr_api_zh
