@@ -55,7 +55,7 @@ _**People should be able to easily benchmark, reproduce, examine ASR systems fro
 SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publicly available sources (Youtube, TV programs, Podcast etc), covering various well-known scenarios and topics, transcribed by payed professional annotators.
 ```
 
-| 已公开 <br> UNLOCKED | 编号 <br> DATASET_ID | 名称 <br> NAME | 场景 <br> SCENARIO | 内容领域 <br> TOPIC | 时长 <br> HOURS | 难度(1-5) <br> DIFFICULTY  |
+| 已公开 <br> UNLOCKED | 编号 <br> DATASET_ID | 名称 <br> NAME | 场景 <br> SCENARIO | 内容领域 <br> TOPIC | 有效时长 <br> DURATION (HOURS) | 难度(1-5) <br> DIFFICULTY  |
 | --- | --- | --- | --- | --- | --- | --- |
 | &check; |SPEECHIO_ASR_ZH00000| 调试集 <br> for debugging | 视频会议、论坛演讲 <br> conference & speech | 经济、货币、金融 <br> economy, currency, finance | 1.0 | ★★☆ |
 | &check; |SPEECHIO_ASR_ZH00001| 新闻联播 | 新闻播报 <br> TV News | 时政 <br> news & politics | 9 | ★ |
@@ -76,9 +76,9 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &check; |SPEECHIO_ASR_ZH00016| 德云社演出 | 剧场相声 <br> Theater Crosstalk Show | 包袱段子 <br> Funny Stories | 1 | ★★★ |
 | &check; |SPEECHIO_ASR_ZH00017| 吐槽大会 | 脱口秀电视节目 <br> Standup Comedy | 明星糗事 <br> Celebrity Jokes | 1.8 | ★★☆ |
 | &check; |SPEECHIO_ASR_ZH00018| 小猪佩奇 <br> 熊出没 | 少儿动画 <br> Children Cartoon | 童话故事、日常 <br> Fairy Tale | 0.9 | ★☆ |
-| &cross; |SPEECHIO_ASR_ZH00019| CCTV5 NBA 转播 | 体育赛事解说 <br> Sports Game Live | 篮球、NBA <br> NBA Game | 0.7 | ★★★ |
-| &cross; |SPEECHIO_ASR_ZH00020| 篮球人物 | 纪录片 <br> Documentary | 篮球明星、成长 <br> NBA Super Stars' Life & History | 2.2 | ★★ |
-| &cross; |SPEECHIO_ASR_ZH00021| 汽车之家评测 | 短视频 <br> VLog | 汽车测评 <br> Car benchmarks, Road driving test | 1.7 | ★★★☆ |
+| &check; |SPEECHIO_ASR_ZH00019| CCTV5 NBA 转播 | 体育赛事解说 <br> Sports Game Live | 篮球、NBA <br> NBA Game | 0.7 | ★★★ |
+| &check; |SPEECHIO_ASR_ZH00020| 篮球人物 | 纪录片 <br> Documentary | 篮球明星、成长 <br> NBA Super Stars' Life & History | 2.2 | ★★ |
+| &check; |SPEECHIO_ASR_ZH00021| 汽车之家评测 | 短视频 <br> VLog | 汽车测评 <br> Car benchmarks, Road driving test | 1.7 | ★★★☆ |
 | &cross; |SPEECHIO_ASR_ZH00022| 小艾大叔 豪宅带看 | 短视频 <br> VLog | 房地产、豪宅 <br> Realestate, Mansion tour | 1.7 | ★★★ |
 | &cross; |SPEECHIO_ASR_ZH00023| 无聊开箱 <br> Zealer评测 | 短视频 <br> VLog | 产品开箱评测 <br> Unboxing | 2 | ★★★ |
 | &cross; |SPEECHIO_ASR_ZH00024| 付老师种植技术 | 短视频 <br> VLog | 农业、种植 <br> Agriculture, Planting | 2.7 | ★★★☆ |
@@ -95,6 +95,11 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &cross; |SPEECHIO_ASR_ZH00035| 新氧医美 | 短视频 <br> VLog | 医疗美容 <br> Medical Cosmetology | 1.4 | ★★ |
 | &cross; |SPEECHIO_ASR_ZH00036| 交通广播 | 交通广播 <br> traffic radio | 路况，娱乐 <br> Traffics | 1.2 | ★★★☆ |
 | &cross; |SPEECHIO_ASR_ZH00037| 老俞闲聊 | 在线会议 <br> Online meeting | 闲聊 <br> chat | 2.4 | ★★★ |
+| &cross; |SPEECHIO_ASR_ZH00038| 电影：疯狂石头+疯狂赛车 | 电影 <br> Film | 重庆话、山东青岛、四川成都话、河北唐山话、粤语、天津话、河南话、陕西话、闽南话，武汉话等 <br> multiple accents | 1.3 | ★★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00039| 电影：1942 | 电影 <br> Film | 河南话 <br> HeNan Accent | 0.9 | ★★★★ |
+| &cross; |SPEECHIO_ASR_ZH00040| 电影：白鹿原 | 电影 <br> Film | 陕西话 <br> ShaanXi Accent | 1.1 | ★★★★★ |
+| &cross; |SPEECHIO_ASR_ZH00041| 电影：让子弹飞 | 电影 <br> Film | 四川话 <br> SiChuan Accent | 1.1 | ★★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00042| 电影：人生大事 | 电影 <br> Film | 武汉话 <br> WuHan Accent | 0.8 | ★★★★ |
 
 </p></details>
 
