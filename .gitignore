@@ -20,6 +20,7 @@ models/*
 !models/tencent_api_zh
 !models/yitu_api_zh
 !models/aliyun_ftasr_api_zh
+!models/ximalaya_api_zh
 
 # en models
 !models/aliyun_api_en
@@ -103,3 +104,7 @@ models/tencent_api_en/SECRET_KEY
 # yitu api credential
 models/yitu_api_zh/DEV_ID
 models/yitu_api_zh/DEV_KEY
+
+# ximalaya api credential
+models/ximalaya_api_zh/APP_KEY
+models/ximalaya_api_zh/SECRET_KEY
