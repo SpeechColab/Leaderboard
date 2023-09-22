@@ -34,5 +34,3 @@ whisper_large:
   url: oss://speechio-leaderboard/models/whisper_large/
 whisper_large_v2:
   url: oss://speechio-leaderboard/models/whisper_large_v2/
-ximalaya_api_zh:
-  url: oss://speechio-leaderboard/models/ximalaya_api_zh/
