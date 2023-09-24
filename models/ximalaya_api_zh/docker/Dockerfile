@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python3-pip && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install grpcio==1.37.0 grpcio-tools==1.37.0 protobuf==3.15.8
+RUN pip3 install websockets==11.0.3
 
 # Use C.UTF-8 locale to avoid issues with ASCII encoding
 ENV LC_ALL=C.UTF-8
