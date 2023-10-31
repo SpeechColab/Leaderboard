@@ -1,6 +1,6 @@
 # SpeechColab ASR leaderboard
 
-![result](misc/SpeechIO_TIOBE_2023_06.png)
+![result](misc/SpeechIO_TIOBE_2023_09.png)
 ![result](misc/SpeechColab_ASR_EN_2022_10.png)
 
 ## 1. Overview
@@ -180,57 +180,57 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 ## 5. Latest Results
 
 ### Public Models
-#### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00018)
+#### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00021)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | aliyun_ftasr_api_zh | 1.69% | 2023.06 |
-| 2 | microsoft_sdk_zh | 2.36% | 2023.06 |
-| 3 | tencent_api_zh | 2.91% | 2023.06 |
-| 4 | iflytek_lfasr_api_zh | 3.28% | 2023.06 |
-| 5 | aispeech_api_zh | 3.42% | 2023.06 |
-| 6 | baidu_pro_api_zh | 6.68% | 2023.06 |
+| 1 | ximalaya_api_zh | 1.44% | 2023.09 |
+| 2 | aliyun_ftasr_api_zh | 1.69% | 2023.09 |
+| 3 | microsoft_batch_zh | 2.20% | 2023.09 |
+| 4 | tencent_api_zh | 2.97% | 2023.09 |
+| 5 | iflytek_lfasr_api_zh | 3.22% | 2023.09 |
+| 6 | aispeech_api_zh | 3.35% | 2023.09 |
+| 7 | baidu_pro_api_zh | 6.79% | 2023.09 |
 
-#### **Locked** SpeechIO test sets (ZH00019 ~ ZH00037)
+#### **Locked** SpeechIO test sets (ZH00022 ~ ZH00042)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | aliyun_ftasr_api_zh | 3.25% | 2023.06 |
-| 2 | microsoft_sdk_zh | 4.24% | 2023.06 |
-| 3 | tencent_api_zh | 4.58% | 2023.06 |
-| 4 | iflytek_lfasr_api_zh | 4.80% | 2023.06 |
-| 5 | aispeech_api_zh | 5.07% | 2023.06 |
-| 6 | baidu_pro_api_zh | 10.07% | 2023.06 |
+| 1 | aliyun_ftasr_api_zh | 5.59% | 2023.09 |
+| 1 | ximalaya_api_zh | 5.59% | 2023.09 |
+| 3 | microsoft_batch_zh | 5.76% | 2023.09 |
+| 4 | tencent_api_zh | 6.71% | 2023.09 |
+| 5 | iflytek_lfasr_api_zh | 7.64% | 2023.09 |
+| 6 | aispeech_api_zh | 8.14% | 2023.09 |
+| 7 | baidu_pro_api_zh | 14.00% | 2023.09 |
 
-#### **All** SpeechIO test sets (ZH00001 ~ ZH00037)
+#### **All** SpeechIO test sets (ZH00001 ~ ZH00042)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | aliyun_ftasr_api_zh | 2.37% | 2023.06 |
-| 2 | microsoft_sdk_zh | 3.17% | 2023.06 |
-| 3 | tencent_api_zh | 3.63% | 2023.06 |
-| 4 | iflytek_lfasr_api_zh | 3.94% | 2023.06 |
-| 5 | aispeech_api_zh | 4.13% | 2023.06 |
-| 6 | baidu_pro_api_zh | 8.14% | 2023.06 |
+| 1 | ximalaya_api_zh | 3.12% | 2023.09 |
+| 2 | aliyun_ftasr_api_zh | 3.27% | 2023.09 |
+| 3 | microsoft_batch_zh | 3.65% | 2023.09 |
+| 4 | tencent_api_zh | 4.49% | 2023.09 |
+| 5 | iflytek_lfasr_api_zh | 5.01% | 2023.09 |
+| 6 | aispeech_api_zh | 5.29% | 2023.09 |
+| 7 | baidu_pro_api_zh | 9.71% | 2023.09 |
 
 ### Private Models
-#### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00018)
+#### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00021)
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- |---------|
-| hiasr_api_zh(*) | 1.41% | 2023.06 |
-| bilibili_api_zh(*) | 2.39% | 2023.06 |
+| bilibili_api_zh(*) | 2.32% | 2023.09 |
 
-#### **Locked** SpeechIO test sets (ZH00019 ~ ZH00037)
+#### **Locked** SpeechIO test sets (ZH00022 ~ ZH00042)
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- |----------|---------|
-| hiasr_api_zh(*) | 3.21% | 2023.06 |
-| bilibili_api_zh(*) | 3.21%    | 2023.06 |
+| bilibili_api_zh(*) | 4.88%    | 2023.09 |
 
-#### **All** SpeechIO test sets (ZH00001 ~ ZH00037)
+#### **All** SpeechIO test sets (ZH00001 ~ ZH00042)
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- |---------|
-| hiasr_api_zh(*) | 2.19% | 2023.06 |
-| bilibili_api_zh(*) | 2.75% | 2023.06 |
+| bilibili_api_zh(*) | 3.36% | 2023.09 |
 
+<!-- 
 <details><summary> Detail all results (字错误率 CER %) </summary><p>
-
 | Test Set ID | 测试场景&内容领域 | bilibili_api_zh | Date 时间 |
 | --- | --- | --- | --- |
 | SPEECHIO_ASR_ZH00001 | 新闻联播 | 0.57 | 2023.06 |
@@ -270,8 +270,8 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 | SPEECHIO_ASR_ZH00035 | 新氧医美 | 1.21 | 2023.06 |
 | SPEECHIO_ASR_ZH00036 | 交通广播 信不信由你 | 6.27 | 2023.06 |
 | SPEECHIO_ASR_ZH00037 | 在线会议聊天 老俞闲话 | 2.94 | 2023.06 |
-
 </p></details>
+-->
 
 _note: models with `(*)` marker can be found in model zoo, but not universally available to public yet._
 
