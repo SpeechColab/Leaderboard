@@ -229,49 +229,53 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 | --- | --- |---------|
 | bilibili_api_zh(*) | 3.36% | 2023.09 |
 
-<!-- 
 <details><summary> Detail all results (字错误率 CER %) </summary><p>
+
 | Test Set ID | 测试场景&内容领域 | bilibili_api_zh | Date 时间 |
 | --- | --- | --- | --- |
-| SPEECHIO_ASR_ZH00001 | 新闻联播 | 0.57 | 2023.06 |
-| SPEECHIO_ASR_ZH00002 | 访谈 鲁豫有约 | 2.81 | 2023.06 |
-| SPEECHIO_ASR_ZH00003 | 电视节目 天下足球 | 0.91 | 2023.06 |
-| SPEECHIO_ASR_ZH00004 | 场馆演讲 罗振宇跨年 | 1.57 | 2023.06 |
-| SPEECHIO_ASR_ZH00005 | 在线教育 李永乐 科普 | 1.44 | 2023.06 |
-| SPEECHIO_ASR_ZH00006 | 直播 王者荣耀 张大仙&骚白 | 5.69 | 2023.06 |
-| SPEECHIO_ASR_ZH00007 | 直播 带货 李佳琪&薇娅 | 6.45 | 2023.06 |
-| SPEECHIO_ASR_ZH00008 | 线下培训 老罗语录 | 3.81 | 2023.06 |
-| SPEECHIO_ASR_ZH00009 | 播客 故事FM | 3.22 | 2023.06 |
-| SPEECHIO_ASR_ZH00010 | 播客 创业内幕 | 3.55 | 2023.06 |
-| SPEECHIO_ASR_ZH00011 | 在线教育 罗翔 刑法法考 | 1.81 | 2023.06 |
-| SPEECHIO_ASR_ZH00012 | 在线教育 张雪峰 考研 | 2.05 | 2023.06 |
-| SPEECHIO_ASR_ZH00013 | 短视频 影剪 谷阿莫&牛叔说电影 | 3.01 | 2023.06 |
-| SPEECHIO_ASR_ZH00014 | 短视频 美式&烹饪 | 3.61 | 2023.06 |
-| SPEECHIO_ASR_ZH00015 | 评书 单田芳 白眉大侠 | 4.64 | 2023.06 |
-| SPEECHIO_ASR_ZH00016 | 相声 德云社专场 | 3.04 | 2023.06 |
-| SPEECHIO_ASR_ZH00017 | 脱口秀 吐槽大会 | 2.69 | 2023.06 |
-| SPEECHIO_ASR_ZH00018 | 少儿卡通 小猪佩奇&熊出没 | 1.86 | 2023.06 |
-| SPEECHIO_ASR_ZH00019 | 体育赛事解说 NBA比赛 | 2.32 | 2023.06 |
-| SPEECHIO_ASR_ZH00020 | 纪录片 篮球人物 | 1.55 | 2023.06 |
-| SPEECHIO_ASR_ZH00021 | 短视频 汽车之家 汽车评测 | 1.70 | 2023.06 |
-| SPEECHIO_ASR_ZH00022 | 短视频 小艾大叔 豪宅带看 | 3.44 | 2023.06 |
-| SPEECHIO_ASR_ZH00023 | 短视频 开箱视频 Zeal&无聊开箱 | 2.18 | 2023.06 |
-| SPEECHIO_ASR_ZH00024 | 短视频 付老师 农业种植 | 4.92 | 2023.06 |
-| SPEECHIO_ASR_ZH00025 | 线下课堂 石国鹏 古希腊哲学 | 3.27 | 2023.06 |
-| SPEECHIO_ASR_ZH00026 | 广播电台节目 张震鬼故事 | 3.59 | 2023.06 |
-| SPEECHIO_ASR_ZH00027 | 华语大学生辩论赛 兴趣，技能，成长 | 2.15 | 2023.06 |
-| SPEECHIO_ASR_ZH00028 | 同声传译：时政&社会公共治理 | 1.97 | 2023.06 |
-| SPEECHIO_ASR_ZH00029 | 港台口音：港台明星访谈 | 4.10 | 2023.06 |
-| SPEECHIO_ASR_ZH00030 | 老外口音：《世界青年说》 | 3.93 | 2023.06 |
-| SPEECHIO_ASR_ZH00031 | 直播带货 东方甄选 | 3.85 | 2023.06 |
-| SPEECHIO_ASR_ZH00032 | 音乐 郎朗钢琴课 | 3.90 | 2023.06 |
-| SPEECHIO_ASR_ZH00033 | 芯片 老石谈芯 | 2.65 | 2023.06 |
-| SPEECHIO_ASR_ZH00034 | 网络IT 电丸科技AK | 5.74 | 2023.06 |
-| SPEECHIO_ASR_ZH00035 | 新氧医美 | 1.21 | 2023.06 |
-| SPEECHIO_ASR_ZH00036 | 交通广播 信不信由你 | 6.27 | 2023.06 |
-| SPEECHIO_ASR_ZH00037 | 在线会议聊天 老俞闲话 | 2.94 | 2023.06 |
+| SPEECHIO_ASR_ZH00001 | 新闻联播 | 0.54 | 2023.09 |
+| SPEECHIO_ASR_ZH00002 | 访谈 鲁豫有约 | 2.78 | 2023.09 |
+| SPEECHIO_ASR_ZH00003 | 电视节目 天下足球 | 0.81 | 2023.09 |
+| SPEECHIO_ASR_ZH00004 | 场馆演讲 罗振宇跨年 | 1.48 | 2023.09 |
+| SPEECHIO_ASR_ZH00005 | 在线教育 李永乐 科普 | 1.47 | 2023.09 |
+| SPEECHIO_ASR_ZH00006 | 直播 王者荣耀 张大仙&骚白 | 5.85 | 2023.09 |
+| SPEECHIO_ASR_ZH00007 | 直播 带货 李佳琪&薇娅 | 6.19 | 2023.09 |
+| SPEECHIO_ASR_ZH00008 | 线下培训 老罗语录 | 3.68 | 2023.09 |
+| SPEECHIO_ASR_ZH00009 | 播客 故事FM | 3.18 | 2023.09 |
+| SPEECHIO_ASR_ZH00010 | 播客 创业内幕 | 3.51 | 2023.09 |
+| SPEECHIO_ASR_ZH00011 | 在线教育 罗翔 刑法法考 | 1.77 | 2023.09 |
+| SPEECHIO_ASR_ZH00012 | 在线教育 张雪峰 考研 | 2.11 | 2023.09 |
+| SPEECHIO_ASR_ZH00013 | 短视频 影剪 谷阿莫&牛叔说电影 | 2.97 | 2023.09 |
+| SPEECHIO_ASR_ZH00014 | 短视频 美式&烹饪 | 3.56 | 2023.09 |
+| SPEECHIO_ASR_ZH00015 | 评书 单田芳 白眉大侠 | 4.72 | 2023.09 |
+| SPEECHIO_ASR_ZH00016 | 相声 德云社专场 | 3.01 | 2023.09 |
+| SPEECHIO_ASR_ZH00017 | 脱口秀 吐槽大会 | 2.93 | 2023.09 |
+| SPEECHIO_ASR_ZH00018 | 少儿卡通 小猪佩奇&熊出没 | 1.98 | 2023.09 |
+| SPEECHIO_ASR_ZH00019 | 体育赛事解说 NBA比赛 | 2.32 | 2023.09 |
+| SPEECHIO_ASR_ZH00020 | 纪录片 篮球人物 | 1.51 | 2023.09 |
+| SPEECHIO_ASR_ZH00021 | 短视频 汽车之家 汽车评测 | 1.75 | 2023.09 |
+| SPEECHIO_ASR_ZH00022 | 短视频 小艾大叔 豪宅带看 | 3.29 | 2023.09 |
+| SPEECHIO_ASR_ZH00023 | 短视频 开箱视频 Zeal&无聊开箱 | 2.18 | 2023.09 |
+| SPEECHIO_ASR_ZH00024 | 短视频 付老师 农业种植 | 4.80 | 2023.09 |
+| SPEECHIO_ASR_ZH00025 | 线下课堂 石国鹏 古希腊哲学 | 3.32 | 2023.09 |
+| SPEECHIO_ASR_ZH00026 | 广播电台节目 张震鬼故事 | 3.70 | 2023.09 |
+| SPEECHIO_ASR_ZH00027 | 华语大学生辩论赛 兴趣，技能，成长 | 2.07 | 2023.09 |
+| SPEECHIO_ASR_ZH00028 | 同声传译：时政&社会公共治理 | 1.90 | 2023.09 |
+| SPEECHIO_ASR_ZH00029 | 港台口音：港台明星访谈 | 3.89 | 2023.09 |
+| SPEECHIO_ASR_ZH00030 | 老外口音：《世界青年说》 | 3.88 | 2023.09 |
+| SPEECHIO_ASR_ZH00031 | 直播带货 东方甄选 | 3.80 | 2023.09 |
+| SPEECHIO_ASR_ZH00032 | 音乐 郎朗钢琴课 | 3.92 | 2023.09 |
+| SPEECHIO_ASR_ZH00033 | 芯片 老石谈芯 | 2.70 | 2023.09 |
+| SPEECHIO_ASR_ZH00034 | 网络IT 电丸科技AK | 5.48 | 2023.09 |
+| SPEECHIO_ASR_ZH00035 | 新氧医美 | 1.16 | 2023.09 |
+| SPEECHIO_ASR_ZH00036 | 交通广播 信不信由你 | 5.92 | 2023.09 |
+| SPEECHIO_ASR_ZH00037 | 在线会议聊天 老俞闲话 | 2.86 | 2023.09 |
+| SPEECHIO_ASR_ZH00038 | 电影：疯狂石头+疯狂赛车（方言杂烩） | 18.27 | 2023.09 |
+| SPEECHIO_ASR_ZH00039 | 电影：1942（河南话） | 13.95 | 2023.09 |
+| SPEECHIO_ASR_ZH00040 | 电影：白鹿原（陕西话） | 26.41 | 2023.09 |
+| SPEECHIO_ASR_ZH00041 | 电影：让子弹飞（四川话） | 10.82 | 2023.09 |
+| SPEECHIO_ASR_ZH00042 | 电影：人生大事（武汉话） | 18.07 | 2023.09 |
 </p></details>
--->
 
 _note: models with `(*)` marker can be found in model zoo, but not universally available to public yet._
 
