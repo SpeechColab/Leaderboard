@@ -72,18 +72,18 @@ SPEECHIO_ASR_ZH00020:
   url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00020/
 SPEECHIO_ASR_ZH00021:
   url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00021/
+SPEECHIO_ASR_ZH00022:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00022/
+SPEECHIO_ASR_ZH00023:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00023/
+SPEECHIO_ASR_ZH00024:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00024/
+SPEECHIO_ASR_ZH00025:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00025/
+SPEECHIO_ASR_ZH00026:
+  url: oss://speechio-leaderboard/datasets/SPEECHIO_ASR_ZH00026/
 
 ## Locked
-SPEECHIO_ASR_ZH00022:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00022/
-SPEECHIO_ASR_ZH00023:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00023/
-SPEECHIO_ASR_ZH00024:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00024/
-SPEECHIO_ASR_ZH00025:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00025/
-SPEECHIO_ASR_ZH00026:
-  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00026/
 SPEECHIO_ASR_ZH00027:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00027/
 SPEECHIO_ASR_ZH00028:
