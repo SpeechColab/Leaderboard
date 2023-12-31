@@ -1,6 +1,6 @@
 # SpeechColab ASR leaderboard
 
-![result](misc/SpeechIO_TIOBE_2023_09.png)
+![result](misc/SpeechIO_TIOBE_2023_12.png)
 ![result](misc/SpeechColab_ASR_EN_2022_10.png)
 
 ## 1. Overview
@@ -180,38 +180,40 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 ## 5. Latest Results
 
 ### Public Models
-#### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00021)
+#### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00026)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | ximalaya_api_zh | 1.44% | 2023.09 |
-| 2 | aliyun_ftasr_api_zh | 1.69% | 2023.09 |
-| 3 | microsoft_batch_zh | 2.20% | 2023.09 |
-| 4 | tencent_api_zh | 2.97% | 2023.09 |
-| 5 | iflytek_lfasr_api_zh | 3.22% | 2023.09 |
-| 6 | aispeech_api_zh | 3.35% | 2023.09 |
-| 7 | baidu_pro_api_zh | 6.79% | 2023.09 |
+| 1 | ximalaya_api_zh | 1.72% | 2023.12 |
+| 2 | aliyun_ftasr_api_zh | 1.85% | 2023.12 |
+| 3 | microsoft_batch_zh | 2.40% | 2023.12 |
+| 4 | tencent_api_zh | 3.18% | 2023.12 |
+| 5 | iflytek_lfasr_api_zh | 3.32% | 2023.12 |
+| 6 | aispeech_api_zh | 3.62% | 2023.12 |
+| 7 | baidu_pro_api_zh | 7.29% | 2023.12 |
 
-#### **Locked** SpeechIO test sets (ZH00022 ~ ZH00042)
+#### **Locked** SpeechIO test sets (ZH00026 ~ ZH00042)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | aliyun_ftasr_api_zh | 5.59% | 2023.09 |
-| 1 | ximalaya_api_zh | 5.59% | 2023.09 |
-| 3 | microsoft_batch_zh | 5.76% | 2023.09 |
-| 4 | tencent_api_zh | 6.71% | 2023.09 |
-| 5 | iflytek_lfasr_api_zh | 7.64% | 2023.09 |
-| 6 | aispeech_api_zh | 8.14% | 2023.09 |
-| 7 | baidu_pro_api_zh | 14.00% | 2023.09 |
+| 1 | aliyun_ftasr_api_zh | 6.28% | 2023.12 |
+| 2 | ximalaya_api_zh | 6.35% | 2023.12 |
+| 3 | microsoft_batch_zh | 6.52% | 2023.12 |
+| 4 | tencent_api_zh | 7.49% | 2023.12 |
+| 5 | iflytek_lfasr_api_zh | 8.17% | 2023.12 |
+| 6 | aispeech_api_zh | 9.16% | 2023.12 |
+| 7 | baidu_pro_api_zh | 15.28% | 2023.12 |
 
 #### **All** SpeechIO test sets (ZH00001 ~ ZH00042)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | ximalaya_api_zh | 3.12% | 2023.09 |
-| 2 | aliyun_ftasr_api_zh | 3.27% | 2023.09 |
-| 3 | microsoft_batch_zh | 3.65% | 2023.09 |
-| 4 | tencent_api_zh | 4.49% | 2023.09 |
-| 5 | iflytek_lfasr_api_zh | 5.01% | 2023.09 |
-| 6 | aispeech_api_zh | 5.29% | 2023.09 |
-| 7 | baidu_pro_api_zh | 9.71% | 2023.09 |
+| 1 | ximalaya_api_zh | 3.12% | 2023.12 |
+| 2 | aliyun_ftasr_api_zh | 3.29% | 2023.12 |
+| 3 | microsoft_batch_zh | 3.65% | 2023.12 |
+| 4 | tencent_api_zh | 4.48% | 2023.12 |
+| 5 | iflytek_lfasr_api_zh | 4.79% | 2023.12 |
+| 6 | aispeech_api_zh | 5.29% | 2023.12 |
+| 7 | baidu_pro_api_zh | 9.71% | 2023.12 |
+
+<!--
 
 ### Private Models
 #### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00021)
@@ -278,6 +280,8 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 </p></details>
 
 _note: models with `(*)` marker can be found in model zoo, but not universally available to public yet._
+
+-->
 
 ---
 
