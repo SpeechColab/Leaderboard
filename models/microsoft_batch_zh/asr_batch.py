@@ -15,7 +15,8 @@ REGION = 'chinaeast2'
 LOCALE = "zh-CN"
 NAME = "Microsoft batch transcription"
 DESCRIPTION = "Microsoft batch transcription description"
-HOST = "https://{REGION}.api.cognitive.azure.cn/speechtotext/v3.1".format(REGION=REGION)
+#HOST = "https://{REGION}.api.cognitive.azure.cn/speechtotext/v3.1" .format(REGION=REGION)
+HOST = "https://eastasia.api.cognitive.microsoft.com/speechtotext/v3.1"
 
 with open('SUBSCRIPTION_KEY', 'r') as f:
     SUBSCRIPTION_KEY = f.readline().strip()
