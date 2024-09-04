@@ -1,6 +1,6 @@
 # SpeechColab ASR leaderboard
 
-![result](misc/SpeechIO_TIOBE_2024_04.png)
+![result](misc/SpeechIO_TIOBE_2024_08.png)
 ![result](misc/SpeechColab_ASR_EN_2022_10.png)
 
 ## 1. Overview
@@ -183,35 +183,35 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 #### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00026)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | ---  | --- | --- | --- |
-| 1 | ximalaya_api_zh | 1.72% | 2024.04 |
-| 2 | microsoft_batch_zh | 2.06% | 2024.04 |
-| 3 | aliyun_ftasr_api_zh | 2.06% | 2024.04 |
-| 4 | iflytek_lfasr_api_zh | 3.01% | 2024.04 |
-| 5 | tencent_api_zh | 3.28% | 2024.04 |
-| 6 | aispeech_api_zh | 3.61% | 2024.04 |
-| 7 | baidu_pro_api_zh | 7.29% | 2024.04 |
+| 1 | ximalaya_api_zh | 1.72% | 2024.08 |
+| 2 | aliyun_ftasr_api_zh | 1.80% | 2024.08 |
+| 3 | microsoft_batch_zh | 1.95% | 2024.08 |
+| 4 | iflytek_lfasr_api_zh | 3.02% | 2024.08 |
+| 5 | tencent_api_zh | 3.20% | 2024.08 |
+| 6 | aispeech_api_zh | 3.61% | 2024.08 |
+| 7 | baidu_pro_api_zh | 7.28% | 2024.08 |
 
 #### **Locked** SpeechIO test sets (ZH00027 ~ ZH00042)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | ximalaya_api_zh | 6.35% | 2024.04 |
-| 2 | microsoft_batch_zh | 6.51% | 2024.04 |
-| 3 | aliyun_ftasr_api_zh | 6.81% | 2024.04 |
-| 4 | tencent_api_zh | 7.59% | 2024.04 |
-| 5 | iflytek_lfasr_api_zh | 7.81% | 2024.04 |
-| 6 | aispeech_api_zh | 9.16% | 2024.04 |
-| 7 | baidu_pro_api_zh | 15.29% | 2024.04 |
+| 1 | microsoft_batch_zh | 4.79% | 2024.08 |
+| 2 | aliyun_ftasr_api_zh | 6.09% | 2024.08 |
+| 3 | ximalaya_api_zh | 6.35% | 2024.08 |
+| 4 | tencent_api_zh | 7.22% | 2024.08 |
+| 5 | iflytek_lfasr_api_zh | 7.84% | 2024.08 |
+| 6 | aispeech_api_zh | 9.15% | 2024.08 |
+| 7 | baidu_pro_api_zh | 15.31% | 2024.08 |
 
 #### **All** SpeechIO test sets (ZH00001 ~ ZH00042)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- |----------| --- |
-| 1 | ximalaya_api_zh | 3.12% | 2024.04 |
-| 2 | microsoft_batch_zh | 3.41% | 2024.04 |
-| 3 | aliyun_ftasr_api_zh | 3.50% | 2024.04 |
-| 4 | iflytek_lfasr_api_zh | 4.46% | 2024.04 |
-| 5 | tencent_api_zh | 4.58% | 2024.04 |
-| 6 | aispeech_api_zh | 5.29% | 2024.04 |
-| 7 | baidu_pro_api_zh | 9.71% | 2024.04 |
+| 1 | microsoft_batch_zh | 2.81% | 2024.08 |
+| 2 | aliyun_ftasr_api_zh | 3.09% | 2024.08 |
+| 3 | ximalaya_api_zh | 3.12% | 2024.08 |
+| 4 | tencent_api_zh | 4.42% | 2024.08 |
+| 5 | iflytek_lfasr_api_zh | 4.48% | 2024.08 |
+| 6 | aispeech_api_zh | 5.29% | 2024.08 |
+| 7 | baidu_pro_api_zh | 9.71% | 2024.08 |
 
 
 ### Private Models
