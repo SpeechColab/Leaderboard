@@ -116,6 +116,14 @@ SPEECHIO_ASR_ZH00041:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00041/
 SPEECHIO_ASR_ZH00042:
   url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00042/
+SPEECHIO_ASR_ZH00043:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00043/
+SPEECHIO_ASR_ZH00044:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00044/
+SPEECHIO_ASR_ZH00045:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00045/
+SPEECHIO_ASR_ZH00046:
+  url: oss://speechio-leaderboard/datasets_private/SPEECHIO_ASR_ZH00046/
 
 
 # LibriSpeech
