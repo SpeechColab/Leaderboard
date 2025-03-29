@@ -183,99 +183,103 @@ Follow this [specification](HOW_TO_SUBMIT.md). Existing models are good referenc
 #### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00026)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | ---  | --- | --- | --- |
-| 1 | ximalaya_api_zh | 1.72% | 2024.08 |
-| 2 | aliyun_ftasr_api_zh | 1.80% | 2024.08 |
-| 3 | microsoft_batch_zh | 1.95% | 2024.08 |
-| 4 | iflytek_lfasr_api_zh | 3.02% | 2024.08 |
-| 5 | tencent_api_zh | 3.20% | 2024.08 |
-| 6 | aispeech_api_zh | 3.61% | 2024.08 |
-| 7 | baidu_pro_api_zh | 7.28% | 2024.08 |
+| 1 | ximalaya_api_zh | 1.72% | 2025.01 |
+| 2 | aliyun_ftasr_api_zh | 1.80% | 2025.01 |
+| 3 | microsoft_batch_zh | 1.95% | 2025.01 |
+| 4 | iflytek_lfasr_api_zh | 3.01% | 2025.01 |
+| 5 | tencent_api_zh | 3.20% | 2025.01 |
+| 6 | aispeech_api_zh | 3.61% | 2025.01 |
+| 7 | baidu_pro_api_zh | 7.30% | 2025.01 |
 
-#### **Locked** SpeechIO test sets (ZH00027 ~ ZH00042)
+#### **Locked** SpeechIO test sets (ZH00027 ~ ZH00046)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- | --- | --- |
-| 1 | microsoft_batch_zh | 4.79% | 2024.08 |
-| 2 | aliyun_ftasr_api_zh | 6.09% | 2024.08 |
-| 3 | ximalaya_api_zh | 6.35% | 2024.08 |
-| 4 | tencent_api_zh | 7.22% | 2024.08 |
-| 5 | iflytek_lfasr_api_zh | 7.84% | 2024.08 |
-| 6 | aispeech_api_zh | 9.15% | 2024.08 |
-| 7 | baidu_pro_api_zh | 15.31% | 2024.08 |
+| 1 | microsoft_batch_zh | 5.26% | 2025.01 |
+| 2 | ximalaya_api_zh | 6.89% | 2025.01 |
+| 3 | aliyun_ftasr_api_zh | 6.92% | 2025.01 |
+| 4 | tencent_api_zh | 7.81% | 2025.01 |
+| 5 | iflytek_lfasr_api_zh | 8.70% | 2025.01 |
+| 6 | aispeech_api_zh | 10.42% | 2025.01 |
+| 7 | baidu_pro_api_zh | 16.23% | 2025.01 |
 
-#### **All** SpeechIO test sets (ZH00001 ~ ZH00042)
+#### **All** SpeechIO test sets (ZH00001 ~ ZH00046)
 | Rank 排名 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- |----------| --- |
-| 1 | microsoft_batch_zh | 2.81% | 2024.08 |
-| 2 | aliyun_ftasr_api_zh | 3.09% | 2024.08 |
-| 3 | ximalaya_api_zh | 3.12% | 2024.08 |
-| 4 | tencent_api_zh | 4.42% | 2024.08 |
-| 5 | iflytek_lfasr_api_zh | 4.48% | 2024.08 |
-| 6 | aispeech_api_zh | 5.29% | 2024.08 |
-| 7 | baidu_pro_api_zh | 9.71% | 2024.08 |
+| 1 | microsoft_batch_zh | 2.99% | 2025.01 |
+| 2 | ximalaya_api_zh | 3.35% | 2025.01 |
+| 3 | aliyun_ftasr_api_zh | 3.40% | 2025.01 |
+| 4 | tencent_api_zh | 4.64% | 2025.01 |
+| 5 | iflytek_lfasr_api_zh | 4.80% | 2025.01 |
+| 6 | aispeech_api_zh | 5.75% | 2025.01 |
+| 7 | baidu_pro_api_zh | 10.10% | 2025.01 |
 
 
 ### Private Models
 #### **Unlocked** SpeechIO test sets (ZH00001 ~ ZH00026)
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- |-------|---------|
-| bilibili_api_zh(*) | 2.49% | 2024.08 |
+| bilibili_api_zh(*) | 2.49% | 2025.01 |
 
-#### **Locked** SpeechIO test sets (ZH00027 ~ ZH00042)
+#### **Locked** SpeechIO test sets (ZH00027 ~ ZH00046)
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- |-------|---------|
-| bilibili_api_zh(*) | 5.36% | 2024.08 |
+| bilibili_api_zh(*) | 5.56% | 2025.01 |
 
-#### **All** SpeechIO test sets (ZH00001 ~ ZH00042)
+#### **All** SpeechIO test sets (ZH00001 ~ ZH00046)
 | Model 模型 | CER 字错误率 | Date 时间 |
 | --- | --- |---------|
-| bilibili_api_zh(*) | 3.36% | 2024.08 |
+| bilibili_api_zh(*) | 3.45% | 2025.01 |
 
 <details><summary> Detail all results (字错误率 CER %) </summary><p>
 
 | Test Set ID | 测试场景&内容领域 | bilibili_api_zh | Date 时间 |
 | --- | --- | --- | --- |
-| SPEECHIO_ASR_ZH00001 | 新闻联播 | 0.54 | 2024.08 |
-| SPEECHIO_ASR_ZH00002 | 访谈 鲁豫有约 | 2.78 | 2024.08 |
-| SPEECHIO_ASR_ZH00003 | 电视节目 天下足球 | 0.81 | 2024.08 |
-| SPEECHIO_ASR_ZH00004 | 场馆演讲 罗振宇跨年 | 1.48 | 2024.08 |
-| SPEECHIO_ASR_ZH00005 | 在线教育 李永乐 科普 | 1.47 | 2024.08 |
-| SPEECHIO_ASR_ZH00006 | 直播 王者荣耀 张大仙&骚白 | 5.85 | 2024.08 |
-| SPEECHIO_ASR_ZH00007 | 直播 带货 李佳琪&薇娅 | 6.21 | 2024.08 |
-| SPEECHIO_ASR_ZH00008 | 线下培训 老罗语录 | 3.69 | 2024.08 |
-| SPEECHIO_ASR_ZH00009 | 播客 故事FM | 3.18 | 2024.08 |
-| SPEECHIO_ASR_ZH00010 | 播客 创业内幕 | 3.51 | 2024.08 |
-| SPEECHIO_ASR_ZH00011 | 在线教育 罗翔 刑法法考 | 1.77 | 2024.08 |
-| SPEECHIO_ASR_ZH00012 | 在线教育 张雪峰 考研 | 2.11 | 2024.08 |
-| SPEECHIO_ASR_ZH00013 | 短视频 影剪 谷阿莫&牛叔说电影 | 2.96 | 2024.08 |
-| SPEECHIO_ASR_ZH00014 | 短视频 美式&烹饪 | 3.56 | 2024.08 |
-| SPEECHIO_ASR_ZH00015 | 评书 单田芳 白眉大侠 | 4.71 | 2024.08 |
-| SPEECHIO_ASR_ZH00016 | 相声 德云社专场 | 2.99 | 2024.08 |
-| SPEECHIO_ASR_ZH00017 | 脱口秀 吐槽大会 | 2.94 | 2024.08 |
-| SPEECHIO_ASR_ZH00018 | 少儿卡通 小猪佩奇&熊出没 | 1.97 | 2024.08 |
-| SPEECHIO_ASR_ZH00019 | 体育赛事解说 NBA比赛 | 2.32 | 2024.08 |
-| SPEECHIO_ASR_ZH00020 | 纪录片 篮球人物 | 1.51 | 2024.08 |
-| SPEECHIO_ASR_ZH00021 | 短视频 汽车之家 汽车评测 | 1.75 | 2024.08 |
-| SPEECHIO_ASR_ZH00022 | 短视频 小艾大叔 豪宅带看 | 3.29 | 2024.08 |
-| SPEECHIO_ASR_ZH00023 | 短视频 开箱视频 Zeal&无聊开箱 | 2.19 | 2024.08 |
-| SPEECHIO_ASR_ZH00024 | 短视频 付老师 农业种植 | 4.81 | 2024.08 |
-| SPEECHIO_ASR_ZH00025 | 线下课堂 石国鹏 古希腊哲学 | 3.32 | 2024.08 |
-| SPEECHIO_ASR_ZH00026 | 广播电台节目 张震鬼故事 | 3.69 | 2024.08 |
-| SPEECHIO_ASR_ZH00027 | 华语大学生辩论赛 兴趣，技能，成长 | 2.07 | 2024.08 |
-| SPEECHIO_ASR_ZH00028 | 同声传译：时政&社会公共治理 | 1.90 | 2024.08 |
-| SPEECHIO_ASR_ZH00029 | 港台口音：港台明星访谈 | 3.89 | 2024.08 |
-| SPEECHIO_ASR_ZH00030 | 老外口音：《世界青年说》 | 3.87 | 2024.08 |
-| SPEECHIO_ASR_ZH00031 | 直播带货 东方甄选 | 3.80 | 2024.08 |
-| SPEECHIO_ASR_ZH00032 | 音乐 郎朗钢琴课 | 3.86 | 2024.08 |
-| SPEECHIO_ASR_ZH00033 | 芯片 老石谈芯 | 2.70 | 2024.08 |
-| SPEECHIO_ASR_ZH00034 | 网络IT 电丸科技AK | 5.48 | 2024.08 |
-| SPEECHIO_ASR_ZH00035 | 新氧医美 | 1.17 | 2024.08 |
-| SPEECHIO_ASR_ZH00036 | 交通广播 信不信由你 | 5.94 | 2024.08 |
-| SPEECHIO_ASR_ZH00037 | 在线会议聊天 老俞闲话 | 2.86 | 2024.08 |
-| SPEECHIO_ASR_ZH00038 | 电影：疯狂石头+疯狂赛车（方言杂烩） | 18.29 | 2024.08 |
-| SPEECHIO_ASR_ZH00039 | 电影：1942（河南话） | 13.96 | 2024.08 |
-| SPEECHIO_ASR_ZH00040 | 电影：白鹿原（陕西话） | 26.38 | 2024.08 |
-| SPEECHIO_ASR_ZH00041 | 电影：让子弹飞（四川话） | 10.84 | 2024.08 |
-| SPEECHIO_ASR_ZH00042 | 电影：人生大事（武汉话） | 18.04 | 2024.08 |
+| SPEECHIO_ASR_ZH00001 | 新闻联播 | 0.53 | 2025.01 |
+| SPEECHIO_ASR_ZH00002 | 访谈 | 2.83 | 2025.01 |
+| SPEECHIO_ASR_ZH00003 | 电视节目 | 0.97 | 2025.01 |
+| SPEECHIO_ASR_ZH00004 | 场馆演讲 | 1.59 | 2025.01 |
+| SPEECHIO_ASR_ZH00005 | 在线教育 | 1.45 | 2025.01 |
+| SPEECHIO_ASR_ZH00006 | 直播 | 5.76 | 2025.01 |
+| SPEECHIO_ASR_ZH00007 | 直播 | 6.40 | 2025.01 |
+| SPEECHIO_ASR_ZH00008 | 线下培训 | 3.69 | 2025.01 |
+| SPEECHIO_ASR_ZH00009 | 播客 | 3.18 | 2025.01 |
+| SPEECHIO_ASR_ZH00010 | 播客 | 3.48 | 2025.01 |
+| SPEECHIO_ASR_ZH00011 | 在线教育 | 1.78 | 2025.01 |
+| SPEECHIO_ASR_ZH00012 | 在线教育 | 2.13 | 2025.01 |
+| SPEECHIO_ASR_ZH00013 | 短视频 | 3.03 | 2025.01 |
+| SPEECHIO_ASR_ZH00014 | 短视频 | 3.47 | 2025.01 |
+| SPEECHIO_ASR_ZH00015 | 评书 | 4.83 | 2025.01 |
+| SPEECHIO_ASR_ZH00016 | 相声 | 3.04 | 2025.01 |
+| SPEECHIO_ASR_ZH00017 | 脱口秀 | 2.82 | 2025.01 |
+| SPEECHIO_ASR_ZH00018 | 少儿卡通 | 1.96 | 2025.01 |
+| SPEECHIO_ASR_ZH00019 | 体育赛事解说 | 2.29 | 2025.01 |
+| SPEECHIO_ASR_ZH00020 | 纪录片 | 1.55 | 2025.01 |
+| SPEECHIO_ASR_ZH00021 | 短视频 | 1.69 | 2025.01 |
+| SPEECHIO_ASR_ZH00022 | 短视频 | 3.47 | 2025.01 |
+| SPEECHIO_ASR_ZH00023 | 短视频 | 2.14 | 2025.01 |
+| SPEECHIO_ASR_ZH00024 | 短视频 | 4.70 | 2025.01 |
+| SPEECHIO_ASR_ZH00025 | 线下课堂 | 3.14 | 2025.01 |
+| SPEECHIO_ASR_ZH00026 | 广播电台节目 | 3.63 | 2025.01 |
+| SPEECHIO_ASR_ZH00027 | 华语大学生辩论赛 | 2.03 | 2025.01 |
+| SPEECHIO_ASR_ZH00028 | 同声传译：时政&社会公共治理 | 2.04 | 2025.01 |
+| SPEECHIO_ASR_ZH00029 | 港台口音：港台明星访谈 | 3.87 | 2025.01 |
+| SPEECHIO_ASR_ZH00030 | 老外口音：《世界青年说》 | 3.86 | 2025.01 |
+| SPEECHIO_ASR_ZH00031 | 直播带货 | 3.74 | 2025.01 |
+| SPEECHIO_ASR_ZH00032 | 音乐 | 3.86 | 2025.01 |
+| SPEECHIO_ASR_ZH00033 | 芯片 | 2.45 | 2025.01 |
+| SPEECHIO_ASR_ZH00034 | 网络IT | 5.10 | 2025.01 |
+| SPEECHIO_ASR_ZH00035 | 新氧医美 | 1.13 | 2025.01 |
+| SPEECHIO_ASR_ZH00036 | 交通广播 | 6.01 | 2025.01 |
+| SPEECHIO_ASR_ZH00037 | 在线会议聊天 | 3.02 | 2025.01 |
+| SPEECHIO_ASR_ZH00038 | 电影：疯狂石头+疯狂赛车（方言杂烩） | 18.36 | 2025.01 |
+| SPEECHIO_ASR_ZH00039 | 电影：1942（河南话） | 13.92 | 2025.01 |
+| SPEECHIO_ASR_ZH00040 | 电影：白鹿原（陕西话） | 25.80 | 2025.01 |
+| SPEECHIO_ASR_ZH00041 | 电影：让子弹飞（四川话） | 11.37 | 2025.01 |
+| SPEECHIO_ASR_ZH00042 | 电影：人生大事（武汉话） | 18.24 | 2025.01 |
+| SPEECHIO_ASR_ZH00043 | 听障 | 23.34 | 2025.01 |
+| SPEECHIO_ASR_ZH00044 | 诗词 | 1.64 | 2025.01 |
+| SPEECHIO_ASR_ZH00045 | 文言文 | 4.22 | 2025.01 |
+| SPEECHIO_ASR_ZH00046 | 歌词 | 9.60 | 2025.01 |
 </p></details>
 
 _note: models with `(*)` marker can be found in model zoo, but not universally available to public yet._
