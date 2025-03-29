@@ -100,6 +100,10 @@ SpeechIO test sets are carefully curated by SpeechIO authors, crawled from publi
 | &cross; |SPEECHIO_ASR_ZH00040| 电影：白鹿原 | 电影 <br> Film | 陕西话 <br> ShaanXi Accent | 1.1 | ★★★★★ |
 | &cross; |SPEECHIO_ASR_ZH00041| 电影：让子弹飞 | 电影 <br> Film | 四川话 <br> SiChuan Accent | 1.1 | ★★★★☆ |
 | &cross; |SPEECHIO_ASR_ZH00042| 电影：人生大事 | 电影 <br> Film | 武汉话 <br> WuHan Accent | 0.8 | ★★★★ |
+| &cross; |SPEECHIO_ASR_ZH00043| 听障 | 听障语音识别 <br> Hearing Imperiment Speaker | 新闻脚本 <br> News Prompts | 0.6 | ★★★★★ |
+| &cross; |SPEECHIO_ASR_ZH00044| 唐诗宋词 | 诗词朗诵 <br> Poems Reading | 唐诗宋词 <br> Chinese Poems | 1.1 | ★★★☆ |
+| &cross; |SPEECHIO_ASR_ZH00045| 文言文 | 文言文朗诵 <br> Classical Chinese Reading | 论语，老子，诗经，孙子兵法 | 0.5 | ★★★★★ |
+| &cross; |SPEECHIO_ASR_ZH00046| 音乐歌词识别 | 演唱 <br> Singing | 歌词 <br> Lyrics | 1.2 | ★★★★☆ |
 
 </p></details>
 
