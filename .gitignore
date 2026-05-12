@@ -31,6 +31,7 @@ models/*
 !models/google_USM_en
 !models/tencent_api_en
 !models/microsoft_sdk_en
+!models/smallest_ai_stt_en
 
 # dataset zoo
 datasets/*
@@ -108,3 +109,6 @@ models/yitu_api_zh/DEV_KEY
 # ximalaya api credential
 models/ximalaya_api_zh/APP_KEY
 models/ximalaya_api_zh/SECRET_KEY
+
+# smallest ai credential
+models/smallest_ai_stt_en/assets/API_KEY

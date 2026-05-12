@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 2 ]; then
+  echo "Usage: SBI <wav.scp> <result_dir>"
+  exit 1
+fi
+
+scp=$1
+dir=$2
+
+API_KEY_FILE=$(dirname "$0")/assets/API_KEY
+if [ ! -f "$API_KEY_FILE" ]; then
+  echo "ERROR: API key not found at $API_KEY_FILE"
+  exit 1
+fi
+
+python3 $(dirname "$0")/asr_api.py "$scp" "$dir/raw_rec.txt" "$API_KEY_FILE"
