@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "$#" -ne 2 ]; then
+    echo "Usage: ./SBI <input_audio_list> <result_dir>" >&2
+    exit 1
+fi
+
+SCP="$1"
+RESULT_DIR="$2"
+mkdir -p "$RESULT_DIR"
+
+if [ -z "${ORUK_API_KEY:-}" ] && [ -f "./assets/API_KEY" ]; then
+    export ORUK_API_KEY="$(tr -d '[:space:]' < ./assets/API_KEY)"
+fi
+
+exec python3 ./asr_api.py "$SCP" "$RESULT_DIR/raw_rec.txt"
